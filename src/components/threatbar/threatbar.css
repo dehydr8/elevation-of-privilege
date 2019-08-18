@@ -1,0 +1,21 @@
+.threat-bar {
+  position: fixed;
+  right: 310px;
+  height: 100%;
+  width: 500px;
+  overflow-y: auto;
+
+  font-size: 0.9em;
+}
+
+.threat-container .card {
+  margin-bottom: 10px;
+}
+
+.hoverable:hover {
+  cursor: pointer;
+}
+
+.thin-list-group-item {
+  padding: .30rem .75rem;
+}

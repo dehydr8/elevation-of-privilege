@@ -1,0 +1,10 @@
+.model {
+  position: fixed;
+  left: 0;
+  width: 100%;
+}
+
+.status-bar {
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+}
