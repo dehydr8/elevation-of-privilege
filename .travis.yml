@@ -35,12 +35,9 @@ matrix:
         - docker tag $REPO:$COMMIT $REPO:$TRAVIS_TAG
         - docker tag $REPO:$COMMIT $REPO:$TRAVIS_TAG
         - docker tag $REPO:$COMMIT registry.heroku.com/$HEROKU_APP_NAME/web
-      deploy:
-        provider: script
-        script:
-          docker push $REPO;
-          docker push registry.heroku.com/$HEROKU_APP_NAME/web;
-          heroku container:release web --app $HEROKU_APP_NAME
+        - docker push $REPO
+        - docker push registry.heroku.com/$HEROKU_APP_NAME/web
+        - heroku container:release web --app $HEROKU_APP_NAME
 
 notifications:
   email: false
