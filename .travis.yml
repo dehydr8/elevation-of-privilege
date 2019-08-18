@@ -28,7 +28,7 @@ matrix:
       before_install:
         - wget -qO- https://toolbelt.heroku.com/install.sh | sh
         - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-        - echo "$HEROKU_PASS" | docker login -u "$HEROKU_USER" --password-stdin registry.heroku.com
+        - echo "$HEROKU_API_KEY" | docker login -u "$HEROKU_USER" --password-stdin registry.heroku.com
       script:
         - docker build -t $REPO:$COMMIT .
         - docker tag $REPO:$COMMIT $REPO:latest
