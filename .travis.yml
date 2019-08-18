@@ -21,14 +21,10 @@ matrix:
       stage: build docker image
       services:
         - docker
-      env:
-        global:
-          - secure: "grmgBYJrTblslvpM7cyQx5ZrfsVjcWJETCO2+b02qAd/yW/mRMEnuUCwZYBatDF2Hn+enpLe2BcwQjoTkDs0mfFHU+ywy3PLD7TYXCCyJmx/qsj1etOd7PAXuIN+ATKYqf9RsAs9eRwYRnYCxBAyHeT1GBVkm7NheZGDPvHJPo0Wu4Koskod/DmvJdt7Yy+zXa8O8Cd+3WHzIdmvkOoW46wTmbKEB+Vl0u96GWrxjOPle/5Lz7edxPr8bo74uQj6qeSJDYJWR44R7zJw8BR8I+aCq5YG0QThosoNSKlH9jmUA819IpaCutzsAWBzACEsdwu9N/XqYSlr3Tf6oerGoEhqm8w08C/RW3em9e6xbmbL51WZjQXVGhin8MKFnUzV52T48Lod8DY6tPE5hIYZNSqtE9vKGiXlLqBoPSCC7p6vNCo17xjNLZq2wLyZlMp2Mu4kV15AVU44AF9QlRRR5ooFCFTS2ztij16s1+aXlsAH95TOXXOit6oDkOzcLzFwnLR6PCS3iZJHqtLCiNs194pX6cCwVGhyqxtlGyw5bKtJLy/IjKDGAbCZIZVKhXoNU/ewckGWAczuqtqwfw3FXEzTzzD/GrbMz+KykH4HVtpqvJ0n/h9cAXy3cBcHttxPntw+VJ1EaYP+ZBnNm57cjTufiptvz3MBIWONZlA6Uvg="
-          - secure: "NPNw0ITQO/ZKTEmMFZho6H6ATjx0U8tRWs5oYYiRj4ZDUOwdxWHB0R4XFjLopfq9ECZkPaUyKIvfnL5CsERLjUBQRnb+tpzfMLhHu2RlZ+LHjcO+4025A+lRqCYlGmA/2AyNuF02V9OwGLxzBWwih3K5fH8HVn19nEE/oCmt6WUSvYIv2MLlq+oZlcdoN5rmHoFKp9X2gmmjzhC+T//4fy2GdHB7V/Bt4motoh2/ZowRdo22yiVZwpGqRLWjpRXIVn4fxPJfFOVNJZEbi0bc9AW5RkdUzCoRlyDrpHS/RqLU1ete+r/Pes0VuO/aslIn1dlkCPkGl0AGiUy0QWhqKWyN48eeBiCObqSPOvWJjRb2XhCWF1fEzrj+pzPKhNdyrffvTXwJswdxxYtLhvSRUw97CQchIOQfJBO8jnVof0kknLLL7nX4BQJH5yxbF4r0+umWPTY+414js3nQWoc/WK/W37bX4FBFptAHUsVccJw/CVHT/IugkIXYquT4RIpKyddC7yMkTbQzOciZ7pAGWJXHTmSb8EwfsUlFwZ1R1hL6CKRK+9JQbpZo8S/XVW1uNG0D0RFWu/bXwAIu12b18F4Deob1Jwcr6XjozN4KomRp7bebVfJrLhxmQQv//r2FRNySM0n2j0+IHmkgmnKl666ldi5chz4khahVA9U/l1s="
-          - COMMIT=${TRAVIS_COMMIT::8}
-          - REPO=okhalid/eop
       if: tag IS present
       script:
+        - export COMMIT=${TRAVIS_COMMIT::8}
+        - export REPO=okhalid/eop
         - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
         - docker build -t $REPO:$COMMIT .
         - docker tag $REPO:$COMMIT $REPO:latest
