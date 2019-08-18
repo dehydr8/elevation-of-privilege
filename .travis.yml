@@ -18,18 +18,29 @@ matrix:
       after_script:
       - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
     - dist: trusty
-      stage: build docker image
+      stage: build and deploy docker image
       services:
         - docker
       if: tag IS present
-      script:
-        - export COMMIT=${TRAVIS_COMMIT::8}
-        - export REPO=okhalid/eop
+      env:
+        - COMMIT=${TRAVIS_COMMIT::8}
+        - REPO=okhalid/eop
+      before_install:
+        - wget -qO- https://toolbelt.heroku.com/install.sh | sh
         - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+        - echo "$HEROKU_PASS" | docker login -u "$HEROKU_USER" --password-stdin registry.heroku.com
+      script:
         - docker build -t $REPO:$COMMIT .
         - docker tag $REPO:$COMMIT $REPO:latest
         - docker tag $REPO:$COMMIT $REPO:$TRAVIS_TAG
-        - docker push $REPO
+        - docker tag $REPO:$COMMIT $REPO:$TRAVIS_TAG
+        - docker tag $REPO:$COMMIT registry.heroku.com/$HEROKU_APP_NAME/web
+      deploy:
+        provider: script
+        script:
+          docker push $REPO;
+          docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+          heroku container:release web --app $HEROKU_APP_NAME
 
 notifications:
   email: false
