@@ -1,17 +1,39 @@
-language: node_js
-node_js:
-- "10"
-cache:
-  directories:
-  - node_modules
-install:
-- rm -rf node_modules/*/.git/
-- npm install -q --no-color --no-progress
-before_script:
-- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-- chmod +x ./cc-test-reporter
-- ./cc-test-reporter before-build
-script:
-- npm run test -- --coverage --watchAll=false
-after_script:
-- ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+matrix:
+  include:
+    - language: node_js
+      node_js:
+      - "10"
+      cache:
+        directories:
+        - node_modules
+      install:
+      - rm -rf node_modules/*/.git/
+      - npm install -q --no-color --no-progress
+      before_script:
+      - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - chmod +x ./cc-test-reporter
+      - ./cc-test-reporter before-build
+      script:
+      - npm run test -- --coverage --watchAll=false
+      after_script:
+      - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+    - dist: trusty
+      stage: build docker image
+      services:
+        - docker
+      env:
+        global:
+          - secure: "grmgBYJrTblslvpM7cyQx5ZrfsVjcWJETCO2+b02qAd/yW/mRMEnuUCwZYBatDF2Hn+enpLe2BcwQjoTkDs0mfFHU+ywy3PLD7TYXCCyJmx/qsj1etOd7PAXuIN+ATKYqf9RsAs9eRwYRnYCxBAyHeT1GBVkm7NheZGDPvHJPo0Wu4Koskod/DmvJdt7Yy+zXa8O8Cd+3WHzIdmvkOoW46wTmbKEB+Vl0u96GWrxjOPle/5Lz7edxPr8bo74uQj6qeSJDYJWR44R7zJw8BR8I+aCq5YG0QThosoNSKlH9jmUA819IpaCutzsAWBzACEsdwu9N/XqYSlr3Tf6oerGoEhqm8w08C/RW3em9e6xbmbL51WZjQXVGhin8MKFnUzV52T48Lod8DY6tPE5hIYZNSqtE9vKGiXlLqBoPSCC7p6vNCo17xjNLZq2wLyZlMp2Mu4kV15AVU44AF9QlRRR5ooFCFTS2ztij16s1+aXlsAH95TOXXOit6oDkOzcLzFwnLR6PCS3iZJHqtLCiNs194pX6cCwVGhyqxtlGyw5bKtJLy/IjKDGAbCZIZVKhXoNU/ewckGWAczuqtqwfw3FXEzTzzD/GrbMz+KykH4HVtpqvJ0n/h9cAXy3cBcHttxPntw+VJ1EaYP+ZBnNm57cjTufiptvz3MBIWONZlA6Uvg="
+          - secure: "C6Ouhs6qpypCiQ4iGaUZgDwec2gohfN3Vu5LCeu/cZSXX/UDkufhRJXarERhVBAq+Ndzw/pgPrLeEykNHelXwixt1ECL7AirLM/BB9NE/56MugoswrpcXC0HtXes/4QunJ8KjhhtPGCiWEauMR5LHaLOEkYrR2OsY6YC83192xljOAbxmNDohNoYIVl9zyyqM+HE1IvasOL5v9dL+F96Morfp9hysK21j+pi06aPoTnyUfqkMldObzXbVvZihnJ4saMOmvRdhy/x04hZh17GbyuOcnbuXS9gxbInkm8saa1AtuISk5di74hJ3WB1qz5yegtB8mEbh9sWfhW14vjrgyn+E5s13Dwz9t5PCeyt0fXLRTuKrL8KuUQ+qYX5m3p6S9ZJabS0zs0KhVzpTjUFVG1jRP9FV+UvxTeNb2uwEsibAYv71d8eVvSlJHP6aVv3LWtmyVCxEFrV2KDbekGPY8yHp+9hEUmnSZBoE6LndEYDuaaXAsejqRG4vC+qWJT7rbLoUwbJFEcXM9HSb6LSBwC1v7KLy316Bhw5VtJXf5C1+tRhqt0URnMnEmfQovVl2hGxeGmm2emQlG6PhqYZ1Ae8C/8FIOcL2Xpe5EQhwcYdanVOTS1NLSgvE33gjI5B1ngtzgvjrqAPlQAl3Xlf69vT62IiZc0C2gEAKWFbpcE="
+          - COMMIT=${TRAVIS_COMMIT::8}
+          - REPO=okhalid/eop
+      if: tag IS present
+      script:
+        - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+        - docker build -t $REPO:$COMMIT .
+        - docker tag $REPO:$COMMIT $REPO:latest
+        - docker tag $REPO:$COMMIT $REPO:$TRAVIS_TAG
+        - docker push $REPO
+
+notifications:
+  email: false
