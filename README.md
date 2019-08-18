@@ -1,5 +1,7 @@
 Elevation of Privilege
 ======================
+[![Build Status](https://travis-ci.org/dehydr8/elevation-of-privilege.svg?branch=master)](https://travis-ci.org/dehydr8/elevation-of-privilege)
+
 Elevation of Privilege (EoP) is the easy way to get started and learn threat modeling. It is a card game that developers, architects or security experts can play.
 
 # Todos
