@@ -128,7 +128,6 @@ class Model extends React.Component {
       }
     });
     paper.on('blank:pointerdown', function(event, x, y) {
-      console.log("dragging start!");
       parent.setState({
         ...parent.state,
         dragging: true,
@@ -139,7 +138,6 @@ class Model extends React.Component {
       });
     });
     paper.on('cell:pointerup blank:pointerup', function(event, x, y) {
-      console.log("dragging end!");
       parent.setState({
         ...parent.state,
         dragging: false,
