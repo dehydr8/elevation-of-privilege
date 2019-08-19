@@ -25,30 +25,32 @@ class About extends React.Component {
                   <p>Because the game uses STRIDE threats, it gives you a framework for thinking, and specific actionable examples of those threats.</p>
                   <h2>STRIDE stands for</h2>
                   <table className="table table-sm">
-                    <tr>
-                      <th scope="row">Spoofing</th>
-                      <td>Impersonating something or someone else</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Tampering</th>
-                      <td>Modifying data or code</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Repudiation</th>
-                      <td>Claiming not to have performed an action</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Information Disclosure</th>
-                      <td>Exposing information to someone not authorized to see it</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Denial of Service</th>
-                      <td>Denying or degrading service to users</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Elevation of Privilege</th>
-                      <td>Gain capabilities without proper authorization</td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Spoofing</th>
+                        <td>Impersonating something or someone else</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Tampering</th>
+                        <td>Modifying data or code</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Repudiation</th>
+                        <td>Claiming not to have performed an action</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Information Disclosure</th>
+                        <td>Exposing information to someone not authorized to see it</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Denial of Service</th>
+                        <td>Denying or degrading service to users</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Elevation of Privilege</th>
+                        <td>Gain capabilities without proper authorization</td>
+                      </tr>
+                    </tbody>
                   </table>
                   <h1>Preparing to play</h1>
                   <p>An Elevation of Privilege game is usually initiated for one of a few reasons. Those include because a group of developers has a system or feature to threat model, because someone wants to learn or teach the skill, or because someone has picked up a copy of the game and wants to explore.</p>
