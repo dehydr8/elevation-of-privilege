@@ -1,4 +1,4 @@
-import { app, server } from './server'
+import { app, server, serverHandle, appHandle } from './server'
 import request from 'supertest'
 import ElevationOfPrivilege from './game/eop';
 
@@ -159,4 +159,13 @@ it('download the final model for a game', async () => {
   expect(threats[0].description).toBe("description");
   expect(threats[0].mitigation).toBe("mitigation");
   expect(threats[0].game).toBe(gameID);
+});
+
+afterAll(() => {
+  // cleanup
+  serverHandle.then(s => {
+    s.apiServer.close();
+    s.appServer.close();
+  });
+  appHandle.close();
 });
