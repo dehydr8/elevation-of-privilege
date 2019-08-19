@@ -46,12 +46,14 @@
     ]
   },
   "devDependencies": {
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "supertest": "^4.0.2"
   },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
-      "!<rootDir>/node_modules/"
+      "!<rootDir>/node_modules/",
+      "!src/serviceWorker.js"
     ],
     "coverageThreshold": {
       "global": {
