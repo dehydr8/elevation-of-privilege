@@ -132,3 +132,8 @@ app.use(router.routes()).use(router.allowedMethods());
 app.listen(API_PORT, () => {
   console.log(`API serving at: http://localhost:${API_PORT}/`);
 });
+
+export {
+  app,
+  server
+}
