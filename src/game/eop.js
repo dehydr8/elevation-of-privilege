@@ -20,7 +20,7 @@ for (let i=0; i<DECK_SUITS.length; i++) {
 // remove invalid cards
 INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
 
-function shuffleCards(ctx) {
+export function shuffleCards(ctx) {
   let players = [];
   let totalCardsToDeal = Math.floor(deck.length / ctx.numPlayers) * ctx.numPlayers;
 
@@ -55,7 +55,7 @@ function shuffleCards(ctx) {
   }
 }
 
-function getWinner(suit, dealt) {
+export function getWinner(suit, dealt) {
   let winner = 0, max = -1;
   for (let i=0; i<dealt.length; i++) {
     let c = dealt[i];
@@ -70,7 +70,7 @@ function getWinner(suit, dealt) {
   return winner;
 }
 
-const ElevationOfPrivilege = Game({
+export const ElevationOfPrivilege = Game({
   name: 'elevation-of-privilege',
   setup(ctx) {
     let scores = [];
@@ -428,5 +428,3 @@ const ElevationOfPrivilege = Game({
     },
   }
 });
-
-export default ElevationOfPrivilege;

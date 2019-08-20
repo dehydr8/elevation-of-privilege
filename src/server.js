@@ -1,5 +1,5 @@
 import { Server, FlatFile } from 'boardgame.io/server';
-import ElevationOfPrivilege from './game/eop';
+import { ElevationOfPrivilege } from './game/eop';
 import Router from 'koa-router';
 import Koa from 'koa';
 import cors from '@koa/cors';
