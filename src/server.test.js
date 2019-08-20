@@ -1,6 +1,6 @@
 import { app, server, serverHandle, appHandle } from './server'
 import request from 'supertest'
-import ElevationOfPrivilege from './game/eop';
+import { ElevationOfPrivilege } from './game/eop';
 
 it('server is not undefined', async() => {
   expect(server).toBeDefined();

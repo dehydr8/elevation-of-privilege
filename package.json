@@ -53,7 +53,11 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/",
-      "!src/serviceWorker.js"
+      "!src/serviceWorker.js",
+      "!src/components/board/board.ignoretest.js",
+      "!src/jointjs/shapes.js",
+      "!src/index.js",
+      "!src/App.js"
     ],
     "coverageThreshold": {
       "global": {
