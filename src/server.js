@@ -105,6 +105,7 @@ router.get('/download/:id', async ctx => {
             game: gameID,
           })
         });
+        cell.threats = threats;
       }
     });
   });
