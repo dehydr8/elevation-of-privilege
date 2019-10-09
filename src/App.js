@@ -1,7 +1,7 @@
 import React from 'react';
 import { Client } from 'boardgame.io/react';
 import Board from './components/board/board';
-import ElevationOfPrivilege from './game/eop';
+import { ElevationOfPrivilege } from './game/eop';
 import { SERVER_PORT } from './constants';
 
 const url = window.location.protocol+'//'+window.location.hostname+(window.location.port ? ':'+window.location.port: '');
