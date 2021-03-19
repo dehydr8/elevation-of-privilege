@@ -10,7 +10,7 @@
     "bootstrap": "^4.3.1",
     "jointjs": "^1.1.0",
     "lodash": "^4.17.15",
-    "mongodb": "^3.3.0-beta2",
+    "mongodb": "^3.6.5",
     "node-persist": "^3.0.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
