@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import React from 'react';
+import { default as React, default as React } from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
-import { API_PORT } from '../../utils/constants';
+import { API_PORT, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS } from '../../constants';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
 import '../styles/create.css';
@@ -13,25 +13,20 @@ class Create extends React.Component {
 
   constructor(props) {
     super(props);
+    let initialPlayerNames = {};
+    let initialSecrets = {};
+    _.range(MAX_NUMBER_PLAYERS).forEach(
+      n => {
+        initialPlayerNames[n] = `Player ${n+1}`;
+        initialSecrets[n] = ``;
+      }
+    );
+
     this.state = {
-      players: 3,
+      players: MIN_NUMBER_PLAYERS,
       gameID: "",
-      names: {
-        0: "Player 1",
-        1: "Player 2",
-        2: "Player 3",
-        3: "Player 4",
-        4: "Player 5",
-        5: "Player 6",
-      },
-      secret: {
-        0: "",
-        1: "",
-        2: "",
-        3: "",
-        4: "",
-        5: "",
-      },
+      names: initialPlayerNames,
+      secret: initialSecrets,
       creating: false,
       created: false,
       model: null,
@@ -135,10 +130,13 @@ class Create extends React.Component {
               <Label for="players" sm={2}>Players</Label>
               <Col sm={10}>
                 <Input type="select" name="players" id="players" onChange={e => this.onPlayersUpdated(e)} value={this.state.players}>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
+                  {
+                    _.range(MIN_NUMBER_PLAYERS, MAX_NUMBER_PLAYERS+1).map(
+                      n => (
+                        <option key={`players-${n}`}>{n}</option>
+                      )
+                    )
+                  }
                 </Input>
               </Col>
             </FormGroup>

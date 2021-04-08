@@ -4,6 +4,9 @@ export const STARTING_CARD = 'T3';
 export const INVALID_CARDS = ['T2', 'E2', 'E3', 'E4'];
 export const TRUMP_CARD_PREFIX = 'E';
 
+export const MIN_NUMBER_PLAYERS = 3;
+export const MAX_NUMBER_PLAYERS = 9;
+
 export const SERVER_PORT = process.env.SERVER_PORT || 8000;
 export const API_PORT = process.env.API_PORT || 8001;
 export const INTERNAL_API_PORT = process.env.INTERNAL_API_PORT || 8002;
