@@ -1,9 +1,10 @@
-import { Game, PlayerView, INVALID_MOVE } from 'boardgame.io/core';
-import { DECK_HANDS, DECK_SUITS, STARTING_CARD, INVALID_CARDS, TRUMP_CARD_PREFIX } from '../utils/constants';
-import { getPlayers, getValidMoves, getDealtCard } from '../utils/utils';
-import { getThreatDescription } from './definitions.js';
-import uuidv4 from 'uuid/v4';
+import { Game, INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import _ from 'lodash';
+import uuidv4 from 'uuid/v4';
+import { DEFAULT_START_SUIT, STARTING_CARD_MAP } from '../constants';
+import { DECK_HANDS, DECK_SUITS, INVALID_CARDS, TRUMP_CARD_PREFIX } from '../utils/constants';
+import { getDealtCard, getPlayers, getValidMoves } from '../utils/utils';
+import { getThreatDescription } from './definitions.js';
 
 let scores = {};
 let deck = [];
@@ -20,7 +21,7 @@ for (let i=0; i<DECK_SUITS.length; i++) {
 // remove invalid cards
 INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
 
-export function shuffleCards(ctx) {
+export function shuffleCards(ctx, startingCard) {
   let players = [];
   let totalCardsToDeal = Math.floor(deck.length / ctx.numPlayers) * ctx.numPlayers;
 
@@ -29,12 +30,12 @@ export function shuffleCards(ctx) {
   // shuffle the deck first
   let shuffled = ctx.random.Shuffle(deck);
   
-  // remove the STARTING_CARD card and resize to totalCardsToDeal
-  shuffled.splice(shuffled.indexOf(STARTING_CARD), 1);
+  // remove the startingCard card and resize to totalCardsToDeal
+  shuffled.splice(shuffled.indexOf(startingCard), 1);
   shuffled = shuffled.slice(0, totalCardsToDeal - 1);
 
-  // make sure STARTING_CARD is in the shuffled cards
-  shuffled.push(STARTING_CARD);
+  // make sure startingCard is in the shuffled cards
+  shuffled.push(startingCard);
   shuffled = ctx.random.Shuffle(shuffled);
 
   let cardsToDeal = totalCardsToDeal / ctx.numPlayers;
@@ -44,7 +45,7 @@ export function shuffleCards(ctx) {
     let slice = shuffled.slice(i, i+cardsToDeal);
     players.push(slice);
 
-    if (slice.indexOf(STARTING_CARD) >= 0)
+    if (slice.indexOf(startingCard) >= 0)
       first = i / cardsToDeal;
   }
 
@@ -72,9 +73,12 @@ export function getWinner(suit, dealt) {
 
 export const ElevationOfPrivilege = Game({
   name: 'elevation-of-privilege',
-  setup(ctx) {
+  setup(ctx, setupData) {
+    const startSuit = (setupData) ?  setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT
+    const startingCard = STARTING_CARD_MAP[startSuit];
+
     let scores = [];
-    let shuffled = shuffleCards(ctx);
+    let shuffled = shuffleCards(ctx, startingCard);
     let order = [];
     for (let i=0; i<ctx.numPlayers; i++) {
       order.push(i);
@@ -107,6 +111,7 @@ export const ElevationOfPrivilege = Game({
         new: true,
       },
       identifiedThreats: {},
+      startingCard: startingCard
     }
     return ret;
   },
@@ -292,7 +297,7 @@ export const ElevationOfPrivilege = Game({
       let suit = G.suit;
 
       // check if the move is valid
-      if (!getValidMoves(deck, suit, G.round).includes(card)) {
+      if (!getValidMoves(deck, suit, G.round, G.startingCard).includes(card)) {
         return INVALID_MOVE;
       }
 

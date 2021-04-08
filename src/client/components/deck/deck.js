@@ -11,6 +11,7 @@ class Deck extends React.Component {
     current: PropTypes.bool.isRequired,
     active: PropTypes.bool.isRequired,
     onCardSelect: PropTypes.func.isRequired,
+    startingCard: PropTypes.string.isRequired
   };
 
   getRenderedDeck() {
@@ -19,7 +20,7 @@ class Deck extends React.Component {
     let validMoves = [];
 
     if (this.props.current && this.props.active && this.props.phase === "play") {
-      validMoves = getValidMoves(left, suit, this.props.round);
+      validMoves = getValidMoves(left, suit, this.props.round, this.props.startingCard);
     }
 
     let deck = left

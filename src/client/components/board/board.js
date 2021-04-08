@@ -93,7 +93,16 @@ class Board extends React.Component {
             <div className="status-bar">
               <Status playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard}  />
             </div>
-            <Deck cards={this.props.G.players[this.props.playerID]} suit={this.props.G.suit} phase={this.props.ctx.phase} round={this.props.G.round} current={current} active={active} onCardSelect={(e) => this.props.moves.draw(e)} />
+            <Deck 
+              cards={this.props.G.players[this.props.playerID]}
+              suit={this.props.G.suit}
+              phase={this.props.ctx.phase}
+              round={this.props.G.round}
+              current={current}
+              active={active}
+              onCardSelect={(e) => this.props.moves.draw(e)}
+              startingCard={this.props.G.startingCard} // <===  This is still missing   i.e. undeifned
+            />
           </div>
         </div>
         <Sidebar playerID={this.props.playerID} gameID={this.props.gameID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} phase={this.props.ctx.phase} current={current} active={active} names={this.state.names} />

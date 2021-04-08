@@ -30,10 +30,12 @@ class Create extends React.Component {
       creating: false,
       created: false,
       model: null,
+      startSuit: "T"
     };
 
     this.onPlayersUpdated = this.onPlayersUpdated.bind(this);
     this.onNameUpdated = this.onNameUpdated.bind(this);
+    this.onstartSuitUpdated = this.onstartSuitUpdated.bind(this);
     this.readFile = this.readFile.bind(this);
     this.onFileRead = this.onFileRead.bind(this);
     this.createGame = this.createGame.bind(this);
@@ -57,6 +59,7 @@ class Create extends React.Component {
         players: this.state.players,
         model: this.state.model,
         names: this.state.names,
+        startSuit: this.state.startSuit,
       });
 
     const gameId = r.body.game;
@@ -93,6 +96,13 @@ class Create extends React.Component {
     this.setState({
       ...this.state,
       players: parseInt(e.target.value),
+    });
+  }
+
+  onstartSuitUpdated(e) {
+    this.setState({
+      ...this.state,
+      startSuit: e.target.value,
     });
   }
 
@@ -150,6 +160,20 @@ class Create extends React.Component {
                 </Col>
               </FormGroup>
             )}
+            <hr />
+            <FormGroup row>
+              <Label for="startSuit" sm={2}>Start Suite</Label>
+              <Col sm={10}>
+                <Input type="select" name="startSuit" id="startSuit" onChange={e => this.onstartSuitUpdated(e)} value={this.state.startSuit}>
+                  <option>S</option>
+                  <option>T</option>
+                  <option>R</option>
+                  <option>I</option>
+                  <option>D</option>
+                  <option>E</option>
+                </Input>
+              </Col>
+            </FormGroup>
             <hr />
             <FormGroup row>
               <Label for="model" sm={2}>Model</Label>
