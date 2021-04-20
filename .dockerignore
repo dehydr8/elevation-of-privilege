@@ -2,3 +2,4 @@ node_modules/
 deploy/
 build/
 db/
+**/*.test.js
