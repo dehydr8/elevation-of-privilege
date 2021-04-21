@@ -2,9 +2,7 @@ FROM node:15.14.0-alpine3.13 AS builder
 WORKDIR /usr/src/app
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm ci
-# TODO: installing only production dependencies breaks "node -r esm"
-#RUN npm ci  --only=production
+RUN npm ci --only=production
 
 FROM node:15.14.0-alpine3.13
 RUN apk add dumb-init
