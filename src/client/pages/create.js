@@ -1,10 +1,12 @@
+
 import _ from 'lodash';
-import { default as React, default as React } from 'react';
+import React, { default as React, default as React } from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
-import { API_PORT, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS } from '../../constants';
+import { API_PORT, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../constants';
+import { getTypeString } from '../../utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
 import '../styles/create.css';
@@ -162,15 +164,14 @@ class Create extends React.Component {
             )}
             <hr />
             <FormGroup row>
-              <Label for="startSuit" sm={2}>Start Suite</Label>
+              <Label for="startSuit" sm={2}>Start Suit</Label>
               <Col sm={10}>
                 <Input type="select" name="startSuit" id="startSuit" onChange={e => this.onstartSuitUpdated(e)} value={this.state.startSuit}>
-                  <option>S</option>
-                  <option>T</option>
-                  <option>R</option>
-                  <option>I</option>
-                  <option>D</option>
-                  <option>E</option>
+                  {
+                    Object.keys(STARTING_CARD_MAP).map(suit => (
+                      <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString(suit)}</option>
+                    ))
+                  }
                 </Input>
               </Col>
             </FormGroup>
