@@ -11,7 +11,8 @@ RUN chown node:node /usr/src/app
 USER node
 ENV NODE_ENV production
 COPY --chown=node:node  --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
-# TODO: copy only neccessary files
-COPY --chown=node:node ./src /usr/src/app/src
-CMD [ "dumb-init", "node", "-r", "esm", "/usr/src/app/src/server.js" ]
+COPY --chown=node:node ./src/server /usr/src/app/src/server
+COPY --chown=node:node ./src/game /usr/src/app/src/game
+COPY --chown=node:node ./src/utils /usr/src/app/src/utils
+CMD [ "dumb-init", "node", "-r", "esm", "/usr/src/app/src/server/server.js" ]
 

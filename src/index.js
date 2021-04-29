@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './cards.css';
+import './client/styles/cards.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom'
-import App from './App';
-import Create from './components/create/create';
-import About from './components/about/about';
-import * as serviceWorker from './serviceWorker';
+import App from './client/pages/app';
+import Create from './client/pages/create';
+import About from './client/pages/about';
+import * as serviceWorker from './client/serviceWorker';
 
 ReactDOM.render(
   <Router>
