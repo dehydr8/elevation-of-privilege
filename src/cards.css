@@ -141,13 +141,15 @@
 }
 
 .playingCards .hand .active:hover {
-    margin-top: -10px;
+    margin-top: -310px;
     cursor: pointer;
+    transform: scale(1.0);
 }
 
 .scaled {
     transform-origin: top left;
     transform: scale(0.4);
+    transition: all 0.4s ease-in-out;
 }
 
 .scaled-big {
