@@ -16,3 +16,4 @@ services:
       dockerfile: docker/server.dockerfile
     container_name: threats-server
     restart: unless-stopped
+    network_mode: service:client
