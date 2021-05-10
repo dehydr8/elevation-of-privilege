@@ -30,7 +30,7 @@ matrix:
         - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
         - echo "$HEROKU_API_KEY" | docker login -u "$HEROKU_USER" --password-stdin registry.heroku.com
       script:
-        - docker build -t $REPO:$COMMIT .
+        - docker build -f heroku/Dockerfile -t $REPO:$COMMIT .
         - docker tag $REPO:$COMMIT $REPO:latest
         - docker tag $REPO:$COMMIT $REPO:$TRAVIS_TAG
         - docker tag $REPO:$COMMIT $REPO:$TRAVIS_TAG
