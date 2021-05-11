@@ -2,7 +2,9 @@
   "name": "eop",
   "version": "0.2.2",
   "private": true,
+  "main": "src/client/index.js",
   "dependencies": {
+    "esm": "^3.2.25",
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
@@ -28,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node -r esm src/server.js"
+    "server": "node -r esm src/server/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,7 +48,6 @@
     ]
   },
   "devDependencies": {
-    "esm": "^3.2.25",
     "supertest": "^4.0.2"
   },
   "jest": {

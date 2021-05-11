@@ -33,14 +33,18 @@ npm run start
 The UI can also be built and served statically, keep in mind that the values of the port numbers will be hard coded in the generated files.
 
 ### Docker
-The docker image uses `supervisord` to run both the UI and the server in the same container. The UI is built and served using `nginx`, it is also used to proxy requests from `/api` to the public API.
+To start a dockerized version of the EoP game use
 
-```
-docker build . -t eop:latest
-docker run --rm -it -p 8080:80 eop:latest
+```bash
+docker-compose up --build
 ```
 
 This would start EoP on port `8080` and would be accessible at `http://localhost:8080/`.
+The docker-compose setup starts two container: 
+ * `threats-client`: running `nginx` as a reverse proxy and serving the react application
+ * `threats-server`: running the `nodejs` backends: public API and game server
+
+![docker-compose setup](docs/docker-setup.svg)
 
 ## TODO
 * Spectator mode
@@ -50,7 +54,6 @@ This would start EoP on port `8080` and would be accessible at `http://localhost
 * Improve test coverage, write tests for possible game states and moves
 * Refactor and have reusable components
 * Optimize component renders through `shouldComponentUpdate`
-* Optimize docker image, currently using `ubuntu:latest`
 * Write contributing guide
 
 ## Credits

@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: docker/client.dockerfile
+    container_name: threats-client
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+
+  server:
+    build:
+      context: .
+      dockerfile: docker/server.dockerfile
+    container_name: threats-server
+    restart: unless-stopped
+    network_mode: service:client
