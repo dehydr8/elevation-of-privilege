@@ -1,5 +1,3 @@
-import { STARTING_CARD } from './constants';
-
 export function getDealtCard(G) {
   let dealtCard = "";
   if (G.dealt.length > 0) {
@@ -60,11 +58,11 @@ export function getComponentName(component) {
   return `${prefix}: ${component.attrs.text.text}`;
 }
 
-export function getValidMoves(cards, suit, round) {
+export function getValidMoves(cards, suit, round, startingCard) {
   let validMoves = [];
 
   if (suit === "" && round <= 1) {
-    validMoves.push(STARTING_CARD);
+    validMoves.push(startingCard);
   } else {
     if (suit !== "")
       validMoves = cards.filter(e => e.startsWith(suit));

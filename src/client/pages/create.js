@@ -1,10 +1,12 @@
+
 import _ from 'lodash';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
-import { API_PORT } from '../../utils/constants';
+import { API_PORT, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
+import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
 import '../styles/create.css';
@@ -13,32 +15,29 @@ class Create extends React.Component {
 
   constructor(props) {
     super(props);
+    let initialPlayerNames = {};
+    let initialSecrets = {};
+    _.range(MAX_NUMBER_PLAYERS).forEach(
+      n => {
+        initialPlayerNames[n] = `Player ${n+1}`;
+        initialSecrets[n] = ``;
+      }
+    );
+
     this.state = {
-      players: 3,
+      players: MIN_NUMBER_PLAYERS,
       gameID: "",
-      names: {
-        0: "Player 1",
-        1: "Player 2",
-        2: "Player 3",
-        3: "Player 4",
-        4: "Player 5",
-        5: "Player 6",
-      },
-      secret: {
-        0: "",
-        1: "",
-        2: "",
-        3: "",
-        4: "",
-        5: "",
-      },
+      names: initialPlayerNames,
+      secret: initialSecrets,
       creating: false,
       created: false,
       model: null,
+      startSuit: "T"
     };
 
     this.onPlayersUpdated = this.onPlayersUpdated.bind(this);
     this.onNameUpdated = this.onNameUpdated.bind(this);
+    this.onstartSuitUpdated = this.onstartSuitUpdated.bind(this);
     this.readFile = this.readFile.bind(this);
     this.onFileRead = this.onFileRead.bind(this);
     this.createGame = this.createGame.bind(this);
@@ -62,6 +61,7 @@ class Create extends React.Component {
         players: this.state.players,
         model: this.state.model,
         names: this.state.names,
+        startSuit: this.state.startSuit,
       });
 
     const gameId = r.body.game;
@@ -101,6 +101,13 @@ class Create extends React.Component {
     });
   }
 
+  onstartSuitUpdated(e) {
+    this.setState({
+      ...this.state,
+      startSuit: e.target.value,
+    });
+  }
+
   onNameUpdated(idx, e) {
     this.setState({
       ...this.state,
@@ -135,10 +142,13 @@ class Create extends React.Component {
               <Label for="players" sm={2}>Players</Label>
               <Col sm={10}>
                 <Input type="select" name="players" id="players" onChange={e => this.onPlayersUpdated(e)} value={this.state.players}>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
+                  {
+                    _.range(MIN_NUMBER_PLAYERS, MAX_NUMBER_PLAYERS+1).map(
+                      n => (
+                        <option key={`players-${n}`}>{n}</option>
+                      )
+                    )
+                  }
                 </Input>
               </Col>
             </FormGroup>
@@ -152,6 +162,19 @@ class Create extends React.Component {
                 </Col>
               </FormGroup>
             )}
+            <hr />
+            <FormGroup row>
+              <Label for="startSuit" sm={2}>Start Suit</Label>
+              <Col sm={10}>
+                <Input type="select" name="startSuit" id="startSuit" onChange={e => this.onstartSuitUpdated(e)} value={this.state.startSuit}>
+                  {
+                    Object.keys(STARTING_CARD_MAP).map(suit => (
+                      <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString(suit)}</option>
+                    ))
+                  }
+                </Input>
+              </Col>
+            </FormGroup>
             <hr />
             <FormGroup row>
               <Label for="model" sm={2}>Model</Label>

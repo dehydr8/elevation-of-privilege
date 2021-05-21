@@ -1,5 +1,5 @@
 import { Client } from 'boardgame.io/client';
-import { INVALID_CARDS, STARTING_CARD } from '../../utils/constants';
+import { DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP } from '../../utils/constants';
 import { ElevationOfPrivilege } from '../eop';
 
 describe('game', () => {
@@ -15,6 +15,7 @@ describe('game', () => {
   }
 
   let createdThreat = "";
+  const STARTING_CARD = STARTING_CARD_MAP[DEFAULT_START_SUIT];
 
   Object.keys(players).forEach(k => {
     players[k].connect();
