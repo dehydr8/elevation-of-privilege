@@ -1,8 +1,7 @@
 import { Game, INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
-import { DEFAULT_START_SUIT, STARTING_CARD_MAP } from '../constants';
-import { DECK_HANDS, DECK_SUITS, INVALID_CARDS, TRUMP_CARD_PREFIX } from '../utils/constants';
+import { DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
 import { getDealtCard, getPlayers, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions.js';
 

@@ -24,6 +24,9 @@ const runPublicApi = (gameServer) => {
         .post(`http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/create`)
         .send({
         numPlayers: ctx.request.body.players,
+        setupData: {
+            startSuit: ctx.request.body.startSuit
+          }
         });
 
     const gameName = ElevationOfPrivilege.name;

@@ -1,6 +1,5 @@
 import { Client } from 'boardgame.io/client';
-import { INVALID_CARDS } from '../../utils/constants';
-import { DEFAULT_START_SUIT, STARTING_CARD_MAP } from '../constants';
+import { DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP } from '../../utils/constants';
 import { ElevationOfPrivilege } from '../eop';
 
 describe('game', () => {
