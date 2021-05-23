@@ -18,7 +18,7 @@
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-nl2br": "^0.4.1",
-    "react-router-dom": "^5.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.0.1",
     "reactstrap": "^8.0.1",
     "reactstrap-confirm": "^1.1.0",
