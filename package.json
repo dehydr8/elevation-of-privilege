@@ -22,7 +22,7 @@
     "react-scripts": "3.0.1",
     "reactstrap": "^8.0.1",
     "reactstrap-confirm": "^1.2.0",
-    "superagent": "^5.1.0",
+    "superagent": "^5.3.1",
     "uuid": "^3.4.0"
   },
   "scripts": {
