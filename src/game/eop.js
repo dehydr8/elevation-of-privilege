@@ -246,7 +246,7 @@ export const ElevationOfPrivilege = Game({
       let threat_description = G.threat.description.trim();
       let threat_mitigation = G.threat.mitigation.trim();
 
-      if (G.threat.owner !== ctx.playerID || _.isEmpty(threat_title) || _.isEmpty(threat_description) || _.isEmpty(threat_mitigation)) {
+      if (G.threat.owner !== ctx.playerID || _.isEmpty(threat_title) || _.isEmpty(threat_description)) {
         return INVALID_MOVE;
       }
 
@@ -276,7 +276,7 @@ export const ElevationOfPrivilege = Game({
           type: G.threat.type,
           severity: G.threat.severity,
           description: threat_description,
-          mitigation: threat_mitigation,
+          mitigation: threat_mitigation || "No mitigation provided.",
         }
       });
 

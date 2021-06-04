@@ -19,3 +19,11 @@
 .thin-list-group-item {
   padding: .30rem .75rem;
 }
+
+.checkbox-item {
+  margin-left: 1.25rem;
+}
+
+.pointer {
+  cursor: pointer;
+}

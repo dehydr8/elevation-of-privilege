@@ -25,6 +25,7 @@ class Threatbar extends React.Component {
       title: "",
       description: "",
       mitigation: "",
+      showMigitation: false,
     }
   }
 
@@ -47,12 +48,17 @@ class Threatbar extends React.Component {
         this.props.moves.updateThreat(field, this.state[field]);
       }
     }
+
+    if (!this.props.G.threat.mitigation) {
+      this.props.moves.updateThreat("mitigation", "No mitigation provided.")
+    }
   }
 
   addOrUpdate() {
     // update the values from the state
     this.saveThreat();
     this.props.moves.addOrUpdateThreat();
+    this.toggleMitigationForm(false);
   }
 
   updateState(field, value) {
@@ -122,6 +128,13 @@ class Threatbar extends React.Component {
     }
 
     return threats;
+  }
+
+  toggleMitigationForm(isShown) {
+    this.setState({
+      ...this.state,
+      showMigitation: isShown,
+    });
   }
 
   render() {
@@ -255,7 +268,13 @@ class Threatbar extends React.Component {
                 <Label for="description">Description</Label>
                 <Input type="textarea" name="description" id="description" disabled={ this.props.G.threat.owner !== this.props.playerID } style={{height: 150}} value={this.state.description} onBlur={(e) => this.props.moves.updateThreat("description", e.target.value)} onChange={(e) => this.updateState("description", e.target.value)} />
               </FormGroup>
-              <FormGroup>
+              <FormGroup hidden={ this.props.G.threat.owner !== this.props.playerID }>
+                <div className="checkbox-item">
+                <Input className="pointer" type="checkbox" id="showMitigation" onChange={(e) => this.toggleMitigationForm(e.target.checked)}/>
+                <Label for="showMitigation">Add a mitigation <em>(optional)</em></Label>
+                </div>
+              </FormGroup>
+              <FormGroup hidden={ this.props.G.threat.owner === this.props.playerID && !this.state.showMigitation}>
                 <Label for="mitigation">Mitigation</Label>
                 <Input type="textarea" name="mitigation" id="mitigation" disabled={ this.props.G.threat.owner !== this.props.playerID } style={{height: 150}} value={this.state.mitigation} onBlur={(e) => this.props.moves.updateThreat("mitigation", e.target.value)} onChange={(e) => this.updateState("mitigation", e.target.value)} />
               </FormGroup>
