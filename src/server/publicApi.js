@@ -107,7 +107,9 @@ const runPublicApi = (gameServer) => {
         });
     });
 
-    ctx.attachment(model.summary.title + ".json");
+    const modelTitle = model.summary.title.replace(' ', '-');
+    const timestamp = (new Date()).toISOString().replace(":", "-");   
+    ctx.attachment(`${modelTitle}-${timestamp}.json`);
     ctx.body = model;
     });
 

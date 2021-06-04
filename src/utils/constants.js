@@ -21,3 +21,54 @@ export const MAX_NUMBER_PLAYERS = 9;
 export const SERVER_PORT = process.env.SERVER_PORT || 8000;
 export const API_PORT = process.env.API_PORT || 8001;
 export const INTERNAL_API_PORT = process.env.INTERNAL_API_PORT || 8002;
+
+export const DEFAULT_MODEL = {
+  "summary": {
+    "title": "Threat Modelling"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "title": "Elevation of Privilege",
+        "diagramType": "STRIDE",
+        "id": 0,
+        "$$hashKey": "object:14",
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 50,
+                "y": 50
+              },
+              "angle": 0,
+              "id": "90cdcc2d-21ab-443d-ae95-f97a798429e7",
+              "z": 1,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Application"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            }
+          ]
+        },
+        "size": {
+          "height": 590,
+          "width": 790
+        }
+      }
+    ]
+  }
+};
