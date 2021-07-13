@@ -43,6 +43,8 @@ class Create extends React.Component {
     this.onFileRead = this.onFileRead.bind(this);
     this.createGame = this.createGame.bind(this);
     this.toggleModelMode = this.toggleModelMode.bind(this);
+    this.copyAllLinks = this.copyAllLinks.bind(this);
+    
 
     this.fileReader = new FileReader();
     this.fileReader.onloadend = this.onFileRead;
@@ -136,6 +138,21 @@ class Create extends React.Component {
     })
   }
 
+  async copyToClipboard(text) {
+    //Not sure I fully understand binding, should this function be bound to this?
+    return await navigator.clipboard.writeText(text);
+  }
+
+  copyAllLinks() {
+    this.copyToClipboard(
+      "You have been invited to a game of Elevation of Privilege:\n" +
+      Array(this.state.players).fill(0).map((v, i) => {
+        return `${this.state.names[i]}:\t${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}\n`;
+      }).join("")
+    );
+
+  }
+
   render() {
     let createForm = <div />;
     let linkDisplay = <div />;
@@ -225,10 +242,17 @@ class Create extends React.Component {
                 <td>
                   <a href={`${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.gameID}/{i}/{this.state.secret[i]}</a>
                 </td>
+                <td>
+                  <Button onClick={() => this.copyToClipboard(`${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`)}>
+                    Copy
+                  </Button>
+                </td>
               </tr>
             )}
             </tbody>
           </Table>
+          <hr />
+          <Button onClick={this.copyAllLinks} color="warning" block size="lg">Copy All</Button>
           <hr />
           <div className="text-center">
             <small className="text-muted">
