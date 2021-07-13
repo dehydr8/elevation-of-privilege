@@ -140,14 +140,10 @@ class Create extends React.Component {
 
   copyToClipboard(text) {
     //Not sure I fully understand binding, should this function be bound to this?
-
-    //https://caniuse.com/?search=navigator.clipboard.writeText
-    //Does not work in ie11 notes on use in firefox
     navigator.clipboard.writeText(text);
   }
 
   copyAllLinks() {
-    //how "copy all" formats links
     this.copyToClipboard(
       "You have been invited to a game of Elevation of Privilege:\n" +
       Array(this.state.players).fill(0).map((v, i) => {
