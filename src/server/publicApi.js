@@ -144,8 +144,8 @@ const runPublicApi = (gameServer) => {
             });
         });
         
-
-        ctx.attachment(`testthreats.txt`);
+        const timestamp = new Date().toISOString().replace(":", "-");
+        ctx.attachment(`threats-${timestamp}.txt`);
         //ctx.body = threats;
 
         //copied formatting from christoph's script
