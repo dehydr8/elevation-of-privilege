@@ -138,9 +138,9 @@ class Create extends React.Component {
     })
   }
 
-  copyToClipboard(text) {
+  async copyToClipboard(text) {
     //Not sure I fully understand binding, should this function be bound to this?
-    navigator.clipboard.writeText(text);
+    return await navigator.clipboard.writeText(text);
   }
 
   copyAllLinks() {
