@@ -40,6 +40,11 @@ class Sidebar extends React.Component {
             {' '}
             Download Model
           </Button>
+          <Button block size="lg" color="warning" href={`${this.apiBase}/downloadtext/${this.props.gameID}`}>
+            <FontAwesomeIcon icon={faDownload} />
+            {' '}
+            Download Threats
+          </Button>
           <hr />
           <Leaderboard playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
           <hr />
