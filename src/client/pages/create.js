@@ -256,7 +256,7 @@ class Create extends React.Component {
             </tbody>
           </Table>
           <hr />
-          <Button onClick={this.copyAllLinks} align="center">Copy All</Button>
+          <Button onClick={this.copyAllLinks} color="warning" block size="lg">Copy All</Button>
           <hr />
           <div className="text-center">
             <small className="text-muted">
