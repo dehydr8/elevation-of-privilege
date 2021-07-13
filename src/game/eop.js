@@ -110,7 +110,8 @@ export const ElevationOfPrivilege = Game({
         new: true,
       },
       identifiedThreats: {},
-      startingCard: startingCard
+      startingCard: startingCard,
+      turnDuration: 2*60,
     }
     return ret;
   },
@@ -324,7 +325,8 @@ export const ElevationOfPrivilege = Game({
         players: {
           ...G.players,
           [ctx.currentPlayer]: deck,
-        }
+        },
+        turnFinishTargetTime: Date.now() + G.turnDuration*1000,
       };
     },
   },
