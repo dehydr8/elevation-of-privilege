@@ -40,7 +40,7 @@ class Sidebar extends React.Component {
             {' '}
             Download Model
           </Button>
-          <Button block size="lg" color="warning" href={`${this.apiBase}/downloadtext/${this.props.gameID}`}>
+          <Button block size="lg" color="warning" href={`${this.apiBase}/download/text/${this.props.gameID}`}>
             <FontAwesomeIcon icon={faDownload} />
             {' '}
             Download Threats

@@ -129,13 +129,13 @@ const runPublicApi = (gameServer) => {
 
 
     //produce a nice textfile with the threats in
-    router.get("/downloadtext/:id", async (ctx) => {
+    router.get("/download/text/:id", async (ctx) => {
         //get some variables that might be useful
         const gameName = ElevationOfPrivilege.name;
         const gameID = ctx.params.id;
         const res = await gameServer.db.get(`${gameName}:${gameID}`);
         var threats = [];
-        
+
         Object.keys(res.G.identifiedThreats).forEach((diagramId) => {
             Object.keys(res.G.identifiedThreats[diagramId]).forEach((componentId) => {
                 Object.keys(res.G.identifiedThreats[diagramId][componentId]).forEach((threatId) => {
