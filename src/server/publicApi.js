@@ -153,7 +153,7 @@ const runPublicApi = (gameServer) => {
         ctx.body = `Threats
 =======
 
-  ${threats.map(
+${threats.map(
     (threat, index) => `
 ${index+1}. ${threat.title}
 ${`-`.repeat(threat.title.length + 5)}
@@ -165,9 +165,7 @@ ${threat.description}
 ${threat.mitigation !== `No mitigation provided.` ? `Mitigation:
 ${threat.mitigation}
 
-` : ``
-}`).join(``)} 
-`
+` : ""}`).join("")}`
 
     });
 
