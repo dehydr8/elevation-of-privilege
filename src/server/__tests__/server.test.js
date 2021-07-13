@@ -161,6 +161,97 @@ it('download the final model for a game', async () => {
   expect(threats[0].game).toBe(gameID);
 });
 
+
+it("Download threat file", async () => {
+  const gameName = ElevationOfPrivilege.name;
+  const gameID = "1234567";
+
+  const state = {
+    G: {
+      identifiedThreats: {
+        "0": {
+          "component-1": {
+            "threat-1": {
+              id: "0",
+              severity: "High",
+              type: "S",
+              title: "title",
+              description: "description",
+              mitigation: "mitigation",
+              owner: "0",
+            }
+          },
+          "component-2": {
+            "threat-2": {
+              id: "0",
+              severity: "High",
+              type: "S",
+              title: "title",
+              description: "description",
+              mitigation: "mitigation",
+              owner: "0",
+            }
+          },
+          "component-3": {
+            "threat-3": {
+              id: "0",
+              severity: "High",
+              type: "S",
+              title: "title",
+              description: "description",
+              mitigation: "mitigation",
+              owner: "0",
+            }
+          }
+        }
+      }
+    }
+  };
+
+  await gameServer.db.set(`${gameName}:${gameID}`, state);
+
+  // retrieve the model
+  const response = await request(publicApiServer.callback()).get(`/download/text/${gameID}`);
+  expect(response.text).toBe(`Threats
+=======
+
+
+1. title
+----------
+Author: 0
+
+Description:
+description
+
+Mitigation:
+mitigation
+
+
+2. title
+----------
+Author: 0
+
+Description:
+description
+
+Mitigation:
+mitigation
+
+
+3. title
+----------
+Author: 0
+
+Description:
+description
+
+Mitigation:
+mitigation
+
+`
+  )
+});
+
 afterAll(() => {
   // cleanup
   gameServerHandle.then(s => {
