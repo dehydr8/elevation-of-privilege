@@ -248,41 +248,34 @@ it("Download threat file", async () => {
   // retrieve the model
   const response = await request(publicApiServer.callback()).get(`/download/text/${gameID}`);
   expect(response.text).toBe(`Threats
-=======
-
-
-1. title
-----------
-Author: Player 1
-
-Description:
-description
-
-Mitigation:
-mitigation
-
-
-2. title
-----------
-Author: Player 1
-
-Description:
-description
-
-Mitigation:
-mitigation
-
-
-3. title
-----------
-Author: Player 1
-
-Description:
-description
-
-Mitigation:
-mitigation
-
+  =======
+  
+  **1. title**
+  
+    - *Author:*	      Player 1
+  
+    - *Description:*  description
+  
+    - *Mitigation:*   mitigation
+  
+  
+  **2. title**
+  
+    - *Author:*       Player 1
+  
+    - *Description:*  description
+  
+    - *Mitigation:*   mitigation
+  
+  
+  **3. title**
+  
+    - *Author:*       Player 1
+  
+    - *Description:*  description
+  
+    - *Mitigation:*   mitigation
+  
 `
   )
 });
