@@ -145,10 +145,10 @@ class Create extends React.Component {
 
   copyAllLinks() {
     this.copyToClipboard(
-      "You have been invited to a game of Elevation of Privilege:\n" +
+      'You have been invited to a game of Elevation of Privilege:\n\n' +
       Array(this.state.players).fill(0).map((v, i) => {
-        return `${this.state.names[i]}:\t${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}\n`;
-      }).join("")
+        return `${this.state.names[i]}:\t${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`;
+      }).join('\n\n')
     );
 
   }
