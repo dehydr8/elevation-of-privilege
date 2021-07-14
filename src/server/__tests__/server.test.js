@@ -208,7 +208,42 @@ it("Download threat file", async () => {
     }
   };
 
+  const model = {
+    summary: {
+      title: "Foo",
+    },
+    detail: {
+      diagrams: [{
+        diagramJson: {
+          cells: [{
+            id: "component-1",
+            threats: []
+          }, {
+            id: "component-2"
+          }]
+        }
+      }]
+    }
+  };
+
+  const metadata = {
+    "players": {
+      "0": {
+        "id": 0,
+          "credentials": "30d1cdc1-110c-46f7-8178-e3fedcc71e3d",
+          "name": "Player 1"
+      },
+      "1": {
+        "id": 1,
+        "credentials": "7f76dc60-665a-4068-b3de-0ab7b00fcb6f",
+        "name": "Player 2"
+      }
+    }
+  }
+
   await gameServer.db.set(`${gameName}:${gameID}`, state);
+  await gameServer.db.set(`${gameName}:${gameID}:metadata`, metadata);
+  await gameServer.db.set(`${gameName}:${gameID}:model`, model);
 
   // retrieve the model
   const response = await request(publicApiServer.callback()).get(`/download/text/${gameID}`);
@@ -218,7 +253,7 @@ it("Download threat file", async () => {
 
 1. title
 ----------
-Author: 0
+Author: Player 1
 
 Description:
 description
@@ -229,7 +264,7 @@ mitigation
 
 2. title
 ----------
-Author: 0
+Author: Player 1
 
 Description:
 description
@@ -240,7 +275,7 @@ mitigation
 
 3. title
 ----------
-Author: 0
+Author: Player 1
 
 Description:
 description
