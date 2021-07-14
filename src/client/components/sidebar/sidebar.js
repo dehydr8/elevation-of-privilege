@@ -5,10 +5,7 @@ import DealtCard from '../dealtcard/dealtcard';
 import './sidebar.css';
 import { Button } from 'reactstrap';
 import { getDealtCard, getDealtCardsForPlayers } from '../../../utils/utils'
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { API_PORT } from '../../../utils/constants';
-import Footer from '../footer/footer';
+
 
 class Sidebar extends React.Component {
   static propTypes = {
