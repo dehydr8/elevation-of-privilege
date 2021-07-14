@@ -108,6 +108,12 @@ const runPublicApi = (gameServer) => {
         });
     });
 
+    const modelTitle = model.summary.title.replace(' ', '-');
+    const timestamp = (new Date()).toISOString().replace(":", "-");   
+    ctx.attachment(`${modelTitle}-${timestamp}.json`);
+    ctx.body = model;
+    });
+
     //produce a nice textfile with the threats in
     router.get('/download/text/:id', async (ctx) => {
         //get some variables that might be useful
@@ -156,11 +162,7 @@ ${
         ? `Mitigation:
 ${threat.mitigation}
 
-`
-        : ''
-}`
-    )
-    .join('')}`;
+` : ''}`).join('')}`;
     });
 
     app.use(cors());
