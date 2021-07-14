@@ -119,6 +119,7 @@ const runPublicApi = (gameServer) => {
         const gameName = ElevationOfPrivilege.name;
         const gameID = ctx.params.id;
         const res = await gameServer.db.get(`${gameName}:${gameID}`);
+        const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
         var threats = [];
 
         Object.keys(res.G.identifiedThreats).forEach((diagramId) => {
@@ -137,9 +138,9 @@ const runPublicApi = (gameServer) => {
             );
         });
 
+        const modelTitle = model.summary.title.replace(' ', '-');
         const timestamp = new Date().toISOString().replace(':', '-');
-        ctx.attachment(`threats-${timestamp}.txt`);
-        //ctx.body = threats;
+        ctx.attachment(`${modelTitle}-${timestamp}.txt`);
 
         //copied formatting from christoph's script
 
