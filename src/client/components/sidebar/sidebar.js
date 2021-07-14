@@ -9,6 +9,11 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { API_PORT } from '../../../utils/constants';
 import Footer from '../footer/footer';
+<<<<<<< HEAD
+=======
+import { resolvePlayerNames, getPlayers } from '../../../utils/utils';
+
+>>>>>>> ad7c923 (passbtn new style+warning for last one to pass)
 
 class Sidebar extends React.Component {
   static propTypes = {
@@ -29,8 +34,19 @@ class Sidebar extends React.Component {
 
   render() {
     let dealtCard = getDealtCard(this.props.G);
+    let all = new Set(getPlayers(this.props.ctx.numPlayers));
+    let passed = new Set(this.props.G.passed);
+    let difference = new Set([...all].filter(x => !passed.has(x)));
+    let whopassed = resolvePlayerNames(Array.from(difference), this.props.names, this.props.playerID);
+    let btncolor = "secondary", warningtxt = "invisible";
+
+    if (whopassed[0] === "You" && whopassed[1] === undefined) {
+      btncolor = "warning";
+      warningtxt = "visible";
+    }
 
     return (
+
         <div className="side-bar">
           <div className="text-center">
             <Footer short />
@@ -43,12 +59,13 @@ class Sidebar extends React.Component {
           <hr />
           <Leaderboard playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
           <hr />
-          <Button color="secondary" size="lg" block disabled={
+          <p class={warningtxt}>You are the last one to pass!</p>
+          <Button color={btncolor} size="lg" block disabled={
               this.props.ctx.phase !== "threats" ||
               this.props.G.passed.includes(this.props.playerID) ||
               !this.props.active
             } onClick={() => { this.props.moves.pass() }}>
-              Pass
+              PASS
           </Button>
           <DealtCard card={dealtCard} />
         </div>
