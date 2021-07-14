@@ -44,7 +44,7 @@ class Create extends React.Component {
     this.createGame = this.createGame.bind(this);
     this.toggleModelMode = this.toggleModelMode.bind(this);
     this.copyAllLinks = this.copyAllLinks.bind(this);
-    
+    this.url = this.url.bind(this);
 
     this.fileReader = new FileReader();
     this.fileReader.onloadend = this.onFileRead;
@@ -139,15 +139,18 @@ class Create extends React.Component {
   }
 
   async copyToClipboard(text) {
-    //Not sure I fully understand binding, should this function be bound to this?
     return await navigator.clipboard.writeText(text);
+  }
+
+  url(i) {
+    return `${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`;
   }
 
   copyAllLinks() {
     this.copyToClipboard(
       'You have been invited to a game of Elevation of Privilege:\n\n' +
       Array(this.state.players).fill(0).map((v, i) => {
-        return `${this.state.names[i]}:\t${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`;
+        return `${this.state.names[i]}:\t${this.url(i)}`;
       }).join('\n\n')
     );
 
@@ -240,10 +243,10 @@ class Create extends React.Component {
               <tr key={i}>
                 <td>{this.state.names[i]}</td>
                 <td>
-                  <a href={`${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.gameID}/{i}/{this.state.secret[i]}</a>
+                  <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.gameID}/{i}/{this.state.secret[i]}</a>
                 </td>
                 <td>
-                  <Button onClick={() => this.copyToClipboard(`${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`)}>
+                  <Button onClick={() => this.copyToClipboard(this.url(i))}>
                     Copy
                   </Button>
                 </td>
