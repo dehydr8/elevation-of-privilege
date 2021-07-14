@@ -171,6 +171,6 @@ ${threat.mitigation}
     });
 
     return [app, appHandle]
-};
+}
 
 export default runPublicApi
