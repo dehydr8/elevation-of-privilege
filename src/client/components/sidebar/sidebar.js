@@ -9,11 +9,7 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { API_PORT } from '../../../utils/constants';
 import Footer from '../footer/footer';
-<<<<<<< HEAD
-=======
 import { resolvePlayerNames, getPlayers } from '../../../utils/utils';
-
->>>>>>> ad7c923 (passbtn new style+warning for last one to pass)
 
 class Sidebar extends React.Component {
   static propTypes = {
