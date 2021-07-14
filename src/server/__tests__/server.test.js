@@ -244,10 +244,12 @@ it("Download threat file", async () => {
   await gameServer.db.set(`${gameName}:${gameID}`, state);
   await gameServer.db.set(`${gameName}:${gameID}:metadata`, metadata);
   await gameServer.db.set(`${gameName}:${gameID}:model`, model);
+  
+  const date = new Date().toLocaleString();
 
   // retrieve the model
   const response = await request(publicApiServer.callback()).get(`/download/text/${gameID}`);
-  expect(response.text).toBe(`Threats
+  expect(response.text).toBe(`Threats ${date}
 =======
 
 **1. title**

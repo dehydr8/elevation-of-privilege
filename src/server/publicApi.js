@@ -141,11 +141,12 @@ const runPublicApi = (gameServer) => {
 
         const modelTitle = model.summary.title.replace(' ', '-');
         const timestamp = new Date().toISOString().replace(':', '-');
+        const date = new Date().toLocaleString();
         ctx.attachment(`${modelTitle}-${timestamp}.txt`);
 
         //copied formatting from christoph's script
 
-        ctx.body = `Threats
+        ctx.body = `Threats ${date}
 =======
 ${threats
     .map(
