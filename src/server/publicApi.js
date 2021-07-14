@@ -1,4 +1,3 @@
-
 import cors from '@koa/cors';
 import Koa from 'koa';
 import koaBody from 'koa-body';
@@ -168,10 +167,10 @@ ${threat.mitigation}
     app.use(cors());
     app.use(router.routes()).use(router.allowedMethods());
     const appHandle = app.listen(API_PORT, () => {
-        console.log(`Public API serving at: http://localhost:${API_PORT}/`);
+    console.log(`Public API serving at: http://localhost:${API_PORT}/`);
     });
 
-    return [app, appHandle];
+    return [app, appHandle]
 };
 
-export default runPublicApi;
+export default runPublicApi
