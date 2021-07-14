@@ -119,6 +119,7 @@ const runPublicApi = (gameServer) => {
         const gameName = ElevationOfPrivilege.name;
         const gameID = ctx.params.id;
         const res = await gameServer.db.get(`${gameName}:${gameID}`);
+        const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
         const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
         var threats = [];
 
@@ -152,7 +153,7 @@ ${threats
         (threat, index) => `
 ${index + 1}. ${threat.title}
 ${`-`.repeat(threat.title.length + 5)}
-Author: ${threat.owner}
+Author: ${metadata.players[threat.owner].name}
 
 Description:
 ${threat.description}
