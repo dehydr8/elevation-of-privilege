@@ -167,11 +167,11 @@ ${
   - *Author:*       ${threat.owner}
 ` : ''
 }
-  - *Description:*  ${threat.description}
+  - *Description:*  ${threat.description.replace(/(\r|\n)+/gm, ' ') /* Stops newlines breaking md formatting */}
 
 ${
     threat.mitigation !== `No mitigation provided.`
-        ? `  - *Mitigation:*   ${threat.mitigation}
+        ? `  - *Mitigation:*   ${threat.mitigation.replace(/(\r|\n)+/gm, ' ')}
 
 ` : ''}`).join('')}`;
     });
