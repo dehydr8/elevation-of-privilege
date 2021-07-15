@@ -87,3 +87,7 @@ export function getTypeString(type) {
   }
   return "";
 }
+
+export async function copyToClipboard(text) {
+  return await navigator.clipboard.writeText(text);
+}
