@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
 import { API_PORT, DEFAULT_MODEL, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
-import { getTypeString, copyToClipboard } from '../../utils/utils';
+import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
 import CopyButton from '../components/copybutton/copybutton';
