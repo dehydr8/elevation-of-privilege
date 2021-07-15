@@ -4,3 +4,32 @@
   height: 100%;
   width: 300px;
 }
+.btn-secondary {
+  color: #212529;
+  background-color: #7eb2e0;
+  border-color: #7eb2e0;
+}
+.btn-secondary.disabled {
+  opacity: 0;
+}
+.btn-secondary:hover {
+  background-color: #8fcbff;
+  color: #ffffff;
+  border-color: #7eb2e0;
+}
+
+.btn-warning {
+  color: #efefef;
+  background-color: #ffbf00;
+  border-color: #eeaf00;
+}
+
+.btn-warning:hover {
+  background-color: #ffd000;
+  color: #ffffff;
+  border-color: #faca00;
+}
+
+.visible {
+  color: #ffbf00;
+}
