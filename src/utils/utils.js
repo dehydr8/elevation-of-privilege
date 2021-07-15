@@ -88,8 +88,6 @@ export function getTypeString(type) {
   return "";
 }
 
-//I thought because it doesn't necessarily only apply to create.js it might belong here
-//I also wanted to create a new component that uses this function
 export async function copyToClipboard(text) {
   return await navigator.clipboard.writeText(text);
 }
