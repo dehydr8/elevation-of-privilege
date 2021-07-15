@@ -4,12 +4,3 @@
   height: 100%;
   width: 300px;
 }
-.btn-secondary {
-  background-color: #527593;
-}
-.btn-secondary.disabled {
-  opacity: 0;
-}
-.btn-secondary:hover {
-  background-color: #71a0c9;
-}
