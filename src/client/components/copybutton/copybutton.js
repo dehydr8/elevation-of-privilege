@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'reactstrap';
 import { copyToClipboard } from '../../../utils/utils';
-import { faCopy, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
@@ -20,7 +20,7 @@ class CopyButton extends React.Component {
         super(props);
         this.state = {
             color: this.props.color,
-            copied: false
+            icon: faCopy
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -36,7 +36,7 @@ class CopyButton extends React.Component {
                 disabled={this.props.disabled}
                 size={this.props.size}
             >
-                <FontAwesomeIcon icon={this.state.copied ? faCheck : faCopy} />
+                <FontAwesomeIcon icon={this.state.icon} fixedWidth />
                 {' '}
                 {this.props.children}
             </Button>
@@ -45,14 +45,14 @@ class CopyButton extends React.Component {
 
     handleClick() {
         copyToClipboard(this.props.text).then(() => {
-            this.setState({color: 'success', copied: true});
+            this.setState({color: 'success', icon: faCheck});
             
         }, () => {
             //If the copy fails, maybe alert the user somehow
-            this.setState({color: 'danger'})
+            this.setState({color: 'danger', icon:faTimes})
         });
         setTimeout(() => {
-            this.setState({color: this.props.color, copied: false})
+            this.setState({color: this.props.color, icon: faCopy})
         }, 500);
     }
 }
