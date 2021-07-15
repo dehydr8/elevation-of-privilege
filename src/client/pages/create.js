@@ -239,7 +239,7 @@ class Create extends React.Component {
               <tr key={i}>
                 <td>{this.state.names[i]}</td>
                 <td>
-                  <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.gameID}/{i}/{this.state.secret[i]}</a>
+                  <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{this.url(i)}</a>
                 </td>
                 <td>
                   <CopyButton text={this.url(i)} />
