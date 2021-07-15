@@ -9,6 +9,7 @@ import { API_PORT, DEFAULT_MODEL, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTI
 import { getTypeString, copyToClipboard } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
+import CopyButton from '../components/copybutton/copybutton';
 import '../styles/create.css';
 
 class Create extends React.Component {
@@ -241,9 +242,7 @@ class Create extends React.Component {
                   <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.gameID}/{i}/{this.state.secret[i]}</a>
                 </td>
                 <td>
-                  <Button onClick={() => copyToClipboard(this.url(i))}>
-                    Copy
-                  </Button>
+                  <CopyButton text={this.url(i)} />
                 </td>
               </tr>
             )}
