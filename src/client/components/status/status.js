@@ -12,6 +12,7 @@ class Status extends React.Component {
     names: PropTypes.any.isRequired,
     dealtCard: PropTypes.string.isRequired,
   };
+  
 
   render() {
     if (this.props.ctx.phase === "play") {
@@ -41,7 +42,6 @@ class Status extends React.Component {
     }
 
     return <span />;
-  }
+  } 
 }
-
 export default Status;
