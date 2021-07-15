@@ -8,7 +8,7 @@ class Leaderboard extends React.Component {
     names: PropTypes.any.isRequired,
     cards: PropTypes.any.isRequired,
     playerID: PropTypes.any.isRequired,
-    G: PropTypes.any.isRequired,
+    passed: PropTypes.any.isRequired,
   };
   render() {
     let passed = this.props.passed;
