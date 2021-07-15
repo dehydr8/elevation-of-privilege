@@ -34,12 +34,7 @@ class Sidebar extends React.Component {
     let passed = new Set(this.props.G.passed);
     let difference = new Set([...all].filter(x => !passed.has(x)));
     let whopassed = resolvePlayerNames(Array.from(difference), this.props.names, this.props.playerID);
-    let btncolor = "secondary", warningtxt = "invisible";
-
-    if (whopassed[0] === "You" && whopassed[1] === undefined) {
-      btncolor = "warning";
-      warningtxt = "visible";
-    }
+    const isLastToPass = whopassed[0] === "You" && whopassed[1] === undefined;
 
     return (
 
@@ -54,9 +49,8 @@ class Sidebar extends React.Component {
           </Button>
           <hr />
           <Leaderboard playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
-          <hr />
-          <p class={warningtxt}>You are the last one to pass!</p>
-          <Button color={btncolor} size="lg" block disabled={
+          <p className={(isLastToPass) ? "visible" : "invisible"} >You are the last one to pass!</p>
+          <Button color={(isLastToPass) ? "warning" : "secondary"} size="lg" block disabled={
               this.props.ctx.phase !== "threats" ||
               this.props.G.passed.includes(this.props.playerID) ||
               !this.props.active
