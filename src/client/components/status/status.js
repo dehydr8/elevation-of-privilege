@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { grammarJoin, resolvePlayerNames, resolvePlayerName, getPlayers } from '../../../utils/utils';
+let passedexp;
 
 class Status extends React.Component {
   static propTypes = {
@@ -12,8 +13,10 @@ class Status extends React.Component {
     names: PropTypes.any.isRequired,
     dealtCard: PropTypes.string.isRequired,
   };
+  
 
   render() {
+    passedexp = this.props.G.passed;
     if (this.props.ctx.phase === "play") {
       let currentPlayerName = resolvePlayerName(this.props.ctx.currentPlayer, this.props.names, this.props.playerID);
       let prefix = <span />;
@@ -41,7 +44,7 @@ class Status extends React.Component {
     }
 
     return <span />;
-  }
+  } 
 }
-
 export default Status;
+export {passedexp};
