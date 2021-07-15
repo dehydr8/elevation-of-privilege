@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
 import { API_PORT, DEFAULT_MODEL, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
-import { getTypeString } from '../../utils/utils';
+import { getTypeString, copyToClipboard } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
 import '../styles/create.css';
@@ -138,22 +138,17 @@ class Create extends React.Component {
     })
   }
 
-  async copyToClipboard(text) {
-    return await navigator.clipboard.writeText(text);
-  }
-
   url(i) {
     return `${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`;
   }
 
   copyAllLinks() {
-    this.copyToClipboard(
+    copyToClipboard(
       'You have been invited to a game of Elevation of Privilege:\n\n' +
       Array(this.state.players).fill(0).map((v, i) => {
         return `${this.state.names[i]}:\t${this.url(i)}`;
       }).join('\n\n')
     );
-
   }
 
   render() {
@@ -246,7 +241,7 @@ class Create extends React.Component {
                   <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.gameID}/{i}/{this.state.secret[i]}</a>
                 </td>
                 <td>
-                  <Button onClick={() => this.copyToClipboard(this.url(i))}>
+                  <Button onClick={() => copyToClipboard(this.url(i))}>
                     Copy
                   </Button>
                 </td>
