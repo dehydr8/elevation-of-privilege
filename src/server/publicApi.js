@@ -122,29 +122,39 @@ const runPublicApi = (gameServer) => {
         const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
         const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
         var threats = [];
-
+        
+        //add threats from G.identifiedThreats
         Object.keys(res.G.identifiedThreats).forEach((diagramId) => {
             Object.keys(res.G.identifiedThreats[diagramId]).forEach(
                 (componentId) => {
                     Object.keys(
                         res.G.identifiedThreats[diagramId][componentId]
                     ).forEach((threatId) => {
+                        const threat = res.G.identifiedThreats[diagramId][componentId][threatId];
                         threats.push(
-                            res.G.identifiedThreats[diagramId][componentId][
-                                threatId
-                            ]
+                            {
+                                ...threat,
+                                owner: metadata.players[threat.owner].name
+                            }
                         );
                     });
                 }
             );
         });
 
+        //add threats from model
+        model.detail.diagrams.forEach((diagram) => {
+            diagram.diagramJson.cells.forEach((cell) => {
+                if ('threats' in cell) {
+                    threats.push(...cell.threats);
+                }
+            })
+        })
+
         const modelTitle = model.summary.title.replace(' ', '-');
         const timestamp = new Date().toISOString().replace(':', '-');
         const date = new Date().toLocaleString();
         ctx.attachment(`threats-${modelTitle}-${timestamp}.md`);
-
-        //copied formatting from christoph's script
 
         ctx.body = `Threats ${date}
 =======
@@ -152,9 +162,11 @@ ${threats
     .map(
         (threat, index) => `
 **${index + 1}. ${threat.title}**
-
-  - *Author:*       ${metadata.players[threat.owner].name}
-
+${
+    'owner' in threat ? `
+  - *Author:*       ${threat.owner}
+` : ''
+}
   - *Description:*  ${threat.description}
 
 ${
