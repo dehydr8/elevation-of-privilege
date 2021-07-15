@@ -208,21 +208,76 @@ it("Download threat file", async () => {
     }
   };
 
+  //Maybe I should put these jsons into a file
   const model = {
-    summary: {
-      title: "Foo",
+    "summary": {
+      "title": "Demo Threat Model"
     },
-    detail: {
-      diagrams: [{
-        diagramJson: {
-          cells: [{
-            id: "component-1",
-            threats: []
-          }, {
-            id: "component-2"
-          }]
+    "detail": {
+      "diagrams": [
+        {
+          "diagramJson": {
+            "cells": [
+              {
+                "threats": [
+                  {
+                    "status": "Open",
+                    "severity": "High",
+                    "mitigation": "Encrypt the DB credentials in the configuration file.\n\nExpire and replace the DB credentials regularly.",
+                    "description": "The Background Worker configuration stores the credentials used by the worker to access the DB. An attacker could compromise the Background Worker and get access to the DB credentials.",
+                    "title": "Accessing DB credentials",
+                    "type": "Information disclosure"
+                  }
+                ],
+                "hasOpenThreats": true
+              },
+              {
+                "threats": [
+                  {
+                    "status": "Mitigated",
+                    "severity": "High",
+                    "description": "An attacker could make an query call on the DB,",
+                    "title": "Unauthorised access",
+                    "type": "Information disclosure",
+                    "mitigation": "Require all queries to be authenticated."
+                  },
+                  {
+                    "status": "Open",
+                    "severity": "Medium",
+                    "description": "An attacker could obtain the DB credentials ans use them to make unauthorised queries.",
+                    "title": "Credential theft",
+                    "type": "Information disclosure",
+                    "mitigation": "Use a firewall to restrict access to the DB to only the Background Worker IP address.",
+                    "owner": "The Model"
+                  }
+                ],
+                "hasOpenThreats": true
+              },
+              {
+                "threats": [
+                  {
+                    "status": "Open",
+                    "severity": "High",
+                    "title": "Credentials should be encrypted",
+                    "type": "Information disclosure",
+                    "description": "The Web Application Config stores credentials used  by the Web App to access the message queue.\r\n\r\nThese could be stolen by an attacker and used to read confidential data or place poison message on the queue.",
+                    "mitigation": "The Message Queue credentials should be encrypted.\n\n\n\n\nnewlines shouldn't\nbreak the formatting"
+                  }
+                ],
+                "hasOpenThreats": false
+              },
+              {
+                "hasOpenThreats": false
+              },
+              {
+                "hasOpenThreats": true
+              },
+              {
+              }
+            ]
+          }
         }
-      }]
+      ]
     }
   };
 
@@ -277,6 +332,36 @@ it("Download threat file", async () => {
   - *Description:*  description
 
   - *Mitigation:*   mitigation
+
+
+**4. Accessing DB credentials**
+
+  - *Description:*  The Background Worker configuration stores the credentials used by the worker to access the DB. An attacker could compromise the Background Worker and get access to the DB credentials.
+
+  - *Mitigation:*   Encrypt the DB credentials in the configuration file. Expire and replace the DB credentials regularly.
+
+
+**5. Unauthorised access**
+
+  - *Description:*  An attacker could make an query call on the DB,
+
+  - *Mitigation:*   Require all queries to be authenticated.
+
+
+**6. Credential theft**
+
+  - *Author:*       The Model
+
+  - *Description:*  An attacker could obtain the DB credentials ans use them to make unauthorised queries.
+
+  - *Mitigation:*   Use a firewall to restrict access to the DB to only the Background Worker IP address.
+
+
+**7. Credentials should be encrypted**
+
+  - *Description:*  The Web Application Config stores credentials used  by the Web App to access the message queue. These could be stolen by an attacker and used to read confidential data or place poison message on the queue.
+
+  - *Mitigation:*   The Message Queue credentials should be encrypted. newlines shouldn't break the formatting
 
 `
   )
