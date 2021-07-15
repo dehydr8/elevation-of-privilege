@@ -113,6 +113,69 @@ const runPublicApi = (gameServer) => {
     ctx.body = model;
     });
 
+    //produce a nice textfile with the threats in
+    router.get('/download/text/:id', async (ctx) => {
+        //get some variables that might be useful
+        const gameName = ElevationOfPrivilege.name;
+        const gameID = ctx.params.id;
+        const res = await gameServer.db.get(`${gameName}:${gameID}`);
+        const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
+        const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
+        var threats = [];
+        
+        //add threats from G.identifiedThreats
+        Object.keys(res.G.identifiedThreats).forEach((diagramId) => {
+            Object.keys(res.G.identifiedThreats[diagramId]).forEach(
+                (componentId) => {
+                    Object.keys(
+                        res.G.identifiedThreats[diagramId][componentId]
+                    ).forEach((threatId) => {
+                        const threat = res.G.identifiedThreats[diagramId][componentId][threatId];
+                        threats.push(
+                            {
+                                ...threat,
+                                owner: metadata.players[threat.owner].name
+                            }
+                        );
+                    });
+                }
+            );
+        });
+
+        //add threats from model
+        model.detail.diagrams.forEach((diagram) => {
+            diagram.diagramJson.cells.forEach((cell) => {
+                if ('threats' in cell) {
+                    threats.push(...cell.threats);
+                }
+            })
+        })
+
+        const modelTitle = model.summary.title.replace(' ', '-');
+        const timestamp = new Date().toISOString().replace(':', '-');
+        const date = new Date().toLocaleString();
+        ctx.attachment(`threats-${modelTitle}-${timestamp}.md`);
+
+        ctx.body = `Threats ${date}
+=======
+${threats
+    .map(
+        (threat, index) => `
+**${index + 1}. ${threat.title}**
+${
+    'owner' in threat ? `
+  - *Author:*       ${threat.owner}
+` : ''
+}
+  - *Description:*  ${threat.description.replace(/(\r|\n)+/gm, ' ') /* Stops newlines breaking md formatting */}
+
+${
+    threat.mitigation !== `No mitigation provided.`
+        ? `  - *Mitigation:*   ${threat.mitigation.replace(/(\r|\n)+/gm, ' ')}
+
+` : ''}`).join('')}`;
+    });
+
     app.use(cors());
     app.use(router.routes()).use(router.allowedMethods());
     const appHandle = app.listen(API_PORT, () => {
