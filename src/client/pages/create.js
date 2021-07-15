@@ -44,7 +44,7 @@ class Create extends React.Component {
     this.onFileRead = this.onFileRead.bind(this);
     this.createGame = this.createGame.bind(this);
     this.toggleModelMode = this.toggleModelMode.bind(this);
-    this.copyAllLinks = this.copyAllLinks.bind(this);
+    this.formatAllLinks = this.formatAllLinks.bind(this);
     this.url = this.url.bind(this);
 
     this.fileReader = new FileReader();
@@ -143,8 +143,8 @@ class Create extends React.Component {
     return `${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`;
   }
 
-  copyAllLinks() {
-    copyToClipboard(
+  formatAllLinks() {
+    return (
       'You have been invited to a game of Elevation of Privilege:\n\n' +
       Array(this.state.players).fill(0).map((v, i) => {
         return `${this.state.names[i]}:\t${this.url(i)}`;
@@ -249,7 +249,7 @@ class Create extends React.Component {
             </tbody>
           </Table>
           <hr />
-          <Button onClick={this.copyAllLinks} color="warning" block size="lg">Copy All</Button>
+          <CopyButton text={this.formatAllLinks()} color="warning" block size="lg">Copy All</CopyButton>
           <hr />
           <div className="text-center">
             <small className="text-muted">
