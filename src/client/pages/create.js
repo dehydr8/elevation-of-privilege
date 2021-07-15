@@ -179,11 +179,12 @@ class Create extends React.Component {
               </Col>
             </FormGroup>
             <hr />
+           
             {Array(this.state.players).fill(0).map((v, i) => 
               <FormGroup row key={i}>
                 <Label for={`p${i}`} sm={2}>Name</Label>
                 <Col sm={10}>
-                  <Input autoComplete={"off"} type="text" invalid={_.isEmpty(this.state.names[i])} name={`p${i}`} id={`p${i}`} onChange={e => this.onNameUpdated(i, e)} value={this.state.names[i]} />
+                  <Input autoComplete={"off"} type="text" invalid={_.isEmpty(this.state.names[i])}  maxLength = "19" name={`p${i}`} id={`p${i}`} onChange={e => this.onNameUpdated(i, e)} value={this.state.names[i]} />
                   <FormFeedback>The name cannot be empty</FormFeedback>
                 </Col>
               </FormGroup>
