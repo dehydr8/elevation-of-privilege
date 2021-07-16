@@ -118,19 +118,19 @@ const runPublicApi = (gameServer) => {
         //get some variables that might be useful
         const gameName = ElevationOfPrivilege.name;
         const gameID = ctx.params.id;
-        const res = await gameServer.db.get(`${gameName}:${gameID}`);
+        const gameState = await gameServer.db.get(`${gameName}:${gameID}`);
         const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
         const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
         var threats = [];
         
         //add threats from G.identifiedThreats
-        Object.keys(res.G.identifiedThreats).forEach((diagramId) => {
-            Object.keys(res.G.identifiedThreats[diagramId]).forEach(
+        Object.keys(gameState.G.identifiedThreats).forEach((diagramId) => {
+            Object.keys(gameState.G.identifiedThreats[diagramId]).forEach(
                 (componentId) => {
                     Object.keys(
-                        res.G.identifiedThreats[diagramId][componentId]
+                        gameState.G.identifiedThreats[diagramId][componentId]
                     ).forEach((threatId) => {
-                        const threat = res.G.identifiedThreats[diagramId][componentId][threatId];
+                        const threat = gameState.G.identifiedThreats[diagramId][componentId][threatId];
                         threats.push(
                             {
                                 ...threat,
@@ -143,15 +143,17 @@ const runPublicApi = (gameServer) => {
         });
 
         //add threats from model
-        model.detail.diagrams.forEach((diagram) => {
-            diagram.diagramJson.cells.forEach((cell) => {
-                if ('threats' in cell) {
-                    threats.push(...cell.threats);
-                }
-            })
-        })
+        if(model) {
+            model.detail.diagrams.forEach((diagram) => {
+                diagram.diagramJson.cells.forEach((cell) => {
+                    if ('threats' in cell) {
+                        threats.push(...cell.threats);
+                    }
+                })
+            });
+        }
 
-        const modelTitle = model.summary.title.replace(' ', '-');
+        const modelTitle = model ? model.summary.title.replace(' ', '-') : "No-Title";
         const timestamp = new Date().toISOString().replace(':', '-');
         const date = new Date().toLocaleString();
         ctx.attachment(`threats-${modelTitle}-${timestamp}.md`);
@@ -174,6 +176,7 @@ ${
         ? `  - *Mitigation:*   ${threat.mitigation.replace(/(\r|\n)+/gm, ' ')}
 
 ` : ''}`).join('')}`;
+
     });
 
     app.use(cors());
