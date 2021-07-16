@@ -30,11 +30,7 @@ class Sidebar extends React.Component {
 
   render() {
     let dealtCard = getDealtCard(this.props.G);
-    let all = new Set(getPlayers(this.props.ctx.numPlayers));
-    let passed = new Set(this.props.G.passed);
-    let difference = new Set([...all].filter(x => !passed.has(x)));
-    let whopassed = resolvePlayerNames(Array.from(difference), this.props.names, this.props.playerID);
-    const isLastToPass = whopassed[0] === "You" && whopassed[1] === undefined;
+    const isLastToPass = this.props.G.passed.length === this.props.ctx.numPlayers-1 && !this.props.G.passed.includes(this.props.playerID)
 
     return (
 
@@ -49,13 +45,14 @@ class Sidebar extends React.Component {
           </Button>
           <hr />
           <Leaderboard playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
-          <p className={(isLastToPass) ? "visible" : "invisible"} >You are the last one to pass!</p>
+          {isLastToPass && <div className="warning">You are the last one to pass!</div>}         
           <Button color={(isLastToPass) ? "warning" : "secondary"} size="lg" block disabled={
+      
               this.props.ctx.phase !== "threats" ||
               this.props.G.passed.includes(this.props.playerID) ||
               !this.props.active
             } onClick={() => { this.props.moves.pass() }}>
-              PASS
+              Pass
           </Button>
           <DealtCard card={dealtCard} />
         </div>
