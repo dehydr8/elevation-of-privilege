@@ -125,7 +125,7 @@ const runPublicApi = (gameServer) => {
         const threats = getThreats(gameState, metadata, model);
         
 
-        const modelTitle = model ? model.summary.title.replace(' ', '-') : "No-Title";
+        const modelTitle = model ? model.summary.title.replace(' ', '-') : "untitled-model";
         const timestamp = new Date().toISOString().replace(':', '-');
         const date = new Date().toLocaleString();
         ctx.attachment(`threats-${modelTitle}-${timestamp}.md`);
