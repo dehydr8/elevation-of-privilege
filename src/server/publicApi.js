@@ -121,61 +121,16 @@ const runPublicApi = (gameServer) => {
         const gameState = await gameServer.db.get(`${gameName}:${gameID}`);
         const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
         const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
-        var threats = [];
         
-        //add threats from G.identifiedThreats
-        Object.keys(gameState.G.identifiedThreats).forEach((diagramId) => {
-            Object.keys(gameState.G.identifiedThreats[diagramId]).forEach(
-                (componentId) => {
-                    Object.keys(
-                        gameState.G.identifiedThreats[diagramId][componentId]
-                    ).forEach((threatId) => {
-                        const threat = gameState.G.identifiedThreats[diagramId][componentId][threatId];
-                        threats.push(
-                            {
-                                ...threat,
-                                owner: metadata.players[threat.owner].name
-                            }
-                        );
-                    });
-                }
-            );
-        });
-
-        //add threats from model
-        if(model) {
-            model.detail.diagrams.forEach((diagram) => {
-                diagram.diagramJson.cells.forEach((cell) => {
-                    if ('threats' in cell) {
-                        threats.push(...cell.threats);
-                    }
-                })
-            });
-        }
+        const threats = getThreats(gameState, metadata, model);
+        
 
         const modelTitle = model ? model.summary.title.replace(' ', '-') : "No-Title";
         const timestamp = new Date().toISOString().replace(':', '-');
         const date = new Date().toLocaleString();
         ctx.attachment(`threats-${modelTitle}-${timestamp}.md`);
 
-        ctx.body = `Threats ${date}
-=======
-${threats
-    .map(
-        (threat, index) => `
-**${index + 1}. ${threat.title}**
-${
-    'owner' in threat ? `
-  - *Author:*       ${threat.owner}
-` : ''
-}
-  - *Description:*  ${threat.description.replace(/(\r|\n)+/gm, ' ') /* Stops newlines breaking md formatting */}
-
-${
-    threat.mitigation !== `No mitigation provided.`
-        ? `  - *Mitigation:*   ${threat.mitigation.replace(/(\r|\n)+/gm, ' ')}
-
-` : ''}`).join('')}`;
+        ctx.body = formatThreats(threats, date);
 
     });
 
@@ -186,6 +141,65 @@ ${
     });
 
     return [app, appHandle]
+}
+
+
+
+function getThreats(gameState, metadata, model) {
+    var threats = [];
+        
+    //add threats from G.identifiedThreats
+    Object.keys(gameState.G.identifiedThreats).forEach((diagramId) => {
+        Object.keys(gameState.G.identifiedThreats[diagramId]).forEach(
+            (componentId) => {
+                Object.keys(
+                    gameState.G.identifiedThreats[diagramId][componentId]
+                ).forEach((threatId) => {
+                    const threat = gameState.G.identifiedThreats[diagramId][componentId][threatId];
+                    threats.push(
+                        {
+                            ...threat,
+                            owner: metadata.players[threat.owner].name
+                        }
+                    );
+                });
+            }
+        );
+    });
+
+    //add threats from model
+    if(model) {
+        model.detail.diagrams.forEach((diagram) => {
+            diagram.diagramJson.cells.forEach((cell) => {
+                if ('threats' in cell) {
+                    threats.push(...cell.threats);
+                }
+            })
+        });
+    }
+
+    return threats;
+}
+
+function formatThreats(threats, date) {
+    return `Threats ${date}
+=======
+${threats
+    .map(
+        (threat, index) => `
+**${index + 1}. ${threat.title}**
+${
+    'owner' in threat ? `
+    - *Author:*       ${threat.owner}
+` : ''
+}
+    - *Description:*  ${threat.description.replace(/(\r|\n)+/gm, ' ') /* Stops newlines breaking md formatting */}
+
+${
+    threat.mitigation !== `No mitigation provided.`
+        ? `  - *Mitigation:*   ${threat.mitigation.replace(/(\r|\n)+/gm, ' ')}
+
+` : ''}`).join('')}`;
 }
 
 export default runPublicApi
