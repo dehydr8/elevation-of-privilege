@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Card, CardHeader, Badge } from 'reactstrap';
-
+import './leaderboard.css';
 class Leaderboard extends React.Component {
   static propTypes = {
     scores: PropTypes.any.isRequired,
