@@ -41,7 +41,7 @@ class Sidebar extends React.Component {
             Download Model
           </Button>
           <hr />
-          <Leaderboard passed={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
+          <Leaderboard passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
           <hr />
           <Button color="secondary" size="lg" block disabled={
               this.props.ctx.phase !== "threats" ||

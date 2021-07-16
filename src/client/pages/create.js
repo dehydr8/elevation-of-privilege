@@ -43,7 +43,6 @@ class Create extends React.Component {
     this.onFileRead = this.onFileRead.bind(this);
     this.createGame = this.createGame.bind(this);
     this.toggleModelMode = this.toggleModelMode.bind(this);
-    
 
     this.fileReader = new FileReader();
     this.fileReader.onloadend = this.onFileRead;
