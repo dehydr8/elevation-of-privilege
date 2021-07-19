@@ -87,3 +87,7 @@ export function getTypeString(type) {
   }
   return "";
 }
+
+export function escapeMarkdownText(text) {
+  return text.replace(/[\[\]\(\)<>]/gm, '\$&')
+}

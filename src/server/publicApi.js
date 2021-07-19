@@ -5,7 +5,7 @@ import Router from 'koa-router';
 import request from 'superagent';
 import { ElevationOfPrivilege } from '../game/eop';
 import { API_PORT, INTERNAL_API_PORT } from '../utils/constants';
-import { getTypeString } from '../utils/utils';
+import { getTypeString, escapeMarkdownText } from '../utils/utils';
 
 const runPublicApi = (gameServer) => {
 
@@ -187,17 +187,17 @@ function formatThreats(threats, date) {
 ${threats
     .map(
         (threat, index) => `
-**${index + 1}. ${threat.title}**
+**${index + 1}. ${escapeMarkdownText(threat.title)}**
 ${
-    'owner' in threat ? `
-    - *Author:*       ${threat.owner}
+  'owner' in threat ? `
+  - *Author:*       ${escapeMarkdownText(threat.owner)}
 ` : ''
 }
-    - *Description:*  ${threat.description.replace(/(\r|\n)+/gm, ' ') /* Stops newlines breaking md formatting */}
+  - *Description:*  ${escapeMarkdownText(threat.description.replace(/(\r|\n)+/gm, ' ')) /* Stops newlines breaking md formatting */}
 
 ${
     threat.mitigation !== `No mitigation provided.`
-        ? `  - *Mitigation:*   ${threat.mitigation.replace(/(\r|\n)+/gm, ' ')}
+        ? `  - *Mitigation:*   ${escapeMarkdownText(threat.mitigation.replace(/(\r|\n)+/gm, ' '))}
 
 ` : ''}`).join('')}`;
 }
