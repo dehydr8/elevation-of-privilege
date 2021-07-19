@@ -149,9 +149,6 @@ export const ElevationOfPrivilege = {
           },
           next: function next(G, ctx) {
             return ctx.playOrderPos;
-          },
-          activePlayers: {
-            value: (G, ctx) => getPlayers(ctx.numPlayers), // hack, ANY wasn't working because of int actionPlayers
           }
         },
       },
@@ -231,6 +228,7 @@ export const ElevationOfPrivilege = {
         },
         onEnd: (G, ctx) => {
           ctx.events.endPhase();
+          ctx.events.setActivePlayers({all: 'threats'})
           return {
             ...G,
             playOrderPos: G.playOrderPos + 1,
