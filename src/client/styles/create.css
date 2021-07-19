@@ -2,12 +2,12 @@
   color: white;
 }
 table {
-  table-layout: auto;
   width: 100%;
 }
 
 .card {
-  min-width: 70%;
+  min-width: 100%;
+  width: min-content;
 }
 
 .col-md-6 {
@@ -15,10 +15,14 @@ table {
 }
 
 .c-td-name {
-  width: 60%;
-  min-width: 30%;
+  width: 80%;
+  min-width: 76px;
   max-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.copyBtn {
+  vertical-align: middle;
 }
