@@ -1,4 +1,4 @@
-import { getDealtCard, getDealtCardsForPlayers, resolvePlayerNames, resolvePlayerName, grammarJoin, getPlayers, getComponentName, getValidMoves, getTypeString } from '../utils'
+import { getDealtCard, getDealtCardsForPlayers, resolvePlayerNames, resolvePlayerName, grammarJoin, getPlayers, getComponentName, getValidMoves, getTypeString, escapeMarkdownText } from '../utils'
 import { STARTING_CARD } from '../constants';
 
 it('gets empty card if no card dealt', async () => {
@@ -120,3 +120,14 @@ it('produces valid moves', async () => {
 it('produces correct type string', async () => {
   expect(getTypeString("FOO")).toBe("");
 });
+
+it('successfully escapes any malicious markdown text', () => {
+  expect(escapeMarkdownText('![The goodest boy](https://images.unsplash.com/the_good_boy.png)'))
+    .toBe('\\!\\[The goodest boy\\]\\(https://images.unsplash.com/the_good_boy.png\\)');
+
+  expect(escapeMarkdownText('<a href="javascript:alert(\'XSS\')">Click Me</a>'))
+    .toBe('\\<a href="javascript:alert\\(\'XSS\'\\)"\\>Click Me\\</a\\>');
+  
+  expect(escapeMarkdownText('![Uh oh...]("onerror="alert(\'XSS\'))'))
+    .toBe('\\!\\[Uh oh...\\]\\("onerror="alert\\(\'XSS\'\\)\\)');
+})

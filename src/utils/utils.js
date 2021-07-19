@@ -89,5 +89,9 @@ export function getTypeString(type) {
 }
 
 export function escapeMarkdownText(text) {
-  return text.replace(/[\[\]\(\)<>]/gm, '\$&')
+  //replaces certain characters with an escaped version
+  //doesn't escape * or _ to allow users to format the descriptions
+
+  return text.replace(/[![\]()<>]/gm, '\\$&')
+
 }
