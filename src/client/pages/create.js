@@ -9,6 +9,7 @@ import { API_PORT, DEFAULT_MODEL, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTI
 import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
+import CopyButton from '../components/copybutton/copybutton';
 import '../styles/create.css';
 
 class Create extends React.Component {
@@ -43,7 +44,8 @@ class Create extends React.Component {
     this.onFileRead = this.onFileRead.bind(this);
     this.createGame = this.createGame.bind(this);
     this.toggleModelMode = this.toggleModelMode.bind(this);
-    
+    this.formatAllLinks = this.formatAllLinks.bind(this);
+    this.url = this.url.bind(this);
 
     this.fileReader = new FileReader();
     this.fileReader.onloadend = this.onFileRead;
@@ -137,6 +139,19 @@ class Create extends React.Component {
     })
   }
 
+  url(i) {
+    return `${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`;
+  }
+
+  formatAllLinks() {
+    return (
+      'You have been invited to a game of Elevation of Privilege:\n\n' +
+      Array(this.state.players).fill(0).map((v, i) => {
+        return `${this.state.names[i]}:\t${this.url(i)}`;
+      }).join('\n\n')
+    );
+  }
+
   render() {
     let createForm = <div />;
     let linkDisplay = <div />;
@@ -224,12 +239,17 @@ class Create extends React.Component {
               <tr key={i}>
                 <td className="c-td-name">{this.state.names[i]}</td>
                 <td>
-                  <a href={`${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.gameID}/{i}/{this.state.secret[i]}</a>
+                  <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{this.url(i)}</a>
+                </td>
+                <td>
+                  <CopyButton text={this.url(i)} />
                 </td>
               </tr>
             )}
             </tbody>
           </Table>
+          <hr />
+          <CopyButton text={this.formatAllLinks()} color="warning" block size="lg">Copy All</CopyButton>
           <hr />
           <div className="text-center">
             <small className="text-muted">
