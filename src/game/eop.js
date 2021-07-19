@@ -1,4 +1,4 @@
-import { INVALID_MOVE, PlayerView } from 'boardgame.io/core';
+import { TurnOrder, INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
 import { DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
@@ -80,7 +80,7 @@ export const ElevationOfPrivilege = {
     let shuffled = shuffleCards(ctx, startingCard);
     let order = [];
     for (let i=0; i<ctx.numPlayers; i++) {
-      order.push(i);
+      order.push(i.toString());
     }
     for (let i=0; i<ctx.numPlayers; i++) {
       scores.push(0);
@@ -143,12 +143,12 @@ export const ElevationOfPrivilege = {
   phases: {
     threats: {
       turn: {
-        Order: {
+        order: {
           first: (G, ctx) => {
-            return ctx.playOrderPos;
+            return ctx.currentPlayer;
           },
           next: (G, ctx) => {
-            return ctx.playOrderPos;
+            return ctx.currentPlayer;
           }
         },
       },
@@ -186,7 +186,7 @@ export const ElevationOfPrivilege = {
   
           order = [];
           for (let i=0; i<ctx.numPlayers; i++) {
-            order.push(i);
+            order.push(i.toString());
           }
           for (let i=0; i<lastWinner; i++) {
             let element = order.shift();
@@ -215,17 +215,7 @@ export const ElevationOfPrivilege = {
     play: {
       start: true,
       turn: {
-        Order: {
-          playOrder: (G) => {
-            return G.order;
-          },
-          first: (G, ctx) => {
-            return G.playOrderPos % ctx.playOrder.length;
-          },
-          next: (G, ctx) => {
-            return (ctx.playOrderPos + 1) % ctx.playOrder.length;
-          }
-        },
+        order: TurnOrder.CUSTOM_FROM('order'),
         onEnd: (G, ctx) => {
           ctx.events.endPhase();
           ctx.events.setActivePlayers({all: 'threats'})
