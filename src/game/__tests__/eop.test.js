@@ -1,12 +1,13 @@
 import { Client } from 'boardgame.io/client';
 import { DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP } from '../../utils/constants';
 import { ElevationOfPrivilege } from '../eop';
+import { Local } from 'boardgame.io/multiplayer'
 
 describe('game', () => {
   const spec = {
     game: ElevationOfPrivilege,
     numPlayers: 3,
-    multiplayer: { local: true },
+    multiplayer: Local(),
   }
   const players = {
     "0": Client({ ...spec, playerID: "0", }),
