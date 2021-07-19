@@ -75,8 +75,13 @@ class Board extends React.Component {
     let active = false;
     let current = false;
 
-    if (this.props.ctx.actionPlayers.includes(parseInt(this.props.playerID)) || this.props.ctx.actionPlayers.includes(this.props.playerID)) {
+    //has to test current player first
+    if (this.props.ctx.currentPlayer === this.props.playerID) {
       active = true;
+    } else if (this.props.activePlayers) {
+      if (this.props.activePlayers[this.props.playerID] === 'threats') {
+        active = true;
+      }
     }
 
     if (this.props.playerID === this.props.ctx.currentPlayer) {
