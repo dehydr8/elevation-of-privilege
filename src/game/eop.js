@@ -1,4 +1,4 @@
-import { Game, INVALID_MOVE, PlayerView } from 'boardgame.io/core';
+import { INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
 import { DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
@@ -70,7 +70,7 @@ export function getWinner(suit, dealt) {
   return winner;
 }
 
-export const ElevationOfPrivilege = Game({
+export const ElevationOfPrivilege = {
   name: 'elevation-of-privilege',
   setup(ctx, setupData) {
     const startSuit = (setupData) ?  setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT
@@ -229,7 +229,7 @@ export const ElevationOfPrivilege = Game({
       },
     },
   }
-});
+};
 
 function toggleModal(G, ctx) {
   // if the player has passed, they shouldn't be able to toggle the modal
