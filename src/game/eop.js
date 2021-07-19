@@ -156,7 +156,17 @@ export const ElevationOfPrivilege = {
         },
       },
       next: 'play',
-      allowedMoves: ['addOrUpdateThreat', 'deleteThreat', 'pass', 'selectDiagram', 'selectComponent', 'selectThreat', 'toggleModal', 'toggleModalUpdate', 'updateThreat'],
+      moves: {
+        addOrUpdateThreat,
+        deleteThreat,
+        pass,
+        selectDiagram,
+        selectComponent,
+        selectThreat,
+        toggleModal,
+        toggleModalUpdate,
+        updateThreat
+      },
       endIf: (G, ctx) => {
         let passed = [...G.passed];
         return passed.length >= ctx.numPlayers;
@@ -228,7 +238,12 @@ export const ElevationOfPrivilege = {
         },
       },
       next: 'threats',
-      allowedMoves: ['draw', 'selectDiagram', 'selectComponent', 'selectThreat'],
+      moves: {
+        draw,
+        selectDiagram,
+        selectComponent,
+        selectThreat,
+      },
     },
   },
 };
