@@ -65,6 +65,10 @@ describe('game', () => {
     expect(state.ctx.phase).toBe("threats");
   });
 
+  it('all players should be active in the threats phase', () => {
+    expect(players['0'].getState().ctx.activePlayers).toStrictEqual({"0": "threats", "1": "threats", "2": "threats"})
+  });
+
   it('the played card should not be present in the deck', () => {
     const lastPlayer = players["0"].getState().G.dealtBy;
     const cards = players[lastPlayer].getState().G.players[lastPlayer];
