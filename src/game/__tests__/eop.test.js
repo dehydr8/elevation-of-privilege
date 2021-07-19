@@ -50,8 +50,15 @@ describe('game', () => {
     expect(players["0"].getState().G.scores).toStrictEqual([0,0,0]);
   });
 
+  it('have correct order in ctx', () => {
+    const state = players['0'].getState();
+    Object.keys(players).forEach((v, i) => {
+      expect(state.G.order[i]).toBe(state.ctx.playOrder[i]);
+    });
+  });
+
   it('should respect the play order', () => {
-    expect(players["0"].getState().G.order[0]).toBe(parseInt(players["0"].getState().ctx.currentPlayer));
+    expect(players["0"].getState().G.order[0]).toBe(players["0"].getState().ctx.currentPlayer);
   });
 
   it('should move to the threats phase when the first player makes a move', () => {
@@ -79,7 +86,6 @@ describe('game', () => {
     const lastPlayer = players["0"].getState().G.dealtBy;
     const cards = players[lastPlayer].getState().G.players[lastPlayer];
     const card = cards[Math.floor(Math.random()*cards.length)];
-    players[lastPlayer].moves.draw(card);
     
     const state = players["0"].getState();
 
