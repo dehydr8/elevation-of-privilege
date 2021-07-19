@@ -176,7 +176,7 @@ it("Download threat file", async () => {
               severity: "High",
               type: "S",
               title: "title",
-              description: "description",
+              description: "<img src=\"\" onerror=\"alert('XSS') alt=\"Uh oh...\">",
               mitigation: "mitigation",
               owner: "0",
             }
@@ -186,7 +186,7 @@ it("Download threat file", async () => {
               id: "0",
               severity: "High",
               type: "S",
-              title: "title",
+              title: "title ",
               description: "description",
               mitigation: "mitigation",
               owner: "0",
@@ -223,7 +223,7 @@ it("Download threat file", async () => {
                   {
                     "status": "Open",
                     "severity": "High",
-                    "mitigation": "Encrypt the DB credentials in the configuration file.\n\nExpire and replace the DB credentials regularly.",
+                    "mitigation": "[Click Me](javascript:alert('XSS'))",
                     "description": "The Background Worker configuration stores the credentials used by the worker to access the DB. An attacker could compromise the Background Worker and get access to the DB credentials.",
                     "title": "Accessing DB credentials",
                     "type": "Information disclosure"
@@ -237,7 +237,7 @@ it("Download threat file", async () => {
                     "status": "Mitigated",
                     "severity": "High",
                     "description": "An attacker could make an query call on the DB,",
-                    "title": "Unauthorised access",
+                    "title": "Unauthorised access ",
                     "type": "Information disclosure",
                     "mitigation": "Require all queries to be authenticated."
                   },
@@ -258,7 +258,7 @@ it("Download threat file", async () => {
                   {
                     "status": "Open",
                     "severity": "High",
-                    "title": "Credentials should be encrypted",
+                    "title": "![Uh oh...](https://www.example.com/image.png\"onload=\"alert('XSS'))",
                     "type": "Information disclosure",
                     "description": "The Web Application Config stores credentials used  by the Web App to access the message queue.\r\n\r\nThese could be stolen by an attacker and used to read confidential data or place poison message on the queue.",
                     "mitigation": "The Message Queue credentials should be encrypted.\n\n\n\n\nnewlines shouldn't\nbreak the formatting"
@@ -311,7 +311,7 @@ it("Download threat file", async () => {
 
   - *Author:*       Player 1
 
-  - *Description:*  description
+  - *Description:*  \\<img src="" onerror="alert\\('XSS'\\) alt="Uh oh..."\\>
 
   - *Mitigation:*   mitigation
 
@@ -338,7 +338,7 @@ it("Download threat file", async () => {
 
   - *Description:*  The Background Worker configuration stores the credentials used by the worker to access the DB. An attacker could compromise the Background Worker and get access to the DB credentials.
 
-  - *Mitigation:*   Encrypt the DB credentials in the configuration file. Expire and replace the DB credentials regularly.
+  - *Mitigation:*   \\[Click Me\\]\\(javascript:alert\\('XSS'\\)\\)
 
 
 **5. Unauthorised access**
@@ -357,7 +357,7 @@ it("Download threat file", async () => {
   - *Mitigation:*   Use a firewall to restrict access to the DB to only the Background Worker IP address.
 
 
-**7. Credentials should be encrypted**
+**7. \\!\\[Uh oh...\\]\\(https://www.example.com/image.png"onload="alert\\('XSS'\\)\\)**
 
   - *Description:*  The Web Application Config stores credentials used  by the Web App to access the message queue. These could be stolen by an attacker and used to read confidential data or place poison message on the queue.
 
