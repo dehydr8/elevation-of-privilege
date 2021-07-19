@@ -144,10 +144,10 @@ export const ElevationOfPrivilege = {
     threats: {
       turn: {
         Order: {
-          first: function first(G, ctx) {
+          first: (G, ctx) => {
             return ctx.playOrderPos;
           },
-          next: function next(G, ctx) {
+          next: (G, ctx) => {
             return ctx.playOrderPos;
           }
         },
@@ -216,13 +216,13 @@ export const ElevationOfPrivilege = {
       start: true,
       turn: {
         Order: {
-          playOrder: function playOrder(G) {
+          playOrder: (G) => {
             return G.order;
           },
-          first: function first(G, ctx) {
+          first: (G, ctx) => {
             return G.playOrderPos % ctx.playOrder.length;
           },
-          next: function next(G, ctx) {
+          next: (G, ctx) => {
             return (ctx.playOrderPos + 1) % ctx.playOrder.length;
           }
         },
