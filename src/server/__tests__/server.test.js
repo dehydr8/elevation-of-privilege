@@ -211,7 +211,7 @@ it("Download threat file", async () => {
   //Maybe I should put these jsons into a file
   const model = {
     "summary": {
-      "title": "Demo Threat Model"
+      "title": "  Demo Threat Model "
     },
     "detail": {
       "diagrams": [
@@ -225,7 +225,7 @@ it("Download threat file", async () => {
                     "severity": "High",
                     "mitigation": "[Click Me](javascript:alert('XSS'))",
                     "description": "The Background Worker configuration stores the credentials used by the worker to access the DB. An attacker could compromise the Background Worker and get access to the DB credentials.",
-                    "title": "Accessing DB credentials",
+                    "title": "    Accessing DB credentials ",
                     "type": "Information disclosure"
                   }
                 ],

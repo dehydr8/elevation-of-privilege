@@ -125,7 +125,7 @@ const runPublicApi = (gameServer) => {
         const threats = getThreats(gameState, metadata, model);
         
 
-        const modelTitle = model ? model.summary.title.replace(' ', '-') : "untitled-model";
+        const modelTitle = model ? model.summary.title.trim().replace(' ', '-') : "untitled-model";
         const timestamp = new Date().toISOString().replace(':', '-');
         const date = new Date().toLocaleString();
         ctx.attachment(`threats-${modelTitle}-${timestamp}.md`);
@@ -187,7 +187,7 @@ function formatThreats(threats, date) {
 ${threats
     .map(
         (threat, index) => `
-**${index + 1}. ${escapeMarkdownText(threat.title)}**
+**${index + 1}. ${escapeMarkdownText(threat.title.trim())}**
 ${
   'owner' in threat ? `
   - *Author:*       ${escapeMarkdownText(threat.owner)}
