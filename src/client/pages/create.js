@@ -242,7 +242,7 @@ class Create extends React.Component {
                   <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{this.url(i)}</a>
                 </td>
                 <td>
-                  <CopyButton text={this.url(i)} />
+                    <CopyButton text={this.url(i)} />
                 </td>
               </tr>
             )}
