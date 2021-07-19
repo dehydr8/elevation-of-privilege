@@ -26,7 +26,7 @@ class Leaderboard extends React.Component {
               {this.props.scores.map((val,idx) => 
                 <tr key={idx}>
                   <td>{idx}</td>
-                  <td>{this.props.names[idx]} <strong>{(parseInt(this.props.playerID) === idx) ? '(you)' : ""}</strong></td>
+                  <td className="td-name">{this.props.names[idx]} <strong>{(parseInt(this.props.playerID) === idx) ? '(you)' : ""}</strong></td>
                   <td><strong>{this.props.cards[idx]}</strong></td>
                   <td><Badge>{val}</Badge></td>
                 </tr>

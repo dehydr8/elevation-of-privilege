@@ -13,3 +13,12 @@ table {
 .col-md-6 {
   max-width: 100%;
 }
+
+.c-td-name {
+  width: 60%;
+  min-width: 30%;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

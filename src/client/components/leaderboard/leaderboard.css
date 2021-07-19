@@ -1,4 +1,4 @@
-td {
+.td-name {
   max-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
