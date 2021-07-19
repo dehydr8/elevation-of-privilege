@@ -18,7 +18,7 @@ describe('game', () => {
   const STARTING_CARD = STARTING_CARD_MAP[DEFAULT_START_SUIT];
 
   Object.keys(players).forEach(k => {
-    players[k].connect();
+    players[k].start();
   });
 
   it('should shuffle cards correctly', () => {
