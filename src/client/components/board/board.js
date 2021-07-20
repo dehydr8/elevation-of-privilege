@@ -75,18 +75,21 @@ class Board extends React.Component {
     return this.props.ctx.activePlayers ? true : false;
   }
 
-  render() {
-    let active = false;
-    let current = false;
-
-    //has to test current player first
+  isActive() {
     if (this.props.ctx.currentPlayer === this.props.playerID) {
-      active = true;
-    } else if (this.props.activePlayers) {
-      if (this.props.activePlayers[this.props.playerID] === 'threats') {
-        active = true;
+      return true;
+    } else if (this.props.ctx.activePlayers) {
+      if (this.props.ctx.activePlayers[this.props.playerID] === 'threats') {
+        return true;
       }
+    } else {
+      return false;
     }
+  }
+
+  render() {
+    let current = false;
+    let active = this.isActive();
 
     if (this.props.playerID === this.props.ctx.currentPlayer) {
       current = true;
