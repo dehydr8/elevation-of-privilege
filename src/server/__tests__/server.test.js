@@ -146,9 +146,9 @@ it('download the final model for a game', async () => {
     }
   };
 
-  await gameServer.db.set(`${gameName}:${gameID}`, state);
-  await gameServer.db.set(`${gameName}:${gameID}:metadata`, metadata);
-  await gameServer.db.set(`${gameName}:${gameID}:model`, model);
+  await gameServer.db.setItem(`${gameName}:${gameID}:metadata`, metadata);
+  await gameServer.db.setItem(`${gameName}:${gameID}:model`, model);
+  await gameServer.db.setItem(`${gameName}:${gameID}`, state);
 
   // retrieve the model
   const response = await request(publicApiServer.callback()).get(`/download/${gameID}`);

@@ -47,7 +47,7 @@ const runPublicApi = (gameServer) => {
 
     if (typeof ctx.request.body.model !== 'undefined') {
         // save the model in the db, not in the setupData
-        await gameServer.db.set(`${gameName}:${gameId}:model`, ctx.request.body.model);
+        await gameServer.db.setItem(`${gameName}:${gameId}:model`, ctx.request.body.model);
     }
 
     ctx.body = {
@@ -59,16 +59,16 @@ const runPublicApi = (gameServer) => {
     router.get('/model/:id', async ctx => {
     const gameName = ElevationOfPrivilege.name;
     const gameID = ctx.params.id;
-    const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
+    const model = await gameServer.db.getItem(`${gameName}:${gameID}:model`);
     ctx.body = model;
     });
 
     router.get('/download/:id', async ctx => {
     const gameName = ElevationOfPrivilege.name;
     const gameID = ctx.params.id;
-    const res = await gameServer.db.get(`${gameName}:${gameID}`);
-    const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
-    let model = await gameServer.db.get(`${gameName}:${gameID}:model`);
+    const res = await gameServer.db.getItem(`${gameName}:${gameID}`);
+    const metadata = await gameServer.db.getItem(`${gameName}:${gameID}:metadata`);
+    let model = await gameServer.db.getItem(`${gameName}:${gameID}:model`);
 
     // update the model with the identified threats
     Object.keys(res.G.identifiedThreats).forEach(diagramIdx => {
