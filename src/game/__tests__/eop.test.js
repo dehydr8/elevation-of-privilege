@@ -61,6 +61,11 @@ describe('game', () => {
     expect(players["0"].getState().G.order[0]).toBe(players["0"].getState().ctx.currentPlayer);
   });
 
+  it('should not get stuck in an infinite loop', () => {
+    const starting = players["0"].getState().ctx.currentPlayer;
+    players[starting].moves.draw(STARTING_CARD);
+  });
+
   it('should move to the threats phase when the first player makes a move', () => {
     const starting = players["0"].getState().ctx.currentPlayer;
     players[starting].moves.draw(STARTING_CARD);

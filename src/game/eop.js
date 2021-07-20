@@ -132,7 +132,7 @@ export const ElevationOfPrivilege = {
   turn: {
     order: TurnOrder.CUSTOM_FROM('order'),
     onEnd: (G, ctx) => {
-      ctx.events.endPhase();
+      // ctx.events.endPhase(); ending phase when not in a phase breaks everything
       ctx.events.setActivePlayers({all: 'threats'})
       return {
         ...G,
@@ -140,7 +140,6 @@ export const ElevationOfPrivilege = {
       }
     },
   },
-  next: 'threats',
   moves: {
     draw,
     selectDiagram,
