@@ -105,7 +105,7 @@ class Board extends React.Component {
             <Deck 
               cards={this.props.G.players[this.props.playerID]}
               suit={this.props.G.suit}
-              {/* phase replaced with isInThreatStage. active players is null when not */}
+              /* phase replaced with isInThreatStage. active players is null when not */
               isInThreatStage={this.isInThreatStage()}
               round={this.props.G.round}
               current={current}
