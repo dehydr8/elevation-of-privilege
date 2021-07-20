@@ -11,10 +11,15 @@ class Status extends React.Component {
     active: PropTypes.bool.isRequired,
     names: PropTypes.any.isRequired,
     dealtCard: PropTypes.string.isRequired,
+    isInThreatStage: PropTypes.bool
+  };
+
+  static defaultProps = {
+    isInThreatStage: false
   };
 
   render() {
-    if (this.props.ctx.phase === "play") {
+    if (!this.props.isInThreatStage) {
       let currentPlayerName = resolvePlayerName(this.props.ctx.currentPlayer, this.props.names, this.props.playerID);
       let prefix = <span />;
 
@@ -28,7 +33,7 @@ class Status extends React.Component {
       return (
         <span>{prefix}Waiting for <strong>{currentPlayerName}</strong> to play a card.</span>
       );
-    } else if (this.props.ctx.phase === "threats") {
+    } else if (this.props.isInThreatStage) {
       let all = new Set(getPlayers(this.props.ctx.numPlayers));
       let passed = new Set(this.props.G.passed);
       let difference = new Set([...all].filter(x => !passed.has(x)));

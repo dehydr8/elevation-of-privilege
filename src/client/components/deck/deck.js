@@ -6,7 +6,7 @@ class Deck extends React.Component {
   static propTypes = {
     suit: PropTypes.any.isRequired,
     cards: PropTypes.any.isRequired,
-    phase: PropTypes.string.isRequired,
+    isInThreatStage: PropTypes.bool,
     round: PropTypes.any.isRequired,
     current: PropTypes.bool.isRequired,
     active: PropTypes.bool.isRequired,
@@ -14,12 +14,16 @@ class Deck extends React.Component {
     startingCard: PropTypes.string.isRequired
   };
 
+  static defaultProps = {
+    isInThreatStage: false
+  };
+
   getRenderedDeck() {
     let left = this.props.cards;
     let suit = this.props.suit;
     let validMoves = [];
 
-    if (this.props.current && this.props.active && this.props.phase === "play") {
+    if (this.props.current && this.props.active && !this.props.isInThreatStage) {
       validMoves = getValidMoves(left, suit, this.props.round, this.props.startingCard);
     }
 

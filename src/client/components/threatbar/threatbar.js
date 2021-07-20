@@ -17,6 +17,11 @@ class Threatbar extends React.Component {
     moves: PropTypes.any.isRequired,
     active: PropTypes.bool.isRequired,
     names: PropTypes.any.isRequired,
+    isInThreatStage: PropTypes.bool
+  };
+
+  static defaultProps = {
+    isInThreatStage: false
   };
 
   constructor(props) {
@@ -148,7 +153,7 @@ class Threatbar extends React.Component {
         <Card>
           <CardHeader>Threats for {componentName} <FontAwesomeIcon style={{float: "right"}} icon={faBolt} /></CardHeader>
           <CardBody className="threat-container">
-            <Button color="primary" size="lg" block disabled={this.props.G.selectedComponent === "" || this.props.ctx.phase !== "threats" || this.props.G.passed.includes(this.props.playerID) || !this.props.active} onClick={() => this.props.moves.toggleModal()}>
+            <Button color="primary" size="lg" block disabled={this.props.G.selectedComponent === "" || !this.props.isInThreatStage || this.props.G.passed.includes(this.props.playerID) || !this.props.active} onClick={() => this.props.moves.toggleModal()}>
               <FontAwesomeIcon icon={faPlus} /> Add Threat
             </Button>
             <div hidden={component !== null && component.type !== 'tm.Flow'}>

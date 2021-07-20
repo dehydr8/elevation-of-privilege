@@ -16,10 +16,15 @@ class Sidebar extends React.Component {
     gameID: PropTypes.any.isRequired,
     G: PropTypes.any.isRequired,
     ctx: PropTypes.any.isRequired,
+    isInThreatStage: PropTypes.bool,
     moves: PropTypes.any.isRequired,
     current: PropTypes.bool.isRequired,
     active: PropTypes.bool.isRequired,
     names: PropTypes.any.isRequired,
+  };
+
+  static defaultProps = {
+    isInThreatStage: false,
   };
 
   constructor(props) {
@@ -44,7 +49,7 @@ class Sidebar extends React.Component {
           <Leaderboard playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
           <hr />
           <Button color="secondary" size="lg" block disabled={
-              this.props.ctx.phase !== "threats" ||
+              !this.props.isInThreatStage ||
               this.props.G.passed.includes(this.props.playerID) ||
               !this.props.active
             } onClick={() => { this.props.moves.pass() }}>

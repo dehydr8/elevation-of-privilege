@@ -71,6 +71,10 @@ class Board extends React.Component {
     this.updateModel();
   }
 
+  isInThreatStage() {
+    return this.props.ctx.activePlayers ? true : false;
+  }
+
   render() {
     let active = false;
     let current = false;
@@ -96,12 +100,13 @@ class Board extends React.Component {
         <div className="player-wrap">
           <div className="playingCardsContainer">
             <div className="status-bar">
-              <Status playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard}  />
+              <Status playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard} isInThreatStage={this.isInThreatStage} />
             </div>
             <Deck 
               cards={this.props.G.players[this.props.playerID]}
               suit={this.props.G.suit}
-              phase={this.props.ctx.phase}
+              {/* phase replaced with isInThreatStage. active players is null when not */}
+              isInThreatStage={this.isInThreatStage()}
               round={this.props.G.round}
               current={current}
               active={active}
@@ -110,8 +115,8 @@ class Board extends React.Component {
             />
           </div>
         </div>
-        <Sidebar playerID={this.props.playerID} gameID={this.props.gameID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} phase={this.props.ctx.phase} current={current} active={active} names={this.state.names} />
-        <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} />
+        <Sidebar playerID={this.props.playerID} gameID={this.props.gameID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} isInThreatStage={this.isInThreatStage} current={current} active={active} names={this.state.names} />
+        <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} isInThreatStage={this.isInThreatStage} moves={this.props.moves} active={active} />
       </div>
     );
   }
