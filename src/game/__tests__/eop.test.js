@@ -42,9 +42,13 @@ describe('game', () => {
     );
   });
 
-  it('should start with the play phase', () => {
-    expect(players["0"].getState().ctx.phase).toBe('play');
+  it('should start in no phase', () => {
+    expect(players["0"].getState().ctx.phase).toBeFalsy();
   });
+
+  it('should start with no activePlayers', () => {
+    expect(players['0'].getState().ctx.activePlayers).toBeFalsy();
+  })
 
   it('should start with scores set to zero', () => {
     expect(players["0"].getState().G.scores).toStrictEqual([0,0,0]);
@@ -66,7 +70,7 @@ describe('game', () => {
     players[starting].moves.draw(STARTING_CARD);
   });
 
-  it('should move to the threats phase when the first player makes a move', () => {
+  it('should move to the threats stage when the first player makes a move', () => {
     const starting = players["0"].getState().ctx.currentPlayer;
     players[starting].moves.draw(STARTING_CARD);
 
@@ -74,10 +78,6 @@ describe('game', () => {
     expect(state.G.dealt).toContain(STARTING_CARD);
     expect(state.G.dealtBy).toBe(starting);
     expect(state.G.suit).toBe(STARTING_CARD.substr(0, 1));
-    expect(state.ctx.phase).toBe("threats");
-  });
-
-  it('all players should be active in the threats phase', () => {
     expect(players['0'].getState().ctx.activePlayers).toStrictEqual({"0": "threats", "1": "threats", "2": "threats"})
   });
 
@@ -207,4 +207,11 @@ describe('game', () => {
     let component = state.G.selectedComponent;
     expect(state.G.identifiedThreats[diagram][component]).toStrictEqual({});
   });
+
+  it('should move on when all players have passed', () => {
+    players['1'].moves.pass();
+    players['2'].moves.pass();
+
+    expect(players['0'].getState().ctx.activePlayers).toBeFalsy();
+  })
 });

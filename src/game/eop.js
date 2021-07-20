@@ -131,14 +131,34 @@ export const ElevationOfPrivilege = {
   },
   turn: {
     order: TurnOrder.CUSTOM_FROM('order'),
-    onEnd: (G, ctx) => {
-      // ctx.events.endPhase(); ending phase when not in a phase breaks everything
-      ctx.events.setActivePlayers({all: 'threats'})
-      return {
-        ...G,
-        playOrderPos: G.playOrderPos + 1,
-      }
+    // onEnd: (G, ctx) => {
+    //   // ctx.events.endPhase(); ending phase when not in a phase breaks everything
+    //   ctx.events.setActivePlayers({all: 'threats'})
+    //   return {
+    //     ...G,
+    //     playOrderPos: G.playOrderPos + 1,
+    //   }
+    // },
+    endIf: (G, ctx) => {
+      let passed = [...G.passed];
+      return passed.length >= ctx.numPlayers;
     },
+    onEnd: onTurnEnd,
+    stages: {
+      threats: {
+        moves: {
+          addOrUpdateThreat,
+          deleteThreat,
+          pass,
+          selectDiagram,
+          selectComponent,
+          selectThreat,
+          toggleModal,
+          toggleModalUpdate,
+          updateThreat
+        },
+      }
+    }
   },
   moves: {
     draw,
@@ -450,7 +470,8 @@ function draw(G, ctx, card) {
 
   dealtBy = ctx.currentPlayer;
 
-  ctx.events.endTurn();
+  // move into threats stage
+  ctx.events.setActivePlayers({all: 'threats'});
 
   return {
     ...G,
@@ -462,4 +483,47 @@ function draw(G, ctx, card) {
       [ctx.currentPlayer]: deck,
     }
   };
+}
+
+function onTurnEnd(G, ctx) {
+  let dealt = [...G.dealt];
+  let order = [...G.order];
+  let suit = G.suit;
+  let dealtBy = G.dealtBy;
+  let scores = [...G.scores];
+  let round = G.round;
+  let lastWinner = G.lastWinner;
+
+  // calculate the scores
+  if (dealt.length >= ctx.numPlayers) {
+    let idx = getWinner(suit, dealt);
+    lastWinner = order[idx];
+
+    scores[lastWinner]++;
+
+    order = [];
+    for (let i=0; i<ctx.numPlayers; i++) {
+      order.push(i.toString());
+    }
+    for (let i=0; i<lastWinner; i++) {
+      let element = order.shift();
+      order.push(element);
+    }
+
+    dealt = [];
+    suit = "";
+    dealtBy = "";
+    round++;
+  }
+  return {
+    ...G,
+    dealt,
+    lastWinner,
+    dealtBy,
+    order,
+    suit,
+    scores,
+    round,
+    passed: [], // reset the passed array when the phase ends
+  }
 }
