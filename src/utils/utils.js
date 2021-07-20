@@ -93,5 +93,8 @@ export function escapeMarkdownText(text) {
   //doesn't escape * or _ to allow users to format the descriptions
 
   return text.replace(/[![\]()]/gm, '\\$&').replace(/</gm, '&lt;').replace(/>/gm, '&gt;')
+}
 
+export async function copyToClipboard(text) {
+  return await navigator.clipboard.writeText(text);
 }
