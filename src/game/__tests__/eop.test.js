@@ -91,7 +91,8 @@ describe('game', () => {
     const lastPlayer = players["0"].getState().G.dealtBy;
     const cards = players[lastPlayer].getState().G.players[lastPlayer];
     const card = cards[Math.floor(Math.random()*cards.length)];
-    
+    players[lastPlayer].moves.draw(card);
+
     const state = players["0"].getState();
 
     expect(state.G.dealt.includes(card)).toBeFalsy();
