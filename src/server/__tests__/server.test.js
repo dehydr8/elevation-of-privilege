@@ -311,7 +311,7 @@ it("Download threat file", async () => {
 
   - *Author:*       Player 1
 
-  - *Description:*  \\<img src="" onerror="alert\\('XSS'\\) alt="Uh oh..."\\>
+  - *Description:*  &lt;img src="" onerror="alert\\('XSS'\\) alt="Uh oh..."&gt;
 
   - *Mitigation:*   mitigation
 

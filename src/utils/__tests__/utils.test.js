@@ -126,7 +126,7 @@ it('successfully escapes any malicious markdown text', () => {
     .toBe('\\!\\[The goodest boy\\]\\(https://images.unsplash.com/the_good_boy.png\\)');
 
   expect(escapeMarkdownText('<a href="javascript:alert(\'XSS\')">Click Me</a>'))
-    .toBe('\\<a href="javascript:alert\\(\'XSS\'\\)"\\>Click Me\\</a\\>');
+    .toBe('&lt;a href="javascript:alert\\(\'XSS\'\\)"&gt;Click Me&lt;/a&gt;');
   
   expect(escapeMarkdownText('![Uh oh...]("onerror="alert(\'XSS\'))'))
     .toBe('\\!\\[Uh oh...\\]\\("onerror="alert\\(\'XSS\'\\)\\)');
