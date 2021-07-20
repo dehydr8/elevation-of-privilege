@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './board';
+import * as model from '../model/model'
+
+jest.mock('../model/model.js');
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -18,7 +21,11 @@ it('renders without crashing', () => {
     selectedComponent: "",
     threat: {
       modal: false,
-    }
+    },
+    passed: [],
+    suit: 'T',
+    round: 1,
+    startingCard: 'T3',
   }
   const ctx = {
     actionPlayers: [0, 1, 2]
