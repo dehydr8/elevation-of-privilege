@@ -30,7 +30,7 @@ const runPublicApi = (gameServer) => {
         });
 
     const gameName = ElevationOfPrivilege.name;
-    const gameId = r.body.gameID;
+    const gameId = r.body.matchID;
 
     const credentials = [];
 
@@ -54,6 +54,7 @@ const runPublicApi = (gameServer) => {
         game: gameId,
         credentials,
     };
+    console.log(ctx.body);
     });
 
     router.get('/model/:id', async ctx => {
