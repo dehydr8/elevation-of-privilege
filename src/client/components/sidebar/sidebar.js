@@ -39,14 +39,16 @@ class Sidebar extends React.Component {
             <Footer short />
           </div>
           <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.gameID}`}>
-            <FontAwesomeIcon icon={faDownload} />
-            {' '}
-            Download Model
+            <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Model
+          </Button>
+          <Button block size="lg" color="warning" href={`${this.apiBase}/download/text/${this.props.gameID}`}>
+            <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Threats
           </Button>
           <hr />
-          <Leaderboard playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
+
+          <Leaderboard passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
           {isLastToPass && <div className="warning">You are the last one to pass!</div>}         
-          <Button color={(isLastToPass) ? "warning" : "secondary"} size="lg" block disabled={
+          <Button color={(isLastToPass) ? "warning" : "secondary"} className="pass" size="lg" block disabled={
       
               this.props.ctx.phase !== "threats" ||
               this.props.G.passed.includes(this.props.playerID) ||
