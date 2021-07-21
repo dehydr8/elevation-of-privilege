@@ -7,6 +7,9 @@ import { getDatabase } from './config';
 const server = Server({
     games: [ElevationOfPrivilege],
     db: getDatabase(),
+    origins: [
+        '*' //maybe make this more selective
+    ],
     uuid: uuidv4,
 });
 
