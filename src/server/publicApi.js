@@ -117,10 +117,10 @@ const runPublicApi = (gameServer) => {
     router.get('/download/text/:id', async (ctx) => {
         //get some variables that might be useful
         const gameName = ElevationOfPrivilege.name;
-        const gameID = ctx.params.id;
-        const gameState = await gameServer.db.get(`${gameName}:${gameID}`);
-        const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
-        const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
+        const matchID = ctx.params.id;
+        const gameState = await gameServer.db.get(`${gameName}:${matchID}`);
+        const metadata = await gameServer.db.get(`${gameName}:${matchID}:metadata`);
+        const model = await gameServer.db.get(`${gameName}:${matchID}:model`);
         
         const threats = getThreats(gameState, metadata, model);
         

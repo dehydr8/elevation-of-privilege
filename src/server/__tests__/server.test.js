@@ -168,7 +168,7 @@ it('download the final model for a game', async () => {
 
 it("Download threat file", async () => {
   const gameName = ElevationOfPrivilege.name;
-  const gameID = "1234567";
+  const matchID = "1234567";
 
   const state = {
     G: {
@@ -300,14 +300,14 @@ it("Download threat file", async () => {
     }
   }
 
-  await gameServer.db.setItem(`${gameName}:${gameID}`, state);
-  await gameServer.db.setItem(`${gameName}:${gameID}:metadata`, metadata);
-  await gameServer.db.setItem(`${gameName}:${gameID}:model`, model);
+  await gameServer.db.setItem(`${gameName}:${matchID}`, state);
+  await gameServer.db.setItem(`${gameName}:${matchID}:metadata`, metadata);
+  await gameServer.db.setItem(`${gameName}:${matchID}:model`, model);
   
   const date = new Date().toLocaleString();
 
   // retrieve the model
-  const response = await request(publicApiServer.callback()).get(`/download/text/${gameID}`);
+  const response = await request(publicApiServer.callback()).get(`/download/text/${matchID}`);
   expect(response.text).toBe(`Threats ${date}
 =======
 
