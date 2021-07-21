@@ -22,19 +22,23 @@ it('creates a game without a model', async () => {
 
 it('retrieves player info for a game', async () => {
   const players = 3;
+  const names = [
+    "P1", "P2", "P3"
+  ];
   let response = await request(publicApiServer.callback())
     .post("/create")
     .send({
       players: players,
-      names: [
-        "P1", "P2", "P3"
-      ]
+      names: names
     });
   expect(response.body.game).toBeDefined();
   expect(response.body.credentials.length).toBe(players);
 
   response = await request(publicApiServer.callback()).get(`/players/${response.body.game}`);
   expect(response.body.players.length).toBe(players);
+  response.body.players.forEach((p, i) => {
+    expect(p.name).toBe(names[i]);
+  });
 });
 
 it('creates a game with a model', async () => {
@@ -77,7 +81,7 @@ it('retrieve the model for a game', async () => {
 
 it('download the final model for a game', async () => {
   const gameName = ElevationOfPrivilege.name;
-  const gameID = "1234567";
+  const matchID = "1234567";
 
   const state = {
     G: {
@@ -146,19 +150,19 @@ it('download the final model for a game', async () => {
     }
   };
 
-  await gameServer.db.setItem(`${gameName}:${gameID}:metadata`, metadata);
-  await gameServer.db.setItem(`${gameName}:${gameID}:model`, model);
-  await gameServer.db.setItem(`${gameName}:${gameID}`, state);
+  await gameServer.db.setItem(`${gameName}:${matchID}:metadata`, metadata);
+  await gameServer.db.setItem(`${gameName}:${matchID}:model`, model);
+  await gameServer.db.setItem(`${gameName}:${matchID}`, state);
 
   // retrieve the model
-  const response = await request(publicApiServer.callback()).get(`/download/${gameID}`);
+  const response = await request(publicApiServer.callback()).get(`/download/${matchID}`);
   const threats = response.body.detail.diagrams[0].diagramJson.cells[0].threats;
   expect(threats[0].id).toBe("0");
   expect(threats[0].type).toBe("Spoofing");
   expect(threats[0].title).toBe("title");
   expect(threats[0].description).toBe("description");
   expect(threats[0].mitigation).toBe("mitigation");
-  expect(threats[0].game).toBe(gameID);
+  expect(threats[0].game).toBe(matchID);
 });
 
 afterAll(() => {
