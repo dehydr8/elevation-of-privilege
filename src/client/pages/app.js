@@ -30,7 +30,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="player-container">
-        <EOP gameID={this.state.game} credentials={this.state.secret} playerID={this.state.id + ''} />
+        <EOP matchID={this.state.game} credentials={this.state.secret} playerID={this.state.id + ''} />
       </div>
     );
   }
