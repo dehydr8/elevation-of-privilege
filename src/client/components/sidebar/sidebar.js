@@ -13,7 +13,7 @@ import Footer from '../footer/footer';
 class Sidebar extends React.Component {
   static propTypes = {
     playerID: PropTypes.any,
-    gameID: PropTypes.any.isRequired,
+    matchID: PropTypes.any.isRequired,
     G: PropTypes.any.isRequired,
     ctx: PropTypes.any.isRequired,
     isInThreatStage: PropTypes.bool,
@@ -40,7 +40,7 @@ class Sidebar extends React.Component {
           <div className="text-center">
             <Footer short />
           </div>
-          <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.gameID}`}>
+          <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.matchID}`}>
             <FontAwesomeIcon icon={faDownload} />
             {' '}
             Download Model

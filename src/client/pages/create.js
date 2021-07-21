@@ -26,7 +26,7 @@ class Create extends React.Component {
 
     this.state = {
       players: MIN_NUMBER_PLAYERS,
-      gameID: "",
+      matchID: "",
       names: initialPlayerNames,
       secret: initialSecrets,
       creating: false,
@@ -80,7 +80,7 @@ class Create extends React.Component {
 
     this.setState({
       ...this.state,
-      gameID: gameId,
+      matchID: gameId,
       created: true,
     });
   }
@@ -223,7 +223,7 @@ class Create extends React.Component {
               <tr key={i}>
                 <td>{this.state.names[i]}</td>
                 <td>
-                  <a href={`${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.gameID}/{i}/{this.state.secret[i]}</a>
+                  <a href={`${window.location.origin}/${this.state.matchID}/${i}/${this.state.secret[i]}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.matchID}/{i}/{this.state.secret[i]}</a>
                 </td>
               </tr>
             )}

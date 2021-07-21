@@ -31,6 +31,6 @@ it('renders without crashing', () => {
     actionPlayers: [0, 1, 2]
   }
 
-  ReactDOM.render(<Board G={G} ctx={ctx} gameID="123" moves={{}} events={{}} playerID="0" />, div);
+  ReactDOM.render(<Board G={G} ctx={ctx} matchID="123" moves={{}} events={{}} playerID="0" />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

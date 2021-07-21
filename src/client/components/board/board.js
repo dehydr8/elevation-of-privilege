@@ -14,7 +14,7 @@ class Board extends React.Component {
   static propTypes = {
     G: PropTypes.any.isRequired,
     ctx: PropTypes.any.isRequired,
-    gameID: PropTypes.any.isRequired,
+    matchID: PropTypes.any.isRequired,
     moves: PropTypes.any,
     events: PropTypes.any,
     playerID: PropTypes.any,
@@ -59,7 +59,7 @@ class Board extends React.Component {
 
   async updateModel() {
     const r = await request
-      .get(`${this.apiBase}/model/${this.props.gameID}`);
+      .get(`${this.apiBase}/model/${this.props.matchID}`);
 
     const model = r.body;
 
@@ -121,7 +121,7 @@ class Board extends React.Component {
             />
           </div>
         </div>
-        <Sidebar playerID={this.props.playerID} gameID={this.props.gameID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} isInThreatStage={this.isInThreatStage()} current={current} active={active} names={this.state.names} />
+        <Sidebar playerID={this.props.playerID} matchID={this.props.matchID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} isInThreatStage={this.isInThreatStage()} current={current} active={active} names={this.state.names} />
         <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} isInThreatStage={this.isInThreatStage()} moves={this.props.moves} active={active} />
       </div>
     );

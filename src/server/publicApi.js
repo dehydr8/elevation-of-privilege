@@ -13,9 +13,9 @@ const runPublicApi = (gameServer) => {
     const router = new Router();
 
     router.get('/players/:id', async ctx => {
-    const gameID = ctx.params.id;
+    const matchID = ctx.params.id;
     const r = await request
-        .get(`http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${gameID}`);
+        .get(`http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${matchID}`);
     ctx.body = r.body;
     });
 
@@ -58,17 +58,17 @@ const runPublicApi = (gameServer) => {
 
     router.get('/model/:id', async ctx => {
     const gameName = ElevationOfPrivilege.name;
-    const gameID = ctx.params.id;
-    const model = await gameServer.db.getItem(`${gameName}:${gameID}:model`);
+    const matchID = ctx.params.id;
+    const model = await gameServer.db.getItem(`${gameName}:${matchID}:model`);
     ctx.body = model;
     });
 
     router.get('/download/:id', async ctx => {
     const gameName = ElevationOfPrivilege.name;
-    const gameID = ctx.params.id;
-    const res = await gameServer.db.getItem(`${gameName}:${gameID}`);
-    const metadata = await gameServer.db.getItem(`${gameName}:${gameID}:metadata`);
-    let model = await gameServer.db.getItem(`${gameName}:${gameID}:model`);
+    const matchID = ctx.params.id;
+    const res = await gameServer.db.getItem(`${gameName}:${matchID}`);
+    const metadata = await gameServer.db.getItem(`${gameName}:${matchID}:metadata`);
+    let model = await gameServer.db.getItem(`${gameName}:${matchID}:model`);
 
     // update the model with the identified threats
     Object.keys(res.G.identifiedThreats).forEach(diagramIdx => {
@@ -99,7 +99,7 @@ const runPublicApi = (gameServer) => {
                 description: t.description,
                 mitigation: t.mitigation,
                 owner: metadata.players[t.owner].name,
-                game: gameID,
+                game: matchID,
             })
             });
             cell.threats = threats;

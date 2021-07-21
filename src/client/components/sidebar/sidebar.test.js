@@ -11,6 +11,6 @@ it('renders without crashing', () => {
   const ctx = {};
   const moves = {};
   const div = document.createElement('div');
-  ReactDOM.render(<Sidebar G={G} gameID="1234" ctx={ctx} moves={moves} current={true} active={true} names={["P1", "P2", "P3"]} playerID="0" />, div);
+  ReactDOM.render(<Sidebar G={G} matchID="1234" ctx={ctx} moves={moves} current={true} active={true} names={["P1", "P2", "P3"]} playerID="0" />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
