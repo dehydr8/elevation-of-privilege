@@ -54,7 +54,6 @@ const runPublicApi = (gameServer) => {
         game: gameId,
         credentials,
     };
-    console.log(ctx.body);
     });
 
     router.get('/model/:id', async ctx => {
