@@ -5,8 +5,13 @@ import * as model from '../model/model'
 
 jest.mock('../model/model.js');
 
-it('renders without crashing', () => {
+
+it('renders without crashing', async() => {
+  Board.prototype.componentDidMount = jest.fn();
+
   const div = document.createElement('div');
+  document.body.appendChild(div);
+
   const G = {
     dealt: [],
     players: {
@@ -32,5 +37,7 @@ it('renders without crashing', () => {
   }
 
   ReactDOM.render(<Board G={G} ctx={ctx} matchID="123" moves={{}} events={{}} playerID="0" />, div);
+
   ReactDOM.unmountComponentAtNode(div);
+  div.remove();
 });
