@@ -45,8 +45,11 @@ class Board extends React.Component {
 
   async updateNames() {
     const g = await request
-      .get(`${this.apiBase}/players/${this.props.gameID}`);
-
+      .get(`${this.apiBase}/players/${this.props.matchID}`)
+      .catch(err => {
+        console.error(err, err.stack);
+      });
+    
     g.body.players.forEach(p => {
       if (typeof p.name !== 'undefined') {
         this.updateName(p.id, p.name);
