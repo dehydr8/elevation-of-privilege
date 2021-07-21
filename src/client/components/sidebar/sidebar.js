@@ -39,9 +39,10 @@ class Sidebar extends React.Component {
             <Footer short />
           </div>
           <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.gameID}`}>
-            <FontAwesomeIcon icon={faDownload} />
-            {' '}
-            Download Model
+            <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Model
+          </Button>
+          <Button block size="lg" color="warning" href={`${this.apiBase}/download/text/${this.props.gameID}`}>
+            <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Threats
           </Button>
           <hr />
 
