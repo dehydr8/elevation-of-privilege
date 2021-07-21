@@ -7,8 +7,9 @@ class DealtCard extends React.Component {
   };
 
   render() {
+    const cardClass = this.props.card ? this.props.card.toLowerCase() : '-none';
     return (
-      <div className={`playing-card card${this.props.card.toLowerCase()} active card-rounded scaled-big`} />
+      <div className={`playing-card card${cardClass} active card-rounded scaled-big`} />
     );
   }
 }

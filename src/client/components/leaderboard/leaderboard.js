@@ -8,8 +8,15 @@ class Leaderboard extends React.Component {
     names: PropTypes.any.isRequired,
     cards: PropTypes.any.isRequired,
     playerID: PropTypes.any.isRequired,
+    passedUsers: PropTypes.array.isRequired,
   };
   render() {
+    let passed = this.props.passedUsers;
+    function hasPassed(_idx) {
+      return passed.includes(_idx.toString());
+    }
+
+
     return (
       <Card>
         <CardHeader>Statistics</CardHeader>
@@ -18,6 +25,7 @@ class Leaderboard extends React.Component {
               <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Passed</th>
                 <th>Card</th>
                 <th>Score</th>
               </tr>
@@ -26,7 +34,12 @@ class Leaderboard extends React.Component {
               {this.props.scores.map((val,idx) => 
                 <tr key={idx}>
                   <td>{idx}</td>
-                  <td>{this.props.names[idx]} <strong>{(parseInt(this.props.playerID) === idx) ? '(you)' : ""}</strong></td>
+                  <td>
+                    { this.props.names[idx] } { parseInt(this.props.playerID) === idx && <strong>(you)</strong> }
+                  </td>
+                  <td>
+                  { hasPassed(idx, this) && <div align="center">&#10003;</div> }
+                  </td>
                   <td><strong>{this.props.cards[idx]}</strong></td>
                   <td><Badge>{val}</Badge></td>
                 </tr>
