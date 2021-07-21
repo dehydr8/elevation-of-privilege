@@ -118,9 +118,9 @@ const runPublicApi = (gameServer) => {
         //get some variables that might be useful
         const gameName = ElevationOfPrivilege.name;
         const matchID = ctx.params.id;
-        const gameState = await gameServer.db.get(`${gameName}:${matchID}`);
-        const metadata = await gameServer.db.get(`${gameName}:${matchID}:metadata`);
-        const model = await gameServer.db.get(`${gameName}:${matchID}:model`);
+        const gameState = await gameServer.db.getItem(`${gameName}:${matchID}`);
+        const metadata = await gameServer.db.getItem(`${gameName}:${matchID}:metadata`);
+        const model = await gameServer.db.getItem(`${gameName}:${matchID}:model`);
         
         const threats = getThreats(gameState, metadata, model);
         
