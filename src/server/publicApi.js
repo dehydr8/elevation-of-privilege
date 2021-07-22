@@ -47,7 +47,7 @@ const runPublicApi = (gameServer) => {
 
     if (typeof ctx.request.body.model !== 'undefined') {
         // save the model in the db, not in the setupData
-        await gameServer.db.setItem(`${gameName}:${gameId}:model`, ctx.request.body.model);
+        await gameServer.db.setItem(`${gameId}:model`, ctx.request.body.model);
     }
 
     ctx.body = {
@@ -59,17 +59,19 @@ const runPublicApi = (gameServer) => {
     router.get('/model/:id', async ctx => {
     const gameName = ElevationOfPrivilege.name;
     const matchID = ctx.params.id;
-    const model = await gameServer.db.getItem(`${gameName}:${matchID}:model`);
+    const model = await gameServer.db.getItem(`${matchID}:model`);
     ctx.body = model;
     });
 
     router.get('/download/:id', async ctx => {
     const gameName = ElevationOfPrivilege.name;
     const matchID = ctx.params.id;
-    const res = await gameServer.db.getItem(`${gameName}:${matchID}`);
-    const metadata = await gameServer.db.getItem(`${gameName}:${matchID}:metadata`);
-    let model = await gameServer.db.getItem(`${gameName}:${matchID}:model`);
-
+    const res = await gameServer.db.getItem(`${matchID}`).catch(err => {
+        console.error(err, err.stack);
+    });
+    const metadata = await gameServer.db.getItem(`${matchID}:metadata`);
+    let model = await gameServer.db.getItem(`${matchID}:model`);
+    console.log(res);
     // update the model with the identified threats
     Object.keys(res.G.identifiedThreats).forEach(diagramIdx => {
         Object.keys(res.G.identifiedThreats[diagramIdx]).forEach(componentIdx => {
@@ -118,9 +120,9 @@ const runPublicApi = (gameServer) => {
         //get some variables that might be useful
         const gameName = ElevationOfPrivilege.name;
         const matchID = ctx.params.id;
-        const gameState = await gameServer.db.getItem(`${gameName}:${matchID}`);
-        const metadata = await gameServer.db.getItem(`${gameName}:${matchID}:metadata`);
-        const model = await gameServer.db.getItem(`${gameName}:${matchID}:model`);
+        const gameState = await gameServer.db.getItem(`${matchID}`);
+        const metadata = await gameServer.db.getItem(`${matchID}:metadata`);
+        const model = await gameServer.db.getItem(`${matchID}:model`);
         
         const threats = getThreats(gameState, metadata, model);
         
