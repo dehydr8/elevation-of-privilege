@@ -26,7 +26,7 @@ class Create extends React.Component {
     );
 
     this.state = {
-      players: MIN_NUMBER_PLAYERS,
+      players: 3,
       gameID: "",
       names: initialPlayerNames,
       secret: initialSecrets,
@@ -170,7 +170,7 @@ class Create extends React.Component {
                   {
                     _.range(MIN_NUMBER_PLAYERS, MAX_NUMBER_PLAYERS+1).map(
                       n => (
-                        <option key={`players-${n}`}>{n}</option>
+                        <option key={`players-${n}`} value={n}>{n}</option>
                       )
                     )
                   }

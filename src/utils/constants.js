@@ -15,6 +15,7 @@ export const STARTING_CARD_MAP = {
     'E': 'E5'
   }
 
+export const CARD_LIMIT = 26;
 export const MIN_NUMBER_PLAYERS = 2;
 export const MAX_NUMBER_PLAYERS = 9;
 
