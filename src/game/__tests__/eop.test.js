@@ -42,8 +42,8 @@ describe('game', () => {
     );
   });
 
-  it('should start in no phase', () => {
-    expect(players["0"].getState().ctx.phase).toBeFalsy();
+  it('should start in play stage', () => {
+    expect(players['0'].getState().ctx.activePlayers).toBeFalsy();
   });
 
   it('should start with no activePlayers', () => {
@@ -56,13 +56,12 @@ describe('game', () => {
 
   it('have correct order in ctx', () => {
     const state = players['0'].getState();
-    Object.keys(players).forEach((v, i) => {
-      expect(state.G.order[i]).toBe(state.ctx.playOrder[i]);
-    });
+    expect(state.G.order).toStrictEqual(state.ctx.playOrder);
   });
 
   it('should respect the play order', () => {
-    expect(players["0"].getState().G.order[0]).toBe(players["0"].getState().ctx.currentPlayer);
+    const state = players['0'].getState();
+    expect(state.G.order[state.ctx.playOrderPos]).toBe(players["0"].getState().ctx.currentPlayer);
   });
 
   it('should not get stuck in an infinite loop', () => {
@@ -91,6 +90,7 @@ describe('game', () => {
     const lastPlayer = players["0"].getState().G.dealtBy;
     const cards = players[lastPlayer].getState().G.players[lastPlayer];
     const card = cards[Math.floor(Math.random()*cards.length)];
+
     players[lastPlayer].moves.draw(card);
 
     const state = players["0"].getState();
@@ -98,7 +98,7 @@ describe('game', () => {
     expect(state.G.dealt.includes(card)).toBeFalsy();
   });
 
-  it('anyone should be able to select diagrams in a threats phase', () => {
+  it('anyone should be able to select diagrams in a threats stage', () => {
     Object.keys(players).forEach(k => {
       players[k].moves.selectDiagram(k);
       const state = players["0"].getState();
@@ -106,7 +106,7 @@ describe('game', () => {
     });
   });
 
-  it('anyone should be able to select components in a threats phase', () => {
+  it('anyone should be able to select components in a threats stage', () => {
     Object.keys(players).forEach(k => {
       players[k].moves.selectComponent(k);
       const state = players["0"].getState();
@@ -114,7 +114,7 @@ describe('game', () => {
     });
   });
 
-  it('anyone should be able to select threats in a threats phase', () => {
+  it('anyone should be able to select threats in a threats stage', () => {
     Object.keys(players).forEach(k => {
       players[k].moves.selectThreat(k);
       const state = players["0"].getState();
@@ -122,7 +122,7 @@ describe('game', () => {
     });
   });
 
-  it('anyone should be able to toggle the threat add modal in a threats phase', () => {
+  it('anyone should be able to toggle the threat add modal in a threats stage', () => {
     Object.keys(players).forEach(k => {
       players[k].moves.toggleModal();
       let state = players["0"].getState();
@@ -136,7 +136,7 @@ describe('game', () => {
     });
   });
 
-  it('the players who pass in the threats phase should not be able to toggle the modal', () => {
+  it('the players who pass in the threats stage should not be able to toggle the modal', () => {
     players["0"].moves.pass();
     players["0"].moves.pass();
     players["0"].moves.toggleModal();

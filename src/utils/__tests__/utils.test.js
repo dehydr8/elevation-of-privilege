@@ -21,14 +21,8 @@ it('gets correct card if a multiple cards are dealt', async () => {
 
 it('populates correct cards for players based on dealt cards', async () => {
   expect(getDealtCardsForPlayers(
-    [0, 1, 2],
     ["A", "B", "C"]
   )).toStrictEqual(["A", "B", "C"]);
-
-  expect(getDealtCardsForPlayers(
-    [1, 0, 2],
-    ["A", "B", "C"]
-  )).toStrictEqual(["B", "A", "C"]);
 });
 
 it('resolves player names correctly', async () => {

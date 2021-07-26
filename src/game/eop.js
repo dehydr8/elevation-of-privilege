@@ -2,7 +2,7 @@ import { TurnOrder, INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
 import { DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
-import { getDealtCard, getPlayers, getValidMoves } from '../utils/utils';
+import { getDealtCard, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions.js';
 
 let scores = {};
@@ -63,7 +63,7 @@ export function getWinner(suit, dealt) {
       let score = scores[c];
       if (score > max) {
         max = score;
-        winner = i;
+        winner = i.toString();
       }
     }
   }
@@ -78,29 +78,22 @@ export const ElevationOfPrivilege = {
 
     let scores = [];
     let shuffled = shuffleCards(ctx, startingCard);
-    let order = [];
-    for (let i=0; i<ctx.numPlayers; i++) {
-      order.push(i.toString());
-    }
+
     for (let i=0; i<ctx.numPlayers; i++) {
       scores.push(0);
     }
-    for (let i=0; i<shuffled.first; i++) {
-      let element = order.shift();
-      order.push(element);
-    }
+
 
     let ret = {
       dealt: [],
       passed: [],
       suit: "",
       dealtBy: "",
-      order,
       players: shuffled.players,
       round: 1,
+      numCardsPlayed: 0,
       scores,
-      playOrderPos: 0,
-      lastWinner: -1,
+      lastWinner: shuffled.first,
       maxRounds: shuffled.cardsToDeal,
       selectedDiagram: 0,
       selectedComponent: "",
@@ -130,18 +123,23 @@ export const ElevationOfPrivilege = {
     }
   },
   turn: {
-    order: TurnOrder.CUSTOM_FROM('order'),
-    // onEnd: (G, ctx) => {
-    //   // ctx.events.endPhase(); ending phase when not in a phase breaks everything
-    //   ctx.events.setActivePlayers({all: 'threats'})
-    //   return {
-    //     ...G,
-    //     playOrderPos: G.playOrderPos + 1,
-    //   }
-    // },
+    order: {
+      ...TurnOrder.DEFAULT, // Simple clockwise turns
+      first: function first(G, ctx) { // First player, updated
+        return G.lastWinner;          // every phase (start of game)
+      },
+    },
     endIf: (G, ctx) => {
       let passed = [...G.passed];
-      return passed.length >= ctx.numPlayers;
+      if(passed.length >= ctx.numPlayers) {
+        if(G.numCardsPlayed >= ctx.numPlayers) {
+          //end of trick
+          let lastWinner = getWinner(G.suit, G.dealt);
+          return {next: lastWinner};  // choose next player
+        }
+        return true;
+      };
+      return false;
     },
     onEnd: onTurnEnd,
     stages: {
@@ -158,8 +156,9 @@ export const ElevationOfPrivilege = {
           updateThreat
         },
       }
-    }
+    },
   },
+  
   moves: {
     draw,
     selectDiagram,
@@ -356,6 +355,7 @@ function addOrUpdateThreat(G, ctx) {
 function draw(G, ctx, card) {
   let deck = [...G.players[ctx.currentPlayer]];
   let suit = G.suit;
+  
 
   // check if the move is valid
   if (!getValidMoves(deck, suit, G.round, G.startingCard).includes(card)) {
@@ -367,8 +367,10 @@ function draw(G, ctx, card) {
   deck.splice(index, 1);
 
   let dealt = [...G.dealt];
+  let numCardsPlayed = G.numCardsPlayed
 
-  dealt.push(card);
+  dealt[parseInt(ctx.currentPlayer)] = card;
+  numCardsPlayed++;
 
   // only update the suit if no suit exists
   if (suit === "")
@@ -383,6 +385,7 @@ function draw(G, ctx, card) {
     ...G,
     dealt,
     suit,
+    numCardsPlayed,
     dealtBy,
     players: {
       ...G.players,
@@ -393,32 +396,24 @@ function draw(G, ctx, card) {
 
 function onTurnEnd(G, ctx) {
   let dealt = [...G.dealt];
-  let order = [...G.order];
   let suit = G.suit;
   let dealtBy = G.dealtBy;
   let scores = [...G.scores];
   let round = G.round;
   let lastWinner = G.lastWinner;
+  let numCardsPlayed = G.numCardsPlayed
 
   // calculate the scores
-  if (dealt.length >= ctx.numPlayers) {
-    let idx = getWinner(suit, dealt);
-    lastWinner = order[idx];
+  //end of trick
+  if (numCardsPlayed >= ctx.numPlayers) {
+    lastWinner = getWinner(suit, dealt);
 
     scores[lastWinner]++;
-
-    order = [];
-    for (let i=0; i<ctx.numPlayers; i++) {
-      order.push(i.toString());
-    }
-    for (let i=0; i<lastWinner; i++) {
-      let element = order.shift();
-      order.push(element);
-    }
 
     dealt = [];
     suit = "";
     dealtBy = "";
+    numCardsPlayed = 0;
     round++;
   }
   return {
@@ -426,9 +421,9 @@ function onTurnEnd(G, ctx) {
     dealt,
     lastWinner,
     dealtBy,
-    order,
     suit,
     scores,
+    numCardsPlayed,
     round,
     passed: [], // reset the passed array when the phase ends
   }

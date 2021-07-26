@@ -6,11 +6,10 @@ export function getDealtCard(G) {
   return dealtCard;
 }
 
-export function getDealtCardsForPlayers(order, dealt) {
-  let cards = Array(order.length).fill("");
+export function getDealtCardsForPlayers(dealt) {
+  let cards = Array(dealt.length).fill("");
   for (let i=0; i<dealt.length; i++) {
-    let idx = parseInt(order[i]);
-    cards[idx] = dealt[i];
+    cards[i] = dealt[i];
   }
   return cards;
 }
