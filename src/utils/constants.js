@@ -15,7 +15,8 @@ export const STARTING_CARD_MAP = {
     'E': 'E5'
   }
 
-export const MIN_NUMBER_PLAYERS = 3;
+export const CARD_LIMIT = 26;
+export const MIN_NUMBER_PLAYERS = 2;
 export const MAX_NUMBER_PLAYERS = 9;
 
 export const SERVER_PORT = process.env.SERVER_PORT || 8000;
