@@ -1,0 +1,683 @@
+.cardda, .cardd2, .cardd3, .cardd4, .cardd5, .cardd6, .cardd7, .cardd8, .cardd9, .cardd10, .carddj, .carddq, .carddk,
+.cardaa, .carda2, .carda3, .carda4, .carda5, .carda6, .carda7, .carda8, .carda9, .carda10, .cardaj, .cardaq, .cardak,
+.cardsa, .cards2, .cards3, .cards4, .cards5, .cards6, .cards7, .cards8, .cards9, .cards10, .cardsj, .cardsq, .cardsk,
+.cardoa, .cardo2, .cardo3, .cardo4, .cardo5, .cardo6, .cardo7, .cardo8, .cardo9, .cardo10, .cardoj, .cardoq, .cardok,
+.cardca, .cardc2, .cardc3, .cardc4, .cardc5, .cardc6, .cardc7, .cardc8, .cardc9, .cardc10, .cardcj, .cardcq, .cardck,
+.cardra, .cardr2, .cardr3, .cardr4, .cardr5, .cardr6, .cardr7, .cardr8, .cardr9, .cardr10, .cardrj, .cardrq, .cardrk,
+.cardj1, .cardj2 {
+  display: inline-block;
+  background: url("/cornucopia.png") no-repeat;
+  overflow: hidden;
+  text-indent: -9999px;
+  text-align: left;
+}
+
+/* Reihe 1: d Datavalidation */
+.cardda {
+  background-position: -0px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardd2 {
+  background-position: -331px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardd3 {
+  background-position: -662px -0px;
+  width: 331px;
+  height: 514px;
+}
+.cardd4 {
+  background-position: -993px -0px;
+  width: 331px;
+  height: 514px;
+}
+.cardd5 {
+  background-position: -1324px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardd6 {
+  background-position: -1655px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardd7 {
+  background-position: -1986px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardd8 {
+  background-position: -2317px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardd9 {
+  background-position: -2648px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardd10 {
+  background-position: -2979px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.carddj {
+  background-position: -3310px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.carddq {
+  background-position: -3641px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.carddk {
+  background-position: -3972px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+
+/* Reihe 2: 
+a 
+Authentication */
+
+
+.cardaa {
+  background-position: -0px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.carda2 {
+  background-position: -331px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.carda3 {
+  background-position: -662px -514px;
+  width: 331px;
+  height: 514px;
+}
+.carda4 {
+  background-position: -993px -514px;
+  width: 331px;
+  height: 514px;
+}
+.carda5 {
+  background-position: -1324px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.carda6 {
+  background-position: -1655px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.carda7 {
+  background-position: -1986px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.carda8 {
+  background-position: -2317px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.carda9 {
+  background-position: -2648px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.carda10 {
+  background-position: -2979px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardaj {
+  background-position: -3310px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardaq {
+  background-position: -3641px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardak {
+  background-position: -3972px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+
+/* Reihe 3: 
+s
+Session Management */
+
+
+.cardsa {
+  background-position: -0px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.cards2 {
+  background-position: -331px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.cards3 {
+  background-position: -662px -1028px;
+  width: 331px;
+  height: 514px;
+}
+.cards4 {
+  background-position: -993px -1028px;
+  width: 331px;
+  height: 514px;
+}
+.cards5 {
+  background-position: -1324px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.cards6 {
+  background-position: -1655px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.cards7 {
+  background-position: -1986px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.cards8 {
+  background-position: -2317px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.cards9 {
+  background-position: -2648px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.cards10 {
+  background-position: -2979px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardsj {
+  background-position: -3310px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardsq {
+  background-position: -3641px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardsk {
+  background-position: -3972px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+/* Reihe 4: 
+o
+Authorization */
+
+
+.cardoa {
+  background-position: -0px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardo2 {
+  background-position: -331px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardo3 {
+  background-position: -662px -1542px;
+  width: 331px;
+  height: 514px;
+}
+.cardo4 {
+  background-position: -993px -1542px;
+  width: 331px;
+  height: 514px;
+}
+.cardo5 {
+  background-position: -1324px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardo6 {
+  background-position: -1655px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardo7 {
+  background-position: -1986px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardo8 {
+  background-position: -2317px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardo9 {
+  background-position: -2648px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardo10 {
+  background-position: -2979px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardoj {
+  background-position: -3310px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardoq {
+  background-position: -3641px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardok {
+  background-position: -3972px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+/* Reihe 5: 
+c
+Cryptography */
+
+
+.cardca {
+  background-position: -0px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardc2 {
+  background-position: -331px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardc3 {
+  background-position: -662px -2056px;
+  width: 331px;
+  height: 514px;
+}
+.cardc4 {
+  background-position: -993px -2056px;
+  width: 331px;
+  height: 514px;
+}
+.cardc5 {
+  background-position: -1324px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardc6 {
+  background-position: -1655px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardc7 {
+  background-position: -1986px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardc8 {
+  background-position: -2317px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardc9 {
+  background-position: -2648px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardc10 {
+  background-position: -2979px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardcj {
+  background-position: -3310px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardcq {
+  background-position: -3641px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardck {
+  background-position: -3972px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+/* Reihe 6: 
+r
+Cornucopia */
+
+
+.cardra {
+  background-position: -0px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardr2 {
+  background-position: -331px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardr3 {
+  background-position: -662px -2570px;
+  width: 331px;
+  height: 514px;
+}
+.cardr4 {
+  background-position: -993px -2570px;
+  width: 331px;
+  height: 514px;
+}
+.cardr5 {
+  background-position: -1324px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardr6 {
+  background-position: -1655px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardr7 {
+  background-position: -1986px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardr8 {
+  background-position: -2317px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardr9 {
+  background-position: -2648px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardr10 {
+  background-position: -2979px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardrj {
+  background-position: -3310px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardrq {
+  background-position: -3641px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardrk {
+  background-position: -3972px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+/* Reihe 7: 
+j
+Joker */
+
+
+.cardj1 {
+  background-position: -0px -3084px;
+  width: 331px;
+  height: 514px;
+}
+
+.cardj2 {
+  background-position: -331px -3084px;
+  width: 331px;
+  height: 514px;
+}
+
+.playing-card {
+  border: 1px solid darkgray;
+  -moz-box-shadow: 0.2em 0.2em 0.5em #ccc;
+  -webkit-box-shadow: 0.2em 0.2em 0.5em #ccc;
+  box-shadow: 0.2em 0.2em 0.5em #ccc;
+  background-color: rgba(0, 0, 0, 0.2);
+  bottom: 0;
+  top: 0;
+}
+
+.card-rounded {
+  border-radius: 44px;
+}
+
+.playingCardsContainer {
+  position: fixed;
+  bottom: 0;
+  border-top: 4px double #ccc;
+
+  background-image: radial-gradient(#ccc 20%, transparent 20%),
+    radial-gradient(#fafafa 20%, transparent 20%);
+  background-color: #eaeaea;
+  background-position: 0 0, 50px 50px;
+  background-size: 100px 100px;
+  padding-left: 20px;
+
+  width: 100%;
+}
+
+.playingCards {
+  display: table;
+  width: 100%;
+  padding-top: 20px;
+  height: 250px;
+}
+
+.playingCards:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.playingCards .hand li {
+  background-blend-mode: color;
+}
+
+.playingCards .hand .active {
+  background-blend-mode: normal;
+  border: 1px solid #000;
+}
+
+.playingCards .hand .active:hover {
+  margin-top: -310px;
+  cursor: pointer;
+  transform: scale(1);
+}
+
+.scaled {
+  transform-origin: top left;
+  transform: scale(0.4);
+  transition: all 0.4s ease-in-out;
+}
+
+.scaled-big {
+  transform: scale(0.9);
+}
+
+.playingCards ul.table,
+.playingCards ul.hand,
+.playingCards ul.deck {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 1.5em 0;
+  position: relative;
+}
+.playingCards ul.table li,
+.playingCards ul.hand li,
+.playingCards ul.deck li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  float: left;
+}
+
+.playingCards ul.hand li,
+.playingCards ul.deck li {
+  position: absolute;
+  display: inline-block;
+}
+
+.playingCards ul.hand li:nth-child(1) {
+  left: 0;
+}
+.playingCards ul.hand li:nth-child(2) {
+  left: 3em;
+}
+.playingCards ul.hand li:nth-child(3) {
+  left: 6em;
+}
+.playingCards ul.hand li:nth-child(4) {
+  left: 9em;
+}
+.playingCards ul.hand li:nth-child(5) {
+  left: 12em;
+}
+.playingCards ul.hand li:nth-child(6) {
+  left: 15em;
+}
+.playingCards ul.hand li:nth-child(7) {
+  left: 18em;
+}
+.playingCards ul.hand li:nth-child(8) {
+  left: 21em;
+}
+.playingCards ul.hand li:nth-child(9) {
+  left: 24em;
+}
+.playingCards ul.hand li:nth-child(10) {
+  left: 27em;
+}
+.playingCards ul.hand li:nth-child(11) {
+  left: 30em;
+}
+.playingCards ul.hand li:nth-child(12) {
+  left: 33em;
+}
+.playingCards ul.hand li:nth-child(13) {
+  left: 36em;
+}
+.playingCards ul.hand li:nth-child(14) {
+  left: 39em;
+}
+.playingCards ul.hand li:nth-child(15) {
+  left: 42em;
+}
+.playingCards ul.hand li:nth-child(16) {
+  left: 45em;
+}
+.playingCards ul.hand li:nth-child(17) {
+  left: 48em;
+}
+.playingCards ul.hand li:nth-child(18) {
+  left: 51em;
+}
+.playingCards ul.hand li:nth-child(19) {
+  left: 54em;
+}
+.playingCards ul.hand li:nth-child(20) {
+  left: 57em;
+}
+.playingCards ul.hand li:nth-child(21) {
+  left: 60em;
+}
+.playingCards ul.hand li:nth-child(22) {
+  left: 63em;
+}
+.playingCards ul.hand li:nth-child(23) {
+  left: 66em;
+}
+.playingCards ul.hand li:nth-child(24) {
+  left: 69em;
+}
+.playingCards ul.hand li:nth-child(25) {
+  left: 72em;
+}
+.playingCards ul.hand li:nth-child(26) {
+  left: 75em;
+}

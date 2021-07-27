@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+//import './client/styles/cornucopia_cards.css';
 import './client/styles/cards.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom'

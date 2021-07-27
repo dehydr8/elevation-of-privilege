@@ -1,24 +1,59 @@
 import { Game, INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
-import { DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
+import { DECK_HANDS, E_DECK_SUITS, E_DEFAULT_START_SUIT, E_INVALID_CARDS, E_STARTING_CARD_MAP, E_TRUMP_CARD_PREFIX } from '../utils/constants';
+import { C_DECK_SUITS, C_DEFAULT_START_SUIT, C_STARTING_CARD_MAP, C_TRUMP_CARD_PREFIX, C_INVALID_CARDS } from '../utils/constants';
 import { getDealtCard, getPlayers, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions.js';
 
 let scores = {};
 let deck = [];
-for (let i=0; i<DECK_SUITS.length; i++) {
-  for (let j=0; j<DECK_HANDS.length; j++) {
-    let c = DECK_SUITS[i] + DECK_HANDS[j];
-    deck.push(c);
-    scores[c] = j;
-    if (DECK_SUITS[i] === TRUMP_CARD_PREFIX) {
-      scores[c] += 100;
-    }
+let DECK_SUITS = E_DECK_SUITS;
+let DEFAULT_START_SUIT = E_DEFAULT_START_SUIT;
+let INVALID_CARDS = E_INVALID_CARDS;
+let STARTING_CARD_MAP = E_STARTING_CARD_MAP;
+let TRUMP_CARD_PREFIX = E_TRUMP_CARD_PREFIX;
+let gamemode = false; // false === EoP 
+export function toggleGamemode() {
+  gamemode = !gamemode;
+  if (gamemode) {
+    console.log("C");
+    DECK_SUITS = C_DECK_SUITS;
+    DEFAULT_START_SUIT = C_DEFAULT_START_SUIT;
+    INVALID_CARDS = C_INVALID_CARDS;
+    STARTING_CARD_MAP = C_STARTING_CARD_MAP;
+    TRUMP_CARD_PREFIX = C_TRUMP_CARD_PREFIX;
+    pushDeck();
+  } else {
+    console.log("E");
+    DECK_SUITS = E_DECK_SUITS;
+    DEFAULT_START_SUIT = E_DEFAULT_START_SUIT;
+    INVALID_CARDS = E_INVALID_CARDS;
+    STARTING_CARD_MAP = E_STARTING_CARD_MAP;
+    TRUMP_CARD_PREFIX = E_TRUMP_CARD_PREFIX;
+    pushDeck();
   }
 }
-// remove invalid cards
-INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
+
+export function getStartingCardMap() {
+  return STARTING_CARD_MAP;
+}
+pushDeck();
+export function pushDeck() {
+  deck.length = 0;
+  for (let i = 0; i < DECK_SUITS.length; i++) {
+    for (let j = 0; j < DECK_HANDS.length; j++) {
+      let c = DECK_SUITS[i] + DECK_HANDS[j];
+      deck.push(c);
+      scores[c] = j;
+      if (DECK_SUITS[i] === TRUMP_CARD_PREFIX) {
+        scores[c] += 100;
+      }
+    }
+  }
+  // remove invalid cards
+  INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
+}
 
 export function shuffleCards(ctx, startingCard) {
   let players = [];
@@ -28,7 +63,7 @@ export function shuffleCards(ctx, startingCard) {
 
   // shuffle the deck first
   let shuffled = ctx.random.Shuffle(deck);
-  
+
   // remove the startingCard card and resize to totalCardsToDeal
   shuffled.splice(shuffled.indexOf(startingCard), 1);
   shuffled = shuffled.slice(0, totalCardsToDeal - 1);
@@ -40,14 +75,13 @@ export function shuffleCards(ctx, startingCard) {
   let cardsToDeal = totalCardsToDeal / ctx.numPlayers;
   let first = 0;
 
-  for (let i=0; i<cardsToDeal*ctx.numPlayers; i+=cardsToDeal) {
-    let slice = shuffled.slice(i, i+cardsToDeal);
+  for (let i = 0; i < cardsToDeal * ctx.numPlayers; i += cardsToDeal) {
+    let slice = shuffled.slice(i, i + cardsToDeal);
     players.push(slice);
 
     if (slice.indexOf(startingCard) >= 0)
       first = i / cardsToDeal;
   }
-
   return {
     players,
     first,
@@ -57,7 +91,7 @@ export function shuffleCards(ctx, startingCard) {
 
 export function getWinner(suit, dealt) {
   let winner = 0, max = -1;
-  for (let i=0; i<dealt.length; i++) {
+  for (let i = 0; i < dealt.length; i++) {
     let c = dealt[i];
     if (c.startsWith(suit) || c.startsWith(TRUMP_CARD_PREFIX)) {
       let score = scores[c];
@@ -73,19 +107,19 @@ export function getWinner(suit, dealt) {
 export const ElevationOfPrivilege = Game({
   name: 'elevation-of-privilege',
   setup(ctx, setupData) {
-    const startSuit = (setupData) ?  setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT
+    const startSuit = DEFAULT_START_SUIT;
+    //(setupData) ? setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT;
     const startingCard = STARTING_CARD_MAP[startSuit];
-
     let scores = [];
     let shuffled = shuffleCards(ctx, startingCard);
     let order = [];
-    for (let i=0; i<ctx.numPlayers; i++) {
+    for (let i = 0; i < ctx.numPlayers; i++) {
       order.push(i);
     }
-    for (let i=0; i<ctx.numPlayers; i++) {
+    for (let i = 0; i < ctx.numPlayers; i++) {
       scores.push(0);
     }
-    for (let i=0; i<shuffled.first; i++) {
+    for (let i = 0; i < shuffled.first; i++) {
       let element = order.shift();
       order.push(element);
     }
@@ -211,7 +245,7 @@ export const ElevationOfPrivilege = Game({
     },
     pass: (G, ctx, id) => {
       let passed = [...G.passed];
-      
+
       if (!passed.includes(ctx.playerID)) {
         passed.push(ctx.playerID);
       }
@@ -259,13 +293,13 @@ export const ElevationOfPrivilege = Game({
 
       // TODO: have a cleaner or readable approach to updating this object
       let identifiedThreats = _.cloneDeep(G.identifiedThreats);
-      
+
       if (!(G.selectedDiagram in identifiedThreats)) {
-        Object.assign(identifiedThreats, {[G.selectedDiagram]: {}});
+        Object.assign(identifiedThreats, { [G.selectedDiagram]: {} });
       }
 
       if (!(G.selectedComponent in identifiedThreats[G.selectedDiagram])) {
-        Object.assign(identifiedThreats[G.selectedDiagram], {[G.selectedComponent]: {}});
+        Object.assign(identifiedThreats[G.selectedDiagram], { [G.selectedComponent]: {} });
       }
 
       Object.assign(identifiedThreats[G.selectedDiagram][G.selectedComponent], {
@@ -335,7 +369,7 @@ export const ElevationOfPrivilege = Game({
       if (G.round > G.maxRounds) {
         let scores = [...G.scores];
         let winner = 0, max = -1;
-        for (let i=0; i<scores.length; i++) {
+        for (let i = 0; i < scores.length; i++) {
           if (scores[i] > max) {
             winner = i;
             max = scores[i];
@@ -376,18 +410,18 @@ export const ElevationOfPrivilege = Game({
           if (dealt.length >= ctx.numPlayers) {
             let idx = getWinner(suit, dealt);
             lastWinner = order[idx];
-    
+
             scores[lastWinner]++;
-    
+
             order = [];
-            for (let i=0; i<ctx.numPlayers; i++) {
+            for (let i = 0; i < ctx.numPlayers; i++) {
               order.push(i);
             }
-            for (let i=0; i<lastWinner; i++) {
+            for (let i = 0; i < lastWinner; i++) {
               let element = order.shift();
               order.push(element);
             }
-    
+
             dealt = [];
             suit = "";
             dealtBy = "";

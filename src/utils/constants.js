@@ -1,19 +1,34 @@
 import _ from 'lodash';
 
-export const DECK_HANDS = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
-export const DECK_SUITS = ['S','T','R','I','D','E'];
-export const INVALID_CARDS = ['T2', 'E2', 'E3', 'E4'];
-export const TRUMP_CARD_PREFIX = 'E';
-export const DEFAULT_START_SUIT = 'T'
+//EoP-Cards
+export const DECK_HANDS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+export const E_DECK_SUITS = ['S', 'T', 'R', 'I', 'D', 'E'];
+export const E_INVALID_CARDS = ['T2', 'E2', 'E3', 'E4'];
+export const E_TRUMP_CARD_PREFIX = 'E';
+export const E_DEFAULT_START_SUIT = 'T';
 //TODO: Extract the following from INVALID_CARDS
-export const STARTING_CARD_MAP = {
-    'S': 'S2',
-    'T': 'T3',
-    'R': 'R2',
-    'I': 'I2', 
-    'D': 'D2',
-    'E': 'E5'
-  }
+export const E_STARTING_CARD_MAP = {
+  'S': 'S2',
+  'T': 'T3',
+  'R': 'R2',
+  'I': 'I2',
+  'D': 'D2',
+  'E': 'E5'
+}
+
+//Cornucopia-Cards
+export const C_DECK_SUITS = ['D', 'A', 'S', 'O', 'C', 'R'];
+export const C_INVALID_CARDS = [];
+export const C_TRUMP_CARD_PREFIX = 'C';
+export const C_DEFAULT_START_SUIT = 'D';
+export const C_STARTING_CARD_MAP = {
+  'D': 'D2',
+  'A': 'A2',
+  'S': 'S2',
+  'O': 'O2',
+  'C': 'C2',
+  'R': 'R2'
+}
 
 export const MIN_NUMBER_PLAYERS = 3;
 export const MAX_NUMBER_PLAYERS = 9;
