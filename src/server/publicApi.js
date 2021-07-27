@@ -29,7 +29,6 @@ const runPublicApi = (gameServer) => {
           }
         });
 
-    const gameName = ElevationOfPrivilege.name;
     const gameId = r.body.matchID;
 
     const credentials = [];
@@ -57,21 +56,18 @@ const runPublicApi = (gameServer) => {
     });
 
     router.get('/model/:id', async ctx => {
-    const gameName = ElevationOfPrivilege.name;
     const matchID = ctx.params.id;
     const model = await gameServer.db.getItem(`${matchID}:model`);
     ctx.body = model;
     });
 
     router.get('/download/:id', async ctx => {
-    const gameName = ElevationOfPrivilege.name;
     const matchID = ctx.params.id;
     const res = await gameServer.db.getItem(`${matchID}`).catch(err => {
         console.error(err, err.stack);
     });
     const metadata = await gameServer.db.getItem(`${matchID}:metadata`);
     let model = await gameServer.db.getItem(`${matchID}:model`);
-    console.log(res);
     // update the model with the identified threats
     Object.keys(res.G.identifiedThreats).forEach(diagramIdx => {
         Object.keys(res.G.identifiedThreats[diagramIdx]).forEach(componentIdx => {
@@ -118,7 +114,6 @@ const runPublicApi = (gameServer) => {
     //produce a nice textfile with the threats in
     router.get('/download/text/:id', async (ctx) => {
         //get some variables that might be useful
-        const gameName = ElevationOfPrivilege.name;
         const matchID = ctx.params.id;
         const gameState = await gameServer.db.getItem(`${matchID}`);
         const metadata = await gameServer.db.getItem(`${matchID}:metadata`);

@@ -56,13 +56,11 @@ describe('game', () => {
 
   it('have correct order in ctx', () => {
     const state = players['0'].getState();
-    expect(state.G.order).toStrictEqual(state.ctx.playOrder);
+    expect(state.ctx.playOrder).toStrictEqual(['0', '1', '2']);
   });
 
-  it('should respect the play order', () => {
-    const state = players['0'].getState();
-    expect(state.G.order[state.ctx.playOrderPos]).toBe(players["0"].getState().ctx.currentPlayer);
-  });
+  const startingPlayer = players['0'].getState().ctx.currentPlayer;
+  
 
   it('should not get stuck in an infinite loop', () => {
     const starting = players["0"].getState().ctx.currentPlayer;
@@ -214,4 +212,10 @@ describe('game', () => {
 
     expect(players['0'].getState().ctx.activePlayers).toBeFalsy();
   })
+
+  it('should respect the play order', () => {
+    const state = players['0'].getState()
+    const nextPlayer = (parseInt(startingPlayer) + 1) % state.ctx.numPlayers;
+    expect(state.ctx.currentPlayer).toBe(nextPlayer.toString())
+  });
 });
