@@ -1,7 +1,7 @@
 import { TurnOrder, INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
-import { DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
+import { CARD_LIMIT, DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
 import { getDealtCard, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions.js';
 
@@ -22,8 +22,10 @@ INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
 
 export function shuffleCards(ctx, startingCard) {
   let players = [];
-  let totalCardsToDeal = Math.floor(deck.length / ctx.numPlayers) * ctx.numPlayers;
-
+  let totalCardsToDeal = Math.min(
+    Math.floor(deck.length / ctx.numPlayers) * ctx.numPlayers, 
+    CARD_LIMIT * ctx.numPlayers
+  );
   //totalCardsToDeal = ctx.numPlayers * 2;
 
   // shuffle the deck first
