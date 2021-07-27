@@ -1,6 +1,17 @@
-.td-name {
+.ownPlayername {
+
+  min-width: 120%;
   max-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.otherPlayername {
+
+  min-width: 220%;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;  
 }

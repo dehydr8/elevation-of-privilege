@@ -20,33 +20,36 @@ class Leaderboard extends React.Component {
     return (
       <Card>
         <CardHeader>Statistics</CardHeader>
-          <Table size="sm">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Passed</th>
-                <th>Card</th>
-                <th>Score</th>
+        <Table size="sm">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th></th>
+              <th>Passed</th>
+              <th>Card</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.scores.map((val, idx) =>
+              <tr key={idx}>
+                <td>
+                  <div className={parseInt(this.props.playerID) === idx ? "ownPlayername" : "otherPlayername"}>
+                    {this.props.names[idx]}
+                  </div>
+                </td>
+                <td>
+                  {parseInt(this.props.playerID) === idx && <strong>(you)</strong>}</td>
+                <td>
+                  {hasPassed(idx, this) && <div align="center">&#10003;</div>}
+                </td>
+                <td><strong>{this.props.cards[idx]}</strong></td>
+                <td><Badge>{val}</Badge></td>
               </tr>
-            </thead>
-            <tbody>
-              {this.props.scores.map((val,idx) => 
-                <tr key={idx}>
-                  <td>{idx}</td>
-                  <td className="td-name">
-                    { this.props.names[idx] } { parseInt(this.props.playerID) === idx && <strong>(you)</strong> }
-                  </td>
-                  <td>
-                  { hasPassed(idx, this) && <div align="center">&#10003;</div> }
-                  </td>
-                  <td><strong>{this.props.cards[idx]}</strong></td>
-                  <td><Badge>{val}</Badge></td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-      </Card>
+            )}
+          </tbody>
+        </Table>
+      </Card >
     );
   }
 }
