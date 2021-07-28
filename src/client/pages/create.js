@@ -182,7 +182,7 @@ class Create extends React.Component {
               <FormGroup row key={i}>
                 <Label for={`p${i}`} sm={2}>Name</Label>
                 <Col sm={10}>
-                  <Input autoComplete={"off"} type="text" invalid={_.isEmpty(this.state.names[i])} name={`p${i}`} id={`p${i}`} onChange={e => this.onNameUpdated(i, e)} value={this.state.names[i]} />
+                  <Input autoComplete={"off"} type="text" invalid={_.isEmpty(this.state.names[i])}  name={`p${i}`} id={`p${i}`} onChange={e => this.onNameUpdated(i, e)} value={this.state.names[i]} />
                   <FormFeedback>The name cannot be empty</FormFeedback>
                 </Col>
               </FormGroup>
@@ -237,12 +237,12 @@ class Create extends React.Component {
             <tbody>
             {Array(this.state.players).fill(0).map((v, i) => 
               <tr key={i}>
-                <td>{this.state.names[i]}</td>
+                <td className="c-td-name">{this.state.names[i]}</td>
                 <td>
                   <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{this.url(i)}</a>
                 </td>
                 <td>
-                  <CopyButton text={this.url(i)} />
+                    <CopyButton text={this.url(i)} />
                 </td>
               </tr>
             )}
