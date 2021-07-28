@@ -56,6 +56,11 @@ The docker-compose setup starts two container:
 * Optimize component renders through `shouldComponentUpdate`
 * Write contributing guide
 
+## Using MongoDB
+As of boardgame.io v0.39.0, MongoDB is no longer supported as a database connector. There is currently no external library providing this functionality, however there is an implementation posted on github: https://github.com/boardgameio/boardgame.io/issues/6#issuecomment-656144940.
+
+The functions `setModel` and `fetch` will also need to be implemented to allow the model to be saved to the database
+
 ## Credits
 The game was originally invented by [Adam Shostack](https://adam.shostack.org/) at Microsoft. The [EoP Whitepaper](http://download.microsoft.com/download/F/A/E/FAE1434F-6D22-4581-9804-8B60C04354E4/EoP_Whitepaper.pdf) written by Adam can be downloaded which describes the motivation, experience and lessons learned in creating the game.
 

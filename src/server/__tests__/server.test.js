@@ -150,9 +150,9 @@ it('download the final model for a game', async () => {
     }
   };
 
-  await gameServer.db.setItem(`${matchID}:metadata`, metadata);
-  await gameServer.db.setItem(`${matchID}:model`, model);
-  await gameServer.db.setItem(`${matchID}`, state);
+  await gameServer.db.setMetadata(matchID, metadata);
+  await gameServer.db.setModel(matchID, model);
+  await gameServer.db.setState(matchID, state);
 
   // retrieve the model
   const response = await request(publicApiServer.callback()).get(`/download/${matchID}`);
@@ -300,9 +300,9 @@ it("Download threat file", async () => {
     }
   }
 
-  await gameServer.db.setItem(`${matchID}`, state);
-  await gameServer.db.setItem(`${matchID}:metadata`, metadata);
-  await gameServer.db.setItem(`${matchID}:model`, model);
+  await gameServer.db.setState(matchID, state);
+  await gameServer.db.setMetadata(matchID, metadata);
+  await gameServer.db.setModel(matchID, model);
   
   const date = new Date().toLocaleString();
 
