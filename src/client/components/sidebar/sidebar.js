@@ -9,7 +9,6 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { API_PORT } from '../../../utils/constants';
 import Footer from '../footer/footer';
-import { resolvePlayerNames, getPlayers } from '../../../utils/utils';
 
 class Sidebar extends React.Component {
   static propTypes = {
@@ -30,34 +29,34 @@ class Sidebar extends React.Component {
 
   render() {
     let dealtCard = getDealtCard(this.props.G);
-    const isLastToPass = this.props.G.passed.length === this.props.ctx.numPlayers-1 && !this.props.G.passed.includes(this.props.playerID)
+    const isLastToPass = this.props.G.passed.length === this.props.ctx.numPlayers - 1 && !this.props.G.passed.includes(this.props.playerID)
 
     return (
 
-        <div className="side-bar">
-          <div className="text-center">
-            <Footer short />
-          </div>
-          <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.gameID}`}>
-            <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Model
-          </Button>
-          <Button block size="lg" color="warning" href={`${this.apiBase}/download/text/${this.props.gameID}`}>
-            <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Threats
-          </Button>
-          <hr />
-
-          <Leaderboard passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
-          {isLastToPass && <div className="warning">You are the last one to pass!</div>}         
-          <Button color={(isLastToPass) ? "warning" : "secondary"} className="pass" size="lg" block disabled={
-      
-              this.props.ctx.phase !== "threats" ||
-              this.props.G.passed.includes(this.props.playerID) ||
-              !this.props.active
-            } onClick={() => { this.props.moves.pass() }}>
-              Pass
-          </Button>
-          <DealtCard card={dealtCard} />
+      <div className="side-bar">
+        <div className="text-center">
+          <Footer short />
         </div>
+        <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.gameID}`}>
+          <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Model
+        </Button>
+        <Button block size="lg" color="warning" href={`${this.apiBase}/download/text/${this.props.gameID}`}>
+          <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Threats
+        </Button>
+        <hr />
+
+        <Leaderboard passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
+        {isLastToPass && <div className="warning">You are the last one to pass!</div>}
+        <Button color={(isLastToPass) ? "warning" : "secondary"} className="pass" size="lg" block disabled={
+
+          this.props.ctx.phase !== "threats" ||
+          this.props.G.passed.includes(this.props.playerID) ||
+          !this.props.active
+        } onClick={() => { this.props.moves.pass() }}>
+          Pass
+        </Button>
+        <DealtCard card={dealtCard} />
+      </div>
     );
   }
 }
