@@ -5,7 +5,8 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
-import { API_PORT, DEFAULT_MODEL, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
+import { getStartingCardMap, toggleGamemode } from '../../game/eop';
+import { API_PORT, DEFAULT_MODEL, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS } from '../../utils/constants';
 import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
@@ -19,7 +20,7 @@ class Create extends React.Component {
     let initialSecrets = {};
     _.range(MAX_NUMBER_PLAYERS).forEach(
       n => {
-        initialPlayerNames[n] = `Player ${n+1}`;
+        initialPlayerNames[n] = `Player ${n + 1}`;
         initialSecrets[n] = ``;
       }
     );
@@ -51,7 +52,7 @@ class Create extends React.Component {
   }
 
   async createGame() {
-    
+
     this.setState({
       ...this.state,
       creating: true,
@@ -68,7 +69,7 @@ class Create extends React.Component {
 
     const gameId = r.body.game;
 
-    for (var i=0; i<r.body.credentials.length; i++) {
+    for (var i = 0; i < r.body.credentials.length; i++) {
       this.setState({
         ...this.state,
         secret: {
@@ -121,7 +122,7 @@ class Create extends React.Component {
   }
 
   isFormValid() {
-    for (var i=0; i<this.state.players; i++) {
+    for (var i = 0; i < this.state.players; i++) {
       if (_.isEmpty(this.state.names[i])) {
         return false;
       }
@@ -152,7 +153,7 @@ class Create extends React.Component {
               <Col sm={10}>
                 <Input type="select" name="players" id="players" onChange={e => this.onPlayersUpdated(e)} value={this.state.players}>
                   {
-                    _.range(MIN_NUMBER_PLAYERS, MAX_NUMBER_PLAYERS+1).map(
+                    _.range(MIN_NUMBER_PLAYERS, MAX_NUMBER_PLAYERS + 1).map(
                       n => (
                         <option key={`players-${n}`}>{n}</option>
                       )
@@ -162,7 +163,7 @@ class Create extends React.Component {
               </Col>
             </FormGroup>
             <hr />
-            {Array(this.state.players).fill(0).map((v, i) => 
+            {Array(this.state.players).fill(0).map((v, i) =>
               <FormGroup row key={i}>
                 <Label for={`p${i}`} sm={2}>Name</Label>
                 <Col sm={10}>
@@ -177,7 +178,7 @@ class Create extends React.Component {
               <Col sm={10}>
                 <Input type="select" name="startSuit" id="startSuit" onChange={e => this.onstartSuitUpdated(e)} value={this.state.startSuit}>
                   {
-                    Object.keys(STARTING_CARD_MAP).map(suit => (
+                    Object.keys(getStartingCardMap()).map(suit => (
                       <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString(suit)}</option>
                     ))
                   }
@@ -197,12 +198,18 @@ class Create extends React.Component {
                 </FormText>
                 or
                 <div>
-                  <Input id="default-model-checkbox" type="checkbox" onChange={e => this.toggleModelMode(e.target.checked)}/>
+                  <Input id="default-model-checkbox" type="checkbox" onChange={e => this.toggleModelMode(e.target.checked)} />
                   <Label for="default-model-checkbox">provide model via a different channel (e.g. video stream)</Label>
                 </div>
               </Col>
             </FormGroup>
             <hr />
+            <FormGroup>
+              <Col>
+                <Input id="gamemode" type="checkbox" onChange={e => toggleGamemode()} />
+                <Label for="gamemode">Toggle Gamemode</Label>
+              </Col>
+            </FormGroup>
             <Button block size="lg" color="warning" disabled={this.state.creating || !this.isFormValid()} onClick={this.createGame}>Proceed</Button>
           </Form>
           <hr />
@@ -219,14 +226,14 @@ class Create extends React.Component {
           </div>
           <Table>
             <tbody>
-            {Array(this.state.players).fill(0).map((v, i) => 
-              <tr key={i}>
-                <td>{this.state.names[i]}</td>
-                <td>
-                  <a href={`${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.gameID}/{i}/{this.state.secret[i]}</a>
-                </td>
-              </tr>
-            )}
+              {Array(this.state.players).fill(0).map((v, i) =>
+                <tr key={i}>
+                  <td>{this.state.names[i]}</td>
+                  <td>
+                    <a href={`${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/{this.state.gameID}/{i}/{this.state.secret[i]}</a>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </Table>
           <hr />
@@ -241,9 +248,9 @@ class Create extends React.Component {
 
     return (
       <div>
-        <Helmet bodyAttributes={{style: 'background-color : #000'}}/>
+        <Helmet bodyAttributes={{ style: 'background-color : #000' }} />
         <Container className="create">
-          <Row style={{paddingTop: "20px"}}>
+          <Row style={{ paddingTop: "20px" }}>
             <Col sm="12" md={{ size: 6, offset: 3 }}>
               <div className="text-center">
                 <Logo />

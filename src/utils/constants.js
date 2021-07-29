@@ -15,6 +15,22 @@ export const E_STARTING_CARD_MAP = {
   'D': 'D2',
   'E': 'E5'
 }
+/*
+//Standartisiert
+export const DECK_HANDS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+export const DECK_SUITS = ['A', 'B', 'C', 'D', 'E', 'F'];
+export const INVALID_CARDS = ['B2', 'T2', 'T3', 'T4'];
+export const TRUMP_CARD_PREFIX = 'T';
+export const DEFAULT_START_SUIT = 'T';
+export const STARTING_CARD_MAP = {
+  'A': 'A2',
+  'B': 'B3',
+  'C': 'C2',
+  'D': 'D2',
+  'E': 'E2',
+  'F': 'F5'
+}
+*/
 
 //Cornucopia-Cards
 export const C_DECK_SUITS = ['D', 'A', 'S', 'O', 'C', 'R'];
