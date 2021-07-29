@@ -24,5 +24,4 @@ export function getDatabase() {
       dir: 'db',
       logging: false,
     });
-  // }
 }
