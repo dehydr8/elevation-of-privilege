@@ -1,59 +1,24 @@
 import { Game, INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
-import { DECK_HANDS, E_DECK_SUITS, E_DEFAULT_START_SUIT, E_INVALID_CARDS, E_STARTING_CARD_MAP, E_TRUMP_CARD_PREFIX } from '../utils/constants';
-import { C_DECK_SUITS, C_DEFAULT_START_SUIT, C_STARTING_CARD_MAP, C_TRUMP_CARD_PREFIX, C_INVALID_CARDS } from '../utils/constants';
+import { DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
 import { getDealtCard, getPlayers, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions.js';
 
 let scores = {};
 let deck = [];
-let DECK_SUITS = E_DECK_SUITS;
-let DEFAULT_START_SUIT = E_DEFAULT_START_SUIT;
-let INVALID_CARDS = E_INVALID_CARDS;
-let STARTING_CARD_MAP = E_STARTING_CARD_MAP;
-let TRUMP_CARD_PREFIX = E_TRUMP_CARD_PREFIX;
-let gamemode = false; // false === EoP 
-export function toggleGamemode() {
-  gamemode = !gamemode;
-  if (gamemode) {
-    console.log("C");
-    DECK_SUITS = C_DECK_SUITS;
-    DEFAULT_START_SUIT = C_DEFAULT_START_SUIT;
-    INVALID_CARDS = C_INVALID_CARDS;
-    STARTING_CARD_MAP = C_STARTING_CARD_MAP;
-    TRUMP_CARD_PREFIX = C_TRUMP_CARD_PREFIX;
-    pushDeck();
-  } else {
-    console.log("E");
-    DECK_SUITS = E_DECK_SUITS;
-    DEFAULT_START_SUIT = E_DEFAULT_START_SUIT;
-    INVALID_CARDS = E_INVALID_CARDS;
-    STARTING_CARD_MAP = E_STARTING_CARD_MAP;
-    TRUMP_CARD_PREFIX = E_TRUMP_CARD_PREFIX;
-    pushDeck();
-  }
-}
-
-export function getStartingCardMap() {
-  return STARTING_CARD_MAP;
-}
-pushDeck();
-export function pushDeck() {
-  deck.length = 0;
-  for (let i = 0; i < DECK_SUITS.length; i++) {
-    for (let j = 0; j < DECK_HANDS.length; j++) {
-      let c = DECK_SUITS[i] + DECK_HANDS[j];
-      deck.push(c);
-      scores[c] = j;
-      if (DECK_SUITS[i] === TRUMP_CARD_PREFIX) {
-        scores[c] += 100;
-      }
+for (let i = 0; i < DECK_SUITS.length; i++) {
+  for (let j = 0; j < DECK_HANDS.length; j++) {
+    let c = DECK_SUITS[i] + DECK_HANDS[j];
+    deck.push(c);
+    scores[c] = j;
+    if (DECK_SUITS[i] === TRUMP_CARD_PREFIX) {
+      scores[c] += 100;
     }
   }
-  // remove invalid cards
-  INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
 }
+// remove invalid cards
+INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
 
 export function shuffleCards(ctx, startingCard) {
   let players = [];
@@ -144,7 +109,7 @@ export const ElevationOfPrivilege = Game({
         new: true,
       },
       identifiedThreats: {},
-      startingCard: startingCard
+      startingCard: startingCard,
     }
     return ret;
   },

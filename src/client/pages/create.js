@@ -5,12 +5,22 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
-import { getStartingCardMap, toggleGamemode } from '../../game/eop';
-import { API_PORT, DEFAULT_MODEL, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS } from '../../utils/constants';
+import { API_PORT, DEFAULT_MODEL, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
 import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
 import '../styles/create.css';
+
+let gamemode;
+
+export function toggleGamemode() {
+  gamemode = !gamemode;
+  console.log("GM set to: " + gamemode)
+}
+//export function getGamemode() {
+//console.log("gave gamemode: " + gamemode);
+//return gamemode;
+//}
 
 class Create extends React.Component {
 
@@ -178,7 +188,7 @@ class Create extends React.Component {
               <Col sm={10}>
                 <Input type="select" name="startSuit" id="startSuit" onChange={e => this.onstartSuitUpdated(e)} value={this.state.startSuit}>
                   {
-                    Object.keys(getStartingCardMap()).map(suit => (
+                    Object.keys(STARTING_CARD_MAP).map(suit => (
                       <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString(suit)}</option>
                     ))
                   }
@@ -274,5 +284,5 @@ class Create extends React.Component {
     );
   }
 }
-
+export const gamemode1 = gamemode;
 export default Create;

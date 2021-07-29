@@ -1,10 +1,10 @@
-.cardda, .cardd2, .cardd3, .cardd4, .cardd5, .cardd6, .cardd7, .cardd8, .cardd9, .cardd10, .carddj, .carddq, .carddk,
-.cardaa, .carda2, .carda3, .carda4, .carda5, .carda6, .carda7, .carda8, .carda9, .carda10, .cardaj, .cardaq, .cardak,
-.cardsa, .cards2, .cards3, .cards4, .cards5, .cards6, .cards7, .cards8, .cards9, .cards10, .cardsj, .cardsq, .cardsk,
-.cardoa, .cardo2, .cardo3, .cardo4, .cardo5, .cardo6, .cardo7, .cardo8, .cardo9, .cardo10, .cardoj, .cardoq, .cardok,
-.cardca, .cardc2, .cardc3, .cardc4, .cardc5, .cardc6, .cardc7, .cardc8, .cardc9, .cardc10, .cardcj, .cardcq, .cardck,
-.cardra, .cardr2, .cardr3, .cardr4, .cardr5, .cardr6, .cardr7, .cardr8, .cardr9, .cardr10, .cardrj, .cardrq, .cardrk,
-.cardj1, .cardj2 {
+.ccardaa, .ccarda2, .ccarda3, .ccarda4, .ccarda5, .ccarda6, .ccarda7, .ccarda8, .ccarda9, .ccarda10, .ccardaj, .ccardaq, .ccardak,
+.ccardba, .ccardb2, .ccardb3, .ccardb4, .ccardb5, .ccardb6, .ccardb7, .ccardb8, .ccardb9, .ccardb10, .ccardbj, .ccardbq, .ccardbk,
+.ccardca, .ccardc2, .ccardc3, .ccardc4, .ccardc5, .ccardc6, .ccardc7, .ccardc8, .ccardc9, .ccardc10, .ccardcj, .ccardcq, .ccardck,
+.ccardda, .ccardd2, .ccardd3, .ccardd4, .ccardd5, .ccardd6, .ccardd7, .ccardd8, .ccardd9, .ccardd10, .ccarddj, .ccarddq, .ccarddk,
+.ccardea, .ccarde2, .ccarde3, .ccarde4, .ccarde5, .ccarde6, .ccarde7, .ccarde8, .ccarde9, .ccarde10, .ccardej, .ccardeq, .ccardek,
+.ccardta, .ccardt2, .ccardt3, .ccardt4, .ccardt5, .ccardt6, .ccardt7, .ccardt8, .ccardt9, .ccardt10, .ccardtj, .ccardtq, .ccardtk,
+.ccardj1, .ccardj2 {
   display: inline-block;
   background: url("/cornucopia.png") no-repeat;
   overflow: hidden;
@@ -13,77 +13,77 @@
 }
 
 /* Reihe 1: d Datavalidation */
-.cardda {
+.ccardaa {
   background-position: -0px -0px;
   width: 331px;
   height: 514px;
 }
 
-.cardd2 {
+.ccarda2 {
   background-position: -331px -0px;
   width: 331px;
   height: 514px;
 }
 
-.cardd3 {
+.ccarda3 {
   background-position: -662px -0px;
   width: 331px;
   height: 514px;
 }
-.cardd4 {
+.ccarda4 {
   background-position: -993px -0px;
   width: 331px;
   height: 514px;
 }
-.cardd5 {
+.ccarda5 {
   background-position: -1324px -0px;
   width: 331px;
   height: 514px;
 }
 
-.cardd6 {
+.ccarda6 {
   background-position: -1655px -0px;
   width: 331px;
   height: 514px;
 }
 
-.cardd7 {
+.ccarda7 {
   background-position: -1986px -0px;
   width: 331px;
   height: 514px;
 }
 
-.cardd8 {
+.ccarda8 {
   background-position: -2317px -0px;
   width: 331px;
   height: 514px;
 }
 
-.cardd9 {
+.ccarda9 {
   background-position: -2648px -0px;
   width: 331px;
   height: 514px;
 }
 
-.cardd10 {
+.ccarda10 {
   background-position: -2979px -0px;
   width: 331px;
   height: 514px;
 }
 
-.carddj {
+.ccardaj {
   background-position: -3310px -0px;
   width: 331px;
   height: 514px;
 }
 
-.carddq {
+.ccardaq {
   background-position: -3641px -0px;
   width: 331px;
   height: 514px;
 }
 
-.carddk {
+.ccardak {
   background-position: -3972px -0px;
   width: 331px;
   height: 514px;
@@ -95,77 +95,77 @@ a
 Authentication */
 
 
-.cardaa {
+.ccardba {
   background-position: -0px -514px;
   width: 331px;
   height: 514px;
 }
 
-.carda2 {
+.ccardb2 {
   background-position: -331px -514px;
   width: 331px;
   height: 514px;
 }
 
-.carda3 {
+.ccardb3 {
   background-position: -662px -514px;
   width: 331px;
   height: 514px;
 }
-.carda4 {
+.ccardb4 {
   background-position: -993px -514px;
   width: 331px;
   height: 514px;
 }
-.carda5 {
+.ccardb5 {
   background-position: -1324px -514px;
   width: 331px;
   height: 514px;
 }
 
-.carda6 {
+.ccardb6 {
   background-position: -1655px -514px;
   width: 331px;
   height: 514px;
 }
 
-.carda7 {
+.ccardb7 {
   background-position: -1986px -514px;
   width: 331px;
   height: 514px;
 }
 
-.carda8 {
+.ccardb8 {
   background-position: -2317px -514px;
   width: 331px;
   height: 514px;
 }
 
-.carda9 {
+.ccardb9 {
   background-position: -2648px -514px;
   width: 331px;
   height: 514px;
 }
 
-.carda10 {
+.ccardb10 {
   background-position: -2979px -514px;
   width: 331px;
   height: 514px;
 }
 
-.cardaj {
+.ccardbj {
   background-position: -3310px -514px;
   width: 331px;
   height: 514px;
 }
 
-.cardaq {
+.ccardbq {
   background-position: -3641px -514px;
   width: 331px;
   height: 514px;
 }
 
-.cardak {
+.ccardbk {
   background-position: -3972px -514px;
   width: 331px;
   height: 514px;
@@ -177,77 +177,77 @@ s
 Session Management */
 
 
-.cardsa {
+.ccardca {
   background-position: -0px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.cards2 {
+.ccardc2 {
   background-position: -331px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.cards3 {
+.ccardc3 {
   background-position: -662px -1028px;
   width: 331px;
   height: 514px;
 }
-.cards4 {
+.ccardc4 {
   background-position: -993px -1028px;
   width: 331px;
   height: 514px;
 }
-.cards5 {
+.ccardc5 {
   background-position: -1324px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.cards6 {
+.ccardc6 {
   background-position: -1655px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.cards7 {
+.ccardc7 {
   background-position: -1986px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.cards8 {
+.ccardc8 {
   background-position: -2317px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.cards9 {
+.ccardc9 {
   background-position: -2648px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.cards10 {
+.ccardc10 {
   background-position: -2979px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.cardsj {
+.ccardcj {
   background-position: -3310px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.cardsq {
+.ccardcq {
   background-position: -3641px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.cardsk {
+.ccardck {
   background-position: -3972px -1028px;
   width: 331px;
   height: 514px;
@@ -258,77 +258,77 @@ o
 Authorization */
 
 
-.cardoa {
+.ccardda {
   background-position: -0px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.cardo2 {
+.ccardd2 {
   background-position: -331px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.cardo3 {
+.ccardd3 {
   background-position: -662px -1542px;
   width: 331px;
   height: 514px;
 }
-.cardo4 {
+.ccardd4 {
   background-position: -993px -1542px;
   width: 331px;
   height: 514px;
 }
-.cardo5 {
+.ccardd5 {
   background-position: -1324px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.cardo6 {
+.ccardd6 {
   background-position: -1655px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.cardo7 {
+.ccardd7 {
   background-position: -1986px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.cardo8 {
+.ccardd8 {
   background-position: -2317px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.cardo9 {
+.ccardd9 {
   background-position: -2648px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.cardo10 {
+.ccardd10 {
   background-position: -2979px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.cardoj {
+.ccarddj {
   background-position: -3310px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.cardoq {
+.ccarddq {
   background-position: -3641px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.cardok {
+.ccarddk {
   background-position: -3972px -1542px;
   width: 331px;
   height: 514px;
@@ -339,77 +339,77 @@ c
 Cryptography */
 
 
-.cardca {
+.ccardea {
   background-position: -0px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.cardc2 {
+.ccarde2 {
   background-position: -331px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.cardc3 {
+.ccarde3 {
   background-position: -662px -2056px;
   width: 331px;
   height: 514px;
 }
-.cardc4 {
+.ccarde4 {
   background-position: -993px -2056px;
   width: 331px;
   height: 514px;
 }
-.cardc5 {
+.ccarde5 {
   background-position: -1324px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.cardc6 {
+.ccarde6 {
   background-position: -1655px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.cardc7 {
+.ccarde7 {
   background-position: -1986px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.cardc8 {
+.ccarde8 {
   background-position: -2317px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.cardc9 {
+.ccarde9 {
   background-position: -2648px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.cardc10 {
+.ccarde10 {
   background-position: -2979px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.cardcj {
+.ccardej {
   background-position: -3310px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.cardcq {
+.ccardeq {
   background-position: -3641px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.cardck {
+.ccardek {
   background-position: -3972px -2056px;
   width: 331px;
   height: 514px;
@@ -420,77 +420,77 @@ r
 Cornucopia */
 
 
-.cardra {
+.ccardta {
   background-position: -0px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.cardr2 {
+.ccardt2 {
   background-position: -331px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.cardr3 {
+.ccardt3 {
   background-position: -662px -2570px;
   width: 331px;
   height: 514px;
 }
-.cardr4 {
+.ccardt4 {
   background-position: -993px -2570px;
   width: 331px;
   height: 514px;
 }
-.cardr5 {
+.ccardt5 {
   background-position: -1324px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.cardr6 {
+.ccardt6 {
   background-position: -1655px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.cardr7 {
+.ccardt7 {
   background-position: -1986px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.cardr8 {
+.ccardt8 {
   background-position: -2317px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.cardr9 {
+.ccardt9 {
   background-position: -2648px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.cardr10 {
+.ccardt10 {
   background-position: -2979px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.cardrj {
+.ccardtj {
   background-position: -3310px -2570px;
   width: 331px;
-  height: 514px;
+  height: 514px;  
 }
 
-.cardrq {
+.ccardtq {
   background-position: -3641px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.cardrk {
+.ccardtk {
   background-position: -3972px -2570px;
   width: 331px;
   height: 514px;
@@ -501,13 +501,13 @@ j
 Joker */
 
 
-.cardj1 {
+.ccardj1 {
   background-position: -0px -3084px;
   width: 331px;
   height: 514px;
 }
 
-.cardj2 {
+.ccardj2 {
   background-position: -331px -3084px;
   width: 331px;
   height: 514px;
@@ -527,7 +527,7 @@ Joker */
   border-radius: 44px;
 }
 
-.playingCardsContainer {
+.playingccardsContainer {
   position: fixed;
   bottom: 0;
   border-top: 4px double #ccc;

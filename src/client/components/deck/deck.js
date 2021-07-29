@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getValidMoves } from '../../../utils/utils';
+import { render } from 'react-dom';
+import { gamemode1 } from '../../pages/create';
+
 
 class Deck extends React.Component {
   static propTypes = {
@@ -11,8 +14,9 @@ class Deck extends React.Component {
     current: PropTypes.bool.isRequired,
     active: PropTypes.bool.isRequired,
     onCardSelect: PropTypes.func.isRequired,
-    startingCard: PropTypes.string.isRequired
+    startingCard: PropTypes.string.isRequired,
   };
+
 
   getRenderedDeck() {
     let left = this.props.cards;
@@ -22,10 +26,10 @@ class Deck extends React.Component {
     if (this.props.current && this.props.active && this.props.phase === "play") {
       validMoves = getValidMoves(left, suit, this.props.round, this.props.startingCard);
     }
-
+    console.log("gamemode got: " + gamemode1);
     let deck = left
       .map(e => (
-        <li key={e} className={`playing-card card${e.toLowerCase()} ${validMoves.includes(e) ? 'active' : ''} card-rounded scaled`} onClick={() => this.props.onCardSelect(e)} />
+        <li key={e} className={`playing-card ${(gamemode1) ? "c" : ""}card${e.toLowerCase()} ${validMoves.includes(e) ? 'active' : ''} card-rounded scaled`} onClick={() => this.props.onCardSelect(e)} />
       ));
 
     return (
@@ -36,8 +40,8 @@ class Deck extends React.Component {
   }
 
   render() {
+    console.log("updated deck");
     let deck = this.getRenderedDeck();
-
     return (
       <div className="playingCards">
         {deck}

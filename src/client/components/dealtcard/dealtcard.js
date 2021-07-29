@@ -7,8 +7,9 @@ class DealtCard extends React.Component {
   };
 
   render() {
+    let gamemode = false;
     return (
-      <div className={`playing-card card${this.props.card.toLowerCase()} active card-rounded scaled-big`} />
+      <div className={`playing-card ${(gamemode) ? "c" : ""}card${this.props.card.toLowerCase()} active card-rounded scaled-big`} />
     );
   }
 }
