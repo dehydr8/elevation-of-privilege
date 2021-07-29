@@ -157,6 +157,8 @@
 }
 
 .scaled-big {
+    margin-top: 155%;
+    position: absolute;
     transform: scale(0.9);
 }
 
