@@ -44,11 +44,7 @@ class Board extends React.Component {
   }
 
   async updateNames() {
-    const g = await request
-      .get(`${this.apiBase}/players/${this.props.matchID}`)
-      .catch(err => {
-        console.error(err, err.stack);
-      });
+    const g = await request.get(`${this.apiBase}/players/${this.props.matchID}`)
     
     g.body.players.forEach(p => {
       if (typeof p.name !== 'undefined') {
@@ -74,29 +70,10 @@ class Board extends React.Component {
     this.updateModel();
   }
 
-  isInThreatStage() {
-    return this.props.ctx.activePlayers ? true : false;
-  }
-
-  isActive() {
-    if (this.props.ctx.currentPlayer === this.props.playerID) {
-      return true;
-    } else if (this.props.ctx.activePlayers) {
-      if (this.props.ctx.activePlayers[this.props.playerID] === 'threats') {
-        return true;
-      }
-    } else {
-      return false;
-    }
-  }
-
   render() {
-    let current = false;
-    let active = this.isActive();
-
-    if (this.props.playerID === this.props.ctx.currentPlayer) {
-      current = true;
-    }
+    const current = this.props.playerID === this.props.ctx.currentPlayer
+    const isInThreatStage = this.props.ctx.activePlayers && this.props.ctx.activePlayers[this.props.playerID] === 'threats';
+    const active = current || isInThreatStage;
 
     let dealtCard = getDealtCard(this.props.G);
 
@@ -106,13 +83,13 @@ class Board extends React.Component {
         <div className="player-wrap">
           <div className="playingCardsContainer">
             <div className="status-bar">
-              <Status playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard} isInThreatStage={this.isInThreatStage()} />
+              <Status playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard} isInThreatStage={isInThreatStage} />
             </div>
             <Deck 
               cards={this.props.G.players[this.props.playerID]}
               suit={this.props.G.suit}
               /* phase replaced with isInThreatStage. active players is null when not */
-              isInThreatStage={this.isInThreatStage()}
+              isInThreatStage={isInThreatStage}
               round={this.props.G.round}
               current={current}
               active={active}
@@ -121,8 +98,8 @@ class Board extends React.Component {
             />
           </div>
         </div>
-        <Sidebar playerID={this.props.playerID} matchID={this.props.matchID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} isInThreatStage={this.isInThreatStage()} current={current} active={active} names={this.state.names} />
-        <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} isInThreatStage={this.isInThreatStage()} moves={this.props.moves} active={active} />
+        <Sidebar playerID={this.props.playerID} matchID={this.props.matchID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} isInThreatStage={isInThreatStage} current={current} active={active} names={this.state.names} />
+        <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} isInThreatStage={isInThreatStage} moves={this.props.moves} active={active} />
       </div>
     );
   }

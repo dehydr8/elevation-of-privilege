@@ -4,7 +4,7 @@ import Leaderboard from '../leaderboard/leaderboard';
 import DealtCard from '../dealtcard/dealtcard';
 import './sidebar.css';
 import { Button } from 'reactstrap';
-import { getDealtCard, getDealtCardsForPlayers } from '../../../utils/utils'
+import { getDealtCard } from '../../../utils/utils'
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { API_PORT } from '../../../utils/constants';
@@ -49,8 +49,8 @@ class Sidebar extends React.Component {
         </Button>
         <hr />
 
-        <Leaderboard passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.dealt)} />
-        {isLastToPass && <div className="warning">You are the last one to pass!</div>}
+        <Leaderboard passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={this.props.G.dealt} />
+        {isLastToPass && <div className="warning">You are the last one to pass!</div>}         
         <Button color={(isLastToPass) ? "warning" : "secondary"} className="pass" size="lg" block disabled={
           !isInThreatStage ||
           this.props.G.passed.includes(this.props.playerID) ||

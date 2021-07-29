@@ -3,14 +3,14 @@ import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
 import { getDealtCard, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions.js';
+import { hasPlayerPassed } from './utils';
 
 export function toggleModal(G, ctx) {
   // if the player has passed, they shouldn't be able to toggle the modal
-  let passed = [...G.passed];
-  if (passed.includes(ctx.playerID) || (G.threat.modal && G.threat.owner !== ctx.playerID)) {
+  if (hasPlayerPassed(G, ctx) || (G.threat.modal && G.threat.owner !== ctx.playerID)) {
     return INVALID_MOVE;
   }
-  let card = getDealtCard(G);
+  const card = getDealtCard(G);
   return {
     ...G,
     threat: {
@@ -30,8 +30,7 @@ export function toggleModal(G, ctx) {
 
 export function toggleModalUpdate(G, ctx, threat) {
   // if the player has passed, they shouldn't be able to toggle the modal
-  let passed = [...G.passed];
-  if (passed.includes(ctx.playerID) || (threat.owner !== ctx.playerID)) {
+  if (hasPlayerPassed(G, ctx) || (threat.owner !== ctx.playerID)) {
     return INVALID_MOVE;
   }
 
@@ -64,8 +63,7 @@ export function updateThreat(G, ctx, field, value) {
 
 export function selectDiagram(G, ctx, id) {
   // if the player has passed, they shouldn't be able to select diagrams
-  let passed = [...G.passed];
-  if (passed.includes(ctx.playerID)) {
+  if (hasPlayerPassed(G, ctx)) {
     return INVALID_MOVE;
   }
 
@@ -79,8 +77,7 @@ export function selectDiagram(G, ctx, id) {
 
 export function selectComponent(G, ctx, id) {
   // if the player has passed, they shouldn't be able to select components
-  let passed = [...G.passed];
-  if (passed.includes(ctx.playerID)) {
+  if (hasPlayerPassed(G, ctx)) {
     return INVALID_MOVE;
   }
 
@@ -93,8 +90,7 @@ export function selectComponent(G, ctx, id) {
 
 export function selectThreat(G, ctx, id) {
   // if the player has passed, they shouldn't be able to select threat
-  let passed = [...G.passed];
-  if (passed.includes(ctx.playerID)) {
+  if (hasPlayerPassed(G, ctx)) {
     return INVALID_MOVE;
   }
 
@@ -107,7 +103,7 @@ export function selectThreat(G, ctx, id) {
 export function pass(G, ctx, id) {
   let passed = [...G.passed];
   
-  if (!passed.includes(ctx.playerID)) {
+  if (!hasPlayerPassed(G, ctx)) {
     passed.push(ctx.playerID);
   }
 
@@ -119,8 +115,7 @@ export function pass(G, ctx, id) {
 
 export function deleteThreat(G, ctx, threat) {
   // if the player has passed, they shouldn't be able to toggle the modal
-  let passed = [...G.passed];
-  if (passed.includes(ctx.playerID) || (threat.owner !== ctx.playerID)) {
+  if (hasPlayerPassed(G, ctx) || (threat.owner !== ctx.playerID)) {
     return INVALID_MOVE;
   }
 

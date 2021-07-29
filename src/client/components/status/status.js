@@ -33,7 +33,7 @@ class Status extends React.Component {
       return (
         <span>{prefix}Waiting for <strong>{currentPlayerName}</strong> to play a card.</span>
       );
-    } else if (this.props.isInThreatStage) {
+    } else {
       let all = new Set(getPlayers(this.props.ctx.numPlayers));
       let passed = new Set(this.props.G.passed);
       let difference = new Set([...all].filter(x => !passed.has(x)));
@@ -44,8 +44,6 @@ class Status extends React.Component {
         <span><strong>{playerWhoDealt}</strong> dealt <strong>{this.props.dealtCard}</strong>, waiting for <strong>{grammarJoin(players)}</strong> to add threats or pass.</span>
       );
     }
-
-    return <span />;
   } 
 }
 export default Status;

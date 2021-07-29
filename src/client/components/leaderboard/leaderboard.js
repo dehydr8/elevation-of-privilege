@@ -41,7 +41,7 @@ class Leaderboard extends React.Component {
                 <td>
                   {hasPassed(idx, this) && <div align="center">&#10003;</div>}
                 </td>
-                <td><strong>{this.props.cards[idx]}</strong></td>
+                <td><strong>{this.props.cards[idx] ? this.props.cards[idx] : ''}</strong></td>
                 <td><Badge>{val}</Badge></td>
               </tr>
             )}

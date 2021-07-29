@@ -1,5 +1,4 @@
-import { CARD_LIMIT, DECK_HANDS, DECK_SUITS, INVALID_CARDS, TRUMP_CARD_PREFIX } from '../utils/constants';
-
+import { DEFAULT_START_SUIT, STARTING_CARD_MAP, CARD_LIMIT, DECK_HANDS, DECK_SUITS, INVALID_CARDS, TRUMP_CARD_PREFIX } from '../utils/constants';
 
 
 let scores = {};
@@ -54,6 +53,45 @@ export function shuffleCards(ctx, startingCard) {
   }
 }
 
+export function setupGame(ctx, setupData) {
+  const startSuit = (setupData) ?  setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT
+  const startingCard = STARTING_CARD_MAP[startSuit];
+
+  let scores = new Array(ctx.numPlayers).fill(0);
+  let shuffled = shuffleCards(ctx, startingCard);
+
+  let ret = {
+    dealt: [],
+    passed: [],
+    suit: "",
+    dealtBy: "",
+    players: shuffled.players,
+    round: 1,
+    numCardsPlayed: 0,
+    scores,
+    lastWinner: shuffled.first,
+    maxRounds: shuffled.cardsToDeal,
+    selectedDiagram: 0,
+    selectedComponent: "",
+    selectedThreat: "",
+    threat: {
+      modal: false,
+      new: true,
+    },
+    identifiedThreats: {},
+    startingCard: startingCard
+  }
+  return ret;
+}
+
+export function firstPlayer(G, ctx) {
+  return G.lastWinner;
+}
+
+export function hasPlayerPassed(G, ctx) {
+  return G.passed.includes(ctx.playerID);
+}
+
 export function getWinner(suit, dealt) {
   let winner = 0, max = -1;
   for (let i=0; i<dealt.length; i++) {
@@ -71,14 +109,8 @@ export function getWinner(suit, dealt) {
 
 export function endGameIf(G, ctx) {
   if (G.round > G.maxRounds) {
-    let scores = [...G.scores];
-    let winner = 0, max = -1;
-    for (let i=0; i<scores.length; i++) {
-      if (scores[i] > max) {
-        winner = i;
-        max = scores[i];
-      }
-    }
+    const scores = [...G.scores];
+    const winner = scores.indexOf(Math.max(scores));
     return winner;
   }
 }

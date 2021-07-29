@@ -67,11 +67,7 @@ const runPublicApi = (gameServer) => {
 
   router.get('/download/:id', async (ctx) => {
     const matchID = ctx.params.id;
-    const game = await gameServer.db
-      .fetch(matchID, { state: true, metadata: true, model: true })
-      .catch((err) => {
-        console.error(err, err.stack);
-      });
+    const game = await gameServer.db.fetch(matchID, { state: true, metadata: true, model: true });
 
     // update the model with the identified threats
     Object.keys(game.state.G.identifiedThreats).forEach((diagramIdx) => {

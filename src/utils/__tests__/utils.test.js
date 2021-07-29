@@ -1,4 +1,4 @@
-import { getDealtCard, getDealtCardsForPlayers, resolvePlayerNames, resolvePlayerName, grammarJoin, getPlayers, getComponentName, getValidMoves, getTypeString, escapeMarkdownText } from '../utils'
+import { getDealtCard, resolvePlayerNames, resolvePlayerName, grammarJoin, getPlayers, getComponentName, getValidMoves, getTypeString, escapeMarkdownText } from '../utils'
 import { STARTING_CARD } from '../constants';
 
 it('gets empty card if no card dealt', async () => {
@@ -17,12 +17,6 @@ it('gets correct card if a multiple cards are dealt', async () => {
   expect(getDealtCard({
     dealt: ["A", "B", "C"]
   })).toBe("C");
-});
-
-it('populates correct cards for players based on dealt cards', async () => {
-  expect(getDealtCardsForPlayers(
-    ["A", "B", "C"]
-  )).toStrictEqual(["A", "B", "C"]);
 });
 
 it('resolves player names correctly', async () => {
