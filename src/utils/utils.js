@@ -94,3 +94,14 @@ export function getTypeString(type) {
   }
   return "";
 }
+
+export function escapeMarkdownText(text) {
+  //replaces certain characters with an escaped version
+  //doesn't escape * or _ to allow users to format the descriptions
+
+  return text.replace(/[![\]()]/gm, '\\$&').replace(/</gm, '&lt;').replace(/>/gm, '&gt;')
+}
+
+export async function copyToClipboard(text) {
+  return await navigator.clipboard.writeText(text);
+}

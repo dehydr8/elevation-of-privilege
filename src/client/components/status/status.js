@@ -41,7 +41,6 @@ class Status extends React.Component {
     }
 
     return <span />;
-  }
+  } 
 }
-
 export default Status;

@@ -5,7 +5,7 @@ import Router from 'koa-router';
 import request from 'superagent';
 import { ElevationOfPrivilege } from '../game/eop';
 import { API_PORT, INTERNAL_API_PORT } from '../utils/constants';
-import { getTypeString } from '../utils/utils';
+import { getTypeString, escapeMarkdownText } from '../utils/utils';
 
 const runPublicApi = (gameServer) => {
 
@@ -114,6 +114,27 @@ const runPublicApi = (gameServer) => {
         ctx.body = model;
     });
 
+    //produce a nice textfile with the threats in
+    router.get('/download/text/:id', async (ctx) => {
+        //get some variables that might be useful
+        const gameName = ElevationOfPrivilege.name;
+        const gameID = ctx.params.id;
+        const gameState = await gameServer.db.get(`${gameName}:${gameID}`);
+        const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
+        const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
+        
+        const threats = getThreats(gameState, metadata, model);
+        
+
+        const modelTitle = model ? model.summary.title.trim().replace(' ', '-') : "untitled-model";
+        const timestamp = new Date().toISOString().replace(':', '-');
+        const date = new Date().toLocaleString();
+        ctx.attachment(`threats-${modelTitle}-${timestamp}.md`);
+
+        ctx.body = formatThreats(threats, date);
+
+    });
+
     app.use(cors());
     app.use(router.routes()).use(router.allowedMethods());
     const appHandle = app.listen(API_PORT, () => {
@@ -121,6 +142,65 @@ const runPublicApi = (gameServer) => {
     });
 
     return [app, appHandle]
+}
+
+
+
+function getThreats(gameState, metadata, model) {
+    var threats = [];
+        
+    //add threats from G.identifiedThreats
+    Object.keys(gameState.G.identifiedThreats).forEach((diagramId) => {
+        Object.keys(gameState.G.identifiedThreats[diagramId]).forEach(
+            (componentId) => {
+                Object.keys(
+                    gameState.G.identifiedThreats[diagramId][componentId]
+                ).forEach((threatId) => {
+                    const threat = gameState.G.identifiedThreats[diagramId][componentId][threatId];
+                    threats.push(
+                        {
+                            ...threat,
+                            owner: metadata.players[threat.owner].name
+                        }
+                    );
+                });
+            }
+        );
+    });
+
+    //add threats from model
+    if(model) {
+        model.detail.diagrams.forEach((diagram) => {
+            diagram.diagramJson.cells.forEach((cell) => {
+                if ('threats' in cell) {
+                    threats.push(...cell.threats);
+                }
+            })
+        });
+    }
+
+    return threats;
+}
+
+function formatThreats(threats, date) {
+    return `Threats ${date}
+=======
+${threats
+    .map(
+        (threat, index) => `
+**${index + 1}. ${escapeMarkdownText(threat.title.trim())}**
+${
+  'owner' in threat ? `
+  - *Author:*       ${escapeMarkdownText(threat.owner)}
+` : ''
+}
+  - *Description:*  ${escapeMarkdownText(threat.description.replace(/(\r|\n)+/gm, ' ')) /* Stops newlines breaking md formatting */}
+
+${
+    threat.mitigation !== `No mitigation provided.`
+        ? `  - *Mitigation:*   ${escapeMarkdownText(threat.mitigation.replace(/(\r|\n)+/gm, ' '))}
+
+` : ''}`).join('')}`;
 }
 
 export default runPublicApi

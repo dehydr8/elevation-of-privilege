@@ -4,3 +4,36 @@
   height: 100%;
   width: 300px;
 }
+
+.pass.btn-secondary {
+  color: #212529;
+  background-color: #7eb2e0;
+  border-color: #7eb2e0;
+  margin-top: 12%;
+}
+.pass.btn-secondary.disabled {
+  opacity: 0;
+}
+.pass.btn-secondary:hover {
+  background-color: #8fcbff;
+  color: #ffffff;
+  border-color: #7eb2e0;
+}
+
+.pass.btn-warning {
+  color: #efefef;
+  background-color: #ffbf00;
+  border-color: #eeaf00;
+}
+
+.pass.btn-warning:hover {
+  background-color: #ffd000;
+  color: #ffffff;
+  border-color: #faca00;
+}
+
+.pass.warning {
+  color: #da9500;
+  margin-top: 3%;
+  margin-bottom: 1%;
+}

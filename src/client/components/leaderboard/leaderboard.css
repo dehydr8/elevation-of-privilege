@@ -1,0 +1,8 @@
+.Playername {
+
+  min-width: 120%;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
