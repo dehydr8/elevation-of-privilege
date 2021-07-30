@@ -29,29 +29,30 @@ class Sidebar extends React.Component {
 
   render() {
     let dealtCard = getDealtCard(this.props.G);
+    let currentGamemode = this.props.G.gamemode;
 
     return (
-        <div className="side-bar">
-          <div className="text-center">
-            <Footer short />
-          </div>
-          <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.gameID}`}>
-            <FontAwesomeIcon icon={faDownload} />
-            {' '}
-            Download Model
-          </Button>
-          <hr />
-          <Leaderboard playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
-          <hr />
-          <Button color="secondary" size="lg" block disabled={
-              this.props.ctx.phase !== "threats" ||
-              this.props.G.passed.includes(this.props.playerID) ||
-              !this.props.active
-            } onClick={() => { this.props.moves.pass() }}>
-              Pass
-          </Button>
-          <DealtCard card={dealtCard} />
+      <div className="side-bar">
+        <div className="text-center">
+          <Footer short />
         </div>
+        <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.gameID}`}>
+          <FontAwesomeIcon icon={faDownload} />
+          {' '}
+          Download Model
+        </Button>
+        <hr />
+        <Leaderboard playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
+        <hr />
+        <Button color="secondary" size="lg" block disabled={
+          this.props.ctx.phase !== "threats" ||
+          this.props.G.passed.includes(this.props.playerID) ||
+          !this.props.active
+        } onClick={() => { this.props.moves.pass() }}>
+          Pass
+        </Button>
+        <DealtCard card={dealtCard} gamemode={currentGamemode} />
+      </div>
     );
   }
 }

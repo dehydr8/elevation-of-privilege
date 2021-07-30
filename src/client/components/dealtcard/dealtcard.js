@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 class DealtCard extends React.Component {
   static propTypes = {
     card: PropTypes.string.isRequired,
+    gamemode: PropTypes.string.isRequired,
   };
 
   render() {
     let gamemode = false;
     return (
-      <div className={`playing-card ${(gamemode) ? "c" : ""}card${this.props.card.toLowerCase()} active card-rounded scaled-big`} />
+      <div className={`playing-card ${(this.props.gamemode === "Cornucopia") ? "c" : ""}card${this.props.card.toLowerCase()} active card-rounded scaled-big`} />
     );
   }
 }
