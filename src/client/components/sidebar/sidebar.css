@@ -11,9 +11,7 @@
   border-color: #7eb2e0;
   margin-top: 12%;
 }
-.pass.btn-secondary.disabled {
-  opacity: 0;
-}
+
 .pass.btn-secondary:hover {
   background-color: #8fcbff;
   color: #ffffff;

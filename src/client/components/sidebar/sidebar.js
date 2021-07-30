@@ -49,13 +49,7 @@ class Sidebar extends React.Component {
         {isLastToPass && <div className="warning">You are the last one to pass!</div>}
         {(this.props.ctx.phase === "threats" &&
           !this.props.G.passed.includes(this.props.playerID) &&
-          this.props.active) && <Button color={(isLastToPass) ? "warning" : "secondary"} className="pass" size="lg" block //disabled={
-
-            //this.props.ctx.phase !== "threats" ||
-            //this.props.G.passed.includes(this.props.playerID) ||
-            //!this.props.active
-
-            //} 
+          this.props.active) && <Button color={(isLastToPass) ? "warning" : "secondary"} className="pass" size="lg" block
             onClick={() => { this.props.moves.pass() }}>
             Pass
           </Button>}
