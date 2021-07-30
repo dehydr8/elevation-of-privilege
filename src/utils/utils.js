@@ -1,14 +1,14 @@
 export function getDealtCard(G) {
   let dealtCard = "";
   if (G.dealt.length > 0) {
-      dealtCard = G.dealt[G.dealt.length - 1];
+    dealtCard = G.dealt[G.dealt.length - 1];
   }
   return dealtCard;
 }
 
 export function getDealtCardsForPlayers(order, dealt) {
   let cards = Array(order.length).fill("");
-  for (let i=0; i<dealt.length; i++) {
+  for (let i = 0; i < dealt.length; i++) {
     let idx = parseInt(order[i]);
     cards[idx] = dealt[i];
   }
@@ -17,9 +17,9 @@ export function getDealtCardsForPlayers(order, dealt) {
 
 export function resolvePlayerNames(players, names, current) {
   let resolved = [];
-  for (let i=0; i<players.length; i++) {
+  for (let i = 0; i < players.length; i++) {
     let c = players[i];
-    resolved.push( (parseInt(c) === parseInt(current)) ? "You" : names[c]);
+    resolved.push((parseInt(c) === parseInt(current)) ? "You" : names[c]);
   }
   return resolved;
 }
@@ -30,7 +30,7 @@ export function resolvePlayerName(player, names, current) {
 
 export function grammarJoin(arr) {
   var last = arr.pop();
-  
+
   if (arr.length <= 0)
     return last;
 
@@ -39,7 +39,7 @@ export function grammarJoin(arr) {
 
 export function getPlayers(count) {
   let players = [];
-  for (let i=0; i<count; i++) {
+  for (let i = 0; i < count; i++) {
     players.push(i + '');
   }
   return players;
@@ -75,12 +75,19 @@ export function getValidMoves(cards, suit, round, startingCard) {
 
 export function getTypeString(type) {
   let map = {
-    "S": "Spoofing",
-    "T": "Tampering",
-    "R": "Repudiation",
-    "I": "Information disclosure",
-    "D": "Denial of service",
-    "E": "Elevation of privilege",
+    "A": "Denial of Service",
+    "B": "Information Disclosure",
+    "C": "Repudiation",
+    "D": "Spoofing",
+    "E": "Tampering",
+    "T": "Elevation of privilege",
+
+    "CA": "Data Validation & Encoding",
+    "CB": "Authentication",
+    "CC": "Session Management",
+    "CD": "Authorization",
+    "CE": "Cryptography",
+    "CT": "Cornucopia",
   }
   if (type in map) {
     return map[type];

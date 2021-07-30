@@ -11,17 +11,6 @@ import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
 import '../styles/create.css';
 
-let gamemode;
-
-export function toggleGamemode() {
-  gamemode = !gamemode;
-  console.log("GM set to: " + gamemode)
-}
-//export function getGamemode() {
-//console.log("gave gamemode: " + gamemode);
-//return gamemode;
-//}
-
 class Create extends React.Component {
 
   constructor(props) {
@@ -43,13 +32,15 @@ class Create extends React.Component {
       creating: false,
       created: false,
       model: null,
-      startSuit: "T",
+      startSuit: "A",
       provideModelThruAlternativeChannel: false,
+      gamemode: "EOP",
     };
 
     this.onPlayersUpdated = this.onPlayersUpdated.bind(this);
     this.onNameUpdated = this.onNameUpdated.bind(this);
     this.onstartSuitUpdated = this.onstartSuitUpdated.bind(this);
+    this.onGamemodeUpdated = this.onGamemodeUpdated.bind(this);
     this.readFile = this.readFile.bind(this);
     this.onFileRead = this.onFileRead.bind(this);
     this.createGame = this.createGame.bind(this);
@@ -75,6 +66,7 @@ class Create extends React.Component {
         model: this.state.provideModelThruAlternativeChannel ? DEFAULT_MODEL : this.state.model,
         names: this.state.names,
         startSuit: this.state.startSuit,
+        gamemode: this.state.gamemode,
       });
 
     const gameId = r.body.game;
@@ -118,6 +110,13 @@ class Create extends React.Component {
     this.setState({
       ...this.state,
       startSuit: e.target.value,
+    });
+  }
+
+  onGamemodeUpdated(e) {
+    this.setState({
+      ...this.state,
+      gamemode: e.target.value,
     });
   }
 
@@ -184,12 +183,21 @@ class Create extends React.Component {
             )}
             <hr />
             <FormGroup row>
+              <Label for="gamemode" sm={2}>Gamemode</Label>
+              <Col sm={10}>
+                <Input id="gamemode" type="select" onChange={e => this.onGamemodeUpdated(e)} value={this.state.gamemode}>
+                  <option>EOP</option>
+                  <option>Cornucopia</option>
+                </Input>
+              </Col>
+            </FormGroup>
+            <FormGroup row>
               <Label for="startSuit" sm={2}>Start Suit</Label>
               <Col sm={10}>
                 <Input type="select" name="startSuit" id="startSuit" onChange={e => this.onstartSuitUpdated(e)} value={this.state.startSuit}>
                   {
                     Object.keys(STARTING_CARD_MAP).map(suit => (
-                      <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString(suit)}</option>
+                      <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString((this.state.gamemode === "Cornucopia") ? "C" + suit : "" + suit)}</option>
                     ))
                   }
                 </Input>
@@ -214,19 +222,13 @@ class Create extends React.Component {
               </Col>
             </FormGroup>
             <hr />
-            <FormGroup>
-              <Col>
-                <Input id="gamemode" type="checkbox" onChange={e => toggleGamemode()} />
-                <Label for="gamemode">Toggle Gamemode</Label>
-              </Col>
-            </FormGroup>
             <Button block size="lg" color="warning" disabled={this.state.creating || !this.isFormValid()} onClick={this.createGame}>Proceed</Button>
           </Form>
           <hr />
           <small className="text-muted">
             Players will be able to join the game with the links that are generated after you proceed.
           </small>
-        </div>
+        </div >
       );
     } else {
       linkDisplay = (
@@ -284,5 +286,4 @@ class Create extends React.Component {
     );
   }
 }
-export const gamemode1 = gamemode;
 export default Create;

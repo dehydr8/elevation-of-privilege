@@ -72,8 +72,7 @@ export function getWinner(suit, dealt) {
 export const ElevationOfPrivilege = Game({
   name: 'elevation-of-privilege',
   setup(ctx, setupData) {
-    const startSuit = DEFAULT_START_SUIT;
-    //(setupData) ? setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT;
+    const startSuit = (setupData) ? setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT;
     const startingCard = STARTING_CARD_MAP[startSuit];
     let scores = [];
     let shuffled = shuffleCards(ctx, startingCard);
@@ -88,7 +87,6 @@ export const ElevationOfPrivilege = Game({
       let element = order.shift();
       order.push(element);
     }
-
     let ret = {
       dealt: [],
       passed: [],
@@ -110,6 +108,7 @@ export const ElevationOfPrivilege = Game({
       },
       identifiedThreats: {},
       startingCard: startingCard,
+      gamemode: setupData.gamemode,
     }
     return ret;
   },

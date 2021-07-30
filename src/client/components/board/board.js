@@ -23,7 +23,7 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     let names = [];
-    for (let i=0; i<this.props.ctx.numPlayers; i++) {
+    for (let i = 0; i < this.props.ctx.numPlayers; i++) {
       names.push("No Name");
     }
     this.state = {
@@ -91,9 +91,9 @@ class Board extends React.Component {
         <div className="player-wrap">
           <div className="playingCardsContainer">
             <div className="status-bar">
-              <Status playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard}  />
+              <Status playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard} />
             </div>
-            <Deck 
+            <Deck
               cards={this.props.G.players[this.props.playerID]}
               suit={this.props.G.suit}
               phase={this.props.ctx.phase}
@@ -102,6 +102,7 @@ class Board extends React.Component {
               active={active}
               onCardSelect={(e) => this.props.moves.draw(e)}
               startingCard={this.props.G.startingCard} // <===  This is still missing   i.e. undeifned
+              gamemode={this.props.G.gamemode}
             />
           </div>
         </div>
