@@ -23,7 +23,7 @@ INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
 export function shuffleCards(ctx, startingCard) {
   let players = [];
   let totalCardsToDeal = Math.min(
-    Math.floor(deck.length / ctx.numPlayers) * ctx.numPlayers, 
+    Math.floor(deck.length / ctx.numPlayers) * ctx.numPlayers,
     CARD_LIMIT * ctx.numPlayers
   );
   //totalCardsToDeal = ctx.numPlayers * 2;
@@ -110,7 +110,7 @@ export const ElevationOfPrivilege = Game({
       },
       identifiedThreats: {},
       startingCard: startingCard,
-      gamemode: setupData.gamemode,
+      gameMode: setupData.gameMode,
     }
     return ret;
   },

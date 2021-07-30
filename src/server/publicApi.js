@@ -26,7 +26,7 @@ const runPublicApi = (gameServer) => {
                 numPlayers: ctx.request.body.players,
                 setupData: {
                     startSuit: ctx.request.body.startSuit,
-                    gamemode: ctx.request.body.gamemode
+                    gameMode: ctx.request.body.gameMode
                 }
             });
 
@@ -122,9 +122,9 @@ const runPublicApi = (gameServer) => {
         const gameState = await gameServer.db.get(`${gameName}:${gameID}`);
         const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
         const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
-        
+
         const threats = getThreats(gameState, metadata, model);
-        
+
 
         const modelTitle = model ? model.summary.title.trim().replace(' ', '-') : "untitled-model";
         const timestamp = new Date().toISOString().replace(':', '-');
@@ -148,7 +148,7 @@ const runPublicApi = (gameServer) => {
 
 function getThreats(gameState, metadata, model) {
     var threats = [];
-        
+
     //add threats from G.identifiedThreats
     Object.keys(gameState.G.identifiedThreats).forEach((diagramId) => {
         Object.keys(gameState.G.identifiedThreats[diagramId]).forEach(
@@ -169,7 +169,7 @@ function getThreats(gameState, metadata, model) {
     });
 
     //add threats from model
-    if(model) {
+    if (model) {
         model.detail.diagrams.forEach((diagram) => {
             diagram.diagramJson.cells.forEach((cell) => {
                 if ('threats' in cell) {
@@ -186,19 +186,17 @@ function formatThreats(threats, date) {
     return `Threats ${date}
 =======
 ${threats
-    .map(
-        (threat, index) => `
+            .map(
+                (threat, index) => `
 **${index + 1}. ${escapeMarkdownText(threat.title.trim())}**
-${
-  'owner' in threat ? `
+${'owner' in threat ? `
   - *Author:*       ${escapeMarkdownText(threat.owner)}
 ` : ''
-}
+                    }
   - *Description:*  ${escapeMarkdownText(threat.description.replace(/(\r|\n)+/gm, ' ')) /* Stops newlines breaking md formatting */}
 
-${
-    threat.mitigation !== `No mitigation provided.`
-        ? `  - *Mitigation:*   ${escapeMarkdownText(threat.mitigation.replace(/(\r|\n)+/gm, ' '))}
+${threat.mitigation !== `No mitigation provided.`
+                        ? `  - *Mitigation:*   ${escapeMarkdownText(threat.mitigation.replace(/(\r|\n)+/gm, ' '))}
 
 ` : ''}`).join('')}`;
 }

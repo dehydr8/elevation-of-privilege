@@ -35,13 +35,13 @@ class Create extends React.Component {
       model: null,
       startSuit: "A",
       provideModelThruAlternativeChannel: false,
-      gamemode: "EOP",
+      gameMode: "Elevation of Privilege",
     };
 
     this.onPlayersUpdated = this.onPlayersUpdated.bind(this);
     this.onNameUpdated = this.onNameUpdated.bind(this);
     this.onstartSuitUpdated = this.onstartSuitUpdated.bind(this);
-    this.onGamemodeUpdated = this.onGamemodeUpdated.bind(this);
+    this.ongameModeUpdated = this.ongameModeUpdated.bind(this);
     this.readFile = this.readFile.bind(this);
     this.onFileRead = this.onFileRead.bind(this);
     this.createGame = this.createGame.bind(this);
@@ -69,7 +69,7 @@ class Create extends React.Component {
         model: this.state.provideModelThruAlternativeChannel ? DEFAULT_MODEL : this.state.model,
         names: this.state.names,
         startSuit: this.state.startSuit,
-        gamemode: this.state.gamemode,
+        gameMode: this.state.gameMode,
       });
 
     const gameId = r.body.game;
@@ -116,10 +116,10 @@ class Create extends React.Component {
     });
   }
 
-  onGamemodeUpdated(e) {
+  ongameModeUpdated(e) {
     this.setState({
       ...this.state,
-      gamemode: e.target.value,
+      gameMode: e.target.value,
     });
   }
 
@@ -192,18 +192,18 @@ class Create extends React.Component {
               <FormGroup row key={i}>
                 <Label for={`p${i}`} sm={2}>Name</Label>
                 <Col sm={10}>
-                  <Input autoComplete={"off"} type="text" invalid={_.isEmpty(this.state.names[i])}  name={`p${i}`} id={`p${i}`} onChange={e => this.onNameUpdated(i, e)} value={this.state.names[i]} />
+                  <Input autoComplete={"off"} type="text" invalid={_.isEmpty(this.state.names[i])} name={`p${i}`} id={`p${i}`} onChange={e => this.onNameUpdated(i, e)} value={this.state.names[i]} />
                   <FormFeedback>The name cannot be empty</FormFeedback>
                 </Col>
               </FormGroup>
             )}
             <hr />
             <FormGroup row>
-              <Label for="gamemode" sm={2}>Gamemode</Label>
+              <Label for="gameMode" sm={2}>Game Mode</Label>
               <Col sm={10}>
-                <Input id="gamemode" type="select" onChange={e => this.onGamemodeUpdated(e)} value={this.state.gamemode}>
-                  <option>EOP</option>
-                  <option>Cornucopia</option>
+                <Input id="gameMode" type="select" onChange={e => this.ongameModeUpdated(e)} value={this.state.gameMode}>
+                  <option>Elevation of Privilege</option>
+                  <option>OWASP Cornucopia</option>
                 </Input>
               </Col>
             </FormGroup>
@@ -213,7 +213,7 @@ class Create extends React.Component {
                 <Input type="select" name="startSuit" id="startSuit" onChange={e => this.onstartSuitUpdated(e)} value={this.state.startSuit}>
                   {
                     Object.keys(STARTING_CARD_MAP).map(suit => (
-                      <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString((this.state.gamemode === "Cornucopia") ? "C" + suit : "" + suit)}</option>
+                      <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString(suit, this.state.gameMode)}</option>
                     ))
                   }
                 </Input>
@@ -254,17 +254,17 @@ class Create extends React.Component {
           </div>
           <Table>
             <tbody>
-            {Array(this.state.players).fill(0).map((v, i) => 
-              <tr key={i}>
-                <td className="c-td-name">{this.state.names[i]}</td>
-                <td>
-                  <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{this.url(i)}</a>
-                </td>
-                <td>
+              {Array(this.state.players).fill(0).map((v, i) =>
+                <tr key={i}>
+                  <td className="c-td-name">{this.state.names[i]}</td>
+                  <td>
+                    <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{this.url(i)}</a>
+                  </td>
+                  <td>
                     <CopyButton text={this.url(i)} />
-                </td>
-              </tr>
-            )}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </Table>
           <hr />

@@ -2,6 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Card, CardHeader, Badge } from 'reactstrap';
 import './leaderboard.css';
+import { getAbbreviationForCornucopia, getAbbreviationForEoP, isgameModeCornucopia } from '../../../utils/utils';
+
+
+function getCardName(card, gameMode) {
+  if (isgameModeCornucopia(gameMode)) {
+    return getAbbreviationForCornucopia(card) + card.substr(1);
+  } else {
+    return getAbbreviationForEoP(card) + card.substr(1);
+  }
+}
+
 class Leaderboard extends React.Component {
   static propTypes = {
     scores: PropTypes.any.isRequired,
@@ -9,6 +20,7 @@ class Leaderboard extends React.Component {
     cards: PropTypes.any.isRequired,
     playerID: PropTypes.any.isRequired,
     passedUsers: PropTypes.array.isRequired,
+    gameMode: PropTypes.string.isRequired,
   };
   render() {
     let passed = this.props.passedUsers;
@@ -41,7 +53,7 @@ class Leaderboard extends React.Component {
                 <td>
                   {hasPassed(idx, this) && <div align="center">&#10003;</div>}
                 </td>
-                <td><strong>{this.props.cards[idx]}</strong></td>
+                <td><strong>{getCardName(this.props.cards[idx], this.props.gameMode)}</strong></td>
                 <td><Badge>{val}</Badge></td>
               </tr>
             )}

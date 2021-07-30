@@ -15,6 +15,10 @@ export function getDealtCardsForPlayers(order, dealt) {
   return cards;
 }
 
+export function isgameModeCornucopia(gameMode) {
+  return (gameMode === "OWASP Cornucopia");
+}
+
 export function resolvePlayerNames(players, names, current) {
   let resolved = [];
   for (let i = 0; i < players.length; i++) {
@@ -73,27 +77,67 @@ export function getValidMoves(cards, suit, round, startingCard) {
   return validMoves;
 }
 
-export function getTypeString(type) {
-  let map = {
-    "A": "Denial of Service",
-    "B": "Information Disclosure",
-    "C": "Repudiation",
-    "D": "Spoofing",
-    "E": "Tampering",
-    "T": "Elevation of privilege",
-
-    "CA": "Data Validation & Encoding",
-    "CB": "Authentication",
-    "CC": "Session Management",
-    "CD": "Authorization",
-    "CE": "Cryptography",
-    "CT": "Cornucopia",
+export function getTypeString(type, gameMode) {
+  let map;
+  if (isgameModeCornucopia(gameMode)) {
+    map = {
+      "A": "Data Validation & Encoding",
+      "B": "Authentication",
+      "C": "Session Management",
+      "D": "Authorization",
+      "E": "Cryptography",
+      "T": "Cornucopia",
+    }
+  } else {
+    map = {
+      "A": "Denial of Service",
+      "B": "Information Disclosure",
+      "C": "Repudiation",
+      "D": "Spoofing",
+      "E": "Tampering",
+      "T": "Elevation of privilege",
+    }
   }
   if (type in map) {
     return map[type];
   }
   return "";
 }
+
+
+export function getAbbreviationForEoP(card) {
+  let category = card.substr(0, 1);
+  let map = {
+    "A": "D",
+    "B": "I",
+    "C": "R",
+    "D": "S",
+    "E": "T",
+    "T": "E",
+  }
+  if (category in map) {
+    return map[category];
+  }
+  return "";
+}
+
+export function getAbbreviationForCornucopia(card) {
+  let category = card.substr(0, 1);
+  let map = {
+    "A": "Data",
+    "B": "AuthN",
+    "C": "Sessn",
+    "D": "AuthZ",
+    "E": "Crypt",
+    "T": "Cornu",
+  }
+  if (category in map) {
+    return map[category];
+  }
+  return "";
+}
+
+
 
 export function escapeMarkdownText(text) {
   //replaces certain characters with an escaped version

@@ -102,7 +102,7 @@ class Board extends React.Component {
               active={active}
               onCardSelect={(e) => this.props.moves.draw(e)}
               startingCard={this.props.G.startingCard} // <===  This is still missing   i.e. undeifned
-              gamemode={this.props.G.gamemode}
+              gameMode={this.props.G.gameMode}
             />
           </div>
         </div>
