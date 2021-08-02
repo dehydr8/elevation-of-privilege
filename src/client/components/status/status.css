@@ -1,7 +1,7 @@
 span.status strong {
   vertical-align: top;
   display: inline-block;
-  max-width: 10em;  /* maybe this should be a constant */
+  max-width: 40em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
