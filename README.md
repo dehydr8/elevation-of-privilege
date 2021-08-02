@@ -57,10 +57,16 @@ The docker-compose setup starts two container:
 * Write contributing guide
 
 ## Using MongoDB
-As of boardgame.io v0.39.0, MongoDB is no longer supported as a database connector. There is currently no external library providing this functionality, however there is an [implementation](https://github.com/boardgameio/boardgame.io/issues/6#issuecomment-656144940) posted on github.
+As of boardgame.io v0.39.0, MongoDB is no longer supported as a database connector. There is currently no external library providing this functionality, however there is an [implementation](https://github.com/boardgameio/boardgame.io/issues/6#issuecomment-656144940) posted on github. This class implements the abstract functions in [this base class](https://github.com/boardgameio/boardgame.io/blob/ce8ef4a16bcc420b05c5e0751b41f168352bce7d/src/server/db/base.ts#L49-L111).
 
+MongoDB has also been removed as a dependency so must be installed by running
+```
+npm install mongodb
+```
 
-In order for the architectural model of the system to be saved to the database, the functions `setModel` and `fetch` will also need to be implemented. All the code relating to the database connector is in src/server/config.js
+An equivalent to `ModelFlatFile` should also be implemented. This extends the FlatFile database connector to allow the model to be saved to the database. The functions this implements are `setModel`, which allows the model to be set, and `fetch`, which is also overwritten to allow the model to be read in addition to the other properties. The implementations of these for the FlatFile object are available in `ModelFlatFile.js`
+
+Once the database connector is fully implemented, it can be used instead of a FlatFile by changing the object used in `config.js`. Just replace `ModelFlatFile` with the name of the mongoDB database connector.
 
 ## Credits
 The game was originally invented by [Adam Shostack](https://adam.shostack.org/) at Microsoft. The [EoP Whitepaper](http://download.microsoft.com/download/F/A/E/FAE1434F-6D22-4581-9804-8B60C04354E4/EoP_Whitepaper.pdf) written by Adam can be downloaded which describes the motivation, experience and lessons learned in creating the game.
