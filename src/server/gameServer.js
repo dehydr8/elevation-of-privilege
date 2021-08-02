@@ -1,5 +1,5 @@
 import { Server } from 'boardgame.io/server';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4} from 'uuid';
 import { ElevationOfPrivilege } from '../game/eop';
 import { INTERNAL_API_PORT, SERVER_PORT } from '../utils/constants';
 import { getDatabase } from './config';
