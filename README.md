@@ -63,4 +63,4 @@ The motivation for creating this online version of the game at Careem was due to
 
 The game is built using [boardgame.io](https://boardgame.io/), a framework for developing turn based games. The graphics, icons and card images used in this version were extracted from the original card game built by Microsoft.
 
-Made with :green_heart: at Careem
+Made with :green_heart: at Careem and [TNG Technology Consulting](https://www.tngtech.com/en/)
