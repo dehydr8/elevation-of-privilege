@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { grammarJoin, resolvePlayerNames, resolvePlayerName, getPlayers } from '../../../utils/utils';
+import { grammarJoin, resolvePlayerNames, resolvePlayerName, getPlayers, getCardName } from '../../../utils/utils';
 
 class Status extends React.Component {
   static propTypes = {
@@ -11,6 +11,7 @@ class Status extends React.Component {
     active: PropTypes.bool.isRequired,
     names: PropTypes.any.isRequired,
     dealtCard: PropTypes.string.isRequired,
+    gameMode: PropTypes.string.isRequired,
   };
 
   render() {
@@ -36,11 +37,11 @@ class Status extends React.Component {
       let playerWhoDealt = resolvePlayerName(this.props.G.dealtBy, this.props.names, this.props.playerID);
 
       return (
-        <span><strong>{playerWhoDealt}</strong> dealt <strong>{this.props.dealtCard}</strong>, waiting for <strong>{grammarJoin(players)}</strong> to add threats or pass.</span>
+        <span><strong>{playerWhoDealt}</strong> dealt <strong>{getCardName(this.props.dealtCard, this.props.gameMode)}</strong>, waiting for <strong>{grammarJoin(players)}</strong> to add threats or pass.</span>
       );
     }
 
     return <span />;
-  } 
+  }
 }
 export default Status;

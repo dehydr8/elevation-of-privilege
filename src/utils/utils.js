@@ -19,6 +19,14 @@ export function isGameModeCornucopia(gameMode) {
   return (gameMode === "OWASP Cornucopia");
 }
 
+export function getCardName(card, gameMode) {
+  if (isGameModeCornucopia(gameMode)) {
+    return getAbbreviationForCornucopia(card) + card.substr(1);
+  } else {
+    return getAbbreviationForEoP(card) + card.substr(1);
+  }
+}
+
 export function resolvePlayerNames(players, names, current) {
   let resolved = [];
   for (let i = 0; i < players.length; i++) {
