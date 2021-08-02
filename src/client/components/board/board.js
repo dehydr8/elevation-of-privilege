@@ -23,7 +23,7 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     let names = [];
-    for (let i=0; i<this.props.ctx.numPlayers; i++) {
+    for (let i = 0; i < this.props.ctx.numPlayers; i++) {
       names.push("No Name");
     }
     this.state = {
@@ -91,9 +91,9 @@ class Board extends React.Component {
         <div className="player-wrap">
           <div className="playingCardsContainer">
             <div className="status-bar">
-              <Status playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard}  />
+              <Status playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard} />
             </div>
-            <Deck 
+            <Deck
               cards={this.props.G.players[this.props.playerID]}
               suit={this.props.G.suit}
               phase={this.props.ctx.phase}
@@ -107,6 +107,13 @@ class Board extends React.Component {
         </div>
         <Sidebar playerID={this.props.playerID} gameID={this.props.gameID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} phase={this.props.ctx.phase} current={current} active={active} names={this.state.names} />
         <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} />
+        <p className="license">The card game
+          <a href="https://www.microsoft.com/en-us/download/details.aspx?id=20303"> Elevation of Privilege </a>
+          by
+          <a href="https://adam.shostack.org/"> Adam Shostack </a> (Microsoft)
+          is licensed under
+          <a href="https://creativecommons.org/licenses/by/3.0/us/"> CC-BY-3.0</a>
+          .</p>
       </div>
     );
   }
