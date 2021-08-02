@@ -22,6 +22,8 @@ describe('game', () => {
     players[k].start();
   });
 
+  const startingPlayer = players['0'].getState().ctx.currentPlayer;
+
   it('should shuffle cards correctly', () => {
     let all = [];
     Object.keys(players).forEach(k => {
@@ -42,13 +44,10 @@ describe('game', () => {
     );
   });
 
-  it('should start in play stage', () => {
+  it('shouldn\'t start in a stage/phase', () => {
     expect(players['0'].getState().ctx.activePlayers).toBeFalsy();
+    expect(players['0'].getState().ctx.phase).toBeFalsy();
   });
-
-  it('should start with no activePlayers', () => {
-    expect(players['0'].getState().ctx.activePlayers).toBeFalsy();
-  })
 
   it('should start with scores set to zero', () => {
     expect(players["0"].getState().G.scores).toStrictEqual([0,0,0]);
@@ -57,14 +56,6 @@ describe('game', () => {
   it('have correct order in ctx', () => {
     const state = players['0'].getState();
     expect(state.ctx.playOrder).toStrictEqual(['0', '1', '2']);
-  });
-
-  const startingPlayer = players['0'].getState().ctx.currentPlayer;
-  
-
-  it('should not get stuck in an infinite loop', () => {
-    const starting = players["0"].getState().ctx.currentPlayer;
-    players[starting].moves.draw(STARTING_CARD);
   });
 
   it('should move to the threats stage when the first player makes a move', () => {
