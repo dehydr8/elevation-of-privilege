@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getValidMoves, isgameModeCornucopia } from '../../../utils/utils';
+import { getValidMoves, isGameModeCornucopia } from '../../../utils/utils';
 import { render } from 'react-dom';
 
 
@@ -29,7 +29,7 @@ class Deck extends React.Component {
 
     let deck = left
       .map(e => (
-        <li key={e} className={`playing-card ${(isgameModeCornucopia(this.props.gameMode)) ? "c" : ""}card${e.toLowerCase()} ${validMoves.includes(e) ? 'active' : ''} card-rounded scaled`} onClick={() => this.props.onCardSelect(e)} />
+        <li key={e} className={`playing-card ${(isGameModeCornucopia(this.props.gameMode)) ? "c" : ""}card${e.toLowerCase()} ${validMoves.includes(e) ? 'active' : ''} card-rounded scaled`} onClick={() => this.props.onCardSelect(e)} />
       ));
 
     return (

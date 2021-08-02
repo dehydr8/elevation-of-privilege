@@ -33,7 +33,7 @@ class Create extends React.Component {
       creating: false,
       created: false,
       model: null,
-      startSuit: "A",
+      startSuit: "E",
       provideModelThruAlternativeChannel: false,
       gameMode: "Elevation of Privilege",
     };

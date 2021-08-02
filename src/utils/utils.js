@@ -15,7 +15,7 @@ export function getDealtCardsForPlayers(order, dealt) {
   return cards;
 }
 
-export function isgameModeCornucopia(gameMode) {
+export function isGameModeCornucopia(gameMode) {
   return (gameMode === "OWASP Cornucopia");
 }
 
@@ -79,13 +79,13 @@ export function getValidMoves(cards, suit, round, startingCard) {
 
 export function getTypeString(type, gameMode) {
   let map;
-  if (isgameModeCornucopia(gameMode)) {
+  if (isGameModeCornucopia(gameMode)) {
     map = {
       "A": "Data Validation & Encoding",
-      "B": "Authentication",
+      "B": "Cryptography",
       "C": "Session Management",
       "D": "Authorization",
-      "E": "Cryptography",
+      "E": "Authentication",
       "T": "Cornucopia",
     }
   } else {
@@ -125,10 +125,10 @@ export function getAbbreviationForCornucopia(card) {
   let category = card.substr(0, 1);
   let map = {
     "A": "Data",
-    "B": "AuthN",
+    "B": "Crypt",
     "C": "Sessn",
     "D": "AuthZ",
-    "E": "Crypt",
+    "E": "AuthN",
     "T": "Cornu",
   }
   if (category in map) {

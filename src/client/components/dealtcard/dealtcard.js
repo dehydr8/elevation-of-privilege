@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isgameModeCornucopia } from '../../../utils/utils';
+import { isGameModeCornucopia } from '../../../utils/utils';
 
 class DealtCard extends React.Component {
   static propTypes = {
@@ -11,7 +11,7 @@ class DealtCard extends React.Component {
   render() {
     const cardClass = this.props.card ? this.props.card.toLowerCase() : '-none';
     return (
-      <div className={`playing-card ${(isgameModeCornucopia(this.props.gameMode)) ? "c" : ""}card${this.props.card.toLowerCase()} active card-rounded scaled-big`} />
+      <div className={`playing-card ${(isGameModeCornucopia(this.props.gameMode)) ? "c" : ""}card${this.props.card.toLowerCase()} active card-rounded scaled-big`} />
     );
   }
 }

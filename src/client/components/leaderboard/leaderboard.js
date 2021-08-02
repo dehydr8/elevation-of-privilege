@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Card, CardHeader, Badge } from 'reactstrap';
 import './leaderboard.css';
-import { getAbbreviationForCornucopia, getAbbreviationForEoP, isgameModeCornucopia } from '../../../utils/utils';
+import { getAbbreviationForCornucopia, getAbbreviationForEoP, isGameModeCornucopia } from '../../../utils/utils';
 
 
 function getCardName(card, gameMode) {
-  if (isgameModeCornucopia(gameMode)) {
+  if (isGameModeCornucopia(gameMode)) {
     return getAbbreviationForCornucopia(card) + card.substr(1);
   } else {
     return getAbbreviationForEoP(card) + card.substr(1);
