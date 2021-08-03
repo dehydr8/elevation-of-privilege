@@ -29,7 +29,7 @@ class Deck extends React.Component {
 
     let deck = left
       .map(e => (
-        <li key={e} className={`playing-card ${(isGameModeCornucopia(this.props.gameMode)) ? "c" : ""}card${e.toLowerCase()} ${validMoves.includes(e) ? 'active' : ''} card-rounded scaled`} onClick={() => this.props.onCardSelect(e)} />
+        <li key={e} className={`playing-card ${(isGameModeCornucopia(this.props.gameMode)) ? "cornucopiacard c" : ""}card${e.toLowerCase()} ${validMoves.includes(e) ? 'active' : ''} card-rounded scaled`} onClick={() => this.props.onCardSelect(e)} />
       ));
 
     return (
