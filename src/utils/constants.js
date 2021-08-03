@@ -3,6 +3,9 @@ export const DECK_SUITS = ['A', 'B', 'C', 'D', 'E', 'T'];
 export const INVALID_CARDS = ['B2', 'T2', 'T3', 'T4'];
 export const TRUMP_CARD_PREFIX = 'T';
 export const DEFAULT_START_SUIT = 'E';
+export const GAMEMODE_EOP = "Elevation of Privilege";
+export const GAMEMODE_CORNUCOPIA = "OWASP Cornucopia";
+export const DEFAULT_GAME_MODE = "Elevation of Privilege";
 export const STARTING_CARD_MAP = {
   'D': 'D2',
   'E': 'E3',

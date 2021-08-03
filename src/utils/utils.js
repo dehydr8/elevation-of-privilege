@@ -1,3 +1,5 @@
+import { GAMEMODE_CORNUCOPIA } from "./constants";
+
 export function getDealtCard(G) {
   let dealtCard = "";
   if (G.dealt.length > 0) {
@@ -16,7 +18,7 @@ export function getDealtCardsForPlayers(order, dealt) {
 }
 
 export function isGameModeCornucopia(gameMode) {
-  return (gameMode === "OWASP Cornucopia");
+  return (gameMode === GAMEMODE_CORNUCOPIA);
 }
 
 export function getCardName(card, gameMode) {

@@ -29,7 +29,6 @@ class Sidebar extends React.Component {
 
   render() {
     let dealtCard = getDealtCard(this.props.G);
-    const currentGameMode = this.props.G.gameMode;
     const isLastToPass = this.props.G.passed.length === this.props.ctx.numPlayers - 1 && !this.props.G.passed.includes(this.props.playerID)
 
     return (
@@ -54,7 +53,7 @@ class Sidebar extends React.Component {
         } onClick={() => { this.props.moves.pass() }}>
           Pass
         </Button>
-        <DealtCard card={dealtCard} gameMode={currentGameMode} />
+        <DealtCard card={dealtCard} gameMode={this.props.G.gameMode} />
       </div>
     );
   }

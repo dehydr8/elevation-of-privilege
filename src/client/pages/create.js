@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
-import { API_PORT, DEFAULT_MODEL, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
+import { API_PORT, DEFAULT_GAME_MODE, DEFAULT_MODEL, DEFAULT_START_SUIT, GAMEMODE_CORNUCOPIA, GAMEMODE_EOP, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
 import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
@@ -33,9 +33,9 @@ class Create extends React.Component {
       creating: false,
       created: false,
       model: null,
-      startSuit: "E",
+      startSuit: DEFAULT_START_SUIT,
       provideModelThruAlternativeChannel: false,
-      gameMode: "Elevation of Privilege",
+      gameMode: DEFAULT_GAME_MODE,
     };
 
     this.onPlayersUpdated = this.onPlayersUpdated.bind(this);
@@ -202,8 +202,8 @@ class Create extends React.Component {
               <Label for="gameMode" sm={2}>Game Mode</Label>
               <Col sm={10}>
                 <Input id="gameMode" type="select" onChange={e => this.ongameModeUpdated(e)} value={this.state.gameMode}>
-                  <option>Elevation of Privilege</option>
-                  <option>OWASP Cornucopia</option>
+                  <option>{GAMEMODE_EOP}</option>
+                  <option>{GAMEMODE_CORNUCOPIA}</option>
                 </Input>
               </Col>
             </FormGroup>
