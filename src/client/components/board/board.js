@@ -9,6 +9,7 @@ import request from 'superagent';
 import Status from '../status/status';
 import { getDealtCard } from '../../../utils/utils';
 import { API_PORT } from '../../../utils/constants';
+import License from '../license/license';
 
 class Board extends React.Component {
   static propTypes = {
@@ -107,13 +108,7 @@ class Board extends React.Component {
           </div>
         </div>
         <Sidebar playerID={this.props.playerID} gameID={this.props.gameID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} phase={this.props.ctx.phase} current={current} active={active} names={this.state.names} />
-        <p className="license">The card game
-          <a href="https://www.microsoft.com/en-us/download/details.aspx?id=20303"> Elevation of Privilege </a>
-          by
-          <a href="https://adam.shostack.org/"> Adam Shostack </a> (Microsoft)
-          is licensed under
-          <a href="https://creativecommons.org/licenses/by/3.0/us/"> CC-BY-3.0</a>
-          .</p>
+        <License />
       </div>
     );
   }
