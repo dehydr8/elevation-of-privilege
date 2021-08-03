@@ -45,7 +45,7 @@ class Sidebar extends React.Component {
         <hr />
 
         <Leaderboard gameMode={this.props.G.gameMode} passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
-        {isLastToPass && <div className="warning">You are the last one to pass!</div>
+        {isLastToPass && <div className="warning">You are the last one to pass!</div>}
         {(this.props.ctx.phase === "threats" &&
           !this.props.G.passed.includes(this.props.playerID) &&
           this.props.active) && <Button color={(isLastToPass) ? "warning" : "secondary"} className="pass" size="lg" block
