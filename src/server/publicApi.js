@@ -5,7 +5,7 @@ import Router from 'koa-router';
 import request from 'superagent';
 import { ElevationOfPrivilege } from '../game/eop';
 import { API_PORT, INTERNAL_API_PORT } from '../utils/constants';
-import { getTypeString, escapeMarkdownText } from '../utils/utils';
+import { getTypeString, escapeMarkdownText, isGameModeCornucopia } from '../utils/utils';
 
 const runPublicApi = (gameServer) => {
 
@@ -90,12 +90,13 @@ const runPublicApi = (gameServer) => {
                     }
                     Object.keys(res.G.identifiedThreats[diagramIdx][componentIdx]).forEach(threatIdx => {
                         let t = res.G.identifiedThreats[diagramIdx][componentIdx][threatIdx];
+
                         threats.push({
                             status: "Open",
                             severity: t.severity,
                             id: t.id,
-                            methodology: "STRIDE",
-                            type: getTypeString(t.type),
+                            methodology: (isGameModeCornucopia(res.G.gameMode)) ? "Data, Crypt, Sessn, AuthZ, AuthN, Cornu" : "STRIDE",
+                            type: getTypeString(t.type, res.G.gameMode),
                             title: t.title,
                             description: t.description,
                             mitigation: t.mitigation,
