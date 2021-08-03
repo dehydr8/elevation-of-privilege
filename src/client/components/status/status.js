@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './status.css'
 import { grammarJoin, resolvePlayerNames, resolvePlayerName, getPlayers } from '../../../utils/utils';
 
 class Status extends React.Component {
@@ -31,7 +32,7 @@ class Status extends React.Component {
       }
 
       return (
-        <span>{prefix}Waiting for <strong>{currentPlayerName}</strong> to play a card.</span>
+        <span className='status'>{prefix}Waiting for <strong>{currentPlayerName}</strong> to play a card.</span>
       );
     } else {
       let all = new Set(getPlayers(this.props.ctx.numPlayers));
@@ -41,7 +42,7 @@ class Status extends React.Component {
       let playerWhoDealt = resolvePlayerName(this.props.G.dealtBy, this.props.names, this.props.playerID);
 
       return (
-        <span><strong>{playerWhoDealt}</strong> dealt <strong>{this.props.dealtCard}</strong>, waiting for <strong>{grammarJoin(players)}</strong> to add threats or pass.</span>
+        <span className='status'><strong>{playerWhoDealt}</strong> dealt <strong>{this.props.dealtCard}</strong>, waiting for <strong>{grammarJoin(players)}</strong> to add threats or pass.</span>
       );
     }
   } 

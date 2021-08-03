@@ -1,8 +1,8 @@
 .side-bar {
   position: fixed;
   right: 0;
-  height: 100%;
   width: 300px;
+  height: 60%;
 }
 
 .pass.btn-secondary {
@@ -11,9 +11,7 @@
   border-color: #7eb2e0;
   margin-top: 12%;
 }
-.pass.btn-secondary.disabled {
-  opacity: 0;
-}
+
 .pass.btn-secondary:hover {
   background-color: #8fcbff;
   color: #ffffff;
