@@ -43,9 +43,6 @@ class Model extends React.Component {
     svgPoint.x = offsetX;
     svgPoint.y = offsetY;
     var offsetTransformed = svgPoint.matrixTransform(paper.layers.getCTM().inverse());
-    console.log(paper.layers.getCTM().inverse())
-    console.log(svgPoint);
-    console.log(offsetTransformed)
     return offsetTransformed;
   }
 
