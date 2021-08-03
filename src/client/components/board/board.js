@@ -72,7 +72,6 @@ class Board extends React.Component {
 
   render() {
     const current = this.props.playerID === this.props.ctx.currentPlayer
-    // ? true : false to stop isInThreatStage taking undefined if this.props.ctx.activePlayers is undefined
     const isInThreatStage = (this.props.ctx.activePlayers && this.props.ctx.activePlayers[this.props.playerID] === 'threats') ? true : false;
     const active = current || isInThreatStage;
 
