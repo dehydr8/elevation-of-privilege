@@ -9,7 +9,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "boardgame.io": "^0.32.1",
     "bootstrap": "^4.6.0",
-    "cornucopia-cards": "file:cornucopiaCards",
+    "cornucopia-cards-modified": "file:cornucopiaCards",
     "esm": "^3.2.25",
     "jointjs": "^1.1.0",
     "lodash": "^4.17.21",

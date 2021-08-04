@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getValidMoves, isGameModeCornucopia } from '../../../utils/utils';
-import { render } from 'react-dom';
 
 
 class Deck extends React.Component {

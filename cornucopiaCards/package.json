@@ -1,12 +1,11 @@
 {
-  "name": "cornucopia-cards",
+  "name": "cornucopia-cards-modified",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "a version of the playing cards OWASP Cornucopia adapted for this game",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "CC BY 3.0"
+  "author": "TNG Technology Consulting",
+  "license": "CC-BY-SA-3.0"
 }

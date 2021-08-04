@@ -5,7 +5,7 @@ import { ElevationOfPrivilege } from '../../game/eop';
 import { SERVER_PORT } from '../../utils/constants';
 import '../styles/cornucopia_cards.css';
 import '../styles/cards.css';
-import "cornucopia-cards/style.css";
+import "cornucopia-cards-modified/style.css";
 
 const url = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 
