@@ -1,8 +1,18 @@
 .Playername {
-
   min-width: 120%;
   max-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+div.table-container {
+  max-height: 14em;
+  overflow-y: auto;
+}
+
+div.table-container thead {
+  position: sticky;
+  top: 0;
+  background-color: white;
 }
