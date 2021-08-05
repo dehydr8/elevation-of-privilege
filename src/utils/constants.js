@@ -5,6 +5,7 @@ export const DECK_SUITS = ['S','T','R','I','D','E'];
 export const INVALID_CARDS = ['T2', 'E2', 'E3', 'E4'];
 export const TRUMP_CARD_PREFIX = 'E';
 export const DEFAULT_START_SUIT = 'T'
+export const DEFAULT_TURN_DURATION = 120;
 //TODO: Extract the following from INVALID_CARDS
 export const STARTING_CARD_MAP = {
     'S': 'S2',

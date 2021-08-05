@@ -25,7 +25,8 @@ const runPublicApi = (gameServer) => {
         .send({
         numPlayers: ctx.request.body.players,
         setupData: {
-            startSuit: ctx.request.body.startSuit
+            startSuit: ctx.request.body.startSuit,
+            turnDuration: ctx.request.body.turnDuration
           }
         });
 

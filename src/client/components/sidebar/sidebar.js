@@ -36,6 +36,7 @@ class Sidebar extends React.Component {
           <div className="column">
             {
               this.props.G.dealt.length > 0 && 
+              this.props.G.turnDuration > 0 &&
                 <Timer 
                   targetTime={this.props.G.turnFinishTargetTime}
                   duration={this.props.G.turnDuration}

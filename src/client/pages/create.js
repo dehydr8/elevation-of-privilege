@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
-import { API_PORT, DEFAULT_MODEL, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
+import { API_PORT, DEFAULT_MODEL, DEFAULT_START_SUIT, DEFAULT_TURN_DURATION, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
 import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
@@ -32,13 +32,15 @@ class Create extends React.Component {
       creating: false,
       created: false,
       model: null,
-      startSuit: "T",
+      startSuit: DEFAULT_START_SUIT,
+      turnDuration: DEFAULT_TURN_DURATION,
       provideModelThruAlternativeChannel: false,
     };
 
     this.onPlayersUpdated = this.onPlayersUpdated.bind(this);
     this.onNameUpdated = this.onNameUpdated.bind(this);
     this.onstartSuitUpdated = this.onstartSuitUpdated.bind(this);
+    this.onTurnDurationUpdated = this.onTurnDurationUpdated.bind(this);
     this.readFile = this.readFile.bind(this);
     this.onFileRead = this.onFileRead.bind(this);
     this.createGame = this.createGame.bind(this);
@@ -64,6 +66,7 @@ class Create extends React.Component {
         model: this.state.provideModelThruAlternativeChannel ? DEFAULT_MODEL : this.state.model,
         names: this.state.names,
         startSuit: this.state.startSuit,
+        turnDuration: this.state.turnDuration
       });
 
     const gameId = r.body.game;
@@ -117,6 +120,13 @@ class Create extends React.Component {
         ...this.state.names,
         [idx]: e.target.value,
       }
+    });
+  }
+
+  onTurnDurationUpdated(e) {
+    this.setState({
+      ...this.state,
+      turnDuration: parseInt(e.target.value)
     });
   }
 
@@ -181,6 +191,19 @@ class Create extends React.Component {
                       <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString(suit)}</option>
                     ))
                   }
+                </Input>
+              </Col>
+            </FormGroup>
+            <hr />
+            <FormGroup row>
+              <Label for="turnDuration" sm={2}>Turn Duration</Label>
+              <Col sm={10}>
+                <Input type="select" name="turnDuration" id="turnDuration" onChange={e => this.onTurnDurationUpdated(e)} value={this.state.turnDuration}>
+                  <option value={0}>No Timer</option>
+                  <option value={30}>30s</option>
+                  <option value={60}>1 min</option>
+                  <option value={120}>2 mins</option>
+                  <option value={300}>5 mins</option>
                 </Input>
               </Col>
             </FormGroup>

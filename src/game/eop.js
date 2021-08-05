@@ -1,7 +1,7 @@
 import { Game, INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
-import { DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
+import { DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, DEFAULT_TURN_DURATION, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
 import { getDealtCard, getPlayers, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions.js';
 
@@ -75,6 +75,10 @@ export const ElevationOfPrivilege = Game({
   setup(ctx, setupData) {
     const startSuit = (setupData) ?  setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT
     const startingCard = STARTING_CARD_MAP[startSuit];
+    // There's probably a more readable way to do this
+    const turnDuration = (setupData) ? 
+      setupData.turnDuration || (setupData.turnDuration !== 0 && DEFAULT_TURN_DURATION) : 
+      DEFAULT_TURN_DURATION;
 
     let scores = [];
     let shuffled = shuffleCards(ctx, startingCard);
@@ -111,7 +115,7 @@ export const ElevationOfPrivilege = Game({
       },
       identifiedThreats: {},
       startingCard: startingCard,
-      turnDuration: 2*60,
+      turnDuration: turnDuration,
     }
     return ret;
   },

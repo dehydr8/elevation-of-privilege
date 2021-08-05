@@ -7,6 +7,7 @@ it('renders without crashing', () => {
     dealt: ["T1"],
     order: [0,1,2],
     scores: [0,0,0],
+    turnDuration: 0,
   };
   const ctx = {};
   const moves = {};
