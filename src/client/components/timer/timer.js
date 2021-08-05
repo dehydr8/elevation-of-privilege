@@ -18,8 +18,9 @@ const renderTime = ({ remainingTime }) => {
 
 class Timer extends React.Component {
   static propTypes = {
-    duration: PropTypes.number,
-    targetTime: PropTypes.number,
+    // Made these required bc it crashes if they're not provided
+    duration: PropTypes.number.isRequired,
+    targetTime: PropTypes.number.isRequired,
   }
 
   render() {
