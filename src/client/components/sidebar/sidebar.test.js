@@ -8,6 +8,7 @@ it('renders without crashing', () => {
     order: [0,1,2],
     scores: [0,0,0],
     turnDuration: 0,
+    passed: [],
   };
   const ctx = {};
   const moves = {};

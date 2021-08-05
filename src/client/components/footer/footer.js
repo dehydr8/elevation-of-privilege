@@ -14,7 +14,7 @@ class Footer extends React.Component {
     return (
       <small className="text-muted">
         v {packageJson.version}
-        {!this.props.short && <span> - made with <FontAwesomeIcon icon={faHeart} style={{color: "#00cc00"}} /> at Careem - game originally invented by Microsoft</span>}
+        {!this.props.short && <span> - made with <FontAwesomeIcon icon={faHeart} style={{color: "#00cc00"}} /> at Careem and <a href="https://www.tngtech.com/en/">TNG Technology Consulting</a> - game originally invented by Microsoft</span>}
       </small>
     );
   }
