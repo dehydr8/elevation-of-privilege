@@ -69,7 +69,7 @@ class Create extends React.Component {
         model: this.state.provideModelThruAlternativeChannel ? DEFAULT_MODEL : this.state.model,
         names: this.state.names,
         startSuit: this.state.startSuit,
-        turnDuration: this.state.turnDuration
+        turnDuration: parseInt(this.state.turnDuration === 'custom' ? this.state.customTurnDuration : this.state.turnDuration)
       });
 
     const gameId = r.body.game;
@@ -129,7 +129,14 @@ class Create extends React.Component {
   onTurnDurationUpdated(e) {
     this.setState({
       ...this.state,
-      turnDuration: parseInt(e.target.value)
+      turnDuration: e.target.value
+    });
+  }
+
+  onCustomTurnDurationUpdated(e) {
+    this.setState({
+      ...this.state,
+      customTurnDuration: e.target.value
     });
   }
 
@@ -138,6 +145,9 @@ class Create extends React.Component {
       if (_.isEmpty(this.state.names[i])) {
         return false;
       }
+    }
+    if(this.state.turnDuration === 'custom' && isNaN(this.state.customTurnDuration)) {
+      return false;
     }
     return true;
   }
@@ -220,8 +230,26 @@ class Create extends React.Component {
                   <option value={60}>1 min</option>
                   <option value={120}>2 mins</option>
                   <option value={300}>5 mins</option>
+                  <option value={600}>10 mins</option>
+                  <option value={'custom'}>Custom</option>
                 </Input>
               </Col>
+              { this.state.turnDuration === 'custom' &&
+                <>
+                  <Label for="customTurnDuration" sm={2}>Custom Duration in Seconds</Label>
+                  <Col sm={10}>
+                    <Input 
+                      autoComplete={"off"}
+                      type="text"
+                      invalid={isNaN(this.state.customTurnDuration)}
+                      name="customTurnDuration"
+                      onChange={e => this.onCustomTurnDurationUpdated(e)}
+                      value={this.state.customTurnDuration}
+                    />
+                    <FormFeedback>Duration must be a number</FormFeedback>
+                  </Col>
+                </>
+              }
             </FormGroup>
             <hr />
             <FormGroup row>
