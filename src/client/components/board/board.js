@@ -88,7 +88,6 @@ class Board extends React.Component {
     return (
       <div>
         <Model model={this.state.model} selectedDiagram={this.props.G.selectedDiagram} selectedComponent={this.props.G.selectedComponent} onSelectDiagram={this.props.moves.selectDiagram} onSelectComponent={this.props.moves.selectComponent} />
-        <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} />
         <div className="player-wrap">
           <div className="playingCardsContainer">
             <div className="status-bar">
@@ -107,6 +106,7 @@ class Board extends React.Component {
           </div>
         </div>
         <Sidebar playerID={this.props.playerID} gameID={this.props.gameID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} phase={this.props.ctx.phase} current={current} active={active} names={this.state.names} />
+        <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} />
       </div>
     );
   }
