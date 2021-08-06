@@ -23,12 +23,36 @@ class Timer extends React.Component {
     targetTime: PropTypes.number.isRequired,
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      painted: false
+    };
+
+    // This is a bit of a workaround
+    // The timer is updated with window.requestAnimationFrame however the page can be rendered before
+    // this is called if it is not the current tab. This means the remaining time will be set to the 
+    // duration but doesn't start counting down until the tab is opened
+    // By updating the component when requestAnimationFrame is first called, the initial remaining
+    // time is reset and the timer shows the correct time
+    window.requestAnimationFrame(() => {
+      if(!this.state.painted) {
+        this.setState({
+          ...this.state,
+          painted: true
+        });
+      }
+    });
+  }
+
   render() {
     const timeDifferenceInSeconds = Math.floor((this.props.targetTime - Date.now()) / 1000);
 
     return (
       <div className="timer-wrapper">
         <CountdownCircleTimer
+          key={this.state.painted}
+          //This is a hacky way of having the component update
           isPlaying
           size={150}
           duration={this.props.duration}
