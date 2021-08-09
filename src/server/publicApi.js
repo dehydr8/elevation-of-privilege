@@ -56,19 +56,31 @@ const runPublicApi = (gameServer) => {
     };
     });
 
-    router.get('/model/:id', async ctx => {
+    router.get('/model/:game/:id/:secret', async ctx => {
     const gameName = ElevationOfPrivilege.name;
-    const gameID = ctx.params.id;
+    const gameID = ctx.params.game;
+    const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
+
+    // validate secret
+    if (!isSecretValid(ctx, metadata)) {
+        return;
+    }
+
     const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
     ctx.body = model;
     });
 
-    router.get('/download/:id', async ctx => {
+    router.get('/download/:game/:id/:secret', async ctx => {
     const gameName = ElevationOfPrivilege.name;
-    const gameID = ctx.params.id;
+    const gameID = ctx.params.game;
     const res = await gameServer.db.get(`${gameName}:${gameID}`);
     const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
     let model = await gameServer.db.get(`${gameName}:${gameID}:model`);
+    
+    // validate secret
+    if (!isSecretValid(ctx, metadata)) {
+        return;
+    }
 
     // update the model with the identified threats
     Object.keys(res.G.identifiedThreats).forEach(diagramIdx => {
@@ -114,14 +126,19 @@ const runPublicApi = (gameServer) => {
     });
 
     //produce a nice textfile with the threats in
-    router.get('/download/text/:id', async (ctx) => {
+    router.get('/download/text/:game/:id/:secret', async (ctx) => {
         //get some variables that might be useful
         const gameName = ElevationOfPrivilege.name;
-        const gameID = ctx.params.id;
+        const gameID = ctx.params.game;
         const gameState = await gameServer.db.get(`${gameName}:${gameID}`);
         const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
         const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
         
+        // validate secret
+        if (!isSecretValid(ctx, metadata)) {
+            return;
+        }
+
         const threats = getThreats(gameState, metadata, model);
         
 
@@ -143,7 +160,13 @@ const runPublicApi = (gameServer) => {
     return [app, appHandle]
 }
 
-
+function isSecretValid(ctx, metadata) {
+    if (metadata.players[ctx.params.id].credentials !== ctx.params.secret) {
+        ctx.status = 403;
+        return false;
+    }
+    return true;
+}
 
 function getThreats(gameState, metadata, model) {
     var threats = [];
