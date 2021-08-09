@@ -170,7 +170,7 @@ class Threatbar extends React.Component {
                 <CardHeader className="hoverable" onClick={() => this.props.moves.selectThreat(val.id)}>
                   <strong>{val.title}</strong>
                   <Row>
-                    <Col xs="6"><small>{getTypeString(val.type)}</small></Col>
+                    <Col xs="6"><small>{getTypeString(val.type, this.props.G.gameMode)}</small></Col>
                     <Col xs="3"><small>{val.severity}</small></Col>
                     <Col xs="3"><small className="float-right">&mdash; {this.props.names[val.owner]}</small></Col>
                   </Row>
