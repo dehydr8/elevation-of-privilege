@@ -9,6 +9,7 @@ import request from 'superagent';
 import Status from '../status/status';
 import { getDealtCard } from '../../../utils/utils';
 import { API_PORT } from '../../../utils/constants';
+import License from '../license/license';
 
 class Board extends React.Component {
   static propTypes = {
@@ -108,7 +109,7 @@ class Board extends React.Component {
           </div>
         </div>
         <Sidebar playerID={this.props.playerID} gameID={this.props.gameID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} phase={this.props.ctx.phase} current={current} active={active} names={this.state.names} />
-
+        <License />
       </div>
     );
   }
