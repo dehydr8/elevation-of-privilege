@@ -1,0 +1,682 @@
+.ccardaa, .ccarda2, .ccarda3, .ccarda4, .ccarda5, .ccarda6, .ccarda7, .ccarda8, .ccarda9, .ccarda10, .ccardaj, .ccardaq, .ccardak,
+.ccardba, .ccardb2, .ccardb3, .ccardb4, .ccardb5, .ccardb6, .ccardb7, .ccardb8, .ccardb9, .ccardb10, .ccardbj, .ccardbq, .ccardbk,
+.ccardca, .ccardc2, .ccardc3, .ccardc4, .ccardc5, .ccardc6, .ccardc7, .ccardc8, .ccardc9, .ccardc10, .ccardcj, .ccardcq, .ccardck,
+.ccardda, .ccardd2, .ccardd3, .ccardd4, .ccardd5, .ccardd6, .ccardd7, .ccardd8, .ccardd9, .ccardd10, .ccarddj, .ccarddq, .ccarddk,
+.ccardea, .ccarde2, .ccarde3, .ccarde4, .ccarde5, .ccarde6, .ccarde7, .ccarde8, .ccarde9, .ccarde10, .ccardej, .ccardeq, .ccardek,
+.ccardta, .ccardt2, .ccardt3, .ccardt4, .ccardt5, .ccardt6, .ccardt7, .ccardt8, .ccardt9, .ccardt10, .ccardtj, .ccardtq, .ccardtk,
+.ccardj1, .ccardj2 {
+  display: inline-block;
+  overflow: hidden;
+  text-indent: -9999px;
+  text-align: left;
+}
+
+/* Reihe 1: d Datavalidation */
+.ccardaa {
+  background-position: -0px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarda2 {
+  background-position: -331px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarda3 {
+  background-position: -662px -0px;
+  width: 331px;
+  height: 514px;
+}
+.ccarda4 {
+  background-position: -993px -0px;
+  width: 331px;
+  height: 514px;
+}
+.ccarda5 {
+  background-position: -1324px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarda6 {
+  background-position: -1655px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarda7 {
+  background-position: -1986px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarda8 {
+  background-position: -2317px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarda9 {
+  background-position: -2648px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarda10 {
+  background-position: -2979px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardaj {
+  background-position: -3310px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardaq {
+  background-position: -3641px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardak {
+  background-position: -3972px -0px;
+  width: 331px;
+  height: 514px;
+}
+
+
+/* Reihe 2: 
+a 
+Authentication */
+
+
+.ccardea {
+  background-position: -0px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarde2 {
+  background-position: -331px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarde3 {
+  background-position: -662px -514px;
+  width: 331px;
+  height: 514px;
+}
+.ccarde4 {
+  background-position: -993px -514px;
+  width: 331px;
+  height: 514px;
+}
+.ccarde5 {
+  background-position: -1324px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarde6 {
+  background-position: -1655px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarde7 {
+  background-position: -1986px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarde8 {
+  background-position: -2317px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarde9 {
+  background-position: -2648px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarde10 {
+  background-position: -2979px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardej {
+  background-position: -3310px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardeq {
+  background-position: -3641px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardek {
+  background-position: -3972px -514px;
+  width: 331px;
+  height: 514px;
+}
+
+
+/* Reihe 3: 
+s
+Session Management */
+
+
+.ccardca {
+  background-position: -0px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardc2 {
+  background-position: -331px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardc3 {
+  background-position: -662px -1028px;
+  width: 331px;
+  height: 514px;
+}
+.ccardc4 {
+  background-position: -993px -1028px;
+  width: 331px;
+  height: 514px;
+}
+.ccardc5 {
+  background-position: -1324px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardc6 {
+  background-position: -1655px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardc7 {
+  background-position: -1986px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardc8 {
+  background-position: -2317px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardc9 {
+  background-position: -2648px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardc10 {
+  background-position: -2979px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardcj {
+  background-position: -3310px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardcq {
+  background-position: -3641px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardck {
+  background-position: -3972px -1028px;
+  width: 331px;
+  height: 514px;
+}
+
+/* Reihe 4: 
+o
+Authorization */
+
+
+.ccardda {
+  background-position: -0px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardd2 {
+  background-position: -331px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardd3 {
+  background-position: -662px -1542px;
+  width: 331px;
+  height: 514px;
+}
+.ccardd4 {
+  background-position: -993px -1542px;
+  width: 331px;
+  height: 514px;
+}
+.ccardd5 {
+  background-position: -1324px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardd6 {
+  background-position: -1655px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardd7 {
+  background-position: -1986px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardd8 {
+  background-position: -2317px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardd9 {
+  background-position: -2648px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardd10 {
+  background-position: -2979px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarddj {
+  background-position: -3310px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarddq {
+  background-position: -3641px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccarddk {
+  background-position: -3972px -1542px;
+  width: 331px;
+  height: 514px;
+}
+
+/* Reihe 5: 
+c
+Cryptography */
+
+
+.ccardba {
+  background-position: -0px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardb2 {
+  background-position: -331px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardb3 {
+  background-position: -662px -2056px;
+  width: 331px;
+  height: 514px;
+}
+.ccardb4 {
+  background-position: -993px -2056px;
+  width: 331px;
+  height: 514px;
+}
+.ccardb5 {
+  background-position: -1324px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardb6 {
+  background-position: -1655px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardb7 {
+  background-position: -1986px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardb8 {
+  background-position: -2317px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardb9 {
+  background-position: -2648px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardb10 {
+  background-position: -2979px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardbj {
+  background-position: -3310px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardbq {
+  background-position: -3641px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardbk {
+  background-position: -3972px -2056px;
+  width: 331px;
+  height: 514px;
+}
+
+/* Reihe 6: 
+r
+Cornucopia */
+
+
+.ccardta {
+  background-position: -0px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardt2 {
+  background-position: -331px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardt3 {
+  background-position: -662px -2570px;
+  width: 331px;
+  height: 514px;
+}
+.ccardt4 {
+  background-position: -993px -2570px;
+  width: 331px;
+  height: 514px;
+}
+.ccardt5 {
+  background-position: -1324px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardt6 {
+  background-position: -1655px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardt7 {
+  background-position: -1986px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardt8 {
+  background-position: -2317px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardt9 {
+  background-position: -2648px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardt10 {
+  background-position: -2979px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardtj {
+  background-position: -3310px -2570px;
+  width: 331px;
+  height: 514px;  
+}
+
+.ccardtq {
+  background-position: -3641px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardtk {
+  background-position: -3972px -2570px;
+  width: 331px;
+  height: 514px;
+}
+
+/* Reihe 7: 
+j
+Joker */
+
+
+.ccardj1 {
+  background-position: -0px -3084px;
+  width: 331px;
+  height: 514px;
+}
+
+.ccardj2 {
+  background-position: -331px -3084px;
+  width: 331px;
+  height: 514px;
+}
+
+.playing-card {
+  border: 1px solid darkgray;
+  -moz-box-shadow: 0.2em 0.2em 0.5em #ccc;
+  -webkit-box-shadow: 0.2em 0.2em 0.5em #ccc;
+  box-shadow: 0.2em 0.2em 0.5em #ccc;
+  background-color: rgba(0, 0, 0, 0.2);
+  bottom: 0;
+  top: 0;
+}
+
+.card-rounded {
+  border-radius: 44px;
+}
+
+.playingccardsContainer {
+  position: fixed;
+  bottom: 0;
+  border-top: 4px double #ccc;
+
+  background-image: radial-gradient(#ccc 20%, transparent 20%),
+    radial-gradient(#fafafa 20%, transparent 20%);
+  background-color: #eaeaea;
+  background-position: 0 0, 50px 50px;
+  background-size: 100px 100px;
+  padding-left: 20px;
+
+  width: 100%;
+}
+
+.playingCards {
+  display: table;
+  width: 100%;
+  padding-top: 20px;
+  height: 250px;
+}
+
+.playingCards:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.playingCards .hand li {
+  background-blend-mode: color;
+}
+
+.playingCards .hand .active {
+  background-blend-mode: normal;
+  border: 1px solid #000;
+}
+
+.playingCards .hand .active:hover {
+  margin-top: -310px;
+  cursor: pointer;
+  transform: scale(1);
+}
+
+.scaled {
+  transform-origin: top left;
+  transform: scale(0.4);
+  transition: all 0.4s ease-in-out;
+}
+
+.scaled-big {
+  transform: scale(0.9);
+}
+
+.playingCards ul.table,
+.playingCards ul.hand,
+.playingCards ul.deck {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 1.5em 0;
+  position: relative;
+}
+.playingCards ul.table li,
+.playingCards ul.hand li,
+.playingCards ul.deck li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  float: left;
+}
+
+.playingCards ul.hand li,
+.playingCards ul.deck li {
+  position: absolute;
+  display: inline-block;
+}
+
+.playingCards ul.hand li:nth-child(1) {
+  left: 0;
+}
+.playingCards ul.hand li:nth-child(2) {
+  left: 3em;
+}
+.playingCards ul.hand li:nth-child(3) {
+  left: 6em;
+}
+.playingCards ul.hand li:nth-child(4) {
+  left: 9em;
+}
+.playingCards ul.hand li:nth-child(5) {
+  left: 12em;
+}
+.playingCards ul.hand li:nth-child(6) {
+  left: 15em;
+}
+.playingCards ul.hand li:nth-child(7) {
+  left: 18em;
+}
+.playingCards ul.hand li:nth-child(8) {
+  left: 21em;
+}
+.playingCards ul.hand li:nth-child(9) {
+  left: 24em;
+}
+.playingCards ul.hand li:nth-child(10) {
+  left: 27em;
+}
+.playingCards ul.hand li:nth-child(11) {
+  left: 30em;
+}
+.playingCards ul.hand li:nth-child(12) {
+  left: 33em;
+}
+.playingCards ul.hand li:nth-child(13) {
+  left: 36em;
+}
+.playingCards ul.hand li:nth-child(14) {
+  left: 39em;
+}
+.playingCards ul.hand li:nth-child(15) {
+  left: 42em;
+}
+.playingCards ul.hand li:nth-child(16) {
+  left: 45em;
+}
+.playingCards ul.hand li:nth-child(17) {
+  left: 48em;
+}
+.playingCards ul.hand li:nth-child(18) {
+  left: 51em;
+}
+.playingCards ul.hand li:nth-child(19) {
+  left: 54em;
+}
+.playingCards ul.hand li:nth-child(20) {
+  left: 57em;
+}
+.playingCards ul.hand li:nth-child(21) {
+  left: 60em;
+}
+.playingCards ul.hand li:nth-child(22) {
+  left: 63em;
+}
+.playingCards ul.hand li:nth-child(23) {
+  left: 66em;
+}
+.playingCards ul.hand li:nth-child(24) {
+  left: 69em;
+}
+.playingCards ul.hand li:nth-child(25) {
+  left: 72em;
+}
+.playingCards ul.hand li:nth-child(26) {
+  left: 75em;
+}
