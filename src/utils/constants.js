@@ -31,7 +31,7 @@ export const DEFAULT_MODEL = {
     "contributors": [],
     "diagrams": [
       {
-        "title": "Elevation of Privilege",
+        "title": "Threat Modelling",
         "diagramType": "STRIDE",
         "id": 0,
         "$$hashKey": "object:14",
