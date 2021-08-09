@@ -18,8 +18,6 @@ class Threatbar extends React.Component {
     moves: PropTypes.any.isRequired,
     active: PropTypes.bool.isRequired,
     names: PropTypes.any.isRequired,
-    suit: PropTypes.any.isRequired,
-    gameMode: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -253,7 +251,7 @@ class Threatbar extends React.Component {
                 <Input type="select" name="type" id="type" disabled={this.props.G.threat.owner !== this.props.playerID} value={this.props.G.threat.type} onChange={(e) => this.props.moves.updateThreat("type", e.target.value)}>
                   {
                     Object.keys(STARTING_CARD_MAP).map(suit => (
-                      <option value={suit} key={`threat-category-${suit}`}>{getTypeString(suit, this.props.gameMode)}</option>
+                      <option value={suit} key={`threat-category-${suit}`}>{getTypeString(suit, this.props.G.gameMode)}</option>
                     ))
                   }
                 </Input>

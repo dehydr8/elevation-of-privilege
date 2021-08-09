@@ -1,7 +1,7 @@
 import { Game, INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
-import { CARD_LIMIT, DECK_HANDS, DECK_SUITS, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
+import { CARD_LIMIT, DECK_HANDS, DECK_SUITS, DEFAULT_GAME_MODE, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
 import { getDealtCard, getPlayers, getValidMoves, isGameModeCornucopia } from '../utils/utils';
 import { getThreatDescription } from './definitions.js';
 
@@ -73,9 +73,10 @@ export const ElevationOfPrivilege = Game({
   name: 'elevation-of-privilege',
   setup(ctx, setupData) {
     const startSuit = (setupData) ? setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT;
+    const gameMode = setupData ? setupData.gameMode || DEFAULT_GAME_MODE : DEFAULT_GAME_MODE;
     const startingCard = STARTING_CARD_MAP[startSuit];
     // remove invalid cards
-    if (!isGameModeCornucopia(setupData.gameMode)) {
+    if (!isGameModeCornucopia(gameMode)) {
       INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
     }
     let scores = [];
@@ -112,7 +113,7 @@ export const ElevationOfPrivilege = Game({
       },
       identifiedThreats: {},
       startingCard: startingCard,
-      gameMode: setupData.gameMode,
+      gameMode: gameMode,
     }
     return ret;
   },

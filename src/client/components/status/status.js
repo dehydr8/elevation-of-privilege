@@ -12,8 +12,7 @@ class Status extends React.Component {
     current: PropTypes.bool.isRequired,
     active: PropTypes.bool.isRequired,
     names: PropTypes.any.isRequired,
-    dealtCard: PropTypes.string.isRequired,
-    gameMode: PropTypes.string.isRequired,
+    dealtCard: PropTypes.string.isRequired
   };
 
   render() {
@@ -39,7 +38,7 @@ class Status extends React.Component {
       let playerWhoDealt = resolvePlayerName(this.props.G.dealtBy, this.props.names, this.props.playerID);
 
       return (
-      <span className='status'><strong>{playerWhoDealt}</strong> dealt <strong>{getCardName(this.props.dealtCard, this.props.gameMode)}</strong>, waiting for <strong>{grammarJoin(players)}</strong> to add threats or pass.</span>
+      <span className='status'><strong>{playerWhoDealt}</strong> dealt <strong>{getCardName(this.props.dealtCard, this.props.G.gameMode)}</strong>, waiting for <strong>{grammarJoin(players)}</strong> to add threats or pass.</span>
       );
     }
 
