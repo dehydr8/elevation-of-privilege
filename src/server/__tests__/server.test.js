@@ -91,7 +91,7 @@ it('download the final model for a game', async () => {
             "threat-1": {
               id: "0",
               severity: "High",
-              type: "S",
+              type: "D",
               title: "title",
               description: "description",
               mitigation: "mitigation",
@@ -102,7 +102,7 @@ it('download the final model for a game', async () => {
             "threat-2": {
               id: "0",
               severity: "High",
-              type: "S",
+              type: "D",
               title: "title",
               description: "description",
               mitigation: "mitigation",
@@ -113,7 +113,7 @@ it('download the final model for a game', async () => {
             "threat-3": {
               id: "0",
               severity: "High",
-              type: "S",
+              type: "D",
               title: "title",
               description: "description",
               mitigation: "mitigation",
@@ -178,7 +178,7 @@ it("Download threat file", async () => {
             "threat-1": {
               id: "0",
               severity: "High",
-              type: "S",
+              type: "D",
               title: "title",
               description: "<img src=\"\" onerror=\"alert('XSS') alt=\"Uh oh...\">",
               mitigation: "mitigation",
@@ -189,7 +189,7 @@ it("Download threat file", async () => {
             "threat-2": {
               id: "0",
               severity: "High",
-              type: "S",
+              type: "D",
               title: "title ",
               description: "description",
               mitigation: "mitigation",
@@ -200,7 +200,7 @@ it("Download threat file", async () => {
             "threat-3": {
               id: "0",
               severity: "High",
-              type: "S",
+              type: "D",
               title: "title",
               description: "description",
               mitigation: "mitigation",

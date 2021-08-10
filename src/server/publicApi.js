@@ -5,12 +5,11 @@ import Router from 'koa-router';
 import request from 'superagent';
 import { ElevationOfPrivilege } from '../game/eop';
 import { API_PORT, INTERNAL_API_PORT } from '../utils/constants';
-import { getTypeString, escapeMarkdownText } from '../utils/utils';
+import { getTypeString, escapeMarkdownText, isGameModeCornucopia } from '../utils/utils';
 
 const runPublicApi = (gameServer) => {
   const app = new Koa();
   const router = new Router();
-
   router.get('/players/:id', async (ctx) => {
     const matchID = ctx.params.id;
     const r = await request.get(
@@ -28,12 +27,13 @@ const runPublicApi = (gameServer) => {
         numPlayers: ctx.request.body.players,
         setupData: {
           startSuit: ctx.request.body.startSuit,
+          gameMode: ctx.request.body.gameMode
         },
       });
 
     const gameId = r.body.matchID;
 
-    const credentials = [];
+        const credentials = [];
 
     for (var i = 0; i < ctx.request.body.players; i++) {
       const j = await request
@@ -98,7 +98,7 @@ const runPublicApi = (gameServer) => {
                 status: 'Open',
                 severity: t.severity,
                 id: t.id,
-                methodology: 'STRIDE',
+                methodology: (isGameModeCornucopia(game.state.G.gameMode)) ? 'Data, Crypt, Sessn, AuthZ, AuthN, Cornu' : 'STRIDE',
                 type: getTypeString(t.type),
                 title: t.title,
                 description: t.description,
@@ -114,7 +114,7 @@ const runPublicApi = (gameServer) => {
     });
 
     const modelTitle = game.model.summary.title.replace(' ', '-');
-    const timestamp = new Date().toISOString().replace(':', '-');
+    const timestamp = (new Date()).toISOString().replace(':', '-');
     ctx.attachment(`${modelTitle}-${timestamp}.json`);
     ctx.body = game.model;
   });

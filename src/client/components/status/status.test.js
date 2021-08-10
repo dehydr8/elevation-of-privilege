@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Status from './status';
+import { DEFAULT_GAME_MODE } from '../../../utils/constants';
 
 it('renders without crashing', () => {
   const G = {
     dealt: ["T1"],
     order: [0,1,2],
     scores: [0,0,0],
+    gameMode: DEFAULT_GAME_MODE,
   };
   const ctx = {};
   const div = document.createElement('div');
@@ -21,6 +23,7 @@ it('renders play phase correctly', () => {
     scores: [0,0,0],
     round: 0,
     passed: [],
+    gameMode: DEFAULT_GAME_MODE,
   };
   const ctx = {
     phase: "play",
@@ -40,6 +43,7 @@ it('renders threat phase correctly', () => {
     scores: [0,0,0],
     round: 0,
     passed: [],
+    gameMode: DEFAULT_GAME_MODE,
   };
   const ctx = {
     phase: "threats",
@@ -58,7 +62,8 @@ it('renders last won correctly', () => {
     scores: [0,0,0],
     round: 10,
     passed: [],
-    dealtCard: ""
+    dealtCard: "",
+    gameMode: DEFAULT_GAME_MODE,
   };
   const ctx = {
     phase: "play",
