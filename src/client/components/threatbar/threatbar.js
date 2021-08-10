@@ -7,6 +7,7 @@ import { faBolt, faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-ico
 import { getComponentName, getTypeString } from '../../../utils/utils';
 import confirm from 'reactstrap-confirm';
 import './threatbar.css';
+import { STARTING_CARD_MAP } from '../../../utils/constants';
 
 class Threatbar extends React.Component {
   static propTypes = {
@@ -97,7 +98,7 @@ class Threatbar extends React.Component {
         if (cell.id === this.props.G.selectedComponent) {
           if (Array.isArray(cell.threats)) {
             // fix threat ids
-            for (let j=0; j<cell.threats.length; j++) {
+            for (let j = 0; j < cell.threats.length; j++) {
               if (!("id" in cell.threats[j])) {
                 cell.threats[j].id = j + '';
               }
@@ -146,7 +147,7 @@ class Threatbar extends React.Component {
     return (
       <div className="threat-bar" hidden={this.props.G.selectedComponent === ""}>
         <Card>
-          <CardHeader>Threats for {componentName} <FontAwesomeIcon style={{float: "right"}} icon={faBolt} /></CardHeader>
+          <CardHeader>Threats for {componentName} <FontAwesomeIcon style={{ float: "right" }} icon={faBolt} /></CardHeader>
           <CardBody className="threat-container">
             <Button color="primary" size="lg" block disabled={this.props.G.selectedComponent === "" || this.props.ctx.phase !== "threats" || this.props.G.passed.includes(this.props.playerID) || !this.props.active} onClick={() => this.props.moves.toggleModal()}>
               <FontAwesomeIcon icon={faPlus} /> Add Threat
@@ -169,7 +170,7 @@ class Threatbar extends React.Component {
                 <CardHeader className="hoverable" onClick={() => this.props.moves.selectThreat(val.id)}>
                   <strong>{val.title}</strong>
                   <Row>
-                    <Col xs="6"><small>{getTypeString(val.type)}</small></Col>
+                    <Col xs="6"><small>{getTypeString(val.type, this.props.G.gameMode)}</small></Col>
                     <Col xs="3"><small>{val.severity}</small></Col>
                     <Col xs="3"><small className="float-right">&mdash; {this.props.names[val.owner]}</small></Col>
                   </Row>
@@ -191,12 +192,12 @@ class Threatbar extends React.Component {
                       </Col>
                       <Col xs="6">
                         <Button block color="danger" onClick={
-                            () => confirm().then((result) => {
-                              if (result) {
-                                this.props.moves.deleteThreat(val);
-                              }
-                            })
-                          }>
+                          () => confirm().then((result) => {
+                            if (result) {
+                              this.props.moves.deleteThreat(val);
+                            }
+                          })
+                        }>
                           <FontAwesomeIcon icon={faTrash} />
                           {' '}
                           Remove
@@ -233,7 +234,7 @@ class Threatbar extends React.Component {
         </Card>
         <Modal isOpen={this.props.G.threat.modal}>
           <Form>
-            <ModalHeader toggle={() => this.props.moves.toggleModal()} style={{width: "100%"}}>
+            <ModalHeader toggle={() => this.props.moves.toggleModal()} style={{ width: "100%" }}>
               {(this.props.G.threat.new ? 'Add' : 'Update')} Threat
               {' '}
               &mdash;
@@ -243,22 +244,21 @@ class Threatbar extends React.Component {
             <ModalBody>
               <FormGroup>
                 <Label for="title">Title</Label>
-                <Input type="text" name="title" id="title" disabled={ this.props.G.threat.owner !== this.props.playerID } autoComplete="off" value={this.state.title} onBlur={(e) => this.props.moves.updateThreat("title", e.target.value)} onChange={(e) => this.updateState("title", e.target.value)} />
+                <Input type="text" name="title" id="title" disabled={this.props.G.threat.owner !== this.props.playerID} autoComplete="off" value={this.state.title} onBlur={(e) => this.props.moves.updateThreat("title", e.target.value)} onChange={(e) => this.updateState("title", e.target.value)} />
               </FormGroup>
               <FormGroup>
                 <Label for="type">Threat type</Label>
-                <Input type="select" name="type" id="type" disabled={ this.props.G.threat.owner !== this.props.playerID } value={this.props.G.threat.type} onChange={(e) => this.props.moves.updateThreat("type", e.target.value)}>
-                  <option value="S">Spoofing</option>
-                  <option value="T">Tampering</option>
-                  <option value="R">Repudiation</option>
-                  <option value="I">Information Disclosure</option>
-                  <option value="D">Denial of Service</option>
-                  <option value="E">Elevation of Privilege</option>
+                <Input type="select" name="type" id="type" disabled={this.props.G.threat.owner !== this.props.playerID} value={this.props.G.threat.type} onChange={(e) => this.props.moves.updateThreat("type", e.target.value)}>
+                  {
+                    Object.keys(STARTING_CARD_MAP).map(suit => (
+                      <option value={suit} key={`threat-category-${suit}`}>{getTypeString(suit, this.props.G.gameMode)}</option>
+                    ))
+                  }
                 </Input>
               </FormGroup>
               <FormGroup>
                 <Label for="severity">Severity</Label>
-                <Input type="select" name="severity" id="severity" disabled={ this.props.G.threat.owner !== this.props.playerID } value={this.props.G.threat.severity} onChange={(e) => this.props.moves.updateThreat("severity", e.target.value)}>
+                <Input type="select" name="severity" id="severity" disabled={this.props.G.threat.owner !== this.props.playerID} value={this.props.G.threat.severity} onChange={(e) => this.props.moves.updateThreat("severity", e.target.value)}>
                   <option>Low</option>
                   <option>Medium</option>
                   <option>High</option>
@@ -266,25 +266,25 @@ class Threatbar extends React.Component {
               </FormGroup>
               <FormGroup>
                 <Label for="description">Description</Label>
-                <Input type="textarea" name="description" id="description" disabled={ this.props.G.threat.owner !== this.props.playerID } style={{height: 150}} value={this.state.description} onBlur={(e) => this.props.moves.updateThreat("description", e.target.value)} onChange={(e) => this.updateState("description", e.target.value)} />
+                <Input type="textarea" name="description" id="description" disabled={this.props.G.threat.owner !== this.props.playerID} style={{ height: 150 }} value={this.state.description} onBlur={(e) => this.props.moves.updateThreat("description", e.target.value)} onChange={(e) => this.updateState("description", e.target.value)} />
               </FormGroup>
-              <FormGroup hidden={ this.props.G.threat.owner !== this.props.playerID }>
+              <FormGroup hidden={this.props.G.threat.owner !== this.props.playerID}>
                 <div className="checkbox-item">
-                <Input className="pointer" type="checkbox" id="showMitigation" onChange={(e) => this.toggleMitigationForm(e.target.checked)}/>
-                <Label for="showMitigation">Add a mitigation <em>(optional)</em></Label>
+                  <Input className="pointer" type="checkbox" id="showMitigation" onChange={(e) => this.toggleMitigationForm(e.target.checked)} />
+                  <Label for="showMitigation">Add a mitigation <em>(optional)</em></Label>
                 </div>
               </FormGroup>
-              <FormGroup hidden={ this.props.G.threat.owner === this.props.playerID && !this.state.showMigitation}>
+              <FormGroup hidden={this.props.G.threat.owner === this.props.playerID && !this.state.showMigitation}>
                 <Label for="mitigation">Mitigation</Label>
-                <Input type="textarea" name="mitigation" id="mitigation" disabled={ this.props.G.threat.owner !== this.props.playerID } style={{height: 150}} value={this.state.mitigation} onBlur={(e) => this.props.moves.updateThreat("mitigation", e.target.value)} onChange={(e) => this.updateState("mitigation", e.target.value)} />
+                <Input type="textarea" name="mitigation" id="mitigation" disabled={this.props.G.threat.owner !== this.props.playerID} style={{ height: 150 }} value={this.state.mitigation} onBlur={(e) => this.props.moves.updateThreat("mitigation", e.target.value)} onChange={(e) => this.updateState("mitigation", e.target.value)} />
               </FormGroup>
             </ModalBody>
             <ModalFooter>
-              <Button color="success" className="mr-auto" hidden={ this.props.G.threat.owner !== this.props.playerID } onClick={() => this.saveThreat()}>Save</Button>{' '}
-              <Button color="primary" disabled={ this.props.G.threat.owner !== this.props.playerID } onClick={() => this.addOrUpdate()}>{(this.props.G.threat.new ? 'Save & Add' : 'Save & Update')}</Button>{' '}
-              <Button color="secondary" disabled={ this.props.G.threat.owner !== this.props.playerID } onClick={() => this.props.moves.toggleModal()}>Cancel</Button>
+              <Button color="success" className="mr-auto" hidden={this.props.G.threat.owner !== this.props.playerID} onClick={() => this.saveThreat()}>Save</Button>{' '}
+              <Button color="primary" disabled={this.props.G.threat.owner !== this.props.playerID} onClick={() => this.addOrUpdate()}>{(this.props.G.threat.new ? 'Save & Add' : 'Save & Update')}</Button>{' '}
+              <Button color="secondary" disabled={this.props.G.threat.owner !== this.props.playerID} onClick={() => this.props.moves.toggleModal()}>Cancel</Button>
             </ModalFooter>
-            <ModalFooter hidden={ this.props.G.threat.owner !== this.props.playerID }>
+            <ModalFooter hidden={this.props.G.threat.owner !== this.props.playerID}>
               <small className="mr-auto text-muted"><b>TIP:</b> Saving would allow other players to view your changes instantly.</small>
             </ModalFooter>
           </Form>

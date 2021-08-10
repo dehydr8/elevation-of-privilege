@@ -9,6 +9,7 @@ import request from 'superagent';
 import Status from '../status/status';
 import { getDealtCard } from '../../../utils/utils';
 import { API_PORT } from '../../../utils/constants';
+import LicenseAttribution from '../license/licenseAttribution';
 
 class Board extends React.Component {
   static propTypes = {
@@ -89,11 +90,10 @@ class Board extends React.Component {
     return (
       <div>
         <Model model={this.state.model} selectedDiagram={this.props.G.selectedDiagram} selectedComponent={this.props.G.selectedComponent} onSelectDiagram={this.props.moves.selectDiagram} onSelectComponent={this.props.moves.selectComponent} />
-        <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} />
         <div className="player-wrap">
           <div className="playingCardsContainer">
             <div className="status-bar">
-              <Status playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard} />
+              <Status gameMode={this.props.G.gameMode} playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard} />
             </div>
             <Deck
               cards={this.props.G.players[this.props.playerID]}
@@ -104,10 +104,13 @@ class Board extends React.Component {
               active={active}
               onCardSelect={(e) => this.props.moves.draw(e)}
               startingCard={this.props.G.startingCard} // <===  This is still missing   i.e. undeifned
+              gameMode={this.props.G.gameMode}
             />
           </div>
         </div>
         <Sidebar playerID={this.props.playerID} gameID={this.props.gameID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} phase={this.props.ctx.phase} current={current} active={active} names={this.state.names} secret={this.props.credentials} />
+        <Threatbar gameMode={this.props.G.gameMode} suit={this.props.G.suit} playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} />
+        <LicenseAttribution gameMode={this.props.G.gameMode} />
       </div>
     );
   }
