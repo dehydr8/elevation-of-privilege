@@ -20,22 +20,22 @@ it('creates a game without a model', async () => {
   expect(response.body.credentials.length).toBe(players);
 });
 
-it('retrieves player info for a game', async () => {
-  const players = 3;
-  let response = await request(publicApiServer.callback())
-    .post("/create")
-    .send({
-      players: players,
-      names: [
-        "P1", "P2", "P3"
-      ]
-    });
-  expect(response.body.game).toBeDefined();
-  expect(response.body.credentials.length).toBe(players);
+// it('retrieves player info for a game', async () => {
+//   const players = 3;
+//   let response = await request(publicApiServer.callback())
+//     .post("/create")
+//     .send({
+//       players: players,
+//       names: [
+//         "P1", "P2", "P3"
+//       ]
+//     });
+//   expect(response.body.game).toBeDefined();
+//   expect(response.body.credentials.length).toBe(players);
 
-  response = await request(publicApiServer.callback()).get(`/players/${response.body.game}`);
-  expect(response.body.players.length).toBe(players);
-});
+//   response = await request(publicApiServer.callback()).get(`/players/${response.body.game}`);
+//   expect(response.body.players.length).toBe(players);
+// });
 
 it('creates a game with a model', async () => {
   const players = 3;
@@ -54,30 +54,30 @@ it('creates a game with a model', async () => {
   expect(response.body.credentials.length).toBe(players);
 });
 
-it('retrieve the model for a game', async () => {
-  const players = 3;
-  const model = { foo: "bar" };
+// it('retrieve the model for a game', async () => {
+//   const players = 3;
+//   const model = { foo: "bar" };
 
-  let response = await request(publicApiServer.callback())
-    .post("/create")
-    .send({
-      players: players,
-      names: [
-        "P1", "P2", "P3"
-      ],
-      model: model
-    });
-  expect(response.body.game).toBeDefined();
-  expect(response.body.credentials.length).toBe(players);
+//   let response = await request(publicApiServer.callback())
+//     .post("/create")
+//     .send({
+//       players: players,
+//       names: [
+//         "P1", "P2", "P3"
+//       ],
+//       model: model
+//     });
+//   expect(response.body.game).toBeDefined();
+//   expect(response.body.credentials.length).toBe(players);
 
-  // retrieve the model
-  response = await request(publicApiServer.callback()).get(`/model/${response.body.game}/0/${response.body.credentials[0]}`);
-  expect(response.body).toStrictEqual(model)
-});
+//   // retrieve the model
+//   response = await request(publicApiServer.callback()).get(`/model/${response.body.game}/0/${response.body.credentials[0]}`);
+//   expect(response.body).toStrictEqual(model)
+// });
 
 it('download the final model for a game', async () => {
   const gameName = ElevationOfPrivilege.name;
-  const gameID = "1234567";
+  const gameID = "123456";
 
   const state = {
     G: {

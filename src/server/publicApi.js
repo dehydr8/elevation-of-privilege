@@ -12,12 +12,12 @@ const runPublicApi = (gameServer) => {
     const app = new Koa();
     const router = new Router();
 
-    router.get('/players/:id', async ctx => {
-        const gameID = ctx.params.id;
-        const r = await request
-            .get(`http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${gameID}`);
-        ctx.body = r.body;
-    });
+    // router.get('/players/:id', async ctx => {
+    //     const gameID = ctx.params.id;
+    //     const r = await request
+    //         .get(`http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${gameID}`);
+    //     ctx.body = r.body;
+    // });
 
     router.post('/create', koaBody(), async ctx => {
         const r = await request
@@ -57,19 +57,19 @@ const runPublicApi = (gameServer) => {
         };
     });
 
-    router.get('/model/:game/:id/:secret', async ctx => {
-        const gameName = ElevationOfPrivilege.name;
-        const gameID = ctx.params.game;
-        const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
+    // router.get('/model/:game/:id/:secret', async ctx => {
+    //     const gameName = ElevationOfPrivilege.name;
+    //     const gameID = ctx.params.game;
+    //     const metadata = await gameServer.db.get(`${gameName}:${gameID}:metadata`);
 
-        // validate secret
-        if (!isSecretValid(ctx, metadata)) {
-            return;
-        }
+    //     // validate secret
+    //     if (!isSecretValid(ctx, metadata)) {
+    //         return;
+    //     }
 
-        const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
-        ctx.body = model;
-    });
+    //     const model = await gameServer.db.get(`${gameName}:${gameID}:model`);
+    //     ctx.body = model;
+    // });
 
     router.get('/download/:game/:id/:secret', async ctx => {
         const gameName = ElevationOfPrivilege.name;
@@ -80,6 +80,7 @@ const runPublicApi = (gameServer) => {
     
         // validate secret
         if (!isSecretValid(ctx, metadata)) {
+            ctx.status = 403;
             return;
         }
 
@@ -162,7 +163,7 @@ const runPublicApi = (gameServer) => {
 }
 
 function isSecretValid(ctx, metadata) {
-    return metadata.players[ctx.params.id].credentials !== ctx.params.secret;
+    return metadata.players[ctx.params.id].credentials === ctx.params.secret;
 }
 
 function getThreats(gameState, metadata, model) {
