@@ -49,7 +49,7 @@ class Sidebar extends React.Component {
         </Button>
         <hr />
 
-        <Leaderboard passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={this.props.G.dealt} />
+        <Leaderboard gameMode={this.props.G.gameMode} passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={this.props.G.dealt} />
         {isLastToPass && <div className="warning">You are the last one to pass!</div>}
         {(this.props.isInThreatStage &&
           !this.props.G.passed.includes(this.props.playerID) &&
@@ -58,7 +58,8 @@ class Sidebar extends React.Component {
             Pass
           </Button>}
 
-        <DealtCard card={dealtCard} />
+        <DealtCard card={dealtCard} gameMode={this.props.G.gameMode} />
+
       </div>
     );
   }

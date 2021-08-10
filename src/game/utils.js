@@ -1,10 +1,11 @@
-import { DEFAULT_START_SUIT, STARTING_CARD_MAP, CARD_LIMIT, DECK_HANDS, DECK_SUITS, INVALID_CARDS, TRUMP_CARD_PREFIX } from '../utils/constants';
+import { DEFAULT_START_SUIT, STARTING_CARD_MAP, CARD_LIMIT, DECK_HANDS, DECK_SUITS, INVALID_CARDS, TRUMP_CARD_PREFIX, DEFAULT_GAME_MODE } from '../utils/constants';
+import { isGameModeCornucopia } from '../utils/utils';
 
 
 let scores = {};
 let deck = [];
-for (let i=0; i<DECK_SUITS.length; i++) {
-  for (let j=0; j<DECK_HANDS.length; j++) {
+for (let i = 0; i < DECK_SUITS.length; i++) {
+  for (let j = 0; j < DECK_HANDS.length; j++) {
     let c = DECK_SUITS[i] + DECK_HANDS[j];
     deck.push(c);
     scores[c] = j;
@@ -13,20 +14,18 @@ for (let i=0; i<DECK_SUITS.length; i++) {
     }
   }
 }
-// remove invalid cards
-INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
 
 export function shuffleCards(ctx, startingCard) {
   let players = [];
   let totalCardsToDeal = Math.min(
-    Math.floor(deck.length / ctx.numPlayers) * ctx.numPlayers, 
+    Math.floor(deck.length / ctx.numPlayers) * ctx.numPlayers,
     CARD_LIMIT * ctx.numPlayers
   );
   //totalCardsToDeal = ctx.numPlayers * 2;
 
   // shuffle the deck first
   let shuffled = ctx.random.Shuffle(deck);
-  
+
   // remove the startingCard card and resize to totalCardsToDeal
   shuffled.splice(shuffled.indexOf(startingCard), 1);
   shuffled = shuffled.slice(0, totalCardsToDeal - 1);
@@ -38,14 +37,13 @@ export function shuffleCards(ctx, startingCard) {
   let cardsToDeal = totalCardsToDeal / ctx.numPlayers;
   let first = 0;
 
-  for (let i=0; i<cardsToDeal*ctx.numPlayers; i+=cardsToDeal) {
-    let slice = shuffled.slice(i, i+cardsToDeal);
+  for (let i = 0; i < cardsToDeal * ctx.numPlayers; i += cardsToDeal) {
+    let slice = shuffled.slice(i, i + cardsToDeal);
     players.push(slice);
 
     if (slice.indexOf(startingCard) >= 0)
       first = i / cardsToDeal;
   }
-
   return {
     players,
     first,
@@ -54,9 +52,14 @@ export function shuffleCards(ctx, startingCard) {
 }
 
 export function setupGame(ctx, setupData) {
-  const startSuit = (setupData) ?  setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT
+  const startSuit = (setupData) ? setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT;
+  const gameMode = setupData ? setupData.gameMode || DEFAULT_GAME_MODE : DEFAULT_GAME_MODE;
   const startingCard = STARTING_CARD_MAP[startSuit];
-
+  // remove invalid cards
+  if (!isGameModeCornucopia(gameMode)) {
+    INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
+  }
+  
   let scores = new Array(ctx.numPlayers).fill(0);
   let shuffled = shuffleCards(ctx, startingCard);
 
@@ -79,7 +82,8 @@ export function setupGame(ctx, setupData) {
       new: true,
     },
     identifiedThreats: {},
-    startingCard: startingCard
+    startingCard: startingCard,
+    gameMode: gameMode,
   }
   return ret;
 }

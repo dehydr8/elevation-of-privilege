@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './board';
-import * as model from '../model/model'
+import * as model from '../model/model';
+import { DEFAULT_GAME_MODE } from '../../../utils/constants';
 
 jest.mock('../model/model.js');
 
@@ -31,6 +32,7 @@ it('renders without crashing', async() => {
     suit: 'T',
     round: 1,
     startingCard: 'T3',
+    gameMode: DEFAULT_GAME_MODE,
   }
   const ctx = {
     actionPlayers: [0, 1, 2]

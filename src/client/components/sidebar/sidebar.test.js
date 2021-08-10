@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Sidebar from './sidebar';
+import { DEFAULT_GAME_MODE } from '../../../utils/constants';
 
 it('renders without crashing', () => {
   const G = {
@@ -8,6 +9,7 @@ it('renders without crashing', () => {
     order: [0,1,2],
     scores: [0,0,0],
     passed: [],
+    gameMode: DEFAULT_GAME_MODE
   };
   const ctx = {};
   const moves = {};
