@@ -136,6 +136,7 @@ const runPublicApi = (gameServer) => {
         
         // validate secret
         if (!isSecretValid(ctx, metadata)) {
+            ctx.status = 403;
             return;
         }
 
@@ -161,11 +162,7 @@ const runPublicApi = (gameServer) => {
 }
 
 function isSecretValid(ctx, metadata) {
-    if (metadata.players[ctx.params.id].credentials !== ctx.params.secret) {
-        ctx.status = 403;
-        return false;
-    }
-    return true;
+    return metadata.players[ctx.params.id].credentials !== ctx.params.secret;
 }
 
 function getThreats(gameState, metadata, model) {

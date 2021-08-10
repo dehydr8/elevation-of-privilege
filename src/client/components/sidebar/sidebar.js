@@ -28,8 +28,8 @@ class Sidebar extends React.Component {
     this.apiBase = (process.env.NODE_ENV === 'production') ? '/api' : `${window.location.protocol}//${window.location.hostname}:${API_PORT}`;
   }
 
-  url(string) {
-    return `${this.apiBase}/${string}/${this.props.gameID}/${this.props.playerID}/${this.props.secret}`
+  apiEndpointUrl(apiEndpoint) {
+    return `${this.apiBase}/${apiEndpoint}/${this.props.gameID}/${this.props.playerID}/${this.props.secret}`
   }
 
   render() {
@@ -41,10 +41,10 @@ class Sidebar extends React.Component {
         <div className="text-center">
           <Footer short />
         </div>
-        <Button block size="lg" color="success" href={this.url('download')}>
+        <Button block size="lg" color="success" href={this.apiEndpointUrl('download')}>
           <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Model
         </Button>
-        <Button block size="lg" color="warning" href={this.url('download/text')}>
+        <Button block size="lg" color="warning" href={this.apiEndpointUrl('download/text')}>
           <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Threats
         </Button>
         <hr />
