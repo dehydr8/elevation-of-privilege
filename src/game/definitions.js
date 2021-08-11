@@ -1,3 +1,5 @@
+import { GAMEMODE_EOP } from '../utils/constants';
+
 let definitions = {
   "D2": "An attacker could squat on the random port or socket that the server normally uses",
   "D3": "An attacker could try one credential after another and there's nothing to slow them down (online or offline)",
@@ -75,8 +77,8 @@ let definitions = {
   "TA": "You've invented a new Elevation of Privilege attack",
 }
 
-export function getThreatDescription(card) {
-  if (card in definitions) {
+export function getThreatDescription(card, gameMode) {
+  if (gameMode === GAMEMODE_EOP && card in definitions) {
     return definitions[card];
   }
   return "";
