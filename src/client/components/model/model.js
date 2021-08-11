@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import joint from 'jointjs/index';
+import * as joint from 'jointjs';
 import 'jointjs/dist/joint.css'
 import '../../jointjs/joint-tm.css'
 // eslint-disable-next-line
@@ -25,7 +25,7 @@ class Model extends React.Component {
     super(props);
     this.state = {
       placeholder: React.createRef(),
-      graph: new joint.dia.Graph(),
+      graph: new joint.dia.Graph({}, {cellNamespace: joint.shapes}),
       paper: null,
       dragging: false,
       dragPosition: {
@@ -38,19 +38,19 @@ class Model extends React.Component {
   }
 
   offsetToLocalPoint(offsetX, offsetY, paper) {
+    // Finds mouse position in unscaled version
     var svgPoint = paper.svg.createSVGPoint();
     svgPoint.x = offsetX;
     svgPoint.y = offsetY;
-    var offsetTransformed = svgPoint.matrixTransform(paper.viewport.getCTM().inverse());
+    var offsetTransformed = svgPoint.matrixTransform(paper.layers.getCTM().inverse());
     return offsetTransformed;
   }
 
   mouseWheel(e) {
     e = e.nativeEvent;
     var delta = Math.max(-1, Math.min(1, e.wheelDelta)) / SPEED;
-    var newScale = joint.V(this.state.paper.viewport).scale().sx + delta;
-
-    this.state.paper.setOrigin(0, 0); // reset the previous 'translate'
+    var newScale = joint.V(this.state.paper.layers).scale().sx + delta;
+    this.state.paper.translate(0, 0);
     var p = this.offsetToLocalPoint(e.offsetX, e.offsetY, this.state.paper);
     this.state.paper.scale(newScale, newScale, p.x, p.y);
   }

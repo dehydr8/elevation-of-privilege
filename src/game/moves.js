@@ -1,6 +1,6 @@
 import { INVALID_MOVE} from 'boardgame.io/core'
 import _ from 'lodash';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 import { getDealtCard, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions.js';
 import { hasPlayerPassed } from './utils';
@@ -152,6 +152,7 @@ export function addOrUpdateThreat(G, ctx) {
   // TODO: have a cleaner or readable approach to updating this object
   let identifiedThreats = _.cloneDeep(G.identifiedThreats);
   
+  // Are these necessary
   if (!(G.selectedDiagram in identifiedThreats)) {
     Object.assign(identifiedThreats, {[G.selectedDiagram]: {}});
   }
@@ -160,6 +161,7 @@ export function addOrUpdateThreat(G, ctx) {
     Object.assign(identifiedThreats[G.selectedDiagram], {[G.selectedComponent]: {}});
   }
 
+  //is object.assign required here?
   Object.assign(identifiedThreats[G.selectedDiagram][G.selectedComponent], {
     [G.threat.id]: {
       id: G.threat.id,
