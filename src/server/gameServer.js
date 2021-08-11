@@ -4,10 +4,13 @@ import { ElevationOfPrivilege } from '../game/eop';
 import { INTERNAL_API_PORT, SERVER_PORT } from '../utils/constants';
 import { getDatabase } from './config';
 
-
 const server = Server({
     games: [ElevationOfPrivilege],
     db: getDatabase(),
+    origins: [
+        '*' //maybe make this more selective
+    ],
+    uuid: uuidv4,
 });
 
 const runGameServer = () => {
@@ -18,7 +21,7 @@ const runGameServer = () => {
         },
         lobbyConfig: {
             apiPort: INTERNAL_API_PORT,
-            uuid: uuidv4,
+            
             apiCallback: () => {
             console.log(`Internal API serving at: http://localhost:${INTERNAL_API_PORT}/`);
             },

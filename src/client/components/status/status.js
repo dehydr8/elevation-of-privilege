@@ -12,11 +12,16 @@ class Status extends React.Component {
     current: PropTypes.bool.isRequired,
     active: PropTypes.bool.isRequired,
     names: PropTypes.any.isRequired,
-    dealtCard: PropTypes.string.isRequired
+    dealtCard: PropTypes.string.isRequired,
+    isInThreatStage: PropTypes.bool
+  };
+
+  static defaultProps = {
+    isInThreatStage: false
   };
 
   render() {
-    if (this.props.ctx.phase === "play") {
+    if (!this.props.isInThreatStage) {
       let currentPlayerName = resolvePlayerName(this.props.ctx.currentPlayer, this.props.names, this.props.playerID);
       let prefix = <span />;
 
@@ -30,7 +35,7 @@ class Status extends React.Component {
       return (
         <span className='status'>{prefix}Waiting for <strong>{currentPlayerName}</strong> to play a card.</span>
       );
-    } else if (this.props.ctx.phase === "threats") {
+    } else {
       let all = new Set(getPlayers(this.props.ctx.numPlayers));
       let passed = new Set(this.props.G.passed);
       let difference = new Set([...all].filter(x => !passed.has(x)));
@@ -41,8 +46,6 @@ class Status extends React.Component {
       <span className='status'><strong>{playerWhoDealt}</strong> dealt <strong>{getCardName(this.props.dealtCard, this.props.G.gameMode)}</strong>, waiting for <strong>{grammarJoin(players)}</strong> to add threats or pass.</span>
       );
     }
-
-    return <span className='status'/>;
   } 
 }
 export default Status;
