@@ -3,6 +3,7 @@ import { Client } from 'boardgame.io/react';
 import Board from '../components/board/board';
 import { ElevationOfPrivilege } from '../../game/eop';
 import { SERVER_PORT } from '../../utils/constants';
+import { SocketIO } from 'boardgame.io/multiplayer'
 import '../styles/cornucopia_cards.css';
 import '../styles/cards.css';
 import "cornucopia-cards-modified/style.css";
@@ -13,9 +14,9 @@ const EOP = Client({
   game: ElevationOfPrivilege,
   board: Board,
   debug: false,
-  multiplayer: {
+  multiplayer: SocketIO({
     server: (process.env.NODE_ENV === 'production') ? `${url}` : `${window.location.hostname}:${SERVER_PORT}`
-  },
+  }),
 });
 
 class App extends React.Component {
@@ -32,7 +33,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="player-container">
-        <EOP gameID={this.state.game} credentials={this.state.secret} playerID={this.state.id + ''} />
+        <EOP matchID={this.state.game} credentials={this.state.secret} playerID={this.state.id + ''} />
         <div className="cornucopiacard"></div>
       </div>
 

@@ -1,6 +1,5 @@
 import { gameServer, gameServerHandle, publicApiServer, publicApiServerHandle } from '../server'
-import request from 'supertest'
-import { ElevationOfPrivilege } from '../../game/eop';
+import request from 'supertest';
 
 it('gameServer is not undefined', async() => {
   expect(gameServer).toBeDefined();
@@ -22,19 +21,23 @@ it('creates a game without a model', async () => {
 
 it('retrieves player info for a game', async () => {
   const players = 3;
+  const names = [
+    "P1", "P2", "P3"
+  ];
   let response = await request(publicApiServer.callback())
     .post("/create")
     .send({
       players: players,
-      names: [
-        "P1", "P2", "P3"
-      ]
+      names: names
     });
   expect(response.body.game).toBeDefined();
   expect(response.body.credentials.length).toBe(players);
 
   response = await request(publicApiServer.callback()).get(`/players/${response.body.game}/0/${response.body.credentials[0]}`);
   expect(response.body.players.length).toBe(players);
+  response.body.players.forEach((p, i) => {
+    expect(p.name).toBe(names[i]);
+  });
 });
 
 it('creates a game with a model', async () => {
@@ -76,8 +79,7 @@ it('retrieve the model for a game', async () => {
 });
 
 it('download the final model for a game', async () => {
-  const gameName = ElevationOfPrivilege.name;
-  const gameID = "123456";
+  const matchID = "123456";
 
   const state = {
     G: {
@@ -146,25 +148,24 @@ it('download the final model for a game', async () => {
     }
   };
 
-  await gameServer.db.set(`${gameName}:${gameID}`, state);
-  await gameServer.db.set(`${gameName}:${gameID}:metadata`, metadata);
-  await gameServer.db.set(`${gameName}:${gameID}:model`, model);
+  await gameServer.db.setMetadata(matchID, metadata);
+  await gameServer.db.setModel(matchID, model);
+  await gameServer.db.setState(matchID, state);
 
   // retrieve the model
-  const response = await request(publicApiServer.callback()).get(`/download/${gameID}/0/abc123`);
+  const response = await request(publicApiServer.callback()).get(`/download/${matchID}/0/abc123`);
   const threats = response.body.detail.diagrams[0].diagramJson.cells[0].threats;
   expect(threats[0].id).toBe("0");
   expect(threats[0].type).toBe("Spoofing");
   expect(threats[0].title).toBe("title");
   expect(threats[0].description).toBe("description");
   expect(threats[0].mitigation).toBe("mitigation");
-  expect(threats[0].game).toBe(gameID);
+  expect(threats[0].game).toBe(matchID);
 });
 
 
 it("Download threat file", async () => {
-  const gameName = ElevationOfPrivilege.name;
-  const gameID = "1234567";
+  const matchID = "1234567";
 
   const state = {
     G: {
@@ -296,14 +297,14 @@ it("Download threat file", async () => {
     }
   }
 
-  await gameServer.db.set(`${gameName}:${gameID}`, state);
-  await gameServer.db.set(`${gameName}:${gameID}:metadata`, metadata);
-  await gameServer.db.set(`${gameName}:${gameID}:model`, model);
+  await gameServer.db.setState(matchID, state);
+  await gameServer.db.setMetadata(matchID, metadata);
+  await gameServer.db.setModel(matchID, model);
   
   const date = new Date().toLocaleString();
 
   // retrieve the model
-  const response = await request(publicApiServer.callback()).get(`/download/text/${gameID}/0/30d1cdc1-110c-46f7-8178-e3fedcc71e3d`);
+  const response = await request(publicApiServer.callback()).get(`/download/text/${matchID}/0/30d1cdc1-110c-46f7-8178-e3fedcc71e3d`);
   expect(response.text).toBe(`Threats ${date}
 =======
 

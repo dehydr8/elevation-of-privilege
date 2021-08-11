@@ -15,7 +15,7 @@ class Board extends React.Component {
   static propTypes = {
     G: PropTypes.any.isRequired,
     ctx: PropTypes.any.isRequired,
-    gameID: PropTypes.any.isRequired,
+    matchID: PropTypes.any.isRequired,
     moves: PropTypes.any,
     events: PropTypes.any,
     playerID: PropTypes.any,
@@ -47,7 +47,7 @@ class Board extends React.Component {
 
   async updateNames() {
     const g = await request
-      .get(`${this.apiBase}/players/${this.props.gameID}/${this.props.playerID}/${this.props.credentials}`);
+      .get(`${this.apiBase}/players/${this.props.matchID}/${this.props.playerID}/${this.props.credentials}`);
 
     g.body.players.forEach(p => {
       if (typeof p.name !== 'undefined') {
@@ -58,7 +58,7 @@ class Board extends React.Component {
 
   async updateModel() {
     const r = await request
-      .get(`${this.apiBase}/model/${this.props.gameID}/${this.props.playerID}/${this.props.credentials}`);
+      .get(`${this.apiBase}/model/${this.props.matchID}/${this.props.playerID}/${this.props.credentials}`);
 
     const model = r.body;
 
@@ -74,16 +74,9 @@ class Board extends React.Component {
   }
 
   render() {
-    let active = false;
-    let current = false;
-
-    if (this.props.ctx.actionPlayers.includes(parseInt(this.props.playerID)) || this.props.ctx.actionPlayers.includes(this.props.playerID)) {
-      active = true;
-    }
-
-    if (this.props.playerID === this.props.ctx.currentPlayer) {
-      current = true;
-    }
+    const current = this.props.playerID === this.props.ctx.currentPlayer
+    const isInThreatStage = (this.props.ctx.activePlayers && this.props.ctx.activePlayers[this.props.playerID] === 'threats') ? true : false;
+    const active = current || isInThreatStage;
 
     let dealtCard = getDealtCard(this.props.G);
 
@@ -93,12 +86,13 @@ class Board extends React.Component {
         <div className="player-wrap">
           <div className="playingCardsContainer">
             <div className="status-bar">
-              <Status gameMode={this.props.G.gameMode} playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard} />
+              <Status gameMode={this.props.G.gameMode} playerID={this.props.playerID} G={this.props.G} ctx={this.props.ctx} names={this.state.names} current={current} active={active} dealtCard={dealtCard} isInThreatStage={isInThreatStage} />
             </div>
             <Deck
               cards={this.props.G.players[this.props.playerID]}
               suit={this.props.G.suit}
-              phase={this.props.ctx.phase}
+              /* phase replaced with isInThreatStage. active players is null when not */
+              isInThreatStage={isInThreatStage}
               round={this.props.G.round}
               current={current}
               active={active}
@@ -108,8 +102,8 @@ class Board extends React.Component {
             />
           </div>
         </div>
-        <Sidebar playerID={this.props.playerID} gameID={this.props.gameID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} phase={this.props.ctx.phase} current={current} active={active} names={this.state.names} secret={this.props.credentials} />
-        <Threatbar gameMode={this.props.G.gameMode} suit={this.props.G.suit} playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} />
+        <Sidebar playerID={this.props.playerID} matchID={this.props.matchID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} isInThreatStage={isInThreatStage} current={current} active={active} names={this.state.names} secret={this.props.credentials} />
+        <Threatbar gameMode={this.props.G.gameMode} suit={this.props.G.suit} playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} isInThreatStage={isInThreatStage} />
         <LicenseAttribution gameMode={this.props.G.gameMode} />
       </div>
     );

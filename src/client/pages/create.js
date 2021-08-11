@@ -27,7 +27,7 @@ class Create extends React.Component {
 
     this.state = {
       players: 3,
-      gameID: "",
+      matchID: "",
       names: initialPlayerNames,
       secret: initialSecrets,
       creating: false,
@@ -86,7 +86,7 @@ class Create extends React.Component {
 
     this.setState({
       ...this.state,
-      gameID: gameId,
+      matchID: gameId,
       created: true,
     });
   }
@@ -150,7 +150,7 @@ class Create extends React.Component {
   }
 
   url(i) {
-    return `${window.location.origin}/${this.state.gameID}/${i}/${this.state.secret[i]}`;
+    return `${window.location.origin}/${this.state.matchID}/${i}/${this.state.secret[i]}`;
   }
 
   formatAllLinks() {

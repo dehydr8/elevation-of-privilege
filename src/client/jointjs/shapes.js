@@ -1,4 +1,4 @@
-import joint from 'jointjs/index';
+import * as joint from 'jointjs';
 
 var V = joint.V;
 

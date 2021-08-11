@@ -8,20 +8,14 @@ export function getDealtCard(G) {
   return dealtCard;
 }
 
-export function getDealtCardsForPlayers(order, dealt) {
-  let cards = Array(order.length).fill("");
-  for (let i = 0; i < dealt.length; i++) {
-    let idx = parseInt(order[i]);
-    cards[idx] = dealt[i];
-  }
-  return cards;
-}
-
 export function isGameModeCornucopia(gameMode) {
   return (gameMode === GAMEMODE_CORNUCOPIA);
 }
 
 export function getCardName(card, gameMode) {
+  if (!card) {
+    return '';
+  }
   if (isGameModeCornucopia(gameMode)) {
     return getAbbreviationForCornucopia(card) + card.substr(1);
   } else {
