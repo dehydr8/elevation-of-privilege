@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { STARTING_CARD_MAP } from '../../../utils/constants';
 import { getTypeString } from '../../../utils/utils';
+import _ from 'lodash';
 
 class ThreatModal extends React.Component {
   static propTypes = {
@@ -70,6 +71,10 @@ class ThreatModal extends React.Component {
     });
   }
 
+  isInvalid() {
+    return this.props.G.threat.owner !== this.props.playerID ||_.isEmpty(this.state.description) || _.isEmpty(this.state.title);
+  }
+
   render() {
     return (
       <Modal isOpen={this.props.isOpen}>
@@ -121,7 +126,7 @@ class ThreatModal extends React.Component {
           </ModalBody>
           <ModalFooter>
             <Button color="success" className="mr-auto" hidden={this.props.G.threat.owner !== this.props.playerID} onClick={() => this.saveThreat()}>Save</Button>{' '}
-            <Button color="primary" disabled={this.props.G.threat.owner !== this.props.playerID} onClick={() => this.addOrUpdate()}>{(this.props.G.threat.new ? 'Save & Add' : 'Save & Update')}</Button>{' '}
+            <Button color="primary" disabled={this.isInvalid()} onClick={() => this.addOrUpdate()}>{(this.props.G.threat.new ? 'Save & Add' : 'Save & Update')}</Button>{' '}
             <Button color="secondary" disabled={this.props.G.threat.owner !== this.props.playerID} onClick={() => this.props.moves.toggleModal()}>Cancel</Button>
           </ModalFooter>
           <ModalFooter hidden={this.props.G.threat.owner !== this.props.playerID}>
