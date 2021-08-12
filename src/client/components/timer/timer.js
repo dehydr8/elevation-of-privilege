@@ -16,7 +16,7 @@ class Timer extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
     duration: PropTypes.number.isRequired,
-    targetTime: PropTypes.number.isRequired,
+    targetTime: PropTypes.number,
   }
 
   static defaultProps = {
@@ -47,12 +47,8 @@ class Timer extends React.Component {
 
   render() {
     const timeDifferenceInSeconds = Math.floor((this.props.targetTime - Date.now()) / 1000);
-
-    return (
-      <>
-      {
-        this.props.active &&
-        this.props.duration > 0 &&
+    if (this.props.active && this.props.duration > 0) {
+      return (
         <div className="timer-wrapper">
           <CountdownCircleTimer
             key={`timer-${this.state.active}-${this.state.painted}`}
@@ -60,15 +56,16 @@ class Timer extends React.Component {
             size={150}
             duration={this.props.duration}
             initialRemainingTime={Math.max(timeDifferenceInSeconds, 0)}
-            colors={[["#28a745", 0.5], ["#ffc107", 0.25], ["#dc3545"]]}
+            colors={[["#28a745", 0.625], ["#ffc107", 0.25], ["#dc3545", 0.125]]}
             onComplete={() => false}
           >
             {renderTime}
           </CountdownCircleTimer>
         </div>
-      }
-      </>
-    );
+      );
+    } else {
+      return null;
+    }
   }
 }
 
