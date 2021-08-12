@@ -5,10 +5,6 @@ import PropTypes from 'prop-types';
 import "./timer.css";
 
 const renderTime = ({ remainingTime }) => {
-  // if (remainingTime === 0) {
-  //   return <div className="timer">Time's up...</div>;
-  // }
-
   return (
     <div className="timer">
       <div className="value">{Math.floor(remainingTime / 60)}:{(remainingTime % 60).toString().padStart(2, "0")}</div>
@@ -18,9 +14,13 @@ const renderTime = ({ remainingTime }) => {
 
 class Timer extends React.Component {
   static propTypes = {
-    // Made these required bc it crashes if they're not provided
+    active: PropTypes.bool,
     duration: PropTypes.number.isRequired,
     targetTime: PropTypes.number.isRequired,
+  }
+
+  static defaultProps = {
+    active: true
   }
 
   constructor(props) {
@@ -49,20 +49,25 @@ class Timer extends React.Component {
     const timeDifferenceInSeconds = Math.floor((this.props.targetTime - Date.now()) / 1000);
 
     return (
-      <div className="timer-wrapper">
-        <CountdownCircleTimer
-          key={this.state.painted}
-          //This is a hacky way of having the component update
-          isPlaying
-          size={150}
-          duration={this.props.duration}
-          initialRemainingTime={Math.max(timeDifferenceInSeconds, 0)}
-          colors={[["#28a745", 0.5], ["#ffc107", 0.25], ["#dc3545"]]}
-          onComplete={() => false}
-        >
-          {renderTime}
-        </CountdownCircleTimer>
-      </div>
+      <>
+      {
+        this.props.active &&
+        this.props.duration > 0 &&
+        <div className="timer-wrapper">
+          <CountdownCircleTimer
+            key={`timer-${this.state.active}-${this.state.painted}`}
+            isPlaying
+            size={150}
+            duration={this.props.duration}
+            initialRemainingTime={Math.max(timeDifferenceInSeconds, 0)}
+            colors={[["#28a745", 0.5], ["#ffc107", 0.25], ["#dc3545"]]}
+            onComplete={() => false}
+          >
+            {renderTime}
+          </CountdownCircleTimer>
+        </div>
+      }
+      </>
     );
   }
 }

@@ -40,15 +40,12 @@ class Sidebar extends React.Component {
     return (
       <div className="side-bar">
         <div className="column">
-          {
-            this.props.isInThreatStage && 
-            this.props.G.turnDuration > 0 &&
-              <Timer 
-                targetTime={this.props.G.turnFinishTargetTime}
-                duration={this.props.G.turnDuration}
-                key={`turn-timer-${this.props.G.dealt.length}`} 
-              />
-          }
+          <Timer
+            active={this.props.isInThreatStage}
+            targetTime={this.props.G.turnFinishTargetTime}
+            duration={this.props.G.turnDuration}
+            key={this.props.isInThreatStage}
+          />
         </div>
         <div className="column">
           <div className="text-center">
