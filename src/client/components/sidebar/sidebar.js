@@ -39,37 +39,27 @@ class Sidebar extends React.Component {
 
     return (
       <div className="side-bar">
-        <div className="column">
-          <Timer
-            active={this.props.isInThreatStage}
-            targetTime={this.props.G.turnFinishTargetTime}
-            duration={this.props.G.turnDuration}
-            key={this.props.isInThreatStage}
-          />
+        <div className="text-center">
+          <Footer short />
         </div>
-        <div className="column">
-          <div className="text-center">
-            <Footer short />
-          </div>
-          <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.matchID}`}>
-            <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Model
-          </Button>
-          <Button block size="lg" color="warning" href={`${this.apiBase}/download/text/${this.props.matchID}`}>
-            <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Threats
-          </Button>
-          <hr />
+        <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.matchID}`}>
+          <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Model
+        </Button>
+        <Button block size="lg" color="warning" href={`${this.apiBase}/download/text/${this.props.matchID}`}>
+          <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Threats
+        </Button>
+        <hr />
 
-          <Leaderboard gameMode={this.props.G.gameMode} passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={this.props.G.dealt} />
-          {isLastToPass && <div className="warning">You are the last one to pass!</div>}
-          {(this.props.isInThreatStage &&
-            !this.props.G.passed.includes(this.props.playerID) &&
-            this.props.active) && <Button color={(isLastToPass) ? "warning" : "secondary"} className="pass" size="lg" block
-              onClick={() => { this.props.moves.pass() }}>
-              Pass
-            </Button>}
+        <Leaderboard gameMode={this.props.G.gameMode} passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={this.props.G.dealt} />
+        {isLastToPass && <div className="warning">You are the last one to pass!</div>}
+        {(this.props.isInThreatStage &&
+          !this.props.G.passed.includes(this.props.playerID) &&
+          this.props.active) && <Button color={(isLastToPass) ? "warning" : "secondary"} className="pass" size="lg" block
+            onClick={() => { this.props.moves.pass() }}>
+            Pass
+          </Button>}
 
-          <DealtCard card={dealtCard} gameMode={this.props.G.gameMode} />
-        </div>
+        <DealtCard card={dealtCard} gameMode={this.props.G.gameMode} />
       </div>
     );
   }
