@@ -35,7 +35,7 @@ it('doesn\'t render timer when duration isn\'t given or is 0', () => {
   const moves = {};
   const div = document.createElement('div');
   act(() => {
-    ReactDOM.render(<Sidebar G={G} gameID="1234" ctx={ctx} moves={moves} current={true} active={true} names={["P1", "P2", "P3"]} playerID="0" />, div);
+    ReactDOM.render(<Sidebar G={G} matchID="1234" ctx={ctx} moves={moves} current={true} active={true} names={["P1", "P2", "P3"]} playerID="0" isInThreatStage={true}/>, div);
   });
   expect(Timer).not.toHaveBeenCalled();
 
@@ -44,7 +44,7 @@ it('doesn\'t render timer when duration isn\'t given or is 0', () => {
     turnDuration: 0
   };
   act(() => {
-    ReactDOM.render(<Sidebar G={G} gameID="1234" ctx={ctx} moves={moves} current={true} active={true} names={["P1", "P2", "P3"]} playerID="0" />, div);
+    ReactDOM.render(<Sidebar G={G} matchID="1234" ctx={ctx} moves={moves} current={true} active={true} names={["P1", "P2", "P3"]} playerID="0" isInThreatStage={true}/>, div);
   });
   expect(Timer).not.toHaveBeenCalled();
 
@@ -64,7 +64,7 @@ it('renders timer when duration is greater than zero', () => {
   const moves = {};
   const div = document.createElement('div');
   act(() => {
-    ReactDOM.render(<Sidebar G={G} gameID="1234" ctx={ctx} moves={moves} current={true} active={true} names={["P1", "P2", "P3"]} playerID="0" />, div);
+    ReactDOM.render(<Sidebar G={G} matchID="1234" ctx={ctx} moves={moves} current={true} active={true} names={["P1", "P2", "P3"]} playerID="0" isInThreatStage={true} />, div);
   });
   expect(Timer).toHaveBeenCalled();
 

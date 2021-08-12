@@ -41,7 +41,7 @@ class Sidebar extends React.Component {
       <div className="side-bar">
         <div className="column">
           {
-            this.props.ctx.phase === 'threats' && 
+            this.props.isInThreatStage && 
             this.props.G.turnDuration > 0 &&
               <Timer 
                 targetTime={this.props.G.turnFinishTargetTime}
