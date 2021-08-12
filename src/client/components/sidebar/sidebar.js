@@ -4,7 +4,7 @@ import Leaderboard from '../leaderboard/leaderboard';
 import DealtCard from '../dealtcard/dealtcard';
 import './sidebar.css';
 import { Button } from 'reactstrap';
-import { getDealtCard, getDealtCardsForPlayers } from '../../../utils/utils'
+import { getDealtCard } from '../../../utils/utils'
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { API_PORT } from '../../../utils/constants';
@@ -14,13 +14,18 @@ import Timer from '../timer/timer';
 class Sidebar extends React.Component {
   static propTypes = {
     playerID: PropTypes.any,
-    gameID: PropTypes.any.isRequired,
+    matchID: PropTypes.any.isRequired,
     G: PropTypes.any.isRequired,
     ctx: PropTypes.any.isRequired,
+    isInThreatStage: PropTypes.bool,
     moves: PropTypes.any.isRequired,
     current: PropTypes.bool.isRequired,
     active: PropTypes.bool.isRequired,
     names: PropTypes.any.isRequired,
+  };
+
+  static defaultProps = {
+    isInThreatStage: false,
   };
 
   constructor(props) {
@@ -49,24 +54,24 @@ class Sidebar extends React.Component {
           <div className="text-center">
             <Footer short />
           </div>
-          <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.gameID}`}>
+          <Button block size="lg" color="success" href={`${this.apiBase}/download/${this.props.matchID}`}>
             <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Model
           </Button>
-          <Button block size="lg" color="warning" href={`${this.apiBase}/download/text/${this.props.gameID}`}>
+          <Button block size="lg" color="warning" href={`${this.apiBase}/download/text/${this.props.matchID}`}>
             <FontAwesomeIcon icon={faDownload} /> &nbsp; Download Threats
           </Button>
           <hr />
 
-          <Leaderboard passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={getDealtCardsForPlayers(this.props.G.order, this.props.G.dealt)} />
+          <Leaderboard gameMode={this.props.G.gameMode} passedUsers={this.props.G.passed} playerID={this.props.playerID} scores={this.props.G.scores} names={this.props.names} cards={this.props.G.dealt} />
           {isLastToPass && <div className="warning">You are the last one to pass!</div>}
-          {(this.props.ctx.phase === "threats" &&
+          {(this.props.isInThreatStage &&
             !this.props.G.passed.includes(this.props.playerID) &&
             this.props.active) && <Button color={(isLastToPass) ? "warning" : "secondary"} className="pass" size="lg" block
               onClick={() => { this.props.moves.pass() }}>
               Pass
             </Button>}
 
-          <DealtCard card={dealtCard} />
+          <DealtCard card={dealtCard} gameMode={this.props.G.gameMode} />
         </div>
       </div>
     );

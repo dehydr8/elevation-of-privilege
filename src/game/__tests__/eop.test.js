@@ -1,12 +1,13 @@
 import { Client } from 'boardgame.io/client';
 import { DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP } from '../../utils/constants';
 import { ElevationOfPrivilege } from '../eop';
+import { Local } from 'boardgame.io/multiplayer'
 
 describe('game', () => {
   const spec = {
     game: ElevationOfPrivilege,
     numPlayers: 3,
-    multiplayer: { local: true },
+    multiplayer: Local(),
   }
   const players = {
     "0": Client({ ...spec, playerID: "0", }),
@@ -18,8 +19,10 @@ describe('game', () => {
   const STARTING_CARD = STARTING_CARD_MAP[DEFAULT_START_SUIT];
 
   Object.keys(players).forEach(k => {
-    players[k].connect();
+    players[k].start();
   });
+
+  const startingPlayer = players['0'].getState().ctx.currentPlayer;
 
   it('should shuffle cards correctly', () => {
     let all = [];
@@ -41,19 +44,21 @@ describe('game', () => {
     );
   });
 
-  it('should start with the play phase', () => {
-    expect(players["0"].getState().ctx.phase).toBe('play');
+  it('shouldn\'t start in a stage/phase', () => {
+    expect(players['0'].getState().ctx.activePlayers).toBeFalsy();
+    expect(players['0'].getState().ctx.phase).toBeFalsy();
   });
 
   it('should start with scores set to zero', () => {
     expect(players["0"].getState().G.scores).toStrictEqual([0,0,0]);
   });
 
-  it('should respect the play order', () => {
-    expect(players["0"].getState().G.order[0]).toBe(parseInt(players["0"].getState().ctx.currentPlayer));
+  it('have correct order in ctx', () => {
+    const state = players['0'].getState();
+    expect(state.ctx.playOrder).toStrictEqual(['0', '1', '2']);
   });
 
-  it('should move to the threats phase when the first player makes a move', () => {
+  it('should move to the threats stage when the first player makes a move', () => {
     const starting = players["0"].getState().ctx.currentPlayer;
     players[starting].moves.draw(STARTING_CARD);
 
@@ -61,7 +66,7 @@ describe('game', () => {
     expect(state.G.dealt).toContain(STARTING_CARD);
     expect(state.G.dealtBy).toBe(starting);
     expect(state.G.suit).toBe(STARTING_CARD.substr(0, 1));
-    expect(state.ctx.phase).toBe("threats");
+    expect(players['0'].getState().ctx.activePlayers).toStrictEqual({"0": "threats", "1": "threats", "2": "threats"})
   });
 
   it('the played card should not be present in the deck', () => {
@@ -74,14 +79,15 @@ describe('game', () => {
     const lastPlayer = players["0"].getState().G.dealtBy;
     const cards = players[lastPlayer].getState().G.players[lastPlayer];
     const card = cards[Math.floor(Math.random()*cards.length)];
+
     players[lastPlayer].moves.draw(card);
-    
+
     const state = players["0"].getState();
 
     expect(state.G.dealt.includes(card)).toBeFalsy();
   });
 
-  it('anyone should be able to select diagrams in a threats phase', () => {
+  it('anyone should be able to select diagrams in a threats stage', () => {
     Object.keys(players).forEach(k => {
       players[k].moves.selectDiagram(k);
       const state = players["0"].getState();
@@ -89,7 +95,7 @@ describe('game', () => {
     });
   });
 
-  it('anyone should be able to select components in a threats phase', () => {
+  it('anyone should be able to select components in a threats stage', () => {
     Object.keys(players).forEach(k => {
       players[k].moves.selectComponent(k);
       const state = players["0"].getState();
@@ -97,7 +103,7 @@ describe('game', () => {
     });
   });
 
-  it('anyone should be able to select threats in a threats phase', () => {
+  it('anyone should be able to select threats in a threats stage', () => {
     Object.keys(players).forEach(k => {
       players[k].moves.selectThreat(k);
       const state = players["0"].getState();
@@ -105,7 +111,7 @@ describe('game', () => {
     });
   });
 
-  it('anyone should be able to toggle the threat add modal in a threats phase', () => {
+  it('anyone should be able to toggle the threat add modal in a threats stage', () => {
     Object.keys(players).forEach(k => {
       players[k].moves.toggleModal();
       let state = players["0"].getState();
@@ -119,7 +125,7 @@ describe('game', () => {
     });
   });
 
-  it('the players who pass in the threats phase should not be able to toggle the modal', () => {
+  it('the players who pass in the threats stage should not be able to toggle the modal', () => {
     players["0"].moves.pass();
     players["0"].moves.pass();
     players["0"].moves.toggleModal();
@@ -189,5 +195,18 @@ describe('game', () => {
     let diagram = state.G.selectedDiagram;
     let component = state.G.selectedComponent;
     expect(state.G.identifiedThreats[diagram][component]).toStrictEqual({});
+  });
+
+  it('should move on when all players have passed', () => {
+    players['1'].moves.pass();
+    players['2'].moves.pass();
+
+    expect(players['0'].getState().ctx.activePlayers).toBeFalsy();
+  })
+
+  it('should respect the play order', () => {
+    const state = players['0'].getState()
+    const nextPlayer = (parseInt(startingPlayer) + 1) % state.ctx.numPlayers;
+    expect(state.ctx.currentPlayer).toBe(nextPlayer.toString())
   });
 });

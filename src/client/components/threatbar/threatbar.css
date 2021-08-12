@@ -1,11 +1,12 @@
 .threat-bar {
   position: fixed;
   right: 310px;
-  max-height: 100%;
+  max-height: calc(100% - 250px - 3rem);;
   width: 500px;
   overflow-y: auto;
-
   font-size: 0.9em;
+  border-bottom: 1px solid rgba(0,0,0,.125);
+  border-radius: 5px;
 }
 
 .threat-container .card {

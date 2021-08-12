@@ -1,15 +1,8 @@
-import { FlatFile, Mongo } from 'boardgame.io/server';
+import { ModelFlatFile } from "./ModelFlatFile";
 
 export function getDatabase() {
-  if (process.env.DATA_STORE === 'mongo') {
-    return new Mongo({
-      url: process.env.MONGO_URI,
-      dbname: process.env.MONGO_DATABASE,
-    });
-  } else {
-    return new FlatFile({
-      dir: 'db',
-      logging: false,
-    });
-  }
+  return new ModelFlatFile({
+    dir: 'db',
+    logging: false,
+  });
 }

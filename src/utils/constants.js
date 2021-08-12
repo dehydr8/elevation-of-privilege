@@ -1,17 +1,19 @@
 export const DECK_HANDS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-export const DECK_SUITS = ['S', 'T', 'R', 'I', 'D', 'E'];
-export const INVALID_CARDS = ['T2', 'E2', 'E3', 'E4'];
-export const TRUMP_CARD_PREFIX = 'E';
-export const DEFAULT_START_SUIT = 'T'
 export const DEFAULT_TURN_DURATION = 120;
-//TODO: Extract the following from INVALID_CARDS
+export const DECK_SUITS = ['A', 'B', 'C', 'D', 'E', 'T'];
+export const INVALID_CARDS = ['B2', 'T2', 'T3', 'T4'];
+export const TRUMP_CARD_PREFIX = 'T';
+export const DEFAULT_START_SUIT = 'E';
+export const GAMEMODE_EOP = "Elevation of Privilege";
+export const GAMEMODE_CORNUCOPIA = "OWASP Cornucopia";
+export const DEFAULT_GAME_MODE = "Elevation of Privilege";
 export const STARTING_CARD_MAP = {
-  'S': 'S2',
-  'T': 'T3',
-  'R': 'R2',
-  'I': 'I2',
   'D': 'D2',
-  'E': 'E5'
+  'E': 'E3',
+  'C': 'C2',
+  'B': 'B2',
+  'A': 'A2',
+  'T': 'T5'
 }
 
 export const CARD_LIMIT = 26;
@@ -30,7 +32,7 @@ export const DEFAULT_MODEL = {
     "contributors": [],
     "diagrams": [
       {
-        "title": "Elevation of Privilege",
+        "title": "Threat Modelling",
         "diagramType": "STRIDE",
         "id": 0,
         "$$hashKey": "object:14",

@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getValidMoves } from '../../../utils/utils';
+import { getValidMoves, isGameModeCornucopia } from '../../../utils/utils';
+
 
 class Deck extends React.Component {
   static propTypes = {
     suit: PropTypes.any.isRequired,
     cards: PropTypes.any.isRequired,
-    phase: PropTypes.string.isRequired,
+    isInThreatStage: PropTypes.bool,
     round: PropTypes.any.isRequired,
     current: PropTypes.bool.isRequired,
     active: PropTypes.bool.isRequired,
     onCardSelect: PropTypes.func.isRequired,
-    startingCard: PropTypes.string.isRequired
+    startingCard: PropTypes.string.isRequired,
+    gameMode: PropTypes.string.isRequired,
+  };
+
+  static defaultProps = {
+    isInThreatStage: false
   };
 
   getRenderedDeck() {
@@ -19,13 +25,13 @@ class Deck extends React.Component {
     let suit = this.props.suit;
     let validMoves = [];
 
-    if (this.props.current && this.props.active && this.props.phase === "play") {
+    if (this.props.current && this.props.active && !this.props.isInThreatStage) {
       validMoves = getValidMoves(left, suit, this.props.round, this.props.startingCard);
     }
 
     let deck = left
       .map(e => (
-        <li key={e} className={`playing-card card${e.toLowerCase()} ${validMoves.includes(e) ? 'active' : ''} card-rounded scaled`} onClick={() => this.props.onCardSelect(e)} />
+        <li key={e} className={` playing-card ${(isGameModeCornucopia(this.props.gameMode)) ? `cornucopiacard ccard${e.toLowerCase()}` : `card${e.toLowerCase()}`} ${validMoves.includes(e) ? 'active' : ''} card-rounded scaled`} onClick={() => this.props.onCardSelect(e)} />
       ));
 
     return (
@@ -37,7 +43,6 @@ class Deck extends React.Component {
 
   render() {
     let deck = this.getRenderedDeck();
-
     return (
       <div className="playingCards">
         {deck}
