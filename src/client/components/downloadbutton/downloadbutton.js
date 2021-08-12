@@ -30,11 +30,30 @@ class DownloadButton extends React.Component {
     return `${this.apiBase}/${this.props.apiEndpoint}/${this.props.matchID}/${this.props.playerID}/${this.props.secret}`;
   }
 
+  getFilename(response) {
+    const header = response.headers.get('Content-Disposition')
+    const filename = header.match(/filename="(.*)"$/)[1];
+
+    response.headers.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    })
+    console.log(filename);
+    return filename;
+
+  }
+
   handleClick() {
     fetch(this.apiEndpointUrl()).then(res => {
+      let filename = this.getFilename(res);
       res.blob().then(fileBlob => {
         var url = URL.createObjectURL(fileBlob);
-        window.location.assign(url);
+        var a = document.createElement('a');
+        a.href = url;
+        // using the download attribute of an <a> allows the file to be downloaded
+        a.download = filename || 'file';
+        document.body.appendChild(a);
+        a.click();    
+        a.remove();  //afterwards we remove the element again 
       });
     });
   }

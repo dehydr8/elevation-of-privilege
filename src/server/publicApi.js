@@ -132,7 +132,9 @@ const runPublicApi = (gameServer) => {
 
     const modelTitle = game.model.summary.title.replace(' ', '-');
     const timestamp = (new Date()).toISOString().replace(':', '-');
-    ctx.attachment(`${modelTitle}-${timestamp}.json`);
+    const filename = `${modelTitle}-${timestamp}.json`;
+    ctx.attachment(filename);
+    ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
     ctx.body = game.model;
   });
 
@@ -159,7 +161,9 @@ const runPublicApi = (gameServer) => {
       : 'untitled-model';
     const timestamp = new Date().toISOString().replace(':', '-');
     const date = new Date().toLocaleString();
-    ctx.attachment(`threats-${modelTitle}-${timestamp}.md`);
+    const filename = `threats-${modelTitle}-${timestamp}.md`
+    ctx.attachment(filename);
+    ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
 
     ctx.body = formatThreats(threats, date);
   });
