@@ -212,7 +212,7 @@ class Create extends React.Component {
               <Col sm={10}>
                 <Input type="select" name="startSuit" id="startSuit" onChange={e => this.onstartSuitUpdated(e)} value={this.state.startSuit}>
                   {
-                    Object.keys(STARTING_CARD_MAP).map(suit => (
+                    Object.keys(STARTING_CARD_MAP[this.state.gameMode]).map(suit => (
                       <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString(suit, this.state.gameMode)}</option>
                     ))
                   }
