@@ -10,11 +10,12 @@ import { getTypeString, escapeMarkdownText, isGameModeCornucopia } from '../util
 const runPublicApi = (gameServer) => {
   const app = new Koa();
   const router = new Router();
-  router.get('/players/:game/:id/:secret', async ctx => {
+  router.get('/players/:game/:id', async ctx => {
     const matchID = ctx.params.game;
     const game = await gameServer.db.fetch(matchID, { metadata: true });
+    const secret = ctx.get('Authorization');
 
-    if (!isSecretValid(ctx, game.metadata)) {
+    if (!isSecretValid(ctx.params.id, secret, game.metadata)) {
         ctx.status = 403;
         return;
     }
@@ -65,12 +66,13 @@ const runPublicApi = (gameServer) => {
     };
   });
 
-  router.get('/model/:game/:id/:secret', async (ctx) => {
+  router.get('/model/:game/:id', async (ctx) => {
     const matchID = ctx.params.game;
     const game = await gameServer.db.fetch(matchID, { model: true, metadata: true });
+    const secret = ctx.get('Authorization');
 
     // validate secret
-    if (!isSecretValid(ctx, game.metadata)) {
+    if (!isSecretValid(ctx.params.id, secret, game.metadata)) {
         ctx.status = 403;
         return;
     }
@@ -78,12 +80,13 @@ const runPublicApi = (gameServer) => {
     ctx.body = game.model;
   });
 
-  router.get('/download/:game/:id/:secret', async (ctx) => {
+  router.get('/download/:game/:id', async (ctx) => {
     const matchID = ctx.params.game;
     const game = await gameServer.db.fetch(matchID, { state: true, metadata: true, model: true });
+    const secret = ctx.get('Authorization');
 
     // validate secret
-    if (!isSecretValid(ctx, game.metadata)) {
+    if (!isSecretValid(ctx.params.id, secret, game.metadata)) {
         ctx.status = 403;
         return;
     }
@@ -139,7 +142,7 @@ const runPublicApi = (gameServer) => {
   });
 
   //produce a nice textfile with the threats in
-  router.get('/download/text/:game/:id/:secret', async (ctx) => {
+  router.get('/download/text/:game/:id', async (ctx) => {
     //get some variables that might be useful
     const matchID = ctx.params.game;
     const game = await gameServer.db.fetch(matchID, {
@@ -147,9 +150,11 @@ const runPublicApi = (gameServer) => {
       metadata: true,
       model: true,
     });
-        
+    
+    const secret = ctx.get('Authorization');
+
     // validate secret
-    if (!isSecretValid(ctx, game.metadata)) {
+    if (!isSecretValid(ctx.params.id, secret, game.metadata)) {
         ctx.status = 403;
         return;
     }
@@ -177,8 +182,8 @@ const runPublicApi = (gameServer) => {
   return [app, appHandle];
 };
 
-function isSecretValid(ctx, metadata) {
-  return metadata && metadata.players && metadata.players[ctx.params.id].credentials === ctx.params.secret;
+function isSecretValid(id, secret, metadata) {
+  return metadata && metadata.players && metadata.players[id].credentials === secret;
 }
 
 function getThreats(gameState, metadata, model) {

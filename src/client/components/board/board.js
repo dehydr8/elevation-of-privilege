@@ -47,7 +47,8 @@ class Board extends React.Component {
 
   async updateNames() {
     const g = await request
-      .get(`${this.apiBase}/players/${this.props.matchID}/${this.props.playerID}/${this.props.credentials}`);
+      .get(`${this.apiBase}/players/${this.props.matchID}/${this.props.playerID}`)
+      .set('Authorization', this.props.credentials);
 
     g.body.players.forEach(p => {
       if (typeof p.name !== 'undefined') {
@@ -58,7 +59,8 @@ class Board extends React.Component {
 
   async updateModel() {
     const r = await request
-      .get(`${this.apiBase}/model/${this.props.matchID}/${this.props.playerID}/${this.props.credentials}`);
+      .get(`${this.apiBase}/model/${this.props.matchID}/${this.props.playerID}`)
+      .set('Authorization', this.props.credentials);
 
     const model = r.body;
 

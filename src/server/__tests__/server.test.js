@@ -33,7 +33,9 @@ it('retrieves player info for a game', async () => {
   expect(response.body.game).toBeDefined();
   expect(response.body.credentials.length).toBe(players);
 
-  response = await request(publicApiServer.callback()).get(`/players/${response.body.game}/0/${response.body.credentials[0]}`);
+  response = await request(publicApiServer.callback())
+    .get(`/players/${response.body.game}/0`)
+    .set('Authorization', response.body.credentials[0]);
   expect(response.body.players.length).toBe(players);
   response.body.players.forEach((p, i) => {
     expect(p.name).toBe(names[i]);
@@ -74,7 +76,9 @@ it('retrieve the model for a game', async () => {
   expect(response.body.credentials.length).toBe(players);
 
   // retrieve the model
-  response = await request(publicApiServer.callback()).get(`/model/${response.body.game}/0/${response.body.credentials[0]}`);
+  response = await request(publicApiServer.callback())
+    .get(`/model/${response.body.game}/0`)
+    .set('Authorization', response.body.credentials[0]);
   expect(response.body).toStrictEqual(model)
 });
 
@@ -153,7 +157,9 @@ it('download the final model for a game', async () => {
   await gameServer.db.setState(matchID, state);
 
   // retrieve the model
-  const response = await request(publicApiServer.callback()).get(`/download/${matchID}/0/abc123`);
+  const response = await request(publicApiServer.callback())
+    .get(`/download/${matchID}/0`)
+    .set('Authorization', 'abc123');
   const threats = response.body.detail.diagrams[0].diagramJson.cells[0].threats;
   expect(threats[0].id).toBe("0");
   expect(threats[0].type).toBe("Spoofing");
@@ -304,7 +310,9 @@ it("Download threat file", async () => {
   const date = new Date().toLocaleString();
 
   // retrieve the model
-  const response = await request(publicApiServer.callback()).get(`/download/text/${matchID}/0/30d1cdc1-110c-46f7-8178-e3fedcc71e3d`);
+  const response = await request(publicApiServer.callback())
+    .get(`/download/text/${matchID}/0`)
+    .set('Authorization', '30d1cdc1-110c-46f7-8178-e3fedcc71e3d');
   expect(response.text).toBe(`Threats ${date}
 =======
 

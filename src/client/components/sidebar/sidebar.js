@@ -6,7 +6,6 @@ import DownloadButton from '../downloadbutton/downloadbutton';
 import './sidebar.css';
 import { Button } from 'reactstrap';
 import { getDealtCard } from '../../../utils/utils'
-import { API_PORT } from '../../../utils/constants';
 import Footer from '../footer/footer';
 
 class Sidebar extends React.Component {
