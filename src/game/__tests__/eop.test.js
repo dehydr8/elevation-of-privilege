@@ -1,5 +1,5 @@
 import { Client } from 'boardgame.io/client';
-import { DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP } from '../../utils/constants';
+import { DEFAULT_GAME_MODE, DEFAULT_START_SUIT, INVALID_CARDS, STARTING_CARD_MAP } from '../../utils/constants';
 import { ElevationOfPrivilege } from '../eop';
 import { Local } from 'boardgame.io/multiplayer'
 
@@ -16,7 +16,7 @@ describe('game', () => {
   }
 
   let createdThreat = "";
-  const STARTING_CARD = STARTING_CARD_MAP[DEFAULT_START_SUIT];
+  const STARTING_CARD = STARTING_CARD_MAP[DEFAULT_GAME_MODE][DEFAULT_START_SUIT];
 
   Object.keys(players).forEach(k => {
     players[k].start();
@@ -40,7 +40,7 @@ describe('game', () => {
 
     // expect that invalid cards shouldn't be present
     expect(all).toEqual(
-      expect.not.arrayContaining(INVALID_CARDS),
+      expect.not.arrayContaining(INVALID_CARDS[DEFAULT_GAME_MODE]),
     );
   });
 
