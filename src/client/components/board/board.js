@@ -4,7 +4,6 @@ import Model from '../model/model';
 import Deck from '../deck/deck';
 import Sidebar from '../sidebar/sidebar';
 import Threatbar from '../threatbar/threatbar';
-import ThreatModal from '../threatmodal/threatmodal';
 import './board.css';
 import request from 'superagent';
 import Status from '../status/status';
@@ -103,7 +102,6 @@ class Board extends React.Component {
         </div>
         <Sidebar playerID={this.props.playerID} matchID={this.props.matchID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} isInThreatStage={isInThreatStage} current={current} active={active} names={this.state.names} />
         <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} isInThreatStage={isInThreatStage} />
-        <ThreatModal isOpen={this.props.G.threat.modal} G={this.props.G} ctx={this.props.ctx} playerID={this.props.playerID} moves={this.props.moves} names={this.state.names} />
         <LicenseAttribution gameMode={this.props.G.gameMode} />
       </div>
     );

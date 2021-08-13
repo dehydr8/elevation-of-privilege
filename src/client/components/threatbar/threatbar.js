@@ -7,6 +7,7 @@ import { faBolt, faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-ico
 import { getComponentName, getTypeString } from '../../../utils/utils';
 import confirm from 'reactstrap-confirm';
 import './threatbar.css';
+import ThreatModal from '../threatmodal/threatmodal';
 
 class Threatbar extends React.Component {
   static propTypes = {
@@ -180,6 +181,7 @@ class Threatbar extends React.Component {
             {(threats.length <= 0) && <em className="text-muted">No existing threats for this component.</em>}
           </CardBody>
         </Card>
+        <ThreatModal isOpen={this.props.G.threat.modal} G={this.props.G} ctx={this.props.ctx} playerID={this.props.playerID} moves={this.props.moves} names={this.props.names} />
       </div>
     );
   }
