@@ -9,7 +9,7 @@ it('produces empty value for non-existent card', () => {
 
 it('produces empty value for cornucopia gamemode', () => {
   const description = getThreatDescription("D2", GAMEMODE_CORNUCOPIA);
-  expect(description);
+  expect(description).toBe("");
 });
 
 it('produces correct value for existing card', () => {
