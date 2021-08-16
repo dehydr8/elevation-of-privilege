@@ -235,9 +235,7 @@ class Create extends React.Component {
               <Col sm={10}>
                 <Input type="select" name="turnDuration" id="turnDuration" onChange={e => this.onTurnDurationUpdated(e)} value={this.state.turnDuration}>
                   <option value={0}>No Timer</option>
-                  <option value={30}>30s</option>
-                  <option value={60}>1 min</option>
-                  <option value={120}>2 mins</option>
+                  <option value={180}>3 mins</option>
                   <option value={300}>5 mins</option>
                   <option value={600}>10 mins</option>
                 </Input>

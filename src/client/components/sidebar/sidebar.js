@@ -9,7 +9,6 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { API_PORT } from '../../../utils/constants';
 import Footer from '../footer/footer';
-import Timer from '../timer/timer';
 
 class Sidebar extends React.Component {
   static propTypes = {
