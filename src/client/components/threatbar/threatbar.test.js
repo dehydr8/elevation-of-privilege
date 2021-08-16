@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { GAMEMODE_EOP } from '../../../utils/constants';
 import Threatbar from './threatbar';
 
 it('renders without crashing', () => {
@@ -12,7 +13,8 @@ it('renders without crashing', () => {
     identifiedThreats: {},
     threat: {
       modal: false,
-    }
+    },
+    gameMode: GAMEMODE_EOP
   };
   const ctx = {};
   const moves = {};
@@ -32,7 +34,8 @@ it('renders modal without crashing', () => {
     threat: {
       modal: true,
       owner: "0",
-    }
+    },
+    gameMode: GAMEMODE_EOP
   };
   const ctx = {};
   const moves = {};
@@ -53,7 +56,8 @@ it('renders modal for update', () => {
       modal: true,
       new: false,
       owner: "0",
-    }
+    },
+    gameMode: GAMEMODE_EOP
   };
   const ctx = {};
   const moves = {};
