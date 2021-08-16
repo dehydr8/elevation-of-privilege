@@ -101,7 +101,7 @@ class Board extends React.Component {
           </div>
         </div>
         <Sidebar playerID={this.props.playerID} matchID={this.props.matchID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} isInThreatStage={isInThreatStage} current={current} active={active} names={this.state.names} />
-        <Threatbar gameMode={this.props.G.gameMode} suit={this.props.G.suit} playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} isInThreatStage={isInThreatStage} />
+        <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} isInThreatStage={isInThreatStage} />
         <LicenseAttribution gameMode={this.props.G.gameMode} />
       </div>
     );
