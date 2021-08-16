@@ -22,7 +22,7 @@ export function toggleModal(G, ctx) {
       id: uuidv4(),
       title: "",
       severity: "Medium",
-      description: getThreatDescription(card),
+      description: getThreatDescription(card, G.gameMode),
       mitigation: "",
     },
   }
