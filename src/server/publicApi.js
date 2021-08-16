@@ -27,8 +27,9 @@ const runPublicApi = (gameServer) => {
         numPlayers: ctx.request.body.players,
         setupData: {
           startSuit: ctx.request.body.startSuit,
+          turnDuration: ctx.request.body.turnDuration,
           gameMode: ctx.request.body.gameMode
-        },
+        }
       });
 
     const gameId = r.body.matchID;

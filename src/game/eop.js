@@ -5,7 +5,6 @@ import { toggleModal, toggleModalUpdate, updateThreat, selectDiagram, selectComp
 export const ElevationOfPrivilege = {
   name: 'elevation-of-privilege',
   setup: setupGame,
-
   playerView: PlayerView.STRIP_SECRETS,
   endIf: endGameIf,
 
