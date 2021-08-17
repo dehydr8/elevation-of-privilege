@@ -1,4 +1,4 @@
-import { DEFAULT_START_SUIT, STARTING_CARD_MAP, CARD_LIMIT, DECK_HANDS, DECK_SUITS, INVALID_CARDS, TRUMP_CARD_PREFIX, DEFAULT_GAME_MODE } from '../utils/constants';
+import { DEFAULT_START_SUIT, DEFAULT_TURN_DURATION, STARTING_CARD_MAP, CARD_LIMIT, DECK_HANDS, DECK_SUITS, INVALID_CARDS, TRUMP_CARD_PREFIX, DEFAULT_GAME_MODE } from '../utils/constants';
 import { isGameModeCornucopia } from '../utils/utils';
 
 
@@ -54,6 +54,9 @@ export function shuffleCards(ctx, startingCard) {
 export function setupGame(ctx, setupData) {
   const startSuit = (setupData) ? setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT;
   const gameMode = setupData ? setupData.gameMode || DEFAULT_GAME_MODE : DEFAULT_GAME_MODE;
+  const turnDuration = (setupData) ?
+    setupData.turnDuration || (setupData.turnDuration !== 0 && DEFAULT_TURN_DURATION) :
+    DEFAULT_TURN_DURATION;
 
   INVALID_CARDS[gameMode].forEach(c => deck.splice(deck.indexOf(c), 1));
   const startingCard = STARTING_CARD_MAP[gameMode][startSuit];
@@ -82,6 +85,7 @@ export function setupGame(ctx, setupData) {
     identifiedThreats: {},
     startingCard: startingCard,
     gameMode: gameMode,
+    turnDuration: turnDuration,
   }
   return ret;
 }

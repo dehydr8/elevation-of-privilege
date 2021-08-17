@@ -22,7 +22,7 @@ export function toggleModal(G, ctx) {
       id: uuidv4(),
       title: "",
       severity: "Medium",
-      description: getThreatDescription(card),
+      description: getThreatDescription(card, G.gameMode),
       mitigation: "",
     },
   }
@@ -224,6 +224,7 @@ export function draw(G, ctx, card) {
     players: {
       ...G.players,
       [ctx.currentPlayer]: deck,
-    }
+    },
+    turnFinishTargetTime: Date.now() + G.turnDuration * 1000,
   };
 }

@@ -59,7 +59,6 @@ class Sidebar extends React.Component {
           </Button>}
 
         <DealtCard card={dealtCard} gameMode={this.props.G.gameMode} />
-
       </div>
     );
   }

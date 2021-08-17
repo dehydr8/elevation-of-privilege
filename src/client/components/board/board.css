@@ -8,3 +8,10 @@
   border-bottom: 1px solid #ccc;
   padding: 5px;
 }
+
+.timer-wrapper {
+  position: fixed;
+  left: 5px;
+  bottom: 5px;
+  background-color: white;
+}
