@@ -1,6 +1,6 @@
 {
   "name": "eop",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "private": true,
   "main": "src/client/index.js",
   "dependencies": {
@@ -18,6 +18,7 @@
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "react-nl2br": "^1.0.2",
+    "react-countdown-circle-timer": "^2.5.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
     "reactstrap": "^8.9.0",

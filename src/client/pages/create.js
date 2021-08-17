@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
-import { API_PORT, DEFAULT_GAME_MODE, DEFAULT_MODEL, DEFAULT_START_SUIT, GAMEMODE_CORNUCOPIA, GAMEMODE_EOP, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
+import { API_PORT, DEFAULT_GAME_MODE, DEFAULT_MODEL, DEFAULT_START_SUIT, GAMEMODE_CORNUCOPIA, GAMEMODE_EOP, DEFAULT_TURN_DURATION, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
 import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
@@ -34,6 +34,7 @@ class Create extends React.Component {
       created: false,
       model: null,
       startSuit: DEFAULT_START_SUIT,
+      turnDuration: DEFAULT_TURN_DURATION,
       provideModelThruAlternativeChannel: false,
       gameMode: DEFAULT_GAME_MODE,
     };
@@ -41,6 +42,7 @@ class Create extends React.Component {
     this.onPlayersUpdated = this.onPlayersUpdated.bind(this);
     this.onNameUpdated = this.onNameUpdated.bind(this);
     this.onstartSuitUpdated = this.onstartSuitUpdated.bind(this);
+    this.onTurnDurationUpdated = this.onTurnDurationUpdated.bind(this);
     this.ongameModeUpdated = this.ongameModeUpdated.bind(this);
     this.readFile = this.readFile.bind(this);
     this.onFileRead = this.onFileRead.bind(this);
@@ -69,6 +71,7 @@ class Create extends React.Component {
         model: this.state.provideModelThruAlternativeChannel ? DEFAULT_MODEL : this.state.model,
         names: this.state.names,
         startSuit: this.state.startSuit,
+        turnDuration: parseInt(this.state.turnDuration),
         gameMode: this.state.gameMode,
       });
 
@@ -130,6 +133,13 @@ class Create extends React.Component {
         ...this.state.names,
         [idx]: e.target.value,
       }
+    });
+  }
+
+  onTurnDurationUpdated(e) {
+    this.setState({
+      ...this.state,
+      turnDuration: e.target.value
     });
   }
 
@@ -216,6 +226,18 @@ class Create extends React.Component {
                       <option value={suit} key={`start-suit-option-${suit}`}>{getTypeString(suit, this.state.gameMode)}</option>
                     ))
                   }
+                </Input>
+              </Col>
+            </FormGroup>
+            <hr />
+            <FormGroup row>
+              <Label for="turnDuration" sm={2}>Turn Duration</Label>
+              <Col sm={10}>
+                <Input type="select" name="turnDuration" id="turnDuration" onChange={e => this.onTurnDurationUpdated(e)} value={this.state.turnDuration}>
+                  <option value={0}>No Timer</option>
+                  <option value={180}>3 mins</option>
+                  <option value={300}>5 mins</option>
+                  <option value={600}>10 mins</option>
                 </Input>
               </Col>
             </FormGroup>

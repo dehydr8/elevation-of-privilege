@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './board';
 import * as model from '../model/model';
-import { DEFAULT_GAME_MODE } from '../../../utils/constants';
+import { DEFAULT_GAME_MODE, DEFAULT_TURN_DURATION } from '../../../utils/constants';
 
 jest.mock('../model/model.js');
 
@@ -33,6 +33,8 @@ it('renders without crashing', async() => {
     round: 1,
     startingCard: 'T3',
     gameMode: DEFAULT_GAME_MODE,
+    turnDuration: DEFAULT_TURN_DURATION,
+    turnFinishTargetTime: Date.now() + DEFAULT_TURN_DURATION * 1000
   }
   const ctx = {
     actionPlayers: [0, 1, 2]

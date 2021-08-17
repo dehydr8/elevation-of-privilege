@@ -35,8 +35,9 @@ const runPublicApi = (gameServer) => {
         numPlayers: ctx.request.body.players,
         setupData: {
           startSuit: ctx.request.body.startSuit,
+          turnDuration: ctx.request.body.turnDuration,
           gameMode: ctx.request.body.gameMode
-        },
+        }
       });
 
     const gameId = r.body.matchID;
@@ -118,8 +119,8 @@ const runPublicApi = (gameServer) => {
                 status: 'Open',
                 severity: t.severity,
                 id: t.id,
-                methodology: (isGameModeCornucopia(game.state.G.gameMode)) ? 'Data, Crypt, Sessn, AuthZ, AuthN, Cornu' : 'STRIDE',
-                type: getTypeString(t.type),
+                methodology: (isGameModeCornucopia(game.state.G.gameMode)) ? 'Cornucopia' : 'STRIDE',
+                type: getTypeString(t.type, game.state.G.gameMode),
                 title: t.title,
                 description: t.description,
                 mitigation: t.mitigation,

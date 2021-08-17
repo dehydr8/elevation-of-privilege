@@ -1,4 +1,5 @@
 export const DECK_HANDS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+export const DEFAULT_TURN_DURATION = 300;
 export const DECK_SUITS = ['A', 'B', 'C', 'D', 'E', 'T'];
 export const INVALID_CARDS = ['B2', 'T2', 'T3', 'T4'];
 export const TRUMP_CARD_PREFIX = 'T';

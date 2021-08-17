@@ -1,8 +1,8 @@
 .side-bar {
   position: fixed;
   right: 0;
+  height: 100%;
   width: 300px;
-  height: 60%;
 }
 
 .pass.btn-secondary {
