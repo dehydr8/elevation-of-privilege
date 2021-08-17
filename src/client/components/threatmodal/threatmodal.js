@@ -95,7 +95,7 @@ class ThreatModal extends React.Component {
               <Label for="type">Threat type</Label>
               <Input type="select" name="type" id="type" disabled={this.props.G.threat.owner !== this.props.playerID} value={this.props.G.threat.type} onChange={(e) => this.props.moves.updateThreat("type", e.target.value)}>
                 {
-                  Object.keys(STARTING_CARD_MAP).map(suit => (
+                  Object.keys(STARTING_CARD_MAP[this.props.G.gameMode]).map(suit => (
                     <option value={suit} key={`threat-category-${suit}`}>{getTypeString(suit, this.props.G.gameMode)}</option>
                   ))
                 }

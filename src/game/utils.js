@@ -54,15 +54,12 @@ export function shuffleCards(ctx, startingCard) {
 export function setupGame(ctx, setupData) {
   const startSuit = (setupData) ? setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT;
   const gameMode = setupData ? setupData.gameMode || DEFAULT_GAME_MODE : DEFAULT_GAME_MODE;
-  const startingCard = STARTING_CARD_MAP[startSuit];
   const turnDuration = (setupData) ?
     setupData.turnDuration || (setupData.turnDuration !== 0 && DEFAULT_TURN_DURATION) :
     DEFAULT_TURN_DURATION;
 
-  // remove invalid cards
-  if (!isGameModeCornucopia(gameMode)) {
-    INVALID_CARDS.forEach(c => deck.splice(deck.indexOf(c), 1));
-  }
+  INVALID_CARDS[gameMode].forEach(c => deck.splice(deck.indexOf(c), 1));
+  const startingCard = STARTING_CARD_MAP[gameMode][startSuit];
   
   let scores = new Array(ctx.numPlayers).fill(0);
   let shuffled = shuffleCards(ctx, startingCard);

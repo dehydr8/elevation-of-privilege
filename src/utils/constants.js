@@ -1,19 +1,29 @@
 export const DECK_HANDS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 export const DEFAULT_TURN_DURATION = 300;
 export const DECK_SUITS = ['A', 'B', 'C', 'D', 'E', 'T'];
-export const INVALID_CARDS = ['B2', 'T2', 'T3', 'T4'];
 export const TRUMP_CARD_PREFIX = 'T';
 export const DEFAULT_START_SUIT = 'E';
 export const GAMEMODE_EOP = "Elevation of Privilege";
 export const GAMEMODE_CORNUCOPIA = "OWASP Cornucopia";
 export const DEFAULT_GAME_MODE = "Elevation of Privilege";
+export const INVALID_CARDS = {[GAMEMODE_EOP]: ['E2', 'T2', 'T3', 'T4'], [GAMEMODE_CORNUCOPIA]: []};
 export const STARTING_CARD_MAP = {
-  'D': 'D2',
-  'E': 'E3',
-  'C': 'C2',
-  'B': 'B2',
-  'A': 'A2',
-  'T': 'T5'
+  [GAMEMODE_EOP]: {
+    'D': 'D2',
+    'E': 'E3',
+    'C': 'C2',
+    'B': 'B2',
+    'A': 'A2',
+    'T': 'T5'
+  },
+  [GAMEMODE_CORNUCOPIA]: {
+    'D': 'D2',
+    'E': 'E2',
+    'C': 'C2',
+    'B': 'B2',
+    'A': 'A2',
+    'T': 'T2'
+  }
 }
 
 export const CARD_LIMIT = 26;
