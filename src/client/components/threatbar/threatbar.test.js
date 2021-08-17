@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { GAMEMODE_EOP } from '../../../utils/constants';
 import Threatbar from './threatbar';
-import { DEFAULT_GAME_MODE } from '../../../utils/constants';
 
 it('renders without crashing', () => {
   const G = {
@@ -14,7 +14,7 @@ it('renders without crashing', () => {
     threat: {
       modal: false,
     },
-    gameMode: DEFAULT_GAME_MODE
+    gameMode: GAMEMODE_EOP
   };
   const ctx = {};
   const moves = {};
