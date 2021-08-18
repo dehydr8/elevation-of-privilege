@@ -2,6 +2,7 @@ import cors from '@koa/cors';
 import Koa from 'koa';
 import koaBody from 'koa-body';
 import Router from 'koa-router';
+import auth from 'basic-auth';
 import request from 'superagent';
 import { ElevationOfPrivilege } from '../game/eop';
 import { API_PORT, INTERNAL_API_PORT } from '../utils/constants';
@@ -9,13 +10,9 @@ import { getTypeString, escapeMarkdownText, isGameModeCornucopia } from '../util
 
 const runPublicApi = (gameServer) => {
   const app = new Koa();
-  const router = new Router();
-  router.get('/players/:id', async (ctx) => {
-    const matchID = ctx.params.id;
-    const r = await request.get(
-      `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${matchID}`
-    );
-    ctx.body = r.body;
+  
+  const router = new Router({
+    prefix: '/game'
   });
 
   router.post('/create', koaBody(), async (ctx) => {
@@ -33,8 +30,7 @@ const runPublicApi = (gameServer) => {
       });
 
     const gameId = r.body.matchID;
-
-        const credentials = [];
+    const credentials = [];
 
     for (var i = 0; i < ctx.request.body.players; i++) {
       const j = await request
@@ -60,14 +56,40 @@ const runPublicApi = (gameServer) => {
     };
   });
 
-  router.get('/model/:id', async (ctx) => {
-    const matchID = ctx.params.id;
+  //authorise
+  router.use('/:matchID/', async (ctx, next) => {
+    const credentials = auth(ctx);
+    const game = await gameServer.db.fetch(ctx.params.matchID, { metadata: true });
+    const metadata = game.metadata;
+    if(credentials && credentials.name &&
+      metadata && metadata.players && 
+      credentials.pass === metadata.players[credentials.name].credentials
+    ) {
+      return await next();
+    } else {
+      ctx.throw(403);
+    }
+  });
+
+  router.get('/:matchID/players', async ctx => {
+    const matchID = ctx.params.matchID;
+
+    const r = await request.get(
+      `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${matchID}`
+    );
+    ctx.body = r.body;
+  });
+
+
+  router.get('/:matchID/model', async (ctx) => {
+    const matchID = ctx.params.matchID;
     const game = await gameServer.db.fetch(matchID, { model: true });
+
     ctx.body = game.model;
   });
 
-  router.get('/download/:id', async (ctx) => {
-    const matchID = ctx.params.id;
+  router.get('/:matchID/download', async (ctx) => {
+    const matchID = ctx.params.matchID;
     const game = await gameServer.db.fetch(matchID, { state: true, metadata: true, model: true });
 
     // update the model with the identified threats
@@ -92,9 +114,7 @@ const runPublicApi = (gameServer) => {
               game.state.G.identifiedThreats[diagramIdx][componentIdx]
             ).forEach((threatIdx) => {
               let t =
-                game.state.G.identifiedThreats[diagramIdx][componentIdx][
-                  threatIdx
-                ];
+                game.state.G.identifiedThreats[diagramIdx][componentIdx][threatIdx];
               threats.push({
                 status: 'Open',
                 severity: t.severity,
@@ -116,14 +136,16 @@ const runPublicApi = (gameServer) => {
 
     const modelTitle = game.model.summary.title.replace(' ', '-');
     const timestamp = (new Date()).toISOString().replace(':', '-');
-    ctx.attachment(`${modelTitle}-${timestamp}.json`);
+    const filename = `${modelTitle}-${timestamp}.json`;
+    ctx.attachment(filename);
+    ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
     ctx.body = game.model;
   });
 
   //produce a nice textfile with the threats in
-  router.get('/download/text/:id', async (ctx) => {
+  router.get('/:matchID/download/text', async (ctx) => {
     //get some variables that might be useful
-    const matchID = ctx.params.id;
+    const matchID = ctx.params.matchID;
     const game = await gameServer.db.fetch(matchID, {
       state: true,
       metadata: true,
@@ -137,10 +159,14 @@ const runPublicApi = (gameServer) => {
       : 'untitled-model';
     const timestamp = new Date().toISOString().replace(':', '-');
     const date = new Date().toLocaleString();
-    ctx.attachment(`threats-${modelTitle}-${timestamp}.md`);
+    const filename = `threats-${modelTitle}-${timestamp}.md`
+    ctx.attachment(filename);
+    ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
 
     ctx.body = formatThreats(threats, date);
   });
+
+  
 
   app.use(cors());
   app.use(router.routes()).use(router.allowedMethods());

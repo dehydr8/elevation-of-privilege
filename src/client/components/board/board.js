@@ -20,6 +20,7 @@ class Board extends React.Component {
     moves: PropTypes.any,
     events: PropTypes.any,
     playerID: PropTypes.any,
+    credentials: PropTypes.string
   };
 
   constructor(props) {
@@ -46,25 +47,36 @@ class Board extends React.Component {
   }
 
   async updateNames() {
-    const g = await request.get(`${this.apiBase}/players/${this.props.matchID}`)
-    
-    g.body.players.forEach(p => {
-      if (typeof p.name !== 'undefined') {
-        this.updateName(p.id, p.name);
-      }
-    });
+    try{
+      const g = await request
+        .get(`${this.apiBase}/game/${this.props.matchID}/players`)
+        .auth(this.props.playerID, this.props.credentials);
+
+      g.body.players.forEach(p => {
+        if (typeof p.name !== 'undefined') {
+          this.updateName(p.id, p.name);
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async updateModel() {
-    const r = await request
-      .get(`${this.apiBase}/model/${this.props.matchID}`);
+    try{
+      const r = await request
+        .get(`${this.apiBase}/game/${this.props.matchID}/model`)
+        .auth(this.props.playerID, this.props.credentials);
 
-    const model = r.body;
+      const model = r.body;
 
-    this.setState({
-      ...this.state,
-      model,
-    })
+      this.setState({
+        ...this.state,
+        model,
+      })
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   componentDidMount() {
@@ -101,7 +113,7 @@ class Board extends React.Component {
             />
           </div>
         </div>
-        <Sidebar playerID={this.props.playerID} matchID={this.props.matchID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} isInThreatStage={isInThreatStage} current={current} active={active} names={this.state.names} />
+        <Sidebar playerID={this.props.playerID} matchID={this.props.matchID} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} isInThreatStage={isInThreatStage} current={current} active={active} names={this.state.names} secret={this.props.credentials}/>
         <Timer active={isInThreatStage} targetTime={this.props.G.turnFinishTargetTime} duration={this.props.G.turnDuration} key={isInThreatStage} />
         <Threatbar playerID={this.props.playerID} model={this.state.model} names={this.state.names} G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} active={active} isInThreatStage={isInThreatStage} />
         <LicenseAttribution gameMode={this.props.G.gameMode} />
