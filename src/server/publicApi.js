@@ -2,6 +2,7 @@ import cors from '@koa/cors';
 import Koa from 'koa';
 import koaBody from 'koa-body';
 import Router from 'koa-router';
+import auth from 'basic-auth';
 import request from 'superagent';
 import { ElevationOfPrivilege } from '../game/eop';
 import { API_PORT, INTERNAL_API_PORT } from '../utils/constants';
@@ -9,16 +10,25 @@ import { getTypeString, escapeMarkdownText, isGameModeCornucopia } from '../util
 
 const runPublicApi = (gameServer) => {
   const app = new Koa();
-  const router = new Router();
-  router.get('/players/:game/:id', async ctx => {
-    const matchID = ctx.params.game;
-    const game = await gameServer.db.fetch(matchID, { metadata: true });
-    const secret = ctx.get('Authorization');
+  
+  const router = new Router({
+    prefix: '/game'
+  });
 
-    if (!isSecretValid(ctx.params.id, secret, game.metadata)) {
-        ctx.status = 403;
-        return;
+  //authorise
+  router.use('/:matchID', async (ctx, next) => {
+    const user = auth(ctx);
+    const game = await gameServer.db.fetch(ctx.params.matchID, { metadata: true });
+    const metadata = game.metadata;
+    if(user && metadata && metadata.players && user.pass === metadata.players[user.name].credentials) {
+      return await next();
+    } else {
+      ctx.throw(403);
     }
+  });
+
+  router.get('/:matchID/players', async ctx => {
+    const matchID = ctx.params.matchID;
 
     const r = await request.get(
       `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${matchID}`
@@ -26,71 +36,17 @@ const runPublicApi = (gameServer) => {
     ctx.body = r.body;
   });
 
-  router.post('/create', koaBody(), async (ctx) => {
-    const r = await request
-      .post(
-        `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/create`
-      )
-      .send({
-        numPlayers: ctx.request.body.players,
-        setupData: {
-          startSuit: ctx.request.body.startSuit,
-          turnDuration: ctx.request.body.turnDuration,
-          gameMode: ctx.request.body.gameMode
-        }
-      });
 
-    const gameId = r.body.matchID;
-    const credentials = [];
-
-    for (var i = 0; i < ctx.request.body.players; i++) {
-      const j = await request
-        .post(
-          `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${gameId}/join`
-        )
-        .send({
-          playerID: i,
-          playerName: ctx.request.body.names[i],
-        });
-
-      credentials.push(j.body.playerCredentials);
-    }
-
-    if (typeof ctx.request.body.model !== 'undefined') {
-      // save the model in the db, not in the setupData
-      await gameServer.db.setModel(gameId, ctx.request.body.model);
-    }
-
-    ctx.body = {
-      game: gameId,
-      credentials,
-    };
-  });
-
-  router.get('/model/:game/:id', async (ctx) => {
-    const matchID = ctx.params.game;
-    const game = await gameServer.db.fetch(matchID, { model: true, metadata: true });
-    const secret = ctx.get('Authorization');
-
-    // validate secret
-    if (!isSecretValid(ctx.params.id, secret, game.metadata)) {
-        ctx.status = 403;
-        return;
-    }
+  router.get('/:matchID/model', async (ctx) => {
+    const matchID = ctx.params.matchID;
+    const game = await gameServer.db.fetch(matchID, { model: true });
 
     ctx.body = game.model;
   });
 
-  router.get('/download/:game/:id', async (ctx) => {
-    const matchID = ctx.params.game;
+  router.get('/:matchID/download', async (ctx) => {
+    const matchID = ctx.params.matchID;
     const game = await gameServer.db.fetch(matchID, { state: true, metadata: true, model: true });
-    const secret = ctx.get('Authorization');
-
-    // validate secret
-    if (!isSecretValid(ctx.params.id, secret, game.metadata)) {
-        ctx.status = 403;
-        return;
-    }
 
     // update the model with the identified threats
     Object.keys(game.state.G.identifiedThreats).forEach((diagramIdx) => {
@@ -143,22 +99,14 @@ const runPublicApi = (gameServer) => {
   });
 
   //produce a nice textfile with the threats in
-  router.get('/download/text/:game/:id', async (ctx) => {
+  router.get('/:matchID/download/text', async (ctx) => {
     //get some variables that might be useful
-    const matchID = ctx.params.game;
+    const matchID = ctx.params.matchID;
     const game = await gameServer.db.fetch(matchID, {
       state: true,
       metadata: true,
       model: true,
     });
-    
-    const secret = ctx.get('Authorization');
-
-    // validate secret
-    if (!isSecretValid(ctx.params.id, secret, game.metadata)) {
-        ctx.status = 403;
-        return;
-    }
 
     const threats = getThreats(game.state, game.metadata, game.model);
 
@@ -174,6 +122,47 @@ const runPublicApi = (gameServer) => {
     ctx.body = formatThreats(threats, date);
   });
 
+  router.post('/create', koaBody(), async (ctx) => {
+    const r = await request
+      .post(
+        `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/create`
+      )
+      .send({
+        numPlayers: ctx.request.body.players,
+        setupData: {
+          startSuit: ctx.request.body.startSuit,
+          turnDuration: ctx.request.body.turnDuration,
+          gameMode: ctx.request.body.gameMode
+        }
+      });
+
+    const gameId = r.body.matchID;
+    const credentials = [];
+
+    for (var i = 0; i < ctx.request.body.players; i++) {
+      const j = await request
+        .post(
+          `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${gameId}/join`
+        )
+        .send({
+          playerID: i,
+          playerName: ctx.request.body.names[i],
+        });
+
+      credentials.push(j.body.playerCredentials);
+    }
+
+    if (typeof ctx.request.body.model !== 'undefined') {
+      // save the model in the db, not in the setupData
+      await gameServer.db.setModel(gameId, ctx.request.body.model);
+    }
+
+    ctx.body = {
+      game: gameId,
+      credentials,
+    };
+  });
+
   app.use(cors());
   app.use(router.routes()).use(router.allowedMethods());
   const appHandle = app.listen(API_PORT, () => {
@@ -182,10 +171,6 @@ const runPublicApi = (gameServer) => {
 
   return [app, appHandle];
 };
-
-function isSecretValid(id, secret, metadata) {
-  return metadata && metadata.players && metadata.players[id].credentials === secret;
-}
 
 function getThreats(gameState, metadata, model) {
   var threats = [];
