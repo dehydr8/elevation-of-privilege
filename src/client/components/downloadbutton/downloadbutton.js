@@ -86,7 +86,6 @@ class DownloadButton extends React.Component {
       >
         <FontAwesomeIcon icon={this.state.icon} fixedWidth /> &nbsp;
         {this.props.children }
-        {this.state.text}
       </Button>
     );
   }
