@@ -11,6 +11,7 @@ import Status from '../status/status';
 import { getDealtCard } from '../../../utils/utils';
 import { API_PORT } from '../../../utils/constants';
 import LicenseAttribution from '../license/licenseAttribution';
+import { faTty } from '@fortawesome/free-solid-svg-icons';
 
 class Board extends React.Component {
   static propTypes = {
@@ -47,28 +48,36 @@ class Board extends React.Component {
   }
 
   async updateNames() {
-    const g = await request
-      .get(`${this.apiBase}/players/${this.props.matchID}/${this.props.playerID}`)
-      .set('Authorization', this.props.credentials);
+    try{
+      const g = await request
+        .get(`${this.apiBase}/game/${this.props.matchID}/players`)
+        .auth(this.props.playerID, this.props.credentials);
 
-    g.body.players.forEach(p => {
-      if (typeof p.name !== 'undefined') {
-        this.updateName(p.id, p.name);
-      }
-    });
+      g.body.players.forEach(p => {
+        if (typeof p.name !== 'undefined') {
+          this.updateName(p.id, p.name);
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async updateModel() {
-    const r = await request
-      .get(`${this.apiBase}/model/${this.props.matchID}/${this.props.playerID}`)
-      .set('Authorization', this.props.credentials);
+    try{
+      const r = await request
+        .get(`${this.apiBase}/game/${this.props.matchID}/model`)
+        .auth(this.props.playerID, this.props.credentials);
 
-    const model = r.body;
+      const model = r.body;
 
-    this.setState({
-      ...this.state,
-      model,
-    })
+      this.setState({
+        ...this.state,
+        model,
+      })
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   componentDidMount() {

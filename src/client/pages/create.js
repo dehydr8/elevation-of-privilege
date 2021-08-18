@@ -65,7 +65,7 @@ class Create extends React.Component {
     });
 
     const r = await request
-      .post(`${this.apiBase}/create`)
+      .post(`${this.apiBase}/game/create`)
       .send({
         players: this.state.players,
         model: this.state.provideModelThruAlternativeChannel ? DEFAULT_MODEL : this.state.model,

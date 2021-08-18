@@ -27,32 +27,43 @@ class DownloadButton extends React.Component {
   }
 
   apiEndpointUrl() {
-    return `${this.apiBase}/${this.props.apiEndpoint}/${this.props.matchID}/${this.props.playerID}`;
+    return `${this.apiBase}/game/${this.props.matchID}/${this.props.apiEndpoint}`;
   }
 
   getFilename(response) {
     const header = response.headers.get('Content-Disposition')
-    return header.match(/filename="(.*)"$/)[1];
+    return header ? header.match(/filename="(.*)"$/)[1] : 'untitled';
   }
 
-  handleClick() {
-    fetch(
-      this.apiEndpointUrl(), 
-      { headers: {
-        'Authorization': this.props.secret
-      }}
-    ).then(res => {
-      let filename = this.getFilename(res);
-      res.blob().then(fileBlob => {
-        var url = URL.createObjectURL(fileBlob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = filename || 'file';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      });
-    });
+  auth() {
+    const user = this.props.playerID;
+    const pass = this.props.secret;
+    return {'Authorization': 'Basic ' + (user + ":" + pass).toString('base64')}
+  }
+
+  async handleClick() {
+    try{
+      const res = await fetch(
+        this.apiEndpointUrl(), 
+        { headers: this.auth() }
+      );
+      if (!res.ok) {
+        throw Error(res.statusText);
+      }
+
+      const blob = await res.blob();
+      let a = document.createElement('a');
+
+      a.href = URL.createObjectURL(blob);
+      a.download = this.getFilename(res);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch(err) {
+      // TODO: Create an alert or sth when this fails
+      console.error(err);
+      return;
+    }
   }
 
   render() {
