@@ -376,6 +376,79 @@ it("Download threat file", async () => {
   )
 });
 
+describe('authentificaton', () => {
+  const endpoints = ['players', 'model', 'download', 'download/text'];
+  let matchID = null;
+  let credentials = null;
+
+  beforeAll(async () => {
+    // first create game
+    const players = 3;
+
+    let response = await request(publicApiServer.callback())
+      .post("/game/create")
+      .send({
+        players: players,
+        names: [
+          "P1", "P2", "P3"
+        ],
+      });
+    
+    expect(response.body.game).toBeDefined();
+    expect(response.body.credentials.length).toBe(players);
+
+    matchID = response.body.game;
+    credentials = response.body.credentials;
+  });
+  
+  
+  
+
+  it.each(endpoints)('returns an error if no authentification is provided to %s', async (endpoint) => {
+    // Try players
+
+    let response = await request(publicApiServer.callback())
+      .get(`/game/${matchID}/${endpoint}`);
+    expect(response.status).toBe(403);
+  });
+
+  it.each(endpoints)('returns an error if no secret is provided to %s', async (endpoint) => {
+    // Try players
+
+    let response = await request(publicApiServer.callback())
+      .get(`/game/${matchID}/${endpoint}`)
+      .auth('0', '');
+    expect(response.status).toBe(403);
+  });
+
+  it.each(endpoints)('returns an error if no userID is provided to %s', async (endpoint) => {
+    // Try players
+
+    let response = await request(publicApiServer.callback())
+      .get(`/game/${matchID}/${endpoint}`)
+      .auth('', credentials[0]);
+    expect(response.status).toBe(403);
+  });
+
+  it.each(endpoints)('returns an error if wrong secret is provided to %s', async (endpoint) => {
+    // Try players
+
+    let response = await request(publicApiServer.callback())
+      .get(`/game/${matchID}/${endpoint}`)
+      .auth(0, 'thisiswrong');
+    expect(response.status).toBe(403);
+  });
+
+  it.each(endpoints)('returns an error if Authorization header is incorrectly provided to %s', async (endpoint) => {
+    // Try players
+
+    let response = await request(publicApiServer.callback())
+      .get(`/game/${matchID}/${endpoint}`)
+      .auth(0, 'thisiswrong');
+    expect(response.status).toBe(403);
+  });
+});
+
 afterAll(() => {
   // cleanup
   gameServerHandle.then(s => {
