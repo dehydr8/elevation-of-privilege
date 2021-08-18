@@ -11,7 +11,6 @@ import Status from '../status/status';
 import { getDealtCard } from '../../../utils/utils';
 import { API_PORT } from '../../../utils/constants';
 import LicenseAttribution from '../license/licenseAttribution';
-import { faTty } from '@fortawesome/free-solid-svg-icons';
 
 class Board extends React.Component {
   static propTypes = {
