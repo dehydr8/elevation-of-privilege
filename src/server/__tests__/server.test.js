@@ -444,7 +444,7 @@ describe('authentificaton', () => {
 
     let response = await request(publicApiServer.callback())
       .get(`/game/${matchID}/${endpoint}`)
-      .auth(0, 'thisiswrong');
+      .set('Authorization', Buffer.from(`0:${credentials[0]}`).toString('base64'));
     expect(response.status).toBe(403);
   });
 });
