@@ -58,10 +58,13 @@ const runPublicApi = (gameServer) => {
 
   //authorise
   router.use('/:matchID/', async (ctx, next) => {
-    const user = auth(ctx);
+    const credentials = auth(ctx);
     const game = await gameServer.db.fetch(ctx.params.matchID, { metadata: true });
     const metadata = game.metadata;
-    if(user && metadata && metadata.players && user.pass === metadata.players[user.name].credentials) {
+    if(credentials && credentials.name &&
+      metadata && metadata.players && 
+      credentials.pass === metadata.players[credentials.name].credentials
+    ) {
       return await next();
     } else {
       ctx.throw(403);
