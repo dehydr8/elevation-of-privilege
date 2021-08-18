@@ -43,17 +43,19 @@ class CopyButton extends React.Component {
         )
     }
 
-    handleClick() {
-        copyToClipboard(this.props.text).then(() => {
+    async handleClick() {
+        try {
+            await copyToClipboard(this.props.text)
             this.setState({color: 'success', icon: faCheck});
-            
-        }, () => {
+        } catch (err) {
             //If the copy fails, maybe alert the user somehow
             this.setState({color: 'danger', icon:faTimes})
-        });
-        setTimeout(() => {
-            this.setState({color: this.props.color, icon: faCopy})
-        }, 500);
+        }
+        finally{
+            setTimeout(() => {
+                this.setState({color: this.props.color, icon: faCopy})
+            }, 500);
+        }
     }
 }
 

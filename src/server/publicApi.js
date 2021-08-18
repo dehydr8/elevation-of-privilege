@@ -15,8 +15,49 @@ const runPublicApi = (gameServer) => {
     prefix: '/game'
   });
 
+  router.post('/create', koaBody(), async (ctx) => {
+    const r = await request
+      .post(
+        `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/create`
+      )
+      .send({
+        numPlayers: ctx.request.body.players,
+        setupData: {
+          startSuit: ctx.request.body.startSuit,
+          turnDuration: ctx.request.body.turnDuration,
+          gameMode: ctx.request.body.gameMode
+        }
+      });
+
+    const gameId = r.body.matchID;
+    const credentials = [];
+
+    for (var i = 0; i < ctx.request.body.players; i++) {
+      const j = await request
+        .post(
+          `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${gameId}/join`
+        )
+        .send({
+          playerID: i,
+          playerName: ctx.request.body.names[i],
+        });
+
+      credentials.push(j.body.playerCredentials);
+    }
+
+    if (typeof ctx.request.body.model !== 'undefined') {
+      // save the model in the db, not in the setupData
+      await gameServer.db.setModel(gameId, ctx.request.body.model);
+    }
+
+    ctx.body = {
+      game: gameId,
+      credentials,
+    };
+  });
+
   //authorise
-  router.use('/:matchID', async (ctx, next) => {
+  router.use('/:matchID/', async (ctx, next) => {
     const user = auth(ctx);
     const game = await gameServer.db.fetch(ctx.params.matchID, { metadata: true });
     const metadata = game.metadata;
@@ -122,46 +163,7 @@ const runPublicApi = (gameServer) => {
     ctx.body = formatThreats(threats, date);
   });
 
-  router.post('/create', koaBody(), async (ctx) => {
-    const r = await request
-      .post(
-        `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/create`
-      )
-      .send({
-        numPlayers: ctx.request.body.players,
-        setupData: {
-          startSuit: ctx.request.body.startSuit,
-          turnDuration: ctx.request.body.turnDuration,
-          gameMode: ctx.request.body.gameMode
-        }
-      });
-
-    const gameId = r.body.matchID;
-    const credentials = [];
-
-    for (var i = 0; i < ctx.request.body.players; i++) {
-      const j = await request
-        .post(
-          `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${gameId}/join`
-        )
-        .send({
-          playerID: i,
-          playerName: ctx.request.body.names[i],
-        });
-
-      credentials.push(j.body.playerCredentials);
-    }
-
-    if (typeof ctx.request.body.model !== 'undefined') {
-      // save the model in the db, not in the setupData
-      await gameServer.db.setModel(gameId, ctx.request.body.model);
-    }
-
-    ctx.body = {
-      game: gameId,
-      credentials,
-    };
-  });
+  
 
   app.use(cors());
   app.use(router.routes()).use(router.allowedMethods());
