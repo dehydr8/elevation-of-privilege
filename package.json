@@ -12,7 +12,7 @@
     "bootstrap": "^4.6.0",
     "cornucopia-cards-modified": "file:cornucopiaCards",
     "esm": "^3.2.25",
-    "jointjs": "^3.4.0",
+    "jointjs": "^3.4.1",
     "lodash": "^4.17.21",
     "node-persist": "^3.1.0",
     "react": "^17.0.2",
