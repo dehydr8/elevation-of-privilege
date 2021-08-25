@@ -2,6 +2,7 @@ import cors from '@koa/cors';
 import Koa from 'koa';
 import koaBody from 'koa-body';
 import Router from 'koa-router';
+import send from 'koa-send';
 import auth from 'basic-auth';
 import request from 'superagent';
 import { ElevationOfPrivilege } from '../game/eop';
@@ -19,7 +20,6 @@ const runPublicApi = (gameServer) => {
 
   // TODO: set limit to file size using koa-body
   router.post('/create', koaBody({multipart: true, formidable: {uploadDir: './db/images'}}), async (ctx, next) => {
-    // TODO: add error handling
     try{
       console.log(ctx.request.body);
       // Create game
@@ -65,6 +65,9 @@ const runPublicApi = (gameServer) => {
           try{
             const extension = ctx.request.files.model.name.match(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i)[1];
             await rename(ctx.request.files.model.path, `./db/images/${gameId}.${extension}`);
+            //use model object to store info about image
+            // TODO: structure this object so it works w the current threat structure maybe?
+            await gameServer.db.setModel(gameId, {extension});
           } catch (err) {
             await unlink(ctx.request.files.model.path);
             if (err instanceof TypeError) {
@@ -73,10 +76,8 @@ const runPublicApi = (gameServer) => {
               throw err;
             }
           }
-
+          break;
           
-          //falls through
-
         default:
           await gameServer.db.setModel(gameId, null);
           break;
@@ -124,6 +125,14 @@ const runPublicApi = (gameServer) => {
     const game = await gameServer.db.fetch(matchID, { model: true });
 
     ctx.body = game.model;
+  });
+
+  router.get('/:matchID/image', async (ctx) => {
+    const matchID = ctx.params.matchID;
+    const game = await gameServer.db.fetch(matchID, { model: true });
+
+    //send image
+    await send(ctx, `${matchID}.${game.model.extension}`, {root: './db/images'});
   });
 
   router.get('/:matchID/download', async (ctx) => {
