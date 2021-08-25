@@ -5,8 +5,9 @@ import Router from 'koa-router';
 import auth from 'basic-auth';
 import request from 'superagent';
 import { ElevationOfPrivilege } from '../game/eop';
-import { API_PORT, INTERNAL_API_PORT } from '../utils/constants';
+import { API_PORT, DEFAULT_MODEL, INTERNAL_API_PORT, MODEL_TYPE_DEFAULT, MODEL_TYPE_IMAGE, MODEL_TYPE_THREAT_DRAGON } from '../utils/constants';
 import { getTypeString, escapeMarkdownText, isGameModeCornucopia } from '../utils/utils';
+import { rename, unlink } from 'fs/promises';
 
 const runPublicApi = (gameServer) => {
   const app = new Koa();
@@ -15,45 +16,82 @@ const runPublicApi = (gameServer) => {
     prefix: '/game'
   });
 
-  router.post('/create', koaBody(), async (ctx) => {
-    const r = await request
-      .post(
-        `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/create`
-      )
-      .send({
-        numPlayers: ctx.request.body.players,
-        setupData: {
-          startSuit: ctx.request.body.startSuit,
-          turnDuration: ctx.request.body.turnDuration,
-          gameMode: ctx.request.body.gameMode
-        }
-      });
 
-    const gameId = r.body.matchID;
-    const credentials = [];
-
-    for (var i = 0; i < ctx.request.body.players; i++) {
-      const j = await request
+  // TODO: set limit to file size using koa-body
+  router.post('/create', koaBody({multipart: true, formidable: {uploadDir: './db/images'}}), async (ctx, next) => {
+    // TODO: add error handling
+    try{
+      console.log(ctx.request.body);
+      // Create game
+      const r = await request
         .post(
-          `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${gameId}/join`
+          `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/create`
         )
         .send({
-          playerID: i,
-          playerName: ctx.request.body.names[i],
+          numPlayers: ctx.request.body.players,
+          setupData: {
+            startSuit: ctx.request.body.startSuit,
+            turnDuration: ctx.request.body.turnDuration,
+            gameMode: ctx.request.body.gameMode
+          }
         });
 
-      credentials.push(j.body.playerCredentials);
-    }
+      const gameId = r.body.matchID;
+      const credentials = [];
 
-    if (typeof ctx.request.body.model !== 'undefined') {
-      // save the model in the db, not in the setupData
-      await gameServer.db.setModel(gameId, ctx.request.body.model);
-    }
+      for (var i = 0; i < ctx.request.body.players; i++) {
+        const j = await request
+          .post(
+            `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${gameId}/join`
+          )
+          .send({
+            playerID: i,
+            playerName: ctx.request.body['names[]'][i],
+          });
+        credentials.push(j.body.playerCredentials);
+      }
 
-    ctx.body = {
-      game: gameId,
-      credentials,
-    };
+      //model stuff
+      switch (ctx.request.body.modelType) {
+        case MODEL_TYPE_THREAT_DRAGON:
+          await gameServer.db.setModel(gameId, JSON.parse(ctx.request.body.model));
+          break;
+        
+        case MODEL_TYPE_DEFAULT:
+          await gameServer.db.setModel(gameId, JSON.parse(DEFAULT_MODEL));
+          break;
+        
+        case MODEL_TYPE_IMAGE:
+          try{
+            const extension = ctx.request.files.model.name.match(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i)[1];
+            await rename(ctx.request.files.model.path, `./db/images/${gameId}.${extension}`);
+          } catch (err) {
+            await unlink(ctx.request.files.model.path);
+            if (err instanceof TypeError) {
+              throw Error("FileType not supported");
+            } else {
+              throw err;
+            }
+          }
+
+          
+          //falls through
+
+        default:
+          await gameServer.db.setModel(gameId, null);
+          break;
+      }
+
+      ctx.body = {
+        game: gameId,
+        credentials,
+      };
+    } catch (err) {
+      console.error(err, err.stack);
+      ctx.throw(500);
+    }
+    
+    console.log(ctx);
   });
 
   //authorise
