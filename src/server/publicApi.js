@@ -7,7 +7,7 @@ import auth from 'basic-auth';
 import request from 'superagent';
 import { ElevationOfPrivilege } from '../game/eop';
 import { API_PORT, DEFAULT_MODEL, INTERNAL_API_PORT, MODEL_TYPE_DEFAULT, MODEL_TYPE_IMAGE, MODEL_TYPE_THREAT_DRAGON } from '../utils/constants';
-import { getTypeString, escapeMarkdownText, isGameModeCornucopia } from '../utils/utils';
+import { getTypeString, escapeMarkdownText, isGameModeCornucopia, getImageExtension } from '../utils/utils';
 import { rename, unlink } from 'fs/promises';
 
 const runPublicApi = (gameServer) => {
@@ -32,7 +32,8 @@ const runPublicApi = (gameServer) => {
           setupData: {
             startSuit: ctx.request.body.startSuit,
             turnDuration: ctx.request.body.turnDuration,
-            gameMode: ctx.request.body.gameMode
+            gameMode: ctx.request.body.gameMode,
+            modelType: ctx.request.body.modelType,
           }
         });
 
@@ -62,20 +63,16 @@ const runPublicApi = (gameServer) => {
           break;
         
         case MODEL_TYPE_IMAGE:
-          try{
-            const extension = ctx.request.files.model.name.match(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i)[1];
-            await rename(ctx.request.files.model.path, `./db/images/${gameId}.${extension}`);
-            //use model object to store info about image
-            // TODO: structure this object so it works w the current threat structure maybe?
-            await gameServer.db.setModel(gameId, {extension});
-          } catch (err) {
-            await unlink(ctx.request.files.model.path);
-            if (err instanceof TypeError) {
-              throw Error("FileType not supported");
-            } else {
-              throw err;
-            }
+          const extension = getImageExtension(ctx.request.files.model.name);
+          if (!extension) {
+            throw Error("Filetype not supported");
           }
+            
+          await rename(ctx.request.files.model.path, `./db/images/${gameId}.${extension}`);
+          //use model object to store info about image
+          // TODO: structure this object so it works w the current threat structure maybe?
+          await gameServer.db.setModel(gameId, {...ctx.request.files.model, extension});
+          
           break;
           
         default:

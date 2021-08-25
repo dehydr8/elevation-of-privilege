@@ -153,3 +153,11 @@ export function escapeMarkdownText(text) {
 export async function copyToClipboard(text) {
   return await navigator.clipboard.writeText(text);
 }
+
+export function getImageExtension(filename) {
+  try {
+    return filename.match(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i)[1];
+  } catch {
+    return false;
+  }
+}
