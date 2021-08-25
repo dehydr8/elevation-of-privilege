@@ -33,7 +33,7 @@ class Create extends React.Component {
       creating: false,
       created: false,
       modelType: null,
-      model: null,
+      model: undefined,
       startSuit: DEFAULT_START_SUIT,
       turnDuration: DEFAULT_TURN_DURATION,
       provideModelThruAlternativeChannel: false,
@@ -85,8 +85,7 @@ class Create extends React.Component {
     
     formData.append('players', this.state.players);
     formData.append('modelType', this.state.modelType);
-    formData.append('model', this.state.model);
-    console.log(this.state.names);
+    formData.append('model', this.state.modelType === MODEL_TYPE_IMAGE ? this.state.model : JSON.stringify(this.state.model));
     for(let i = 0; i < this.state.players; i++) {
       formData.append('names[]', this.state.names[i]);
     }
@@ -95,7 +94,7 @@ class Create extends React.Component {
     formData.append('gameMode', this.state.gameMode);
 
     // Use Fetch API (not superagent)
-    const r = await fetch(
+    const response = await fetch(
       `${this.apiBase}/game/create`,
       {
         method: 'POST',
@@ -103,16 +102,17 @@ class Create extends React.Component {
       }
     );
 
+    // deal with response
+    const r = await response.json();
 
-    // Deal with response from server
-    const gameId = r.body.game;
+    const gameId = r.game;
 
-    for (var i = 0; i < r.body.credentials.length; i++) {
+    for (var i = 0; i < r.credentials.length; i++) {
       this.setState({
         ...this.state,
         secret: {
           ...this.state.secret,
-          [i]: r.body.credentials[i],
+          [i]: r.credentials[i],
         },
       });
     }
@@ -287,7 +287,7 @@ class Create extends React.Component {
                     <Input type="radio" name="model-type" value={MODEL_TYPE_THREAT_DRAGON} onChange={this.updateModelType}/>
                     Provide model via Threat Dragon
                   </Label>
-                  <Input enabled={this.state.modelType === MODEL_TYPE_THREAT_DRAGON} type="file" name="model-json" id="model" onChange={this.readJson} />
+                  <Input disabled={this.state.modelType !== MODEL_TYPE_THREAT_DRAGON} type="file" name="model-json" id="model" onChange={this.readJson} />
                   <FormText color="muted">
                     Select the JSON model produced by <a target="_blank" rel="noopener noreferrer" href="https://docs.threatdragon.org/">Threat Dragon</a>.
                   </FormText>
@@ -300,7 +300,7 @@ class Create extends React.Component {
                     <Input type="radio" name="model-type" value={MODEL_TYPE_IMAGE} onChange={this.updateModelType}/>
                     Provide Model via an image
                   </Label>
-                  <Input enabled={this.state.modelType === MODEL_TYPE_IMAGE} type="file" name="model-image" id="model" onChange={this.updateImage} />
+                  <Input disabled={this.state.modelType !== MODEL_TYPE_IMAGE} type="file" name="model-image" id="model" onChange={this.updateImage} />
                 </FormGroup>
                 <FormGroup>
                   <Label check>
