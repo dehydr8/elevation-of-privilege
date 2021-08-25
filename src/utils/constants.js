@@ -34,6 +34,10 @@ export const SERVER_PORT = process.env.SERVER_PORT || 8000;
 export const API_PORT = process.env.API_PORT || 8001;
 export const INTERNAL_API_PORT = process.env.INTERNAL_API_PORT || 8002;
 
+export const MODEL_TYPE_THREAT_DRAGON = "Threat Dragon";
+export const MODEL_TYPE_DEFAULT = "Default";
+export const MODEL_TYPE_IMAGE = "Image";
+
 export const DEFAULT_MODEL = {
   "summary": {
     "title": "Threat Modelling"

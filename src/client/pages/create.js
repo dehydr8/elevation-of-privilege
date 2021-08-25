@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
 import request from 'superagent';
-import { API_PORT, DEFAULT_GAME_MODE, DEFAULT_MODEL, DEFAULT_START_SUIT, GAMEMODE_CORNUCOPIA, GAMEMODE_EOP, DEFAULT_TURN_DURATION, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP } from '../../utils/constants';
+import { API_PORT, DEFAULT_GAME_MODE, DEFAULT_MODEL, DEFAULT_START_SUIT, GAMEMODE_CORNUCOPIA, GAMEMODE_EOP, DEFAULT_TURN_DURATION, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP, MODEL_TYPE_THREAT_DRAGON, MODEL_TYPE_IMAGE, MODEL_TYPE_DEFAULT } from '../../utils/constants';
 import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
@@ -32,6 +32,7 @@ class Create extends React.Component {
       secret: initialSecrets,
       creating: false,
       created: false,
+      modelType: null,
       model: null,
       startSuit: DEFAULT_START_SUIT,
       turnDuration: DEFAULT_TURN_DURATION,
@@ -44,10 +45,11 @@ class Create extends React.Component {
     this.onstartSuitUpdated = this.onstartSuitUpdated.bind(this);
     this.onTurnDurationUpdated = this.onTurnDurationUpdated.bind(this);
     this.ongameModeUpdated = this.ongameModeUpdated.bind(this);
-    this.readFile = this.readFile.bind(this);
+    this.readJson = this.readJson.bind(this);
+    this.updateImage = this.updateImage.bind(this);
     this.onFileRead = this.onFileRead.bind(this);
     this.createGame = this.createGame.bind(this);
-    this.toggleModelMode = this.toggleModelMode.bind(this);
+    this.updateModelType = this.updateModelType.bind(this);
     this.formatAllLinks = this.formatAllLinks.bind(this);
     this.url = this.url.bind(this);
 
@@ -63,18 +65,46 @@ class Create extends React.Component {
       ...this.state,
       creating: true,
     });
-
+    /* rewrite this
+    // ----------------------
     const r = await request
       .post(`${this.apiBase}/game/create`)
       .send({
         players: this.state.players,
-        model: this.state.provideModelThruAlternativeChannel ? DEFAULT_MODEL : this.state.model,
+        modelType: this.state.modelType,
+        model: this.state.model,
         names: this.state.names,
         startSuit: this.state.startSuit,
         turnDuration: parseInt(this.state.turnDuration),
         gameMode: this.state.gameMode,
       });
+    //---------------------*/
 
+    // FormData object (with file if required)
+    const formData = new FormData()
+    
+    formData.append('players', this.state.players);
+    formData.append('modelType', this.state.modelType);
+    formData.append('model', this.state.model);
+    console.log(this.state.names);
+    for(let i = 0; i < this.state.players; i++) {
+      formData.append('names[]', this.state.names[i]);
+    }
+    formData.append('startSuit', this.state.startSuit);
+    formData.append('turnDuration', this.state.turnDuration);
+    formData.append('gameMode', this.state.gameMode);
+
+    // Use Fetch API (not superagent)
+    const r = await fetch(
+      `${this.apiBase}/game/create`,
+      {
+        method: 'POST',
+        body: formData
+      }
+    );
+
+
+    // Deal with response from server
     const gameId = r.body.game;
 
     for (var i = 0; i < r.body.credentials.length; i++) {
@@ -101,8 +131,15 @@ class Create extends React.Component {
     });
   }
 
-  readFile(e) {
+  readJson(e) {
     this.fileReader.readAsText(e.target.files[0]);
+  }
+
+  updateImage(e) {
+    this.setState({
+      ...this.state,
+      model: e.target.files[0]
+    });
   }
 
   onPlayersUpdated(e) {
@@ -152,10 +189,10 @@ class Create extends React.Component {
     return true;
   }
 
-  toggleModelMode(shouldUseDefault) {
+  updateModelType(e) {
     this.setState({
       ...this.setState,
-      provideModelThruAlternativeChannel: shouldUseDefault,
+      modelType: e.target.value,
     })
   }
 
@@ -245,18 +282,32 @@ class Create extends React.Component {
             <FormGroup row>
               <Label for="model" sm={2}>Model</Label>
               <Col sm={10}>
-                <Input disabled={this.state.provideModelThruAlternativeChannel} type="file" name="model" id="model" onChange={this.readFile} />
-                <FormText color="muted">
-                  Select the JSON model produced by <a target="_blank" rel="noopener noreferrer" href="https://docs.threatdragon.org/">Threat Dragon</a>.
-                </FormText>
-                <FormText color="muted">
-                  Or download a <a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/mike-goodwin/owasp-threat-dragon-demo/master/ThreatDragonModels/Demo%20Threat%20Model/Demo%20Threat%20Model.json">sample model</a> to try it out.
-                </FormText>
-                or
-                <div>
-                  <Input id="default-model-checkbox" type="checkbox" onChange={e => this.toggleModelMode(e.target.checked)} />
-                  <Label for="default-model-checkbox">provide model via a different channel (e.g. video stream)</Label>
-                </div>
+                <FormGroup>
+                  <Label check>
+                    <Input type="radio" name="model-type" value={MODEL_TYPE_THREAT_DRAGON} onChange={this.updateModelType}/>
+                    Provide model via Threat Dragon
+                  </Label>
+                  <Input enabled={this.state.modelType === MODEL_TYPE_THREAT_DRAGON} type="file" name="model-json" id="model" onChange={this.readJson} />
+                  <FormText color="muted">
+                    Select the JSON model produced by <a target="_blank" rel="noopener noreferrer" href="https://docs.threatdragon.org/">Threat Dragon</a>.
+                  </FormText>
+                  <FormText color="muted">
+                    Or download a <a target="_blank" rel="noopener noreferrer" href="https://raw.githubusercontent.com/mike-goodwin/owasp-threat-dragon-demo/master/ThreatDragonModels/Demo%20Threat%20Model/Demo%20Threat%20Model.json">sample model</a> to try it out.
+                  </FormText>
+                </FormGroup>
+                <FormGroup>
+                  <Label check>
+                    <Input type="radio" name="model-type" value={MODEL_TYPE_IMAGE} onChange={this.updateModelType}/>
+                    Provide Model via an image
+                  </Label>
+                  <Input enabled={this.state.modelType === MODEL_TYPE_IMAGE} type="file" name="model-image" id="model" onChange={this.updateImage} />
+                </FormGroup>
+                <FormGroup>
+                  <Label check>
+                    <Input id="radio-button-default-model" type="radio" value={MODEL_TYPE_DEFAULT} name="model-type" onChange={this.updateModelType}/>
+                    Provide model via a different channel (e.g. video stream)
+                  </Label>
+                </FormGroup>
               </Col>
             </FormGroup>
             <hr />
