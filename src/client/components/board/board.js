@@ -4,12 +4,13 @@ import Model from '../model/model';
 import Deck from '../deck/deck';
 import Sidebar from '../sidebar/sidebar';
 import Threatbar from '../threatbar/threatbar';
+import ImageModel from '../imagemodel/imagemodel';
 import Timer from '../timer/timer';
 import './board.css';
 import request from 'superagent';
 import Status from '../status/status';
 import { getDealtCard } from '../../../utils/utils';
-import { API_PORT } from '../../../utils/constants';
+import { API_PORT, MODEL_TYPE_IMAGE } from '../../../utils/constants';
 import LicenseAttribution from '../license/licenseAttribution';
 
 class Board extends React.Component {
@@ -31,8 +32,9 @@ class Board extends React.Component {
     }
     this.state = {
       names,
-      model: null,
+      model: null
     };
+    this.apiRequest = this.apiRequest.bind(this);
     this.apiBase = (process.env.NODE_ENV === 'production') ? '/api' : `${window.location.protocol}//${window.location.hostname}:${API_PORT}`;
   }
 
@@ -46,42 +48,42 @@ class Board extends React.Component {
     })
   }
 
-  async updateNames() {
-    try{
-      const g = await request
-        .get(`${this.apiBase}/game/${this.props.matchID}/players`)
+  async apiRequest(endpoint) {
+    // Using superagent makes auth easier but for consistency using fetch may be better
+    try {
+      return await request
+        .get(`${this.apiBase}/game/${this.props.matchID}/${endpoint}`)
         .auth(this.props.playerID, this.props.credentials);
-
-      g.body.players.forEach(p => {
-        if (typeof p.name !== 'undefined') {
-          this.updateName(p.id, p.name);
-        }
-      });
     } catch (err) {
       console.error(err);
     }
   }
 
+  async updateNames() {
+    const g = await this.apiRequest('players');
+    g.body.players.forEach(p => {
+      if (typeof p.name !== 'undefined') {
+        this.updateName(p.id, p.name);
+      }
+    });
+  }
+
   async updateModel() {
-    try{
-      const r = await request
-        .get(`${this.apiBase}/game/${this.props.matchID}/model`)
-        .auth(this.props.playerID, this.props.credentials);
+    const r = await this.apiRequest('model');
 
-      const model = r.body;
+    const model = r.body;
 
-      this.setState({
-        ...this.state,
-        model,
-      })
-    } catch (err) {
-      console.error(err);
-    }
+    this.setState({
+      ...this.state,
+      model,
+    })
   }
 
   componentDidMount() {
     this.updateNames();
-    this.updateModel();
+    if (this.props.G.modelType !== MODEL_TYPE_IMAGE) {
+      this.updateModel();
+    }
   }
 
   render() {
@@ -91,9 +93,13 @@ class Board extends React.Component {
 
     let dealtCard = getDealtCard(this.props.G);
 
+
     return (
       <div>
-        <Model model={this.state.model} selectedDiagram={this.props.G.selectedDiagram} selectedComponent={this.props.G.selectedComponent} onSelectDiagram={this.props.moves.selectDiagram} onSelectComponent={this.props.moves.selectComponent} />
+        { this.props.G.modelType === MODEL_TYPE_IMAGE ?
+          <ImageModel /> :
+          <Model model={this.state.model} selectedDiagram={this.props.G.selectedDiagram} selectedComponent={this.props.G.selectedComponent} onSelectDiagram={this.props.moves.selectDiagram} onSelectComponent={this.props.moves.selectComponent} />
+        }
         <div className="player-wrap">
           <div className="playingCardsContainer">
             <div className="status-bar">

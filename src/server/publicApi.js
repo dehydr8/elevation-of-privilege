@@ -70,8 +70,7 @@ const runPublicApi = (gameServer) => {
             
           await rename(ctx.request.files.model.path, `./db/images/${gameId}.${extension}`);
           //use model object to store info about image
-          // TODO: structure this object so it works w the current threat structure maybe?
-          await gameServer.db.setModel(gameId, {...ctx.request.files.model, extension});
+          await gameServer.db.setModel(gameId, {extension});
           
           break;
           
@@ -85,6 +84,7 @@ const runPublicApi = (gameServer) => {
         credentials,
       };
     } catch (err) {
+      // Maybe this error could be more specific?
       console.error(err, err.stack);
       ctx.throw(500);
     }
