@@ -21,7 +21,6 @@ const runPublicApi = (gameServer) => {
   // TODO: set limit to file size using koa-body
   router.post('/create', koaBody({multipart: true, formidable: {uploadDir: './db/images'}}), async (ctx, next) => {
     try{
-      console.log(ctx.request.body);
       // Create game
       const r = await request
         .post(
@@ -64,7 +63,7 @@ const runPublicApi = (gameServer) => {
         
         case MODEL_TYPE_IMAGE:
           const extension = getImageExtension(ctx.request.files.model.name);
-          if (!extension) {
+          if (!(/image\/[a-z]+$/i.test(ctx.request.files.model.type) && extension)) {
             throw Error("Filetype not supported");
           }
             
@@ -88,8 +87,6 @@ const runPublicApi = (gameServer) => {
       console.error(err, err.stack);
       ctx.throw(500);
     }
-    
-    console.log(ctx);
   });
 
   //authorise

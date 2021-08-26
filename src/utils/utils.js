@@ -156,7 +156,7 @@ export async function copyToClipboard(text) {
 
 export function getImageExtension(filename) {
   try {
-    return filename.match(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i)[1];
+    return filename.match(/\.([a-z]+)$/i)[1];
   } catch {
     return false;
   }

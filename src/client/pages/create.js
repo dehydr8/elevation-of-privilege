@@ -300,7 +300,7 @@ class Create extends React.Component {
                     <Input type="radio" name="model-type" value={MODEL_TYPE_IMAGE} onChange={this.updateModelType}/>
                     Provide Model via an image
                   </Label>
-                  <Input disabled={this.state.modelType !== MODEL_TYPE_IMAGE} type="file" name="model-image" id="model" onChange={this.updateImage} />
+                  <Input disabled={this.state.modelType !== MODEL_TYPE_IMAGE} type="file" accept="image/*" name="model-image" id="model" onChange={this.updateImage} />
                 </FormGroup>
                 <FormGroup>
                   <Label check>
