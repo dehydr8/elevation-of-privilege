@@ -1,5 +1,6 @@
 import { gameServer, gameServerHandle, publicApiServer, publicApiServerHandle } from '../server'
 import request from 'supertest';
+import { MODEL_TYPE_THREAT_DRAGON } from '../../utils/constants';
 
 it('gameServer is not undefined', async() => {
   expect(gameServer).toBeDefined();
@@ -9,12 +10,8 @@ it('creates a game without a model', async () => {
   const players = 3;
   const response = await request(publicApiServer.callback())
     .post("/game/create")
-    .send({
-      players: players,
-      names: [
-        "P1", "P2", "P3"
-      ]
-    });
+    .field('players', players)
+    .field('names[]', ['P1', 'P2', 'P3']);
   expect(response.body.game).toBeDefined();
   expect(response.body.credentials.length).toBe(players);
 });
@@ -26,10 +23,8 @@ it('retrieves player info for a game', async () => {
   ];
   let response = await request(publicApiServer.callback())
     .post("/game/create")
-    .send({
-      players: players,
-      names: names
-    });
+    .field('players', players)
+    .field('names[]', names);
   expect(response.body.game).toBeDefined();
   expect(response.body.credentials.length).toBe(players);
 
@@ -46,15 +41,10 @@ it('creates a game with a model', async () => {
   const players = 3;
   const response = await request(publicApiServer.callback())
     .post("/game/create")
-    .send({
-      players: players,
-      names: [
-        "P1", "P2", "P3"
-      ],
-      model: {
-        
-      }
-    });
+    .field('players', players)
+    .field('names[]', ['P1', 'P2', 'P3'])
+    .field('modelType', MODEL_TYPE_THREAT_DRAGON)
+    .field('model', JSON.stringify({}));
   expect(response.body.game).toBeDefined();
   expect(response.body.credentials.length).toBe(players);
 });
@@ -65,13 +55,10 @@ it('retrieve the model for a game', async () => {
 
   let response = await request(publicApiServer.callback())
     .post("/game/create")
-    .send({
-      players: players,
-      names: [
-        "P1", "P2", "P3"
-      ],
-      model: model
-    });
+    .field('players', players)
+    .field('names[]', ['P1', 'P2', 'P3'])
+    .field('modelType', MODEL_TYPE_THREAT_DRAGON)
+    .field('model', JSON.stringify(model));
   expect(response.body.game).toBeDefined();
   expect(response.body.credentials.length).toBe(players);
 
@@ -387,12 +374,8 @@ describe('authentificaton', () => {
 
     let response = await request(publicApiServer.callback())
       .post("/game/create")
-      .send({
-        players: players,
-        names: [
-          "P1", "P2", "P3"
-        ],
-      });
+      .field('players', players)
+      .field('names[]', ['P1', 'P2', 'P3']);
     
     expect(response.body.game).toBeDefined();
     expect(response.body.credentials.length).toBe(players);
