@@ -97,7 +97,7 @@ class Board extends React.Component {
     return (
       <div>
         { this.props.G.modelType === MODEL_TYPE_IMAGE ?
-          <ImageModel /> :
+          <ImageModel playerID={this.props.playerID} credentials={this.props.credentials} matchID={this.props.matchID} onSelect={() => {this.props.moves.selectComponent(0)}} onDeselect={() => {this.props.moves.selectComponent('')}}/> :
           <Model model={this.state.model} selectedDiagram={this.props.G.selectedDiagram} selectedComponent={this.props.G.selectedComponent} onSelectDiagram={this.props.moves.selectDiagram} onSelectComponent={this.props.moves.selectComponent} />
         }
         <div className="player-wrap">

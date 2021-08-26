@@ -161,3 +161,11 @@ export function getImageExtension(filename) {
     return false;
   }
 }
+
+export function asyncSetTimeout(callback, delay) {
+  return new Promise((resolve, reject) => {
+    setTimeout(async () => {
+      callback().then(resolve, reject);
+    }, delay);
+  })
+}
