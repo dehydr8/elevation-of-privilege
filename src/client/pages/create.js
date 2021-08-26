@@ -4,8 +4,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label, Row, Table } from 'reactstrap';
-import request from 'superagent';
-import { API_PORT, DEFAULT_GAME_MODE, DEFAULT_MODEL, DEFAULT_START_SUIT, GAMEMODE_CORNUCOPIA, GAMEMODE_EOP, DEFAULT_TURN_DURATION, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP, MODEL_TYPE_THREAT_DRAGON, MODEL_TYPE_IMAGE, MODEL_TYPE_DEFAULT } from '../../utils/constants';
+import { API_PORT, DEFAULT_GAME_MODE, DEFAULT_START_SUIT, GAMEMODE_CORNUCOPIA, GAMEMODE_EOP, DEFAULT_TURN_DURATION, MAX_NUMBER_PLAYERS, MIN_NUMBER_PLAYERS, STARTING_CARD_MAP, MODEL_TYPE_THREAT_DRAGON, MODEL_TYPE_IMAGE, MODEL_TYPE_DEFAULT } from '../../utils/constants';
 import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
@@ -34,6 +33,7 @@ class Create extends React.Component {
       created: false,
       modelType: null,
       model: undefined,
+      image: undefined,
       startSuit: DEFAULT_START_SUIT,
       turnDuration: DEFAULT_TURN_DURATION,
       provideModelThruAlternativeChannel: false,
@@ -65,27 +65,14 @@ class Create extends React.Component {
       ...this.state,
       creating: true,
     });
-    /* rewrite this
-    // ----------------------
-    const r = await request
-      .post(`${this.apiBase}/game/create`)
-      .send({
-        players: this.state.players,
-        modelType: this.state.modelType,
-        model: this.state.model,
-        names: this.state.names,
-        startSuit: this.state.startSuit,
-        turnDuration: parseInt(this.state.turnDuration),
-        gameMode: this.state.gameMode,
-      });
-    //---------------------*/
-
     // FormData object (with file if required)
     const formData = new FormData()
     
     formData.append('players', this.state.players);
     formData.append('modelType', this.state.modelType);
-    formData.append('model', this.state.modelType === MODEL_TYPE_IMAGE ? this.state.model : JSON.stringify(this.state.model));
+    if (this.state.modelType !== MODEL_TYPE_DEFAULT) {
+      formData.append('model', this.state.modelType === MODEL_TYPE_IMAGE ? this.state.image : JSON.stringify(this.state.model));
+    }
     for(let i = 0; i < this.state.players; i++) {
       formData.append('names[]', this.state.names[i]);
     }
@@ -138,7 +125,7 @@ class Create extends React.Component {
   updateImage(e) {
     this.setState({
       ...this.state,
-      model: e.target.files[0]
+      image: e.target.files[0]
     });
   }
 
@@ -185,6 +172,10 @@ class Create extends React.Component {
       if (_.isEmpty(this.state.names[i])) {
         return false;
       }
+    }
+    if((this.state.modelType === MODEL_TYPE_THREAT_DRAGON && !this.state.model) ||
+      (this.state.modelType === MODEL_TYPE_IMAGE && !this.state.image)) {
+      return false;
     }
     return true;
   }
