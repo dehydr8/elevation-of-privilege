@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import './imagemodel.css';
 import { API_PORT } from '../../../utils/constants';
 import { MapInteractionCSS } from 'react-map-interaction';
@@ -27,15 +26,13 @@ class ImageModel extends React.Component {
     // maybe this is better defined in constants (also used by downloadbutton.js)
     this.apiBase = (process.env.NODE_ENV === 'production') ? '/api' : `${window.location.protocol}//${window.location.hostname}:${API_PORT}`;
     this.state = {
-      imgSrc: ''
+      imgSrc: undefined
     };
   }
 
   auth() {
     const user = this.props.playerID;
     const pass = this.props.credentials;
-    console.log(user);
-    console.log(pass);
     return {'Authorization': 'Basic ' + Buffer.from(user + ':' + pass).toString('base64')};
   }
 
@@ -50,7 +47,6 @@ class ImageModel extends React.Component {
 
     const blob = await res.blob();
     const url = URL.createObjectURL(blob);
-    console.log(url);
 
     this.setState({
       ...this.state,
@@ -94,13 +90,13 @@ class ImageModel extends React.Component {
   render() {
     return (
       <div className="model" onClick={this.handleDeselect}>
-        <Helmet>
-          {/* Make this title more specific? */}
-          <title>EoP</title>
-        </Helmet>
-        <MapInteractionCSS>
-          <img src={this.state.imgSrc} alt="Architectural Model" onError={this.onError} onClick={this.handleSelect} />
-        </MapInteractionCSS>
+        { 
+          this.state.imgSrc && (
+            <MapInteractionCSS>
+              <img src={this.state.imgSrc} alt="Architectural Model" onError={this.onError} onClick={this.handleSelect} />
+            </MapInteractionCSS>
+          )
+        }
       </div>
     );
   }
