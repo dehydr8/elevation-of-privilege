@@ -155,11 +155,12 @@ export async function copyToClipboard(text) {
 }
 
 export function getImageExtension(filename) {
-  try {
-    return filename.match(/\.([a-z]+)$/i)[1];
-  } catch {
-    return false;
+  const pattern = new RegExp(`\\.(?<extension>\\w+)$`);
+  const matches = filename.match(pattern);
+  if (matches && matches.groups && matches.groups.extension) {
+    return matches.groups.extension
   }
+  return undefined;
 }
 
 export function asyncSetTimeout(callback, delay) {
