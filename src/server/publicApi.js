@@ -133,54 +133,60 @@ const runPublicApi = (gameServer) => {
     const matchID = ctx.params.matchID;
     const game = await gameServer.db.fetch(matchID, { state: true, metadata: true, model: true });
 
-    // update the model with the identified threats
-    Object.keys(game.state.G.identifiedThreats).forEach((diagramIdx) => {
-      Object.keys(game.state.G.identifiedThreats[diagramIdx]).forEach(
-        (componentIdx) => {
-          let diagram = game.model.detail.diagrams[diagramIdx].diagramJson;
-          let cell = null;
-          for (let i = 0; i < diagram.cells.length; i++) {
-            let c = diagram.cells[i];
-            if (c.id === componentIdx) {
-              cell = c;
-              break;
+    if (game.state.G.modelType == MODEL_TYPE_DEFAULT || game.state.G.modelType == MODEL_TYPE_THREAT_DRAGON) {
+      // update the model with the identified threats
+      Object.keys(game.state.G.identifiedThreats).forEach((diagramIdx) => {
+        Object.keys(game.state.G.identifiedThreats[diagramIdx]).forEach(
+          (componentIdx) => {
+            let diagram = game.model.detail.diagrams[diagramIdx].diagramJson;
+            let cell = null;
+            for (let i = 0; i < diagram.cells.length; i++) {
+              let c = diagram.cells[i];
+              if (c.id === componentIdx) {
+                cell = c;
+                break;
+              }
             }
-          }
-          if (cell !== null) {
-            let threats = [];
-            if (Array.isArray(cell.threats)) {
-              threats = cell.threats;
-            }
-            Object.keys(
-              game.state.G.identifiedThreats[diagramIdx][componentIdx]
-            ).forEach((threatIdx) => {
-              let t =
-                game.state.G.identifiedThreats[diagramIdx][componentIdx][threatIdx];
-              threats.push({
-                status: 'Open',
-                severity: t.severity,
-                id: t.id,
-                methodology: (isGameModeCornucopia(game.state.G.gameMode)) ? 'Cornucopia' : 'STRIDE',
-                type: getTypeString(t.type, game.state.G.gameMode),
-                title: t.title,
-                description: t.description,
-                mitigation: t.mitigation,
-                owner: game.metadata.players[t.owner].name,
-                game: matchID,
+            if (cell !== null) {
+              let threats = [];
+              if (Array.isArray(cell.threats)) {
+                threats = cell.threats;
+              }
+              Object.keys(
+                game.state.G.identifiedThreats[diagramIdx][componentIdx]
+              ).forEach((threatIdx) => {
+                let t =
+                  game.state.G.identifiedThreats[diagramIdx][componentIdx][threatIdx];
+                threats.push({
+                  status: 'Open',
+                  severity: t.severity,
+                  id: t.id,
+                  methodology: (isGameModeCornucopia(game.state.G.gameMode)) ? 'Cornucopia' : 'STRIDE',
+                  type: getTypeString(t.type, game.state.G.gameMode),
+                  title: t.title,
+                  description: t.description,
+                  mitigation: t.mitigation,
+                  owner: game.metadata.players[t.owner].name,
+                  game: matchID,
+                });
               });
-            });
-            cell.threats = threats;
+              cell.threats = threats;
+            }
           }
-        }
-      );
-    });
+        );
+      });
 
-    const modelTitle = game.model.summary.title.replace(' ', '-');
-    const timestamp = (new Date()).toISOString().replace(':', '-');
-    const filename = `${modelTitle}-${timestamp}.json`;
-    ctx.attachment(filename);
-    ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
-    ctx.body = game.model;
+      const modelTitle = game.model.summary.title.replace(' ', '-');
+      const timestamp = (new Date()).toISOString().replace(':', '-');
+      const filename = `${modelTitle}-${timestamp}.json`;
+      ctx.attachment(filename);
+      ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
+      ctx.body = game.model;
+    }
+    else {
+      // if in wrong modelType
+      ctx.throw(409);
+    }
   });
 
   //produce a nice textfile with the threats in
