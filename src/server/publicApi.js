@@ -132,61 +132,61 @@ const runPublicApi = (gameServer) => {
   router.get('/:matchID/download', async (ctx) => {
     const matchID = ctx.params.matchID;
     const game = await gameServer.db.fetch(matchID, { state: true, metadata: true, model: true });
+    const isJsonModel = game.state.G.modelType == MODEL_TYPE_DEFAULT || game.state.G.modelType == MODEL_TYPE_THREAT_DRAGON;
 
-    if (game.state.G.modelType == MODEL_TYPE_DEFAULT || game.state.G.modelType == MODEL_TYPE_THREAT_DRAGON) {
-      // update the model with the identified threats
-      Object.keys(game.state.G.identifiedThreats).forEach((diagramIdx) => {
-        Object.keys(game.state.G.identifiedThreats[diagramIdx]).forEach(
-          (componentIdx) => {
-            let diagram = game.model.detail.diagrams[diagramIdx].diagramJson;
-            let cell = null;
-            for (let i = 0; i < diagram.cells.length; i++) {
-              let c = diagram.cells[i];
-              if (c.id === componentIdx) {
-                cell = c;
-                break;
-              }
-            }
-            if (cell !== null) {
-              let threats = [];
-              if (Array.isArray(cell.threats)) {
-                threats = cell.threats;
-              }
-              Object.keys(
-                game.state.G.identifiedThreats[diagramIdx][componentIdx]
-              ).forEach((threatIdx) => {
-                let t =
-                  game.state.G.identifiedThreats[diagramIdx][componentIdx][threatIdx];
-                threats.push({
-                  status: 'Open',
-                  severity: t.severity,
-                  id: t.id,
-                  methodology: (isGameModeCornucopia(game.state.G.gameMode)) ? 'Cornucopia' : 'STRIDE',
-                  type: getTypeString(t.type, game.state.G.gameMode),
-                  title: t.title,
-                  description: t.description,
-                  mitigation: t.mitigation,
-                  owner: game.metadata.players[t.owner].name,
-                  game: matchID,
-                });
-              });
-              cell.threats = threats;
-            }
-          }
-        );
-      });
-
-      const modelTitle = game.model.summary.title.replace(' ', '-');
-      const timestamp = (new Date()).toISOString().replace(':', '-');
-      const filename = `${modelTitle}-${timestamp}.json`;
-      ctx.attachment(filename);
-      ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
-      ctx.body = game.model;
-    }
-    else {
+    if (!isJsonModel) {
       // if in wrong modelType
       ctx.throw(409);
-    }
+    } 
+      
+    // update the model with the identified threats
+    Object.keys(game.state.G.identifiedThreats).forEach((diagramIdx) => {
+      Object.keys(game.state.G.identifiedThreats[diagramIdx]).forEach(
+        (componentIdx) => {
+          let diagram = game.model.detail.diagrams[diagramIdx].diagramJson;
+          let cell = null;
+          for (let i = 0; i < diagram.cells.length; i++) {
+            let c = diagram.cells[i];
+            if (c.id === componentIdx) {
+              cell = c;
+              break;
+            }
+          }
+          if (cell !== null) {
+            let threats = [];
+            if (Array.isArray(cell.threats)) {
+              threats = cell.threats;
+            }
+            Object.keys(
+              game.state.G.identifiedThreats[diagramIdx][componentIdx]
+            ).forEach((threatIdx) => {
+              let t =
+                game.state.G.identifiedThreats[diagramIdx][componentIdx][threatIdx];
+              threats.push({
+                status: 'Open',
+                severity: t.severity,
+                id: t.id,
+                methodology: (isGameModeCornucopia(game.state.G.gameMode)) ? 'Cornucopia' : 'STRIDE',
+                type: getTypeString(t.type, game.state.G.gameMode),
+                title: t.title,
+                description: t.description,
+                mitigation: t.mitigation,
+                owner: game.metadata.players[t.owner].name,
+                game: matchID,
+              });
+            });
+            cell.threats = threats;
+          }
+        }
+      );
+    });
+
+    const modelTitle = game.model.summary.title.replace(' ', '-');
+    const timestamp = (new Date()).toISOString().replace(':', '-');
+    const filename = `${modelTitle}-${timestamp}.json`;
+    ctx.attachment(filename);
+    ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
+    ctx.body = game.model;
   });
 
   //produce a nice textfile with the threats in
@@ -199,12 +199,13 @@ const runPublicApi = (gameServer) => {
       model: true,
     });
 
-    const threats = getThreats(game.state, game.metadata, game.model);
+    const isJsonModel = game.state.G.modelType == MODEL_TYPE_DEFAULT || game.state.G.modelType == MODEL_TYPE_THREAT_DRAGON;
+    const threats = getThreats(game.state, game.metadata, (isJsonModel) ? game.model : undefined);
 
-    const modelTitle = game.model
-      ? game.model.summary.title.trim().replace(' ', '-')
-      : 'untitled-model';
-    const timestamp = new Date().toISOString().replace(':', '-');
+    const modelTitle = (isJsonModel && game.model)
+      ? game.model.summary.title.trim().replaceAll(' ', '-')
+      : game.state.G.gameMode.trim().replaceAll(' ', '');
+    const timestamp = new Date().toISOString().replaceAll(':', '-');
     const date = new Date().toLocaleString();
     const filename = `threats-${modelTitle}-${timestamp}.md`
     ctx.attachment(filename);
