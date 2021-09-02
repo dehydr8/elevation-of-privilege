@@ -31,7 +31,7 @@ class Create extends React.Component {
       secret: initialSecrets,
       creating: false,
       created: false,
-      modelType: null,
+      modelType: MODEL_TYPE_DEFAULT,
       model: undefined,
       image: undefined,
       startSuit: DEFAULT_START_SUIT,
@@ -278,7 +278,7 @@ class Create extends React.Component {
                     <Input type="radio" name="model-type" value={MODEL_TYPE_THREAT_DRAGON} onChange={this.updateModelType}/>
                     Provide model via Threat Dragon
                   </Label>
-                  <Input disabled={this.state.modelType !== MODEL_TYPE_THREAT_DRAGON} type="file" name="model-json" id="model" onChange={this.readJson} />
+                  <Input disabled={this.state.modelType !== MODEL_TYPE_THREAT_DRAGON} type="file" name="model-json" id="model" onChange={this.readJson} checked={this.state.modelType === MODEL_TYPE_THREAT_DRAGON}/>
                   <FormText color="muted">
                     Select the JSON model produced by <a target="_blank" rel="noopener noreferrer" href="https://docs.threatdragon.org/">Threat Dragon</a>.
                   </FormText>
@@ -291,11 +291,11 @@ class Create extends React.Component {
                     <Input type="radio" name="model-type" value={MODEL_TYPE_IMAGE} onChange={this.updateModelType}/>
                     Provide Model via an image
                   </Label>
-                  <Input disabled={this.state.modelType !== MODEL_TYPE_IMAGE} type="file" accept="image/*" name="model-image" id="model" onChange={this.updateImage} />
+                  <Input disabled={this.state.modelType !== MODEL_TYPE_IMAGE} type="file" accept="image/*" name="model-image" id="model" onChange={this.updateImage} checked={this.state.modelType === MODEL_TYPE_IMAGE}/>
                 </FormGroup>
                 <FormGroup>
                   <Label check>
-                    <Input id="radio-button-default-model" type="radio" value={MODEL_TYPE_DEFAULT} name="model-type" onChange={this.updateModelType}/>
+                    <Input id="radio-button-default-model" type="radio" value={MODEL_TYPE_DEFAULT} name="model-type" onChange={this.updateModelType} checked={this.state.modelType === MODEL_TYPE_DEFAULT}/>
                     Provide model via a different channel (e.g. video stream)
                   </Label>
                 </FormGroup>
