@@ -173,8 +173,8 @@ export const downloadThreatsMarkdownFile = gameServer => async ctx => {
   const threats = getThreats(game.state, game.metadata, (isJsonModel) ? game.model : undefined);
 
   const modelTitle = (isJsonModel && game.model)
-    ? game.model.summary.title.trim().replaceAll(' ', '-')
-    : game.state.G.gameMode.trim().replaceAll(' ', '');
+    ? ((!!game.model) ? game.model.summary.title.trim().replaceAll(' ', '-') : ``)
+    : ((!!game.state.G.gameMode) ? game.state.G.gameMode.trim().replaceAll(' ', '') : ``);
   const timestamp = new Date().toISOString().replaceAll(':', '-');
   const date = new Date().toLocaleString();
   const filename = `threats-${modelTitle}-${timestamp}.md`
