@@ -158,7 +158,7 @@ class Board extends React.Component {
         <Timer
           active={isInThreatStage}
           targetTime={this.props.G.turnFinishTargetTime}
-          duration={this.props.G.turnDuration}
+          duration={parseInt(this.props.G.turnDuration)}
           key={isInThreatStage}
         />
         <Threatbar
