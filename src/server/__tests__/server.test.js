@@ -1,6 +1,6 @@
-import { gameServer, gameServerHandle, publicApiServer, publicApiServerHandle } from '../server'
 import request from 'supertest';
-import { MODEL_TYPE_THREAT_DRAGON } from '../../utils/constants';
+import { GAMEMODE_EOP, MODEL_TYPE_THREAT_DRAGON } from '../../utils/constants';
+import { gameServer, gameServerHandle, publicApiServer, publicApiServerHandle } from '../server';
 
 it('gameServer is not undefined', async() => {
   expect(gameServer).toBeDefined();
@@ -74,6 +74,8 @@ it('download the final model for a game', async () => {
 
   const state = {
     G: {
+      modelType: MODEL_TYPE_THREAT_DRAGON,
+      gameMode: GAMEMODE_EOP,
       identifiedThreats: {
         "0": {
           "component-1": {
@@ -162,6 +164,8 @@ it("Download threat file", async () => {
 
   const state = {
     G: {
+      modelType: MODEL_TYPE_THREAT_DRAGON,
+      gameMode: GAMEMODE_EOP,
       identifiedThreats: {
         "0": {
           "component-1": {
