@@ -58,7 +58,7 @@ const runPublicApi = (gameServer) => {
           break;
         
         case MODEL_TYPE_DEFAULT:
-          await gameServer.db.setModel(gameId, JSON.parse(DEFAULT_MODEL));
+          await gameServer.db.setModel(gameId, DEFAULT_MODEL);
           break;
         
         case MODEL_TYPE_IMAGE:
