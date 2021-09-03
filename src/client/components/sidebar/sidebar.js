@@ -37,7 +37,7 @@ class Sidebar extends React.Component {
           <Footer short />
         </div>
         {
-          (this.props.G.modelType == MODEL_TYPE_THREAT_DRAGON || this.props.G.modelType == MODEL_TYPE_DEFAULT) &&
+          (this.props.G.modelType === MODEL_TYPE_THREAT_DRAGON || this.props.G.modelType === MODEL_TYPE_DEFAULT) &&
             <DownloadButton
               matchID={this.props.matchID}
               playerID={this.props.playerID}
