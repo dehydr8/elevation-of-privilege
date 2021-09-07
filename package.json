@@ -22,7 +22,7 @@
     "react-nl2br": "^1.0.2",
     "react-router-dom": "^5.2.1",
     "react-scripts": "^3.4.4",
-    "reactstrap": "^8.9.0",
+    "reactstrap": "^8.10.0",
     "reactstrap-confirm": "^1.3.2",
     "superagent": "^6.1.0",
     "uuid": "^8.3.2"
