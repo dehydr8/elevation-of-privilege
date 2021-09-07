@@ -1,5 +1,6 @@
 import { CARD_LIMIT, DECK_HANDS, DECK_SUITS, DEFAULT_GAME_MODE, DEFAULT_START_SUIT, DEFAULT_TURN_DURATION, INVALID_CARDS, MODEL_TYPE_DEFAULT, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
 
+
 let scores = {};
 let deck = [];
 for (let i = 0; i < DECK_SUITS.length; i++) {
