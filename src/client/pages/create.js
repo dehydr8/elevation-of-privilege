@@ -10,6 +10,7 @@ import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
 import CopyButton from '../components/copybutton/copybutton';
 import '../styles/create.css';
+import LinkDisplay from '../components/linkDisplay/linkDisplay';
 
 class Create extends React.Component {
 
@@ -202,7 +203,6 @@ class Create extends React.Component {
 
   render() {
     let createForm = <div />;
-    let linkDisplay = <div />;
     if (!this.state.created) {
       createForm = (
         <div>
@@ -310,37 +310,6 @@ class Create extends React.Component {
           </small>
         </div >
       );
-    } else {
-      linkDisplay = (
-        <div>
-          <div className="text-center text-muted">
-            <p>The following links should be distributed to the players respectively.</p>
-          </div>
-          <Table>
-            <tbody>
-              {Array(this.state.players).fill(0).map((v, i) =>
-                <tr key={i}>
-                  <td className="c-td-name">{this.state.names[i]}</td>
-                  <td>
-                    <a href={`${this.url(i)}`} target="_blank" rel="noopener noreferrer">{this.url(i)}</a>
-                  </td>
-                  <td>
-                    <CopyButton text={this.url(i)} />
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-          <hr />
-          <CopyButton text={this.formatAllLinks()} color="warning" block size="lg">Copy All</CopyButton>
-          <hr />
-          <div className="text-center">
-            <small className="text-muted">
-              These links are unique for each player and would allow them to join the game.
-            </small>
-          </div>
-        </div>
-      );
     }
 
     return (
@@ -355,8 +324,16 @@ class Create extends React.Component {
               <Card>
                 <CardHeader className="text-center">Elevation of Privilege</CardHeader>
                 <CardBody>
-                  {createForm}
-                  {linkDisplay}
+                  {
+                    (!this.state.created)
+                      ? createForm
+                      : <LinkDisplay
+                          players={this.state.players}
+                          matchID={this.state.matchID}
+                          names={this.state.names}
+                          secret={this.state.secret}
+                        />
+                  }
                 </CardBody>
               </Card>
             </Col>
