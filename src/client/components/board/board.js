@@ -34,7 +34,6 @@ class Board extends React.Component {
       names,
       model: null
     };
-    this.apiRequest = this.apiGetRequest.bind(this);
     this.apiBase = (process.env.NODE_ENV === 'production') ? '/api' : `${window.location.protocol}//${window.location.hostname}:${API_PORT}`;
   }
 
