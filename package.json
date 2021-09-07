@@ -7,18 +7,24 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.15",
+    "@koa/cors": "^3.1.0",
     "basic-auth": "^2.0.1",
     "boardgame.io": "^0.46.1",
     "bootstrap": "^4.6.0",
     "cornucopia-cards-modified": "file:cornucopiaCards",
     "esm": "^3.2.25",
     "jointjs": "^3.4.1",
+    "koa": "^2.13.1",
+    "koa-body": "^4.2.0",
+    "koa-router": "^10.1.1",
+    "koa-send": "^5.0.1",
     "lodash": "^4.17.21",
     "node-persist": "^3.1.0",
     "react": "^17.0.2",
     "react-countdown-circle-timer": "^2.5.4",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
+    "react-map-interaction": "^2.1.0",
     "react-nl2br": "^1.0.2",
     "react-router-dom": "^5.3.0",
     "react-scripts": "^3.4.4",
@@ -32,7 +38,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node -r esm src/server/server.js"
+    "server": "node --unhandled-rejections=warn -r esm src/server/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"

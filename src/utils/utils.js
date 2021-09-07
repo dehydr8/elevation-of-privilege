@@ -153,3 +153,20 @@ export function escapeMarkdownText(text) {
 export async function copyToClipboard(text) {
   return await navigator.clipboard.writeText(text);
 }
+
+export function getImageExtension(filename) {
+  const pattern = new RegExp(`\\.(?<extension>\\w+)$`);
+  const matches = filename.match(pattern);
+  if (matches && matches.groups && matches.groups.extension) {
+    return matches.groups.extension
+  }
+  return undefined;
+}
+
+export function asyncSetTimeout(callback, delay) {
+  return new Promise((resolve, reject) => {
+    setTimeout(async () => {
+      callback().then(resolve, reject);
+    }, delay);
+  })
+}
