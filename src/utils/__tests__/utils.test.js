@@ -1,22 +1,37 @@
 import { getDealtCard, resolvePlayerNames, resolvePlayerName, grammarJoin, getPlayers, getComponentName, getValidMoves, getTypeString, escapeMarkdownText } from '../utils'
 import { STARTING_CARD } from '../constants';
 
-it('gets empty card if no card dealt', async () => {
-  expect(getDealtCard({
-    dealt: []
-  })).toBe("");
+it('getDealtCard() should get empty card if no card dealt', async () => {
+  const G = {
+    dealt: [],
+    dealtBy: "",
+  };
+  
+  const dealtCard = getDealtCard(G);
+  
+  expect(dealtCard).toBe("");
 });
 
-it('gets correct card if a single card is dealt', async () => {
-  expect(getDealtCard({
-    dealt: ["A"]
-  })).toBe("A");
+it('getDealtCard() should get correct card if a single card is dealt', async () => {
+  const G = {
+    dealt: [null,null,"E3"],
+    dealtBy: "2",
+  };
+  
+  const dealtCard = getDealtCard(G);
+
+  expect(dealtCard).toBe("E3");
 });
 
-it('gets correct card if a multiple cards are dealt', async () => {
-  expect(getDealtCard({
-    dealt: ["A", "B", "C"]
-  })).toBe("C");
+it('getDealtCard() should get correct card if a multiple cards are dealt', async () => {
+  const G = {
+    dealt: ["E8","EA","E3"],
+    dealtBy: "1",
+  };
+  
+  const dealtCard = getDealtCard(G);
+
+  expect(dealtCard).toBe("EA");
 });
 
 it('resolves player names correctly', async () => {

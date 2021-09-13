@@ -1,11 +1,10 @@
 import { GAMEMODE_CORNUCOPIA } from "./constants";
 
 export function getDealtCard(G) {
-  let dealtCard = "";
-  if (G.dealt.length > 0) {
-    dealtCard = G.dealt[G.dealt.length - 1];
+  if (G.dealt.length > 0 && G.dealtBy) {
+    return G.dealt[G.dealtBy];
   }
-  return dealtCard;
+  return "";
 }
 
 export function isGameModeCornucopia(gameMode) {
