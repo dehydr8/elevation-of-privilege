@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 db/
+db-images/
 deploy/

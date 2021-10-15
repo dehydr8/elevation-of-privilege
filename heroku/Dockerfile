@@ -8,7 +8,7 @@ COPY package*.json ./
 RUN npm install
 COPY src ./src
 COPY public ./public
-RUN mkdir -p ./db/images
+RUN mkdir -p ./db-images
 
 RUN npm run build
 

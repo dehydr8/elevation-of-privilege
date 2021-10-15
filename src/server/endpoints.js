@@ -54,7 +54,7 @@ export const createGame = gameServer => async (ctx, next) => {
           throw Error("Filetype not supported");
         }
           
-        await rename(ctx.request.files.model.path, `./db/images/${gameId}.${extension}`);
+        await rename(ctx.request.files.model.path, `./db-images/${gameId}.${extension}`);
         //use model object to store info about image
         await gameServer.db.setModel(gameId, {extension});
         
@@ -97,7 +97,7 @@ export const getImage = gameServer => async ctx => {
   const game = await gameServer.db.fetch(matchID, { model: true });
 
   //send image
-  await send(ctx, `${matchID}.${game.model.extension}`, {root: './db/images'});
+  await send(ctx, `${matchID}.${game.model.extension}`, {root: './db-images'});
 }
 
 export const downloadThreatDragonModel = gameServer => async ctx => {
