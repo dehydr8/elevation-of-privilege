@@ -17,7 +17,7 @@ const runPublicApi = gameServer => {
   //require authentication for all routes starting with `/:matchID/*`
   router.use('/:matchID/', authMiddleware(gameServer));
 
-  router.post('/create', koaBody({multipart: true, formidable: {uploadDir: './db/images'}}), createGame(gameServer));
+  router.post('/create', koaBody({multipart: true, formidable: {uploadDir: './db-images'}}), createGame(gameServer));
   router.get('/:matchID/players', getPlayerNames(gameServer));
   router.get('/:matchID/model', getModel(gameServer));
   router.get('/:matchID/image', getImage(gameServer));

@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 RUN chown node:node /usr/src/app
 USER node
 ENV NODE_ENV production
-RUN mkdir -p /usr/src/app/db/images
+RUN mkdir -p /usr/src/app/db-images
 COPY --chown=node:node  --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
 COPY --chown=node:node ./src/server /usr/src/app/src/server
 COPY --chown=node:node ./src/game /usr/src/app/src/game
