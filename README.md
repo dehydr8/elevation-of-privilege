@@ -49,7 +49,6 @@ The docker-compose setup starts two container:
 ## TODO
 * Spectator mode
 * UI fixes (optimizations, smaller screens)
-* Upload an image instead of a model. Might need restructuring as we rely on diagram components + reporting would change
 * Optimize the card sprite sheet (can look at SVGs)
 * Improve test coverage, write tests for possible game states and moves
 * Refactor and have reusable components
