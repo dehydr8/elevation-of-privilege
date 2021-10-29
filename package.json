@@ -6,7 +6,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
-    "@fortawesome/react-fontawesome": "^0.1.15",
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "@koa/cors": "^3.1.0",
     "basic-auth": "^2.0.1",
     "boardgame.io": "^0.46.1",
