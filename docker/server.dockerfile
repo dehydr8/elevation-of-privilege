@@ -1,10 +1,10 @@
-FROM node:16.11.1-alpine3.14 AS builder
+FROM node:17.0.1-alpine3.14 AS builder
 WORKDIR /usr/src/app
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci --only=production
 
-FROM node:16.11.1-alpine3.14
+FROM node:17.0.1-alpine3.14
 RUN apk add dumb-init
 WORKDIR /usr/src/app
 RUN chown node:node /usr/src/app
