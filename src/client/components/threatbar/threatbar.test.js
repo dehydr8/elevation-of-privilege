@@ -1,24 +1,76 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 import { GAMEMODE_EOP } from '../../../utils/constants';
+import React from 'react';
 import Threatbar from './threatbar';
 
-it('renders without crashing', () => {
+describe('<Threatbar>', () => {
   const G = {
-    dealt: ["T1"],
-    order: [0,1,2],
-    scores: [0,0,0],
-    selectedComponent: "",
-    selectedDiagram: "0",
-    identifiedThreats: {},
+    gameMode: GAMEMODE_EOP,
     threat: {
       modal: false,
     },
-    gameMode: GAMEMODE_EOP
+    selectedDiagram: 'diagram1',
+    selectedComponent: 'component1',
+    identifiedThreats: {
+      diagram1: {
+        component1: {
+          threat1: {
+            title: 'Identified Threat 1'
+          },
+          threat2: {
+            title: 'Identified Threat 2'
+          }
+        }
+      }
+    },
   };
-  const ctx = {};
-  const moves = {};
-  const div = document.createElement('div');
-  ReactDOM.render(<Threatbar G={G} ctx={ctx} model={null} moves={moves} active={true} names={["P1", "P2", "P3"]} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+
+  const model = {
+    detail: {
+      diagrams: {
+        diagram1: {
+          diagramJson: {
+            cells: [
+              {
+                id: 'component1',
+                type: 'type',
+                attrs: {
+                  text: {
+                    text: 'text'
+                  }
+                },
+                threats: [
+                  {
+                    title: 'Existing Threat 1'
+                  },
+                  {
+                    title: 'Existing Threat 2'
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  };
+
+  beforeEach(() => {
+    render(<Threatbar G={G} ctx={{}} moves={{}} active names={[]} model={model}/>);
+  });
+
+  it('shows identified threats in reverse order', () => {
+    const threats = screen.getAllByText(/^Identified Threat \d+$/);
+    expect(threats).toHaveLength(2);
+    expect(threats[0]).toHaveTextContent('Identified Threat 2');
+    expect(threats[1]).toHaveTextContent('Identified Threat 1');
+  });
+
+  it('shows existing threats in reverse order', () => {
+    const threats = screen.getAllByText(/^Existing Threat \d+$/);
+    expect(threats).toHaveLength(2);
+    expect(threats[0]).toHaveTextContent('Existing Threat 2');
+    expect(threats[1]).toHaveTextContent('Existing Threat 1');
+  });
 });
