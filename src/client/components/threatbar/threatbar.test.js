@@ -26,41 +26,39 @@ describe('<Threatbar>', () => {
     },
   };
 
-  const model = {
-    detail: {
-      diagrams: {
-        diagram1: {
-          diagramJson: {
-            cells: [
-              {
-                id: 'component1',
-                type: 'type',
-                attrs: {
-                  text: {
-                    text: 'text'
-                  }
-                },
-                threats: [
-                  {
-                    title: 'Existing Threat 1'
+  it('shows identified threats in reverse order', () => {
+    const model = {
+      detail: {
+        diagrams: {
+          diagram1: {
+            diagramJson: {
+              cells: [
+                {
+                  id: 'component1',
+                  type: 'type',
+                  attrs: {
+                    text: {
+                      text: 'text'
+                    }
                   },
-                  {
-                    title: 'Existing Threat 2'
-                  }
-                ]
-              }
-            ]
+                  threats: [
+                    {
+                      title: 'Existing Threat 1'
+                    },
+                    {
+                      title: 'Existing Threat 2'
+                    }
+                  ]
+                }
+              ]
+            }
           }
         }
       }
-    }
-  };
+    };
 
-  beforeEach(() => {
     render(<Threatbar G={G} ctx={{}} moves={{}} active names={[]} model={model}/>);
-  });
 
-  it('shows identified threats in reverse order', () => {
     const threats = screen.getAllByText(/^Identified Threat \d+$/);
     expect(threats).toHaveLength(2);
     expect(threats[0]).toHaveTextContent('Identified Threat 2');
@@ -68,6 +66,38 @@ describe('<Threatbar>', () => {
   });
 
   it('shows existing threats in reverse order', () => {
+    const model = {
+      detail: {
+        diagrams: {
+          diagram1: {
+            diagramJson: {
+              cells: [
+                {
+                  id: 'component1',
+                  type: 'type',
+                  attrs: {
+                    text: {
+                      text: 'text'
+                    }
+                  },
+                  threats: [
+                    {
+                      title: 'Existing Threat 1'
+                    },
+                    {
+                      title: 'Existing Threat 2'
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    };
+
+    render(<Threatbar G={G} ctx={{}} moves={{}} active names={[]} model={model}/>);
+
     const threats = screen.getAllByText(/^Existing Threat \d+$/);
     expect(threats).toHaveLength(2);
     expect(threats[0]).toHaveTextContent('Existing Threat 2');
