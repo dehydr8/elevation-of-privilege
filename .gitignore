@@ -25,3 +25,6 @@ yarn-error.log*
 db/
 db-images/
 deploy/
+
+# IDE
+.idea

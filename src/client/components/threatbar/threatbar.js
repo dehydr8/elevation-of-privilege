@@ -88,10 +88,10 @@ class Threatbar extends React.Component {
   }
 
   render() {
-    let threats = this.getThreatsForSelectedComponent();
-    let identifiedThreats = this.getIdentifiedThreatsForSelectedComponent();
-    let component = this.getSelectedComponent();
-    let componentName = getComponentName(component);
+    const threats = [...this.getThreatsForSelectedComponent()].reverse();
+    const identifiedThreats = [...this.getIdentifiedThreatsForSelectedComponent()].reverse();
+    const component = this.getSelectedComponent();
+    const componentName = getComponentName(component);
 
     return (
       <div className="threat-bar" hidden={this.props.G.selectedComponent === ""}>
