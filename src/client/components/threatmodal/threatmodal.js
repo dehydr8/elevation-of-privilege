@@ -71,15 +71,19 @@ class ThreatModal extends React.Component {
     });
   }
 
-  isInvalid() {
-    return this.props.G.threat.owner !== this.props.playerID ||_.isEmpty(this.state.description) || _.isEmpty(this.state.title);
+  get isInvalid() {
+    return _.isEmpty(this.state.description) || _.isEmpty(this.state.title);
+  }
+
+  get isOwner() {
+    return this.props.G.threat.owner === this.props.playerID;
   }
 
   render() {
     return (
       <Modal isOpen={this.props.isOpen}>
         <Form>
-          <ModalHeader toggle={() => this.props.moves.toggleModal()} style={{ width: "100%" }}>
+          <ModalHeader toggle={this.isOwner ? () => this.props.moves.toggleModal(): undefined} style={{ width: "100%" }}>
             {(this.props.G.threat.new ? 'Add' : 'Update')} Threat
             {' '}
             &mdash;
@@ -89,11 +93,11 @@ class ThreatModal extends React.Component {
           <ModalBody>
             <FormGroup>
               <Label for="title">Title</Label>
-              <Input type="text" name="title" id="title" disabled={this.props.G.threat.owner !== this.props.playerID} autoComplete="off" value={this.state.title} onBlur={(e) => this.props.moves.updateThreat("title", e.target.value)} onChange={(e) => this.updateState("title", e.target.value)} />
+              <Input type="text" name="title" id="title" disabled={!this.isOwner} autoComplete="off" value={this.state.title} onBlur={(e) => this.props.moves.updateThreat("title", e.target.value)} onChange={(e) => this.updateState("title", e.target.value)} />
             </FormGroup>
             <FormGroup>
               <Label for="type">Threat type</Label>
-              <Input type="select" name="type" id="type" disabled={this.props.G.threat.owner !== this.props.playerID} value={this.props.G.threat.type} onChange={(e) => this.props.moves.updateThreat("type", e.target.value)}>
+              <Input type="select" name="type" id="type" disabled={!this.isOwner} value={this.props.G.threat.type} onChange={(e) => this.props.moves.updateThreat("type", e.target.value)}>
                 {
                   Object.keys(STARTING_CARD_MAP[this.props.G.gameMode]).map(suit => (
                     <option value={suit} key={`threat-category-${suit}`}>{getTypeString(suit, this.props.G.gameMode)}</option>
@@ -103,7 +107,7 @@ class ThreatModal extends React.Component {
             </FormGroup>
             <FormGroup>
               <Label for="severity">Severity</Label>
-              <Input type="select" name="severity" id="severity" disabled={this.props.G.threat.owner !== this.props.playerID} value={this.props.G.threat.severity} onChange={(e) => this.props.moves.updateThreat("severity", e.target.value)}>
+              <Input type="select" name="severity" id="severity" disabled={!this.isOwner} value={this.props.G.threat.severity} onChange={(e) => this.props.moves.updateThreat("severity", e.target.value)}>
                 <option>Low</option>
                 <option>Medium</option>
                 <option>High</option>
@@ -111,7 +115,7 @@ class ThreatModal extends React.Component {
             </FormGroup>
             <FormGroup>
               <Label for="description">Description</Label>
-              <Input type="textarea" name="description" id="description" disabled={this.props.G.threat.owner !== this.props.playerID} style={{ height: 150 }} value={this.state.description} onBlur={(e) => this.props.moves.updateThreat("description", e.target.value)} onChange={(e) => this.updateState("description", e.target.value)} />
+              <Input type="textarea" name="description" id="description" disabled={!this.isOwner} style={{ height: 150 }} value={this.state.description} onBlur={(e) => this.props.moves.updateThreat("description", e.target.value)} onChange={(e) => this.updateState("description", e.target.value)} />
             </FormGroup>
             <FormGroup hidden={this.props.G.threat.owner !== this.props.playerID}>
               <div className="checkbox-item">
@@ -121,13 +125,16 @@ class ThreatModal extends React.Component {
             </FormGroup>
             <FormGroup hidden={this.props.G.threat.owner === this.props.playerID && !this.state.showMitigation}>
               <Label for="mitigation">Mitigation</Label>
-              <Input type="textarea" name="mitigation" id="mitigation" disabled={this.props.G.threat.owner !== this.props.playerID} style={{ height: 150 }} value={this.state.mitigation} onBlur={(e) => this.props.moves.updateThreat("mitigation", e.target.value)} onChange={(e) => this.updateState("mitigation", e.target.value)} />
+              <Input type="textarea" name="mitigation" id="mitigation" disabled={!this.isOwner} style={{ height: 150 }} value={this.state.mitigation} onBlur={(e) => this.props.moves.updateThreat("mitigation", e.target.value)} onChange={(e) => this.updateState("mitigation", e.target.value)} />
             </FormGroup>
           </ModalBody>
-          <ModalFooter>
-            <Button color="primary" className="mr-auto" disabled={this.isInvalid()} onClick={() => this.addOrUpdate()}>Save</Button>
-            <Button color="secondary" disabled={this.props.G.threat.owner !== this.props.playerID} onClick={() => this.props.moves.toggleModal()}>Cancel</Button>
-          </ModalFooter>
+          {
+            this.isOwner &&
+            <ModalFooter>
+              <Button color="primary" className="mr-auto" disabled={this.isInvalid} onClick={() => this.addOrUpdate()}>Save</Button>
+              <Button color="secondary" onClick={() => this.props.moves.toggleModal()}>Cancel</Button>
+            </ModalFooter>
+          }
         </Form>
       </Modal>
     )
