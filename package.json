@@ -40,7 +40,8 @@
     "eject": "react-scripts eject",
     "server": "node --unhandled-rejections=warn -r esm src/server/server.js",
     "lint": "eslint --ext .js,.jsx .",
-    "fixlint": "eslint --fix --ext .js,.jsx ."
+    "fixlint": "eslint --fix --ext .js,.jsx .",
+    "format": "prettier --write \"./**/*.(js|json|yml)\""
   },
   "eslintConfig": {
     "extends": "react-app"
