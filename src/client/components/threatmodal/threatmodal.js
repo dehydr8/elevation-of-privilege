@@ -21,7 +21,7 @@ class ThreatModal extends React.Component {
       title: "",
       description: "",
       mitigation: "",
-      showMigitation: false,
+      showMitigation: false,
     }
   }
 
@@ -67,7 +67,7 @@ class ThreatModal extends React.Component {
   toggleMitigationForm(isShown) {
     this.setState({
       ...this.state,
-      showMigitation: isShown,
+      showMitigation: isShown,
     });
   }
 
@@ -119,7 +119,7 @@ class ThreatModal extends React.Component {
                 <Label for="showMitigation">Add a mitigation <em>(optional)</em></Label>
               </div>
             </FormGroup>
-            <FormGroup hidden={this.props.G.threat.owner === this.props.playerID && !this.state.showMigitation}>
+            <FormGroup hidden={this.props.G.threat.owner === this.props.playerID && !this.state.showMitigation}>
               <Label for="mitigation">Mitigation</Label>
               <Input type="textarea" name="mitigation" id="mitigation" disabled={this.props.G.threat.owner !== this.props.playerID} style={{ height: 150 }} value={this.state.mitigation} onBlur={(e) => this.props.moves.updateThreat("mitigation", e.target.value)} onChange={(e) => this.updateState("mitigation", e.target.value)} />
             </FormGroup>
