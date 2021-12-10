@@ -39,7 +39,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node --unhandled-rejections=warn -r esm src/server/server.js",
-    "lint": "eslint --ext .js,.jsx ."
+    "lint": "eslint --ext .js,.jsx .",
+    "fixlint": "eslint --fix --ext .js,.jsx ."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -57,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.16.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "eslint": "^7.32.0",

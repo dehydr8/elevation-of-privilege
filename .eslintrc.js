@@ -1,5 +1,6 @@
 module.exports = {
   parserOptions: {
+    ecmaVersion: 2021,
     sourceType: 'module',
   },
 
@@ -12,14 +13,18 @@ module.exports = {
 
   overrides: [
     {
-      files: ['./src/client/**'],
+      files: ['index.js', './src/client/**'],
       parserOptions: {
+        ecmaVersion: 2021,
         sourceType: 'module',
         ecmaFeatures: {
           jsx: true,
         },
       },
-      env: { browser: true, node: false, es2021: true },
+      env: {
+        browser: true,
+        node: true, // needed because `process` etc. is used in client
+      },
 
       extends: [
         'eslint:recommended',
@@ -28,14 +33,19 @@ module.exports = {
       ],
 
       plugins: ['react'],
-    },
-    {
-      files: ['./src/server/**'],
-      env: { browser: false, node: true, es2021: true },
+      settings: {
+        react: {
+          version: 'detect',
+        },
+      },
     },
     {
       files: ['./src/game/**'],
-      env: { browser: false, node: false, es2021: true },
+      env: { node: false },
+    },
+    {
+      files: ['./src/**/*.test.js'],
+      env: { jest: true },
     },
   ],
 };

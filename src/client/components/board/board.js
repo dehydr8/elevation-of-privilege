@@ -14,27 +14,32 @@ import { API_PORT, MODEL_TYPE_IMAGE } from '../../../utils/constants';
 import LicenseAttribution from '../license/licenseAttribution';
 
 class Board extends React.Component {
-  static propTypes = {
-    G: PropTypes.any.isRequired,
-    ctx: PropTypes.any.isRequired,
-    matchID: PropTypes.any.isRequired,
-    moves: PropTypes.any,
-    events: PropTypes.any,
-    playerID: PropTypes.any,
-    credentials: PropTypes.string
-  };
+  static get propTypes() {
+    return {
+      G: PropTypes.any.isRequired,
+      ctx: PropTypes.any.isRequired,
+      matchID: PropTypes.any.isRequired,
+      moves: PropTypes.any,
+      events: PropTypes.any,
+      playerID: PropTypes.any,
+      credentials: PropTypes.string,
+    };
+  }
 
   constructor(props) {
     super(props);
     let names = [];
     for (let i = 0; i < this.props.ctx.numPlayers; i++) {
-      names.push("No Name");
+      names.push('No Name');
     }
     this.state = {
       names,
-      model: null
+      model: null,
     };
-    this.apiBase = (process.env.NODE_ENV === 'production') ? '/api' : `${window.location.protocol}//${window.location.hostname}:${API_PORT}`;
+    this.apiBase =
+      process.env.NODE_ENV === 'production'
+        ? '/api'
+        : `${window.location.protocol}//${window.location.hostname}:${API_PORT}`;
   }
 
   updateName(index, name) {
@@ -43,8 +48,8 @@ class Board extends React.Component {
       names: {
         ...this.state.names,
         [index]: name,
-      }
-    })
+      },
+    });
   }
 
   async apiGetRequest(endpoint) {
@@ -60,7 +65,7 @@ class Board extends React.Component {
 
   async updateNames() {
     const g = await this.apiGetRequest('players');
-    g.body.players.forEach(p => {
+    g.body.players.forEach((p) => {
       if (typeof p.name !== 'undefined') {
         this.updateName(p.id, p.name);
       }
@@ -75,7 +80,7 @@ class Board extends React.Component {
     this.setState({
       ...this.state,
       model,
-    })
+    });
   }
 
   componentDidMount() {
@@ -86,33 +91,35 @@ class Board extends React.Component {
   }
 
   render() {
-    const current = this.props.playerID === this.props.ctx.currentPlayer
-    const isInThreatStage = (this.props.ctx.activePlayers && this.props.ctx.activePlayers[this.props.playerID] === 'threats') ? true : false;
+    const current = this.props.playerID === this.props.ctx.currentPlayer;
+    const isInThreatStage =
+      this.props.ctx.activePlayers &&
+      this.props.ctx.activePlayers[this.props.playerID] === 'threats'
+        ? true
+        : false;
     const active = current || isInThreatStage;
 
     let dealtCard = getDealtCard(this.props.G);
 
-
     return (
       <div>
-        { this.props.G.modelType === MODEL_TYPE_IMAGE 
-          ?
-            <ImageModel 
-              playerID={this.props.playerID}
-              credentials={this.props.credentials}
-              matchID={this.props.matchID}
-              onSelect={() => this.props.moves.selectComponent(0)}
-              onDeselect={() => this.props.moves.selectComponent('')}
-            />
-          :          
-            <Model
-              model={this.state.model}
-              selectedDiagram={this.props.G.selectedDiagram}
-              selectedComponent={this.props.G.selectedComponent}
-              onSelectDiagram={this.props.moves.selectDiagram}
-              onSelectComponent={this.props.moves.selectComponent}
-            />
-        }
+        {this.props.G.modelType === MODEL_TYPE_IMAGE ? (
+          <ImageModel
+            playerID={this.props.playerID}
+            credentials={this.props.credentials}
+            matchID={this.props.matchID}
+            onSelect={() => this.props.moves.selectComponent(0)}
+            onDeselect={() => this.props.moves.selectComponent('')}
+          />
+        ) : (
+          <Model
+            model={this.state.model}
+            selectedDiagram={this.props.G.selectedDiagram}
+            selectedComponent={this.props.G.selectedComponent}
+            onSelectDiagram={this.props.moves.selectDiagram}
+            onSelectComponent={this.props.moves.selectComponent}
+          />
+        )}
         <div className="player-wrap">
           <div className="playingCardsContainer">
             <div className="status-bar">

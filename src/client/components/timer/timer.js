@@ -1,52 +1,61 @@
-import React from "react";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import React from 'react';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import PropTypes from 'prop-types';
 
-import "./timer.css";
+import './timer.css';
 
 const renderTime = ({ remainingTime }) => {
   return (
     <div className="timer">
-      <div className="value">{Math.floor(remainingTime / 60)}:{(remainingTime % 60).toString().padStart(2, "0")}</div>
+      <div className="value">
+        {Math.floor(remainingTime / 60)}:
+        {(remainingTime % 60).toString().padStart(2, '0')}
+      </div>
     </div>
   );
 };
 
 class Timer extends React.Component {
-  static propTypes = {
-    active: PropTypes.bool,
-    duration: PropTypes.number.isRequired,
-    targetTime: PropTypes.number,
+  static get propTypes() {
+    return {
+      active: PropTypes.bool,
+      duration: PropTypes.number.isRequired,
+      targetTime: PropTypes.number,
+    };
   }
 
-  static defaultProps = {
-    active: true
+  static get defaultProps() {
+    return {
+      active: true,
+    };
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      painted: false
+      painted: false,
     };
 
     // This is a bit of a workaround
     // The timer is updated with window.requestAnimationFrame however the page can be rendered before
-    // this is called if it is not the current tab. This means the remaining time will be set to the 
+    // this is called if it is not the current tab. This means the remaining time will be set to the
     // duration but doesn't start counting down until the tab is opened
     // By updating the component when requestAnimationFrame is first called, the initial remaining
     // time is reset and the timer shows the correct time
     window.requestAnimationFrame(() => {
-      if(!this.state.painted) {
+      if (!this.state.painted) {
         this.setState({
           ...this.state,
-          painted: true
+          painted: true,
         });
       }
     });
   }
 
   render() {
-    const timeDifferenceInSeconds = Math.floor((this.props.targetTime - Date.now()) / 1000);
+    const timeDifferenceInSeconds = Math.floor(
+      (this.props.targetTime - Date.now()) / 1000,
+    );
     if (this.props.active && this.props.duration > 0) {
       return (
         <div className="timer-wrapper">
@@ -56,7 +65,11 @@ class Timer extends React.Component {
             size={150}
             duration={this.props.duration}
             initialRemainingTime={Math.max(timeDifferenceInSeconds, 0)}
-            colors={[["#28a745", 0.625], ["#ffc107", 0.25], ["#dc3545", 0.125]]}
+            colors={[
+              ['#28a745', 0.625],
+              ['#ffc107', 0.25],
+              ['#dc3545', 0.125],
+            ]}
             onComplete={() => false}
           >
             {renderTime}

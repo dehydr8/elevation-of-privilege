@@ -1,4 +1,4 @@
-import { ModelFlatFile } from "./ModelFlatFile";
+import { ModelFlatFile } from './ModelFlatFile';
 
 export function getDatabase() {
   return new ModelFlatFile({

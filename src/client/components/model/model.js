@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as joint from 'jointjs';
-import 'jointjs/dist/joint.css'
-import '../../jointjs/joint-tm.css'
+import 'jointjs/dist/joint.css';
+import '../../jointjs/joint-tm.css';
 // eslint-disable-next-line
-import Shapes from '../../jointjs/shapes'
+import Shapes from '../../jointjs/shapes';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import './model.css';
@@ -13,26 +13,28 @@ import Helmet from 'react-helmet';
 const SPEED = 20;
 
 class Model extends React.Component {
-  static propTypes = {
-    model: PropTypes.any,
-    selectedDiagram: PropTypes.number.isRequired,
-    selectedComponent: PropTypes.string.isRequired,
-    onSelectDiagram: PropTypes.func.isRequired,
-    onSelectComponent: PropTypes.func.isRequired,
-  };
+  static get propTypes() {
+    return {
+      model: PropTypes.any,
+      selectedDiagram: PropTypes.number.isRequired,
+      selectedComponent: PropTypes.string.isRequired,
+      onSelectDiagram: PropTypes.func.isRequired,
+      onSelectComponent: PropTypes.func.isRequired,
+    };
+  }
 
   constructor(props) {
     super(props);
     this.state = {
       placeholder: React.createRef(),
-      graph: new joint.dia.Graph({}, {cellNamespace: joint.shapes}),
+      graph: new joint.dia.Graph({}, { cellNamespace: joint.shapes }),
       paper: null,
       dragging: false,
       dragPosition: {
         x: 0,
         y: 0,
-      }
-    }
+      },
+    };
     this.mouseMove = this.mouseMove.bind(this);
     this.mouseWheel = this.mouseWheel.bind(this);
   }
@@ -42,7 +44,9 @@ class Model extends React.Component {
     var svgPoint = paper.svg.createSVGPoint();
     svgPoint.x = offsetX;
     svgPoint.y = offsetY;
-    var offsetTransformed = svgPoint.matrixTransform(paper.layers.getCTM().inverse());
+    var offsetTransformed = svgPoint.matrixTransform(
+      paper.layers.getCTM().inverse(),
+    );
     return offsetTransformed;
   }
 
@@ -60,14 +64,17 @@ class Model extends React.Component {
       const x = e.nativeEvent.offsetX;
       const y = e.nativeEvent.offsetY;
       this.state.paper.translate(
-        x - this.state.dragPosition.x, 
-        y - this.state.dragPosition.y
+        x - this.state.dragPosition.x,
+        y - this.state.dragPosition.y,
       );
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.model !== prevProps.model || this.props.selectedDiagram !== prevProps.selectedDiagram) {
+    if (
+      this.props.model !== prevProps.model ||
+      this.props.selectedDiagram !== prevProps.selectedDiagram
+    ) {
       this.updateDiagram(this.state.paper);
       this.updateSelection(this.state.paper);
     }
@@ -79,7 +86,8 @@ class Model extends React.Component {
 
   updateSelection(paper) {
     // unhighlight all
-    for (var k in paper._views){
+    for (var k in paper._views) {
+      // eslint-disable-next-line no-prototype-builtins
       if (paper._views.hasOwnProperty(k)) {
         paper._views[k].unhighlight();
       }
@@ -93,7 +101,10 @@ class Model extends React.Component {
 
   updateDiagram(paper) {
     if (this.props.model !== null && paper !== null) {
-      this.state.graph.fromJSON(this.props.model.detail.diagrams[this.props.selectedDiagram].diagramJson);
+      this.state.graph.fromJSON(
+        this.props.model.detail.diagrams[this.props.selectedDiagram]
+          .diagramJson,
+      );
       //paper.fitToContent(1, 1, 10, { allowNewOrigin: "any" });
     }
   }
@@ -113,21 +124,20 @@ class Model extends React.Component {
       ...this.state,
       paper,
     });
-    
+
     // setup callbacks
     let parent = this;
-    paper.on('cell:pointerclick', function(cellView) {
-      if (cellView.model.attributes.type === "tm.Boundary")
-        return;
+    paper.on('cell:pointerclick', function (cellView) {
+      if (cellView.model.attributes.type === 'tm.Boundary') return;
 
       parent.props.onSelectComponent(cellView.model.id);
     });
-    paper.on('blank:pointerclick', function() {
-      if (parent.props.selectedComponent !== "") {
-        parent.props.onSelectComponent("");
+    paper.on('blank:pointerclick', function () {
+      if (parent.props.selectedComponent !== '') {
+        parent.props.onSelectComponent('');
       }
     });
-    paper.on('blank:pointerdown', function(event, x, y) {
+    paper.on('blank:pointerdown', function (event, x, y) {
       parent.setState({
         ...parent.state,
         dragging: true,
@@ -137,7 +147,7 @@ class Model extends React.Component {
         },
       });
     });
-    paper.on('cell:pointerup blank:pointerup', function(event, x, y) {
+    paper.on('cell:pointerup blank:pointerup', function (event, x, y) {
       parent.setState({
         ...parent.state,
         dragging: false,
@@ -157,36 +167,43 @@ class Model extends React.Component {
     let content = <div />;
 
     if (this.props.model === null) {
-      content = (
-        <h1>No Model</h1>
-      );
+      content = <h1>No Model</h1>;
     } else {
       content = (
         <div>
           <Helmet>
             <title>EoP - {this.props.model.summary.title}</title>
           </Helmet>
-          <h1 style={{ padding: "10px 15px" }}>{this.props.model.summary.title}</h1>
+          <h1 style={{ padding: '10px 15px' }}>
+            {this.props.model.summary.title}
+          </h1>
           <Nav tabs>
             {this.props.model.detail.diagrams.map((d, idx) => (
-            <NavItem key={idx}>
-              <NavLink
-                className={classnames({ active: this.props.selectedDiagram === idx })}
-                onClick={() => this.props.onSelectDiagram(idx)}
-              >
-                {d.title}
-              </NavLink>
-            </NavItem>
+              <NavItem key={idx}>
+                <NavLink
+                  className={classnames({
+                    active: this.props.selectedDiagram === idx,
+                  })}
+                  onClick={() => this.props.onSelectDiagram(idx)}
+                >
+                  {d.title}
+                </NavLink>
+              </NavItem>
             ))}
           </Nav>
         </div>
-      )
+      );
     }
 
     return (
       <div className="model">
         {content}
-        <div className="placeholder" ref={this.state.placeholder} onMouseMove={this.mouseMove} onWheel={this.mouseWheel} />
+        <div
+          className="placeholder"
+          ref={this.state.placeholder}
+          onMouseMove={this.mouseMove}
+          onWheel={this.mouseWheel}
+        />
       </div>
     );
   }

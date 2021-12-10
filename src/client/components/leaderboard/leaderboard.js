@@ -4,23 +4,23 @@ import { Table, Card, CardHeader, Badge } from 'reactstrap';
 import './leaderboard.css';
 import { getCardName } from '../../../utils/utils';
 
-
-
 class Leaderboard extends React.Component {
-  static propTypes = {
-    scores: PropTypes.any.isRequired,
-    names: PropTypes.any.isRequired,
-    cards: PropTypes.any.isRequired,
-    playerID: PropTypes.any.isRequired,
-    passedUsers: PropTypes.array.isRequired,
-    gameMode: PropTypes.string.isRequired,
-  };
+  static get propTypes() {
+    return {
+      scores: PropTypes.any.isRequired,
+      names: PropTypes.any.isRequired,
+      cards: PropTypes.any.isRequired,
+      playerID: PropTypes.any.isRequired,
+      passedUsers: PropTypes.array.isRequired,
+      gameMode: PropTypes.string.isRequired,
+    };
+  }
+
   render() {
     let passed = this.props.passedUsers;
     function hasPassed(_idx) {
       return passed.includes(_idx.toString());
     }
-
 
     return (
       <Card>
@@ -35,24 +35,32 @@ class Leaderboard extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.scores.map((val, idx) =>
+            {this.props.scores.map((val, idx) => (
               <tr key={idx}>
                 <td>
-                  <div className="Playername">
-                    {this.props.names[idx]}
-                  </div>
-                  {parseInt(this.props.playerID) === idx && <div><strong>(you)</strong></div>}
+                  <div className="Playername">{this.props.names[idx]}</div>
+                  {parseInt(this.props.playerID) === idx && (
+                    <div>
+                      <strong>(you)</strong>
+                    </div>
+                  )}
                 </td>
                 <td>
                   {hasPassed(idx, this) && <div align="center">&#10003;</div>}
                 </td>
-                <td><strong>{getCardName(this.props.cards[idx], this.props.gameMode)}</strong></td>
-                <td><Badge>{val}</Badge></td>
+                <td>
+                  <strong>
+                    {getCardName(this.props.cards[idx], this.props.gameMode)}
+                  </strong>
+                </td>
+                <td>
+                  <Badge>{val}</Badge>
+                </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </Table>
-      </Card >
+      </Card>
     );
   }
 }
