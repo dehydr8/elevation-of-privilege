@@ -125,12 +125,8 @@ class ThreatModal extends React.Component {
             </FormGroup>
           </ModalBody>
           <ModalFooter>
-            <Button color="success" className="mr-auto" hidden={this.props.G.threat.owner !== this.props.playerID} onClick={() => this.saveThreat()}>Save</Button>{' '}
-            <Button color="primary" disabled={this.isInvalid()} onClick={() => this.addOrUpdate()}>{(this.props.G.threat.new ? 'Save & Add' : 'Save & Update')}</Button>{' '}
+            <Button color="primary" className="mr-auto" disabled={this.isInvalid()} onClick={() => this.addOrUpdate()}>Save</Button>
             <Button color="secondary" disabled={this.props.G.threat.owner !== this.props.playerID} onClick={() => this.props.moves.toggleModal()}>Cancel</Button>
-          </ModalFooter>
-          <ModalFooter hidden={this.props.G.threat.owner !== this.props.playerID}>
-            <small className="mr-auto text-muted"><b>TIP:</b> Saving would allow other players to view your changes instantly.</small>
           </ModalFooter>
         </Form>
       </Modal>
