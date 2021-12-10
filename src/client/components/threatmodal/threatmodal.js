@@ -30,7 +30,6 @@ class ThreatModal extends React.Component {
       || prevProps.G.threat.description !== this.props.G.threat.description
       || prevProps.G.threat.mitigation !== this.props.G.threat.mitigation) {
       this.setState({
-        ...this.state,
         title: this.props.G.threat.title,
         description: this.props.G.threat.description,
         mitigation: this.props.G.threat.mitigation,
@@ -54,19 +53,11 @@ class ThreatModal extends React.Component {
     // update the values from the state
     this.saveThreat();
     this.props.moves.addOrUpdateThreat();
-    this.toggleMitigationForm(false);
+    this.toggleMitigationField(false);
   }
 
-  updateState(field, value) {
+  toggleMitigationField(isShown) {
     this.setState({
-      ...this.state,
-      [field]: value,
-    })
-  }
-
-  toggleMitigationForm(isShown) {
-    this.setState({
-      ...this.state,
       showMitigation: isShown,
     });
   }
@@ -93,7 +84,7 @@ class ThreatModal extends React.Component {
           <ModalBody>
             <FormGroup>
               <Label for="title">Title</Label>
-              <Input type="text" name="title" id="title" disabled={!this.isOwner} autoComplete="off" value={this.state.title} onBlur={(e) => this.props.moves.updateThreat("title", e.target.value)} onChange={(e) => this.updateState("title", e.target.value)} />
+              <Input type="text" name="title" id="title" disabled={!this.isOwner} autoComplete="off" value={this.state.title} onBlur={(e) => this.props.moves.updateThreat("title", e.target.value)} onChange={(e) => this.setState({title: e.target.value})} />
             </FormGroup>
             <FormGroup>
               <Label for="type">Threat type</Label>
@@ -115,17 +106,17 @@ class ThreatModal extends React.Component {
             </FormGroup>
             <FormGroup>
               <Label for="description">Description</Label>
-              <Input type="textarea" name="description" id="description" disabled={!this.isOwner} style={{ height: 150 }} value={this.state.description} onBlur={(e) => this.props.moves.updateThreat("description", e.target.value)} onChange={(e) => this.updateState("description", e.target.value)} />
+              <Input type="textarea" name="description" id="description" disabled={!this.isOwner} style={{ height: 150 }} value={this.state.description} onBlur={(e) => this.props.moves.updateThreat("description", e.target.value)} onChange={(e) => this.setState({description: e.target.value})} />
             </FormGroup>
             <FormGroup hidden={this.props.G.threat.owner !== this.props.playerID}>
               <div className="checkbox-item">
-                <Input className="pointer" type="checkbox" id="showMitigation" onChange={(e) => this.toggleMitigationForm(e.target.checked)} />
+                <Input className="pointer" type="checkbox" id="showMitigation" onChange={(e) => this.toggleMitigationField(e.target.checked)} />
                 <Label for="showMitigation">Add a mitigation <em>(optional)</em></Label>
               </div>
             </FormGroup>
             <FormGroup hidden={this.props.G.threat.owner === this.props.playerID && !this.state.showMitigation}>
               <Label for="mitigation">Mitigation</Label>
-              <Input type="textarea" name="mitigation" id="mitigation" disabled={!this.isOwner} style={{ height: 150 }} value={this.state.mitigation} onBlur={(e) => this.props.moves.updateThreat("mitigation", e.target.value)} onChange={(e) => this.updateState("mitigation", e.target.value)} />
+              <Input type="textarea" name="mitigation" id="mitigation" disabled={!this.isOwner} style={{ height: 150 }} value={this.state.mitigation} onBlur={(e) => this.props.moves.updateThreat("mitigation", e.target.value)} onChange={(e) => this.setState({mitigation: e.target.value})} />
             </FormGroup>
           </ModalBody>
           {
