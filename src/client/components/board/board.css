@@ -15,3 +15,11 @@
   bottom: 5px;
   background-color: white;
 }
+
+.player-wrap {
+  position: relative;
+}
+
+.player-wrap:hover {
+  z-index: 1;
+}

@@ -141,6 +141,7 @@ class Board extends React.Component {
               gameMode={this.props.G.gameMode}
             />
           </div>
+          <LicenseAttribution gameMode={this.props.G.gameMode} />
         </div>
         <Sidebar
           G={this.props.G}
@@ -170,7 +171,6 @@ class Board extends React.Component {
           active={active}
           isInThreatStage={isInThreatStage}
         />
-        <LicenseAttribution gameMode={this.props.G.gameMode} />
       </div>
     );
   }
