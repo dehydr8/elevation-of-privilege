@@ -1,6 +1,6 @@
 {
   "name": "eop",
-  "version": "0.7.2",
+  "version": "0.9.0",
   "private": true,
   "main": "src/client/index.js",
   "dependencies": {
