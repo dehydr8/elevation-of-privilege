@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Route, BrowserRouter as Router } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import App from './client/pages/app';
 import Create from './client/pages/create';
 import About from './client/pages/about';
@@ -15,7 +15,7 @@ ReactDOM.render(
       <Route exact path="/about" component={About} />
     </div>
   </Router>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

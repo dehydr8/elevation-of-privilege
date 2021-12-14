@@ -5,51 +5,60 @@ import DealtCard from '../dealtcard/dealtcard';
 import DownloadButton from '../downloadbutton/downloadbutton';
 import './sidebar.css';
 import { Button } from 'reactstrap';
-import { getDealtCard } from '../../../utils/utils'
+import { getDealtCard } from '../../../utils/utils';
 import Footer from '../footer/footer';
-import { MODEL_TYPE_DEFAULT, MODEL_TYPE_THREAT_DRAGON } from '../../../utils/constants';
+import {
+  MODEL_TYPE_DEFAULT,
+  MODEL_TYPE_THREAT_DRAGON,
+} from '../../../utils/constants';
 
 class Sidebar extends React.Component {
-  static propTypes = {
-    playerID: PropTypes.any,
-    matchID: PropTypes.any.isRequired,
-    G: PropTypes.any.isRequired,
-    ctx: PropTypes.any.isRequired,
-    isInThreatStage: PropTypes.bool,
-    moves: PropTypes.any.isRequired,
-    current: PropTypes.bool.isRequired,
-    active: PropTypes.bool.isRequired,
-    names: PropTypes.any.isRequired,
-    secret: PropTypes.string
-  };
+  static get propTypes() {
+    return {
+      playerID: PropTypes.any,
+      matchID: PropTypes.any.isRequired,
+      G: PropTypes.any.isRequired,
+      ctx: PropTypes.any.isRequired,
+      isInThreatStage: PropTypes.bool,
+      moves: PropTypes.any.isRequired,
+      current: PropTypes.bool.isRequired,
+      active: PropTypes.bool.isRequired,
+      names: PropTypes.any.isRequired,
+      secret: PropTypes.string,
+    };
+  }
 
-  static defaultProps = {
-    isInThreatStage: false,
-  };
+  static get defaultProps() {
+    return {
+      isInThreatStage: false,
+    };
+  }
 
   render() {
     let dealtCard = getDealtCard(this.props.G);
-    const isLastToPass = this.props.G.passed.length === this.props.ctx.numPlayers - 1 && !this.props.G.passed.includes(this.props.playerID)
+    const isLastToPass =
+      this.props.G.passed.length === this.props.ctx.numPlayers - 1 &&
+      !this.props.G.passed.includes(this.props.playerID);
 
     return (
       <div className="side-bar">
         <div className="text-center">
           <Footer short />
         </div>
-        {
-          (this.props.G.modelType === MODEL_TYPE_THREAT_DRAGON || this.props.G.modelType === MODEL_TYPE_DEFAULT) &&
-            <DownloadButton
-              matchID={this.props.matchID}
-              playerID={this.props.playerID}
-              secret={this.props.secret}
-              block
-              size="lg"
-              color="success"
-              apiEndpoint="download"
-            >
-              Download Model
-            </DownloadButton>
-        }
+        {(this.props.G.modelType === MODEL_TYPE_THREAT_DRAGON ||
+          this.props.G.modelType === MODEL_TYPE_DEFAULT) && (
+          <DownloadButton
+            matchID={this.props.matchID}
+            playerID={this.props.playerID}
+            secret={this.props.secret}
+            block
+            size="lg"
+            color="success"
+            apiEndpoint="download"
+          >
+            Download Model
+          </DownloadButton>
+        )}
         <DownloadButton
           matchID={this.props.matchID}
           playerID={this.props.playerID}
@@ -72,27 +81,26 @@ class Sidebar extends React.Component {
           cards={this.props.G.dealt}
         />
 
-        {
-          isLastToPass && 
-            <div className="warning">You are the last one to pass!</div>
-        }
-        {
-          (this.props.isInThreatStage && !this.props.G.passed.includes(this.props.playerID) && this.props.active) && 
-            <Button 
-              color={(isLastToPass) ? "warning" : "secondary"}
+        {isLastToPass && (
+          <div className="warning">You are the last one to pass!</div>
+        )}
+        {this.props.isInThreatStage &&
+          !this.props.G.passed.includes(this.props.playerID) &&
+          this.props.active && (
+            <Button
+              color={isLastToPass ? 'warning' : 'secondary'}
               className="pass"
               size="lg"
               block
-              onClick={() => { this.props.moves.pass() }}
+              onClick={() => {
+                this.props.moves.pass();
+              }}
             >
               Pass
             </Button>
-        }
+          )}
 
-        <DealtCard 
-          card={dealtCard}
-          gameMode={this.props.G.gameMode} 
-        />
+        <DealtCard card={dealtCard} gameMode={this.props.G.gameMode} />
       </div>
     );
   }

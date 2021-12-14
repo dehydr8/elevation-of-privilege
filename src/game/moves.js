@@ -1,4 +1,4 @@
-import { INVALID_MOVE} from 'boardgame.io/core'
+import { INVALID_MOVE } from 'boardgame.io/core';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { getDealtCard, getValidMoves } from '../utils/utils';
@@ -7,7 +7,10 @@ import { hasPlayerPassed } from './utils';
 
 export function toggleModal(G, ctx) {
   // if the player has passed, they shouldn't be able to toggle the modal
-  if (hasPlayerPassed(G, ctx) || (G.threat.modal && G.threat.owner !== ctx.playerID)) {
+  if (
+    hasPlayerPassed(G, ctx) ||
+    (G.threat.modal && G.threat.owner !== ctx.playerID)
+  ) {
     return INVALID_MOVE;
   }
   const card = getDealtCard(G);
@@ -20,17 +23,17 @@ export function toggleModal(G, ctx) {
       owner: ctx.playerID,
       type: G.suit,
       id: uuidv4(),
-      title: "",
-      severity: "Medium",
+      title: '',
+      severity: 'Medium',
       description: getThreatDescription(card, G.gameMode),
-      mitigation: "",
+      mitigation: '',
     },
-  }
+  };
 }
 
 export function toggleModalUpdate(G, ctx, threat) {
   // if the player has passed, they shouldn't be able to toggle the modal
-  if (hasPlayerPassed(G, ctx) || (threat.owner !== ctx.playerID)) {
+  if (hasPlayerPassed(G, ctx) || threat.owner !== ctx.playerID) {
     return INVALID_MOVE;
   }
 
@@ -48,7 +51,7 @@ export function toggleModalUpdate(G, ctx, threat) {
       description: threat.description,
       mitigation: threat.mitigation,
     },
-  }
+  };
 }
 
 export function updateThreat(G, ctx, field, value) {
@@ -57,8 +60,8 @@ export function updateThreat(G, ctx, field, value) {
     threat: {
       ...G.threat,
       [field]: value,
-    }
-  }
+    },
+  };
 }
 
 export function selectDiagram(G, ctx, id) {
@@ -70,9 +73,9 @@ export function selectDiagram(G, ctx, id) {
   return {
     ...G,
     selectedDiagram: id,
-    selectedComponent: "",
-    selectedThreat: "",
-  }
+    selectedComponent: '',
+    selectedThreat: '',
+  };
 }
 
 export function selectComponent(G, ctx, id) {
@@ -84,8 +87,8 @@ export function selectComponent(G, ctx, id) {
   return {
     ...G,
     selectedComponent: id,
-    selectedThreat: "",
-  }
+    selectedThreat: '',
+  };
 }
 
 export function selectThreat(G, ctx, id) {
@@ -97,12 +100,12 @@ export function selectThreat(G, ctx, id) {
   return {
     ...G,
     selectedThreat: id,
-  }
+  };
 }
 
-export function pass(G, ctx, id) {
+export function pass(G, ctx) {
   let passed = [...G.passed];
-  
+
   if (!hasPlayerPassed(G, ctx)) {
     passed.push(ctx.playerID);
   }
@@ -110,12 +113,12 @@ export function pass(G, ctx, id) {
   return {
     ...G,
     passed,
-  }
+  };
 }
 
 export function deleteThreat(G, ctx, threat) {
   // if the player has passed, they shouldn't be able to toggle the modal
-  if (hasPlayerPassed(G, ctx) || (threat.owner !== ctx.playerID)) {
+  if (hasPlayerPassed(G, ctx) || threat.owner !== ctx.playerID) {
     return INVALID_MOVE;
   }
 
@@ -128,9 +131,9 @@ export function deleteThreat(G, ctx, threat) {
   return {
     ...G,
     scores,
-    selectedThreat: "",
+    selectedThreat: '',
     identifiedThreats,
-  }
+  };
 }
 
 export function addOrUpdateThreat(G, ctx) {
@@ -138,7 +141,11 @@ export function addOrUpdateThreat(G, ctx) {
   let threat_description = G.threat.description.trim();
   let threat_mitigation = G.threat.mitigation.trim();
 
-  if (G.threat.owner !== ctx.playerID || _.isEmpty(threat_title) || _.isEmpty(threat_description)) {
+  if (
+    G.threat.owner !== ctx.playerID ||
+    _.isEmpty(threat_title) ||
+    _.isEmpty(threat_description)
+  ) {
     return INVALID_MOVE;
   }
 
@@ -151,14 +158,16 @@ export function addOrUpdateThreat(G, ctx) {
 
   // TODO: have a cleaner or readable approach to updating this object
   let identifiedThreats = _.cloneDeep(G.identifiedThreats);
-  
+
   // Are these necessary
   if (!(G.selectedDiagram in identifiedThreats)) {
-    Object.assign(identifiedThreats, {[G.selectedDiagram]: {}});
+    Object.assign(identifiedThreats, { [G.selectedDiagram]: {} });
   }
 
   if (!(G.selectedComponent in identifiedThreats[G.selectedDiagram])) {
-    Object.assign(identifiedThreats[G.selectedDiagram], {[G.selectedComponent]: {}});
+    Object.assign(identifiedThreats[G.selectedDiagram], {
+      [G.selectedComponent]: {},
+    });
   }
 
   //is object.assign required here?
@@ -170,8 +179,8 @@ export function addOrUpdateThreat(G, ctx) {
       type: G.threat.type,
       severity: G.threat.severity,
       description: threat_description,
-      mitigation: threat_mitigation || "No mitigation provided.",
-    }
+      mitigation: threat_mitigation || 'No mitigation provided.',
+    },
   });
 
   return {
@@ -183,13 +192,12 @@ export function addOrUpdateThreat(G, ctx) {
     },
     selectedThreat: G.threat.id,
     identifiedThreats,
-  }
+  };
 }
 
 export function draw(G, ctx, card) {
   let deck = [...G.players[ctx.currentPlayer]];
   let suit = G.suit;
-  
 
   // check if the move is valid
   if (!getValidMoves(deck, suit, G.round, G.startingCard).includes(card)) {
@@ -201,19 +209,18 @@ export function draw(G, ctx, card) {
   deck.splice(index, 1);
 
   let dealt = [...G.dealt];
-  let numCardsPlayed = G.numCardsPlayed
+  let numCardsPlayed = G.numCardsPlayed;
 
   dealt[parseInt(ctx.currentPlayer)] = card;
   numCardsPlayed++;
 
   // only update the suit if no suit exists
-  if (suit === "")
-    suit = card.substr(0, 1);
+  if (suit === '') suit = card.substr(0, 1);
 
   dealtBy = ctx.currentPlayer;
 
   // move into threats stage
-  ctx.events.setActivePlayers({all: 'threats'});
+  ctx.events.setActivePlayers({ all: 'threats' });
 
   return {
     ...G,

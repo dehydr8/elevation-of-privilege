@@ -2,21 +2,21 @@ matrix:
   include:
     - language: node_js
       node_js:
-      - "10"
+        - '10'
       cache:
         directories:
-        - node_modules
+          - node_modules
       install:
-      - rm -rf node_modules/*/.git/
-      - npm install -q --no-color --no-progress
+        - rm -rf node_modules/*/.git/
+        - npm install -q --no-color --no-progress
       before_script:
-      - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-      - chmod +x ./cc-test-reporter
-      - ./cc-test-reporter before-build
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
       script:
-      - npm run test -- --coverage --watchAll=false
+        - npm run test -- --coverage --watchAll=false
       after_script:
-      - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
     - dist: trusty
       stage: build and deploy docker image
       services:

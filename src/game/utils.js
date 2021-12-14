@@ -1,5 +1,15 @@
-import { CARD_LIMIT, DECK_HANDS, DECK_SUITS, DEFAULT_GAME_MODE, DEFAULT_START_SUIT, DEFAULT_TURN_DURATION, INVALID_CARDS, MODEL_TYPE_DEFAULT, STARTING_CARD_MAP, TRUMP_CARD_PREFIX } from '../utils/constants';
-
+import {
+  CARD_LIMIT,
+  DECK_HANDS,
+  DECK_SUITS,
+  DEFAULT_GAME_MODE,
+  DEFAULT_START_SUIT,
+  DEFAULT_TURN_DURATION,
+  INVALID_CARDS,
+  MODEL_TYPE_DEFAULT,
+  STARTING_CARD_MAP,
+  TRUMP_CARD_PREFIX,
+} from '../utils/constants';
 
 let scores = {};
 let deck = [];
@@ -18,7 +28,7 @@ export function shuffleCards(ctx, startingCard) {
   let players = [];
   let totalCardsToDeal = Math.min(
     Math.floor(deck.length / ctx.numPlayers) * ctx.numPlayers,
-    CARD_LIMIT * ctx.numPlayers
+    CARD_LIMIT * ctx.numPlayers,
   );
   //totalCardsToDeal = ctx.numPlayers * 2;
 
@@ -40,35 +50,41 @@ export function shuffleCards(ctx, startingCard) {
     let slice = shuffled.slice(i, i + cardsToDeal);
     players.push(slice);
 
-    if (slice.indexOf(startingCard) >= 0)
-      first = i / cardsToDeal;
+    if (slice.indexOf(startingCard) >= 0) first = i / cardsToDeal;
   }
   return {
     players,
     first,
     cardsToDeal,
-  }
+  };
 }
 
 export function setupGame(ctx, setupData) {
-  const startSuit = (setupData) ? setupData.startSuit || DEFAULT_START_SUIT : DEFAULT_START_SUIT;
-  const gameMode = setupData ? setupData.gameMode || DEFAULT_GAME_MODE : DEFAULT_GAME_MODE;
-  const modelType = setupData ? setupData.modelType || MODEL_TYPE_DEFAULT : MODEL_TYPE_DEFAULT;
-  const turnDuration = (setupData) ?
-    setupData.turnDuration || (setupData.turnDuration !== 0 && DEFAULT_TURN_DURATION) :
-    DEFAULT_TURN_DURATION;
+  const startSuit = setupData
+    ? setupData.startSuit || DEFAULT_START_SUIT
+    : DEFAULT_START_SUIT;
+  const gameMode = setupData
+    ? setupData.gameMode || DEFAULT_GAME_MODE
+    : DEFAULT_GAME_MODE;
+  const modelType = setupData
+    ? setupData.modelType || MODEL_TYPE_DEFAULT
+    : MODEL_TYPE_DEFAULT;
+  const turnDuration = setupData
+    ? setupData.turnDuration ||
+      (setupData.turnDuration !== 0 && DEFAULT_TURN_DURATION)
+    : DEFAULT_TURN_DURATION;
 
-  INVALID_CARDS[gameMode].forEach(c => deck.splice(deck.indexOf(c), 1));
+  INVALID_CARDS[gameMode].forEach((c) => deck.splice(deck.indexOf(c), 1));
   const startingCard = STARTING_CARD_MAP[gameMode][startSuit];
-  
+
   let scores = new Array(ctx.numPlayers).fill(0);
   let shuffled = shuffleCards(ctx, startingCard);
 
   let ret = {
     dealt: [],
     passed: [],
-    suit: "",
-    dealtBy: "",
+    suit: '',
+    dealtBy: '',
     players: shuffled.players,
     round: 1,
     numCardsPlayed: 0,
@@ -76,8 +92,8 @@ export function setupGame(ctx, setupData) {
     lastWinner: shuffled.first,
     maxRounds: shuffled.cardsToDeal,
     selectedDiagram: 0,
-    selectedComponent: "",
-    selectedThreat: "",
+    selectedComponent: '',
+    selectedThreat: '',
     threat: {
       modal: false,
       new: true,
@@ -87,11 +103,11 @@ export function setupGame(ctx, setupData) {
     gameMode: gameMode,
     turnDuration: turnDuration,
     modelType,
-  }
+  };
   return ret;
 }
 
-export function firstPlayer(G, ctx) {
+export function firstPlayer(G) {
   return G.lastWinner;
 }
 
@@ -100,8 +116,9 @@ export function hasPlayerPassed(G, ctx) {
 }
 
 export function getWinner(suit, dealt) {
-  let winner = 0, max = -1;
-  for (let i=0; i<dealt.length; i++) {
+  let winner = 0,
+    max = -1;
+  for (let i = 0; i < dealt.length; i++) {
     let c = dealt[i];
     if (c.startsWith(suit) || c.startsWith(TRUMP_CARD_PREFIX)) {
       let score = scores[c];
@@ -114,7 +131,7 @@ export function getWinner(suit, dealt) {
   return winner;
 }
 
-export function endGameIf(G, ctx) {
+export function endGameIf(G) {
   if (G.round > G.maxRounds) {
     const scores = [...G.scores];
     const winner = scores.indexOf(Math.max(scores));
@@ -124,14 +141,14 @@ export function endGameIf(G, ctx) {
 
 export function endTurnIf(G, ctx) {
   let passed = [...G.passed];
-  if(passed.length >= ctx.numPlayers) {
-    if(G.numCardsPlayed >= ctx.numPlayers) {
+  if (passed.length >= ctx.numPlayers) {
+    if (G.numCardsPlayed >= ctx.numPlayers) {
       //end of trick
       let lastWinner = getWinner(G.suit, G.dealt);
-      return {next: lastWinner};  // choose next player
+      return { next: lastWinner }; // choose next player
     }
     return true;
-  };
+  }
   return false;
 }
 
@@ -142,7 +159,7 @@ export function onTurnEnd(G, ctx) {
   let scores = [...G.scores];
   let round = G.round;
   let lastWinner = G.lastWinner;
-  let numCardsPlayed = G.numCardsPlayed
+  let numCardsPlayed = G.numCardsPlayed;
 
   // calculate the scores
   //end of trick
@@ -152,8 +169,8 @@ export function onTurnEnd(G, ctx) {
     scores[lastWinner]++;
 
     dealt = [];
-    suit = "";
-    dealtBy = "";
+    suit = '';
+    dealtBy = '';
     numCardsPlayed = 0;
     round++;
   }
@@ -167,5 +184,5 @@ export function onTurnEnd(G, ctx) {
     numCardsPlayed,
     round,
     passed: [], // reset the passed array when the phase ends
-  }
+  };
 }

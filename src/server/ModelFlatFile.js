@@ -6,11 +6,11 @@ import { FlatFile } from 'boardgame.io/server';
 export class ModelFlatFile extends FlatFile {
   async fetch(matchID, opts) {
     var result = await super.fetch(matchID, opts);
-    if(opts.model) {
+    if (opts.model) {
       const key = this.getModelKey(matchID);
-      result.model = (await this.getItem(key));
+      result.model = await this.getItem(key);
     }
-    return result
+    return result;
   }
   async setModel(id, model) {
     const key = this.getModelKey(id);
@@ -20,4 +20,3 @@ export class ModelFlatFile extends FlatFile {
     return `${matchID}:model`;
   }
 }
-
