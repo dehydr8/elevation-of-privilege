@@ -108,8 +108,6 @@ class Board extends React.Component {
             playerID={this.props.playerID}
             credentials={this.props.credentials}
             matchID={this.props.matchID}
-            onSelect={() => this.props.moves.selectComponent(0)}
-            onDeselect={() => this.props.moves.selectComponent('')}
           />
         ) : (
           <Model

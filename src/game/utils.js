@@ -7,6 +7,7 @@ import {
   DEFAULT_TURN_DURATION,
   INVALID_CARDS,
   MODEL_TYPE_DEFAULT,
+  MODEL_TYPE_IMAGE,
   STARTING_CARD_MAP,
   TRUMP_CARD_PREFIX,
 } from '../utils/constants';
@@ -80,7 +81,7 @@ export function setupGame(ctx, setupData) {
   let scores = new Array(ctx.numPlayers).fill(0);
   let shuffled = shuffleCards(ctx, startingCard);
 
-  let ret = {
+  return {
     dealt: [],
     passed: [],
     suit: '',
@@ -92,7 +93,8 @@ export function setupGame(ctx, setupData) {
     lastWinner: shuffled.first,
     maxRounds: shuffled.cardsToDeal,
     selectedDiagram: 0,
-    selectedComponent: '',
+    // as image models don't have components, put a dummy id here to treat the entire image as selected
+    selectedComponent: modelType === MODEL_TYPE_IMAGE ? 'image' : '',
     selectedThreat: '',
     threat: {
       modal: false,
@@ -104,7 +106,6 @@ export function setupGame(ctx, setupData) {
     turnDuration: turnDuration,
     modelType,
   };
-  return ret;
 }
 
 export function firstPlayer(G) {
