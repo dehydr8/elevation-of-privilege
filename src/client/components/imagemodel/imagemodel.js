@@ -11,8 +11,6 @@ class ImageModel extends React.Component {
       playerID: PropTypes.any,
       credentials: PropTypes.string,
       matchID: PropTypes.string,
-      onSelect: PropTypes.func,
-      onDeselect: PropTypes.func,
     };
   }
 
@@ -21,8 +19,6 @@ class ImageModel extends React.Component {
     this.auth = this.auth.bind(this);
     this.updateImage = this.updateImage.bind(this);
     this.onError = this.onError.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleDeselect = this.handleDeselect.bind(this);
 
     // maybe this is better defined in constants (also used by downloadbutton.js)
     this.apiBase =
@@ -72,20 +68,6 @@ class ImageModel extends React.Component {
     }
   }
 
-  handleSelect(e) {
-    // Call callback if it's not a drag
-    if (!e.defaultPrevented) {
-      this.props.onSelect();
-    }
-    e.stopPropagation();
-  }
-
-  handleDeselect(e) {
-    if (!e.defaultPrevented) {
-      this.props.onDeselect();
-    }
-  }
-
   async componentDidMount() {
     try {
       await this.updateImage();
@@ -96,14 +78,13 @@ class ImageModel extends React.Component {
 
   render() {
     return (
-      <div className="model" onClick={this.handleDeselect}>
+      <div className="model">
         {this.state.imgSrc && (
           <MapInteractionCSS>
             <img
               src={this.state.imgSrc}
               alt="Architectural Model"
               onError={this.onError}
-              onClick={this.handleSelect}
             />
           </MapInteractionCSS>
         )}
