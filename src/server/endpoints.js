@@ -14,6 +14,7 @@ import {
   getImageExtension,
   getTypeString,
   isGameModeCornucopia,
+  logEvent,
 } from '../utils/utils';
 
 export const createGame = (gameServer) => async (ctx) => {
@@ -87,6 +88,7 @@ export const createGame = (gameServer) => async (ctx) => {
       }
     }
 
+    logEvent(`Game created: ${gameId}`);
     ctx.body = {
       game: gameId,
       credentials,
@@ -189,6 +191,8 @@ export const downloadThreatDragonModel = (gameServer) => async (ctx) => {
   const modelTitle = game.model.summary.title.replace(' ', '-');
   const timestamp = new Date().toISOString().replace(':', '-');
   const filename = `${modelTitle}-${timestamp}.json`;
+
+  logEvent(`Download model: ${matchID}`);
   ctx.attachment(filename);
   ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
   ctx.body = game.model;
@@ -223,9 +227,10 @@ export const downloadThreatsMarkdownFile = (gameServer) => async (ctx) => {
   const timestamp = new Date().toISOString().replaceAll(':', '-');
   const date = new Date().toLocaleString();
   const filename = `threats-${modelTitle}-${timestamp}.md`;
+
+  logEvent(`Download threats: ${matchID}`);
   ctx.attachment(filename);
   ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
-
   ctx.body = formatThreats(threats, date);
 };
 

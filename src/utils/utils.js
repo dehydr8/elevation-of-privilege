@@ -161,3 +161,8 @@ export function asyncSetTimeout(callback, delay) {
     }, delay);
   });
 }
+
+export function logEvent(message) {
+  const now = new Date(Date.now()).toISOString();
+  console.log(`${now} - ${message}`);
+}
