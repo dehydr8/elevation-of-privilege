@@ -31,6 +31,7 @@ import {
   MODEL_TYPE_THREAT_DRAGON,
   MODEL_TYPE_IMAGE,
   MODEL_TYPE_DEFAULT,
+  SPECTATOR,
 } from '../../utils/constants';
 import { getTypeString } from '../../utils/utils';
 import Footer from '../components/footer/footer';
@@ -53,6 +54,7 @@ class Create extends React.Component {
       matchID: '',
       names: initialPlayerNames,
       secret: initialSecrets,
+      spectatorSecret: ``,
       creating: false,
       created: false,
       modelType: MODEL_TYPE_DEFAULT,
@@ -131,6 +133,10 @@ class Create extends React.Component {
         },
       });
     }
+
+    this.setState({
+      spectatorSecret: r.spectatorCredential,
+    });
 
     this.setState({
       ...this.state,
@@ -218,8 +224,12 @@ class Create extends React.Component {
     });
   }
 
-  url(i) {
-    return `${window.location.origin}/${this.state.matchID}/${i}/${this.state.secret[i]}`;
+  url(playerId) {
+    const secret =
+      playerId === SPECTATOR
+        ? this.state.spectatorSecret
+        : this.state.secret[playerId];
+    return `${window.location.origin}/${this.state.matchID}/${playerId}/${secret}`;
   }
 
   formatAllLinks() {
@@ -488,6 +498,21 @@ class Create extends React.Component {
                     </td>
                   </tr>
                 ))}
+              <tr key="spectator" className="spectator-row">
+                <td className="c-td-name">Spectator</td>
+                <td>
+                  <a
+                    href={`${this.url(SPECTATOR)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {this.url(SPECTATOR)}
+                  </a>
+                </td>
+                <td>
+                  <CopyButton text={this.url(SPECTATOR)} />
+                </td>
+              </tr>
             </tbody>
           </Table>
           <hr />

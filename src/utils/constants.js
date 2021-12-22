@@ -105,3 +105,5 @@ export const DEFAULT_MODEL = {
     ],
   },
 };
+
+export const SPECTATOR = `spectator`;

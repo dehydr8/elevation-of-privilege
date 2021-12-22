@@ -139,20 +139,22 @@ class Threatbar extends React.Component {
             <FontAwesomeIcon style={{ float: 'right' }} icon={faBolt} />
           </CardHeader>
           <CardBody className="threat-container">
-            <Button
-              color="primary"
-              size="lg"
-              block
-              disabled={
-                this.props.G.selectedComponent === '' ||
-                !this.props.isInThreatStage ||
-                this.props.G.passed.includes(this.props.playerID) ||
-                !this.props.active
-              }
-              onClick={() => this.props.moves.toggleModal()}
-            >
-              <FontAwesomeIcon icon={faPlus} /> Add Threat
-            </Button>
+            {this.props.playerID && (
+              <Button
+                color="primary"
+                size="lg"
+                block
+                disabled={
+                  this.props.G.selectedComponent === '' ||
+                  !this.props.isInThreatStage ||
+                  this.props.G.passed.includes(this.props.playerID) ||
+                  !this.props.active
+                }
+                onClick={() => this.props.moves.toggleModal()}
+              >
+                <FontAwesomeIcon icon={faPlus} /> Add Threat
+              </Button>
+            )}
             <div hidden={component !== null && component.type !== 'tm.Flow'}>
               <hr />
               <Card>

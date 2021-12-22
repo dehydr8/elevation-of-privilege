@@ -10,6 +10,7 @@ import Footer from '../footer/footer';
 import {
   MODEL_TYPE_DEFAULT,
   MODEL_TYPE_THREAT_DRAGON,
+  SPECTATOR,
 } from '../../../utils/constants';
 
 class Sidebar extends React.Component {
@@ -38,7 +39,8 @@ class Sidebar extends React.Component {
     let dealtCard = getDealtCard(this.props.G);
     const isLastToPass =
       this.props.G.passed.length === this.props.ctx.numPlayers - 1 &&
-      !this.props.G.passed.includes(this.props.playerID);
+      !this.props.G.passed.includes(this.props.playerID) &&
+      this.props.playerID !== SPECTATOR;
 
     return (
       <div className="side-bar">
