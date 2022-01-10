@@ -47,7 +47,6 @@ The docker-compose setup starts two container:
 ![docker-compose setup](docs/docker-setup.svg)
 
 ## TODO
-* Spectator mode
 * UI fixes (optimizations, smaller screens)
 * Optimize the card sprite sheet (can look at SVGs)
 * Improve test coverage, write tests for possible game states and moves
