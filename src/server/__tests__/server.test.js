@@ -1,5 +1,10 @@
 import request from 'supertest';
-import { GAMEMODE_EOP, MODEL_TYPE_THREAT_DRAGON } from '../../utils/constants';
+import {
+  GAMEMODE_EOP,
+  MODEL_TYPE_DEFAULT,
+  MODEL_TYPE_THREAT_DRAGON,
+  SPECTATOR,
+} from '../../utils/constants';
 import {
   gameServer,
   gameServerHandle,
@@ -384,6 +389,7 @@ describe('authentificaton', () => {
   const endpoints = ['players', 'model', 'download', 'download/text'];
   let matchID = null;
   let credentials = null;
+  let spectatorCredential = null;
 
   beforeAll(async () => {
     // first create game
@@ -392,17 +398,19 @@ describe('authentificaton', () => {
     let response = await request(publicApiServer.callback())
       .post('/game/create')
       .field('players', players)
-      .field('names[]', ['P1', 'P2', 'P3']);
+      .field('names[]', ['P1', 'P2', 'P3'])
+      .field('modelType', MODEL_TYPE_DEFAULT);
 
     expect(response.body.game).toBeDefined();
     expect(response.body.credentials.length).toBe(players);
 
     matchID = response.body.game;
     credentials = response.body.credentials;
+    spectatorCredential = response.body.spectatorCredential;
   });
 
   it.each(endpoints)(
-    'returns an error if no authentification is provided to %s',
+    'returns an error if no authentication is provided to %s',
     async (endpoint) => {
       // Try players
 
@@ -458,7 +466,53 @@ describe('authentificaton', () => {
         .get(`/game/${matchID}/${endpoint}`)
         .set(
           'Authorization',
+          // missing 'Basic ' prefix
           Buffer.from(`0:${credentials[0]}`).toString('base64'),
+        );
+      expect(response.status).toBe(403);
+    },
+  );
+
+  it.each(endpoints)(
+    'is successful for correct credentials provided to %s',
+    async (endpoint) => {
+      // Try players
+
+      let response = await request(publicApiServer.callback())
+        .get(`/game/${matchID}/${endpoint}`)
+        .set(
+          'Authorization',
+          'Basic ' + Buffer.from(`0:${credentials[0]}`).toString('base64'),
+        );
+      expect(response.status).not.toBe(403);
+    },
+  );
+
+  it.each(endpoints)(
+    'is successful for correct spectator credentials provided to %s',
+    async (endpoint) => {
+      let response = await request(publicApiServer.callback())
+        .get(`/game/${matchID}/${endpoint}`)
+        .set(
+          'Authorization',
+          'Basic ' +
+            Buffer.from(`${SPECTATOR}:${spectatorCredential}`).toString(
+              'base64',
+            ),
+        );
+      expect(response.status).not.toBe(403);
+    },
+  );
+
+  it.each(endpoints)(
+    'rejects wrong spectator credentials provided to %s',
+    async (endpoint) => {
+      let response = await request(publicApiServer.callback())
+        .get(`/game/${matchID}/${endpoint}`)
+        .set(
+          'Authorization',
+          'Basic ' +
+            Buffer.from(`${SPECTATOR}:wrongCredentials`).toString('base64'),
         );
       expect(response.status).toBe(403);
     },
