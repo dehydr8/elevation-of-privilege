@@ -3,18 +3,17 @@ import ReactDOM from 'react-dom';
 import { GAMEMODE_CORNUCOPIA, GAMEMODE_EOP } from '../../../utils/constants';
 import LicenseAttribution from './licenseAttribution';
 
-let div = null
+let div = null;
 beforeEach(() => {
   div = document.createElement('div');
   document.body.appendChild(div);
-})
+});
 
 afterEach(() => {
   ReactDOM.unmountComponentAtNode(div);
   div.remove();
   div = null;
-})
-  
+});
 
 it('gives the correct license for EoP', () => {
   ReactDOM.render(<LicenseAttribution gameMode={GAMEMODE_EOP} />, div);

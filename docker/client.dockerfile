@@ -1,11 +1,10 @@
-FROM node:17.0.1-alpine3.14 AS builder
+FROM node:16.13.1-alpine3.14 AS builder
 WORKDIR /usr/src/app
 COPY package.json ./
 COPY package-lock.json ./
 COPY ./public ./public
 COPY ./src ./src
 COPY ./cornucopiaCards ./cornucopiaCards
-ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN npm ci
 RUN npm run build
 

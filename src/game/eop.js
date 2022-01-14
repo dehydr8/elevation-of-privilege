@@ -1,6 +1,23 @@
 import { TurnOrder, PlayerView } from 'boardgame.io/core';
-import { endGameIf, onTurnEnd, endTurnIf, firstPlayer, setupGame} from './utils';
-import { toggleModal, toggleModalUpdate, updateThreat, selectDiagram, selectComponent, selectThreat, pass, deleteThreat, addOrUpdateThreat, draw } from './moves.js'
+import {
+  endGameIf,
+  onTurnEnd,
+  endTurnIf,
+  firstPlayer,
+  setupGame,
+} from './utils';
+import {
+  toggleModal,
+  toggleModalUpdate,
+  updateThreat,
+  selectDiagram,
+  selectComponent,
+  selectThreat,
+  pass,
+  deleteThreat,
+  addOrUpdateThreat,
+  draw,
+} from './moves.js';
 
 export const ElevationOfPrivilege = {
   name: 'elevation-of-privilege',
@@ -18,7 +35,7 @@ export const ElevationOfPrivilege = {
   turn: {
     order: {
       ...TurnOrder.DEFAULT, // Simple clockwise turns
-      first: firstPlayer
+      first: firstPlayer,
     },
     endIf: endTurnIf,
     onEnd: onTurnEnd,
@@ -33,9 +50,9 @@ export const ElevationOfPrivilege = {
           selectThreat,
           toggleModal,
           toggleModalUpdate,
-          updateThreat
+          updateThreat,
         },
-      }
+      },
     },
   },
 };

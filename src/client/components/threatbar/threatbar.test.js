@@ -16,13 +16,13 @@ describe('<Threatbar>', () => {
       diagram1: {
         component1: {
           threat1: {
-            title: 'Identified Threat 1'
+            title: 'Identified Threat 1',
           },
           threat2: {
-            title: 'Identified Threat 2'
-          }
-        }
-      }
+            title: 'Identified Threat 2',
+          },
+        },
+      },
     },
   };
 
@@ -38,26 +38,28 @@ describe('<Threatbar>', () => {
                   type: 'type',
                   attrs: {
                     text: {
-                      text: 'text'
-                    }
+                      text: 'text',
+                    },
                   },
                   threats: [
                     {
-                      title: 'Existing Threat 1'
+                      title: 'Existing Threat 1',
                     },
                     {
-                      title: 'Existing Threat 2'
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        }
-      }
+                      title: 'Existing Threat 2',
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        },
+      },
     };
 
-    render(<Threatbar G={G} ctx={{}} moves={{}} active names={[]} model={model}/>);
+    render(
+      <Threatbar G={G} ctx={{}} moves={{}} active names={[]} model={model} />,
+    );
 
     const threats = screen.getAllByText(/^Identified Threat \d+$/);
     expect(threats).toHaveLength(2);
@@ -77,26 +79,28 @@ describe('<Threatbar>', () => {
                   type: 'type',
                   attrs: {
                     text: {
-                      text: 'text'
-                    }
+                      text: 'text',
+                    },
                   },
                   threats: [
                     {
-                      title: 'Existing Threat 1'
+                      title: 'Existing Threat 1',
                     },
                     {
-                      title: 'Existing Threat 2'
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        }
-      }
+                      title: 'Existing Threat 2',
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        },
+      },
     };
 
-    render(<Threatbar G={G} ctx={{}} moves={{}} active names={[]} model={model}/>);
+    render(
+      <Threatbar G={G} ctx={{}} moves={{}} active names={[]} model={model} />,
+    );
 
     const threats = screen.getAllByText(/^Existing Threat \d+$/);
     expect(threats).toHaveLength(2);

@@ -6,29 +6,35 @@ import PropTypes from 'prop-types';
 import { API_PORT } from '../../../utils/constants';
 
 class DownloadButton extends React.Component {
-  static propTypes = {
-    color: PropTypes.string,
-    active: PropTypes.bool,
-    block: PropTypes.bool,
-    disabled: PropTypes.bool,
-    outline: PropTypes.bool,
-    size: PropTypes.string,
-    apiEndpoint: PropTypes.string.isRequired,
-    matchID: PropTypes.string.isRequired,
-    secret: PropTypes.string,
-    playerID: PropTypes.any.isRequired
+  static get propTypes() {
+    return {
+      color: PropTypes.string,
+      active: PropTypes.bool,
+      block: PropTypes.bool,
+      disabled: PropTypes.bool,
+      outline: PropTypes.bool,
+      size: PropTypes.string,
+      apiEndpoint: PropTypes.string.isRequired,
+      matchID: PropTypes.string.isRequired,
+      secret: PropTypes.string,
+      playerID: PropTypes.any.isRequired,
+      children: PropTypes.any.isRequired,
+    };
   }
 
   constructor(props) {
     super(props);
-    this.apiBase = (process.env.NODE_ENV === 'production') ? '/api' : `${window.location.protocol}//${window.location.hostname}:${API_PORT}`;
+    this.apiBase =
+      process.env.NODE_ENV === 'production'
+        ? '/api'
+        : `${window.location.protocol}//${window.location.hostname}:${API_PORT}`;
     this.apiEndpointUrl = this.apiEndpointUrl.bind(this);
     this.handleClick = this.handleClick.bind(this);
 
     this.state = {
-        color: this.props.color,
-        icon: faDownload,
-    }
+      color: this.props.color,
+      icon: faDownload,
+    };
   }
 
   apiEndpointUrl() {
@@ -36,22 +42,22 @@ class DownloadButton extends React.Component {
   }
 
   getFilename(response) {
-    const header = response.headers.get('Content-Disposition')
+    const header = response.headers.get('Content-Disposition');
     return header ? header.match(/filename="(.*)"$/)[1] : 'untitled';
   }
 
   auth() {
     const user = this.props.playerID;
     const pass = this.props.secret;
-    return {'Authorization': 'Basic ' + Buffer.from(user + ':' + pass).toString('base64')};
+    return {
+      Authorization:
+        'Basic ' + Buffer.from(user + ':' + pass).toString('base64'),
+    };
   }
 
   async handleClick() {
-    try{
-      const res = await fetch(
-        this.apiEndpointUrl(), 
-        { headers: this.auth() }
-      );
+    try {
+      const res = await fetch(this.apiEndpointUrl(), { headers: this.auth() });
       if (!res.ok) {
         throw Error(res.statusText);
       }
@@ -64,11 +70,11 @@ class DownloadButton extends React.Component {
       document.body.appendChild(a);
       a.click();
       a.remove();
-    } catch(err) {
-      this.setState({icon: faTimes, color: 'danger'})
+    } catch (err) {
+      this.setState({ icon: faTimes, color: 'danger' });
       setTimeout(() => {
-        this.setState({icon: faDownload, color: this.props.color});
-      }, 500)
+        this.setState({ icon: faDownload, color: this.props.color });
+      }, 500);
       console.error(err);
       return;
     }
@@ -85,7 +91,7 @@ class DownloadButton extends React.Component {
         size={this.props.size}
       >
         <FontAwesomeIcon icon={this.state.icon} fixedWidth /> &nbsp;
-        {this.props.children }
+        {this.props.children}
       </Button>
     );
   }
