@@ -169,9 +169,7 @@ class ThreatModal extends React.Component {
                 onChange={(e) => this.setState({ description: e.target.value })}
               />
             </FormGroup>
-            <FormGroup
-              hidden={this.props.G.threat.owner !== this.props.playerID}
-            >
+            <FormGroup hidden={!this.isOwner}>
               <div className="checkbox-item">
                 <Input
                   className="pointer"
@@ -184,12 +182,7 @@ class ThreatModal extends React.Component {
                 </Label>
               </div>
             </FormGroup>
-            <FormGroup
-              hidden={
-                this.props.G.threat.owner === this.props.playerID &&
-                !this.state.showMitigation
-              }
-            >
+            <FormGroup hidden={this.isOwner && !this.state.showMitigation}>
               <Label for="mitigation">Mitigation</Label>
               <Input
                 type="textarea"
