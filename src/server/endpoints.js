@@ -16,8 +16,11 @@ import {
   isGameModeCornucopia,
   logEvent,
 } from '../utils/utils';
+import { v4 as uuidv4 } from 'uuid';
 
 export const createGame = (gameServer) => async (ctx) => {
+  const spectatorCredential = uuidv4();
+
   try {
     // Create game
     const r = await request
@@ -31,6 +34,7 @@ export const createGame = (gameServer) => async (ctx) => {
           turnDuration: ctx.request.body.turnDuration,
           gameMode: ctx.request.body.gameMode,
           modelType: ctx.request.body.modelType,
+          spectatorCredential,
         },
       });
 
@@ -92,6 +96,7 @@ export const createGame = (gameServer) => async (ctx) => {
     ctx.body = {
       game: gameId,
       credentials,
+      spectatorCredential,
     };
   } catch (err) {
     // Maybe this error could be more specific?

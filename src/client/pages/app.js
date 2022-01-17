@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Client } from 'boardgame.io/react';
 import Board from '../components/board/board';
 import { ElevationOfPrivilege } from '../../game/eop';
-import { SERVER_PORT } from '../../utils/constants';
+import { SERVER_PORT, SPECTATOR } from '../../utils/constants';
 import { SocketIO } from 'boardgame.io/multiplayer';
 import '../styles/cornucopia_cards.css';
 import '../styles/cards.css';
@@ -46,12 +46,13 @@ class App extends React.Component {
   }
 
   render() {
+    const playerId = this.state.id.toString();
     return (
       <div className="player-container">
         <EOP
           matchID={this.state.game}
           credentials={this.state.secret}
-          playerID={this.state.id + ''}
+          playerID={playerId === SPECTATOR ? undefined : playerId}
         />
         <div className="cornucopiacard"></div>
       </div>

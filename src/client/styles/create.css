@@ -22,3 +22,7 @@ table {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.spectator-row {
+  border-top: 5px double #eee;
+}

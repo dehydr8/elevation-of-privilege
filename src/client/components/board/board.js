@@ -10,7 +10,11 @@ import './board.css';
 import request from 'superagent';
 import Status from '../status/status';
 import { getDealtCard } from '../../../utils/utils';
-import { API_PORT, MODEL_TYPE_IMAGE } from '../../../utils/constants';
+import {
+  API_PORT,
+  MODEL_TYPE_IMAGE,
+  SPECTATOR,
+} from '../../../utils/constants';
 import LicenseAttribution from '../license/licenseAttribution';
 
 class Board extends React.Component {
@@ -57,7 +61,7 @@ class Board extends React.Component {
     try {
       return await request
         .get(`${this.apiBase}/game/${this.props.matchID}/${endpoint}`)
-        .auth(this.props.playerID, this.props.credentials);
+        .auth(this.props.playerID ?? SPECTATOR, this.props.credentials);
     } catch (err) {
       console.error(err);
     }
@@ -65,7 +69,7 @@ class Board extends React.Component {
 
   async updateNames() {
     const g = await this.apiGetRequest('players');
-    g.body.players.forEach((p) => {
+    g?.body.players.forEach((p) => {
       if (typeof p.name !== 'undefined') {
         this.updateName(p.id, p.name);
       }
@@ -75,7 +79,7 @@ class Board extends React.Component {
   async updateModel() {
     const r = await this.apiGetRequest('model');
 
-    const model = r.body;
+    const model = r?.body;
 
     this.setState({
       ...this.state,
@@ -105,7 +109,7 @@ class Board extends React.Component {
       <div>
         {this.props.G.modelType === MODEL_TYPE_IMAGE ? (
           <ImageModel
-            playerID={this.props.playerID}
+            playerID={this.props.playerID ?? SPECTATOR}
             credentials={this.props.credentials}
             matchID={this.props.matchID}
           />
@@ -133,25 +137,27 @@ class Board extends React.Component {
                 isInThreatStage={isInThreatStage}
               />
             </div>
-            <Deck
-              cards={this.props.G.players[this.props.playerID]}
-              suit={this.props.G.suit}
-              /* phase replaced with isInThreatStage. active players is null when not */
-              isInThreatStage={isInThreatStage}
-              round={this.props.G.round}
-              current={current}
-              active={active}
-              onCardSelect={(e) => this.props.moves.draw(e)}
-              startingCard={this.props.G.startingCard} // <===  This is still missing   i.e. undeifned
-              gameMode={this.props.G.gameMode}
-            />
+            {this.props.playerID && (
+              <Deck
+                cards={this.props.G.players[this.props.playerID]}
+                suit={this.props.G.suit}
+                /* phase replaced with isInThreatStage. active players is null when not */
+                isInThreatStage={isInThreatStage}
+                round={this.props.G.round}
+                current={current}
+                active={active}
+                onCardSelect={(e) => this.props.moves.draw(e)}
+                startingCard={this.props.G.startingCard} // <===  This is still missing   i.e. undeifned
+                gameMode={this.props.G.gameMode}
+              />
+            )}
           </div>
           <LicenseAttribution gameMode={this.props.G.gameMode} />
         </div>
         <Sidebar
           G={this.props.G}
           ctx={this.props.ctx}
-          playerID={this.props.playerID}
+          playerID={this.props.playerID ?? SPECTATOR}
           matchID={this.props.matchID}
           moves={this.props.moves}
           isInThreatStage={isInThreatStage}
