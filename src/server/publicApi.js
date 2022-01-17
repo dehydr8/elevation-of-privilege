@@ -49,20 +49,23 @@ const runPublicApi = (gameServer) => {
 const authMiddleware = (gameServer) => async (ctx, next) => {
   try {
     const credentials = auth(ctx);
-    const game = await gameServer.db.fetch(ctx.params.matchID, {
-      metadata: true,
-    });
-    const metadata = game.metadata;
 
-    if (
-      credentials.name === SPECTATOR &&
-      credentials.pass === metadata.setupData.spectatorCredential
-    ) {
-      return await next();
-    }
+    if (credentials) {
+      const game = await gameServer.db.fetch(ctx.params.matchID, {
+        metadata: true,
+      });
+      const metadata = game.metadata;
 
-    if (credentials.pass === metadata.players[credentials.name].credentials) {
-      return await next();
+      if (
+        credentials.name === SPECTATOR &&
+        credentials.pass === metadata.setupData.spectatorCredential
+      ) {
+        return await next();
+      }
+
+      if (credentials.pass === metadata.players[credentials.name].credentials) {
+        return await next();
+      }
     }
   } catch (err) {
     console.error(
@@ -71,7 +74,7 @@ const authMiddleware = (gameServer) => async (ctx, next) => {
     // ... and go directly to rejection
   }
 
-  console.error(`Rejecting unauthorized request. Game: ${ctx.params.matchID}`);
+  console.log(`Rejecting unauthorized request. Game: ${ctx.params.matchID}`);
   ctx.throw(403);
 };
 
