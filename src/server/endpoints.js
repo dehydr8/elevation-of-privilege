@@ -277,32 +277,38 @@ function getThreats(gameState, metadata, model) {
 function formatThreats(threats, date) {
   return `Threats ${date}
 =======
+
 ${threats
   .map(
-    (threat, index) => `
-**${index + 1}. ${escapeMarkdownText(threat.title.trim())}**
-${
-  'owner' in threat
-    ? `
-  - *Author:*       ${escapeMarkdownText(threat.owner)}
-`
-    : ''
-}
-  - *Description:*  ${
-    escapeMarkdownText(
+    (threat, index) =>
+      `${index + 1}. **${escapeMarkdownText(threat.title.trim())}**${
+        'severity' in threat
+          ? `
+    - *Severity:* ${escapeMarkdownText(threat.severity)}`
+          : ``
+      }${
+        'owner' in threat
+          ? `
+    - *Author:* ${escapeMarkdownText(threat.owner)}`
+          : ``
+      }${
+        'description' in threat
+          ? `
+    - *Description:* ${escapeMarkdownText(
       threat.description.replace(/(\r|\n)+/gm, ' '),
-    ) /* Stops newlines breaking md formatting */
-  }
-
-${
-  threat.mitigation !== `No mitigation provided.`
-    ? `  - *Mitigation:*   ${escapeMarkdownText(
-        threat.mitigation.replace(/(\r|\n)+/gm, ' '),
-      )}
-
+    )}`
+          : ``
+      }${
+        'mitigation' in threat &&
+        threat.mitigation !== `No mitigation provided.`
+          ? `
+    - *Mitigation:* ${escapeMarkdownText(
+      threat.mitigation.replace(/(\r|\n)+/gm, ' '),
+    )}
 `
-    : ''
-}`,
+          : `
+`
+      }`,
   )
   .join('')}`;
 }
