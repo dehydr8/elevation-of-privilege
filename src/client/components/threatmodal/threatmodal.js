@@ -33,7 +33,7 @@ class ThreatModal extends React.Component {
       title: '',
       description: '',
       mitigation: '',
-      showMigitation: false,
+      showMitigation: false,
     };
   }
 
@@ -44,7 +44,6 @@ class ThreatModal extends React.Component {
       prevProps.G.threat.mitigation !== this.props.G.threat.mitigation
     ) {
       this.setState({
-        ...this.state,
         title: this.props.G.threat.title,
         description: this.props.G.threat.description,
         mitigation: this.props.G.threat.mitigation,
@@ -68,29 +67,21 @@ class ThreatModal extends React.Component {
     // update the values from the state
     this.saveThreat();
     this.props.moves.addOrUpdateThreat();
-    this.toggleMitigationForm(false);
+    this.toggleMitigationField(false);
   }
 
-  updateState(field, value) {
+  toggleMitigationField(isShown) {
     this.setState({
-      ...this.state,
-      [field]: value,
+      showMitigation: isShown,
     });
   }
 
-  toggleMitigationForm(isShown) {
-    this.setState({
-      ...this.state,
-      showMigitation: isShown,
-    });
+  get isInvalid() {
+    return _.isEmpty(this.state.description) || _.isEmpty(this.state.title);
   }
 
-  isInvalid() {
-    return (
-      this.props.G.threat.owner !== this.props.playerID ||
-      _.isEmpty(this.state.description) ||
-      _.isEmpty(this.state.title)
-    );
+  get isOwner() {
+    return this.props.G.threat.owner === this.props.playerID;
   }
 
   render() {
@@ -98,7 +89,9 @@ class ThreatModal extends React.Component {
       <Modal isOpen={this.props.isOpen}>
         <Form>
           <ModalHeader
-            toggle={() => this.props.moves.toggleModal()}
+            toggle={
+              this.isOwner ? () => this.props.moves.toggleModal() : undefined
+            }
             style={{ width: '100%' }}
           >
             {this.props.G.threat.new ? 'Add' : 'Update'} Threat &mdash;{' '}
@@ -114,13 +107,13 @@ class ThreatModal extends React.Component {
                 type="text"
                 name="title"
                 id="title"
-                disabled={this.props.G.threat.owner !== this.props.playerID}
+                disabled={!this.isOwner}
                 autoComplete="off"
                 value={this.state.title}
                 onBlur={(e) =>
                   this.props.moves.updateThreat('title', e.target.value)
                 }
-                onChange={(e) => this.updateState('title', e.target.value)}
+                onChange={(e) => this.setState({ title: e.target.value })}
               />
             </FormGroup>
             <FormGroup>
@@ -129,7 +122,7 @@ class ThreatModal extends React.Component {
                 type="select"
                 name="type"
                 id="type"
-                disabled={this.props.G.threat.owner !== this.props.playerID}
+                disabled={!this.isOwner}
                 value={this.props.G.threat.type}
                 onChange={(e) =>
                   this.props.moves.updateThreat('type', e.target.value)
@@ -150,7 +143,7 @@ class ThreatModal extends React.Component {
                 type="select"
                 name="severity"
                 id="severity"
-                disabled={this.props.G.threat.owner !== this.props.playerID}
+                disabled={!this.isOwner}
                 value={this.props.G.threat.severity}
                 onChange={(e) =>
                   this.props.moves.updateThreat('severity', e.target.value)
@@ -167,85 +160,62 @@ class ThreatModal extends React.Component {
                 type="textarea"
                 name="description"
                 id="description"
-                disabled={this.props.G.threat.owner !== this.props.playerID}
+                disabled={!this.isOwner}
                 style={{ height: 150 }}
                 value={this.state.description}
                 onBlur={(e) =>
                   this.props.moves.updateThreat('description', e.target.value)
                 }
-                onChange={(e) =>
-                  this.updateState('description', e.target.value)
-                }
+                onChange={(e) => this.setState({ description: e.target.value })}
               />
             </FormGroup>
-            <FormGroup
-              hidden={this.props.G.threat.owner !== this.props.playerID}
-            >
+            <FormGroup hidden={!this.isOwner}>
               <div className="checkbox-item">
                 <Input
                   className="pointer"
                   type="checkbox"
                   id="showMitigation"
-                  onChange={(e) => this.toggleMitigationForm(e.target.checked)}
+                  onChange={(e) => this.toggleMitigationField(e.target.checked)}
                 />
                 <Label for="showMitigation">
                   Add a mitigation <em>(optional)</em>
                 </Label>
               </div>
             </FormGroup>
-            <FormGroup
-              hidden={
-                this.props.G.threat.owner === this.props.playerID &&
-                !this.state.showMigitation
-              }
-            >
+            <FormGroup hidden={this.isOwner && !this.state.showMitigation}>
               <Label for="mitigation">Mitigation</Label>
               <Input
                 type="textarea"
                 name="mitigation"
                 id="mitigation"
-                disabled={this.props.G.threat.owner !== this.props.playerID}
+                disabled={!this.isOwner}
                 style={{ height: 150 }}
                 value={this.state.mitigation}
                 onBlur={(e) =>
                   this.props.moves.updateThreat('mitigation', e.target.value)
                 }
-                onChange={(e) => this.updateState('mitigation', e.target.value)}
+                onChange={(e) => this.setState({ mitigation: e.target.value })}
               />
             </FormGroup>
           </ModalBody>
-          <ModalFooter>
-            <Button
-              color="success"
-              className="mr-auto"
-              hidden={this.props.G.threat.owner !== this.props.playerID}
-              onClick={() => this.saveThreat()}
-            >
-              Save
-            </Button>{' '}
-            <Button
-              color="primary"
-              disabled={this.isInvalid()}
-              onClick={() => this.addOrUpdate()}
-            >
-              {this.props.G.threat.new ? 'Save & Add' : 'Save & Update'}
-            </Button>{' '}
-            <Button
-              color="secondary"
-              disabled={this.props.G.threat.owner !== this.props.playerID}
-              onClick={() => this.props.moves.toggleModal()}
-            >
-              Cancel
-            </Button>
-          </ModalFooter>
-          <ModalFooter
-            hidden={this.props.G.threat.owner !== this.props.playerID}
-          >
-            <small className="mr-auto text-muted">
-              <b>TIP:</b> Saving would allow other players to view your changes
-              instantly.
-            </small>
-          </ModalFooter>
+          {this.isOwner && (
+            <ModalFooter>
+              <Button
+                color="primary"
+                className="mr-auto"
+                disabled={this.isInvalid}
+                onClick={() => this.addOrUpdate()}
+              >
+                Save
+              </Button>
+              <Button
+                color="secondary"
+                onClick={() => this.props.moves.toggleModal()}
+              >
+                Cancel
+              </Button>
+            </ModalFooter>
+          )}
         </Form>
       </Modal>
     );
