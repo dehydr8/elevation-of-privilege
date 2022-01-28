@@ -1,6 +1,6 @@
 {
   "name": "eop",
-  "version": "0.10.0",
+  "version": "0.12.0",
   "private": true,
   "main": "src/client/index.js",
   "dependencies": {
@@ -67,7 +67,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "prettier": "^2.5.1",
-    "supertest": "^6.2.1"
+    "supertest": "^6.2.2"
   },
   "jest": {
     "collectCoverageFrom": [

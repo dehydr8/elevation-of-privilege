@@ -3,7 +3,7 @@ import auth from 'basic-auth';
 import Koa from 'koa';
 import koaBody from 'koa-body';
 import Router from 'koa-router';
-import { API_PORT } from '../utils/constants';
+import { API_PORT, SPECTATOR } from '../utils/constants';
 import {
   createGame,
   downloadThreatDragonModel,
@@ -47,22 +47,35 @@ const runPublicApi = (gameServer) => {
 };
 
 const authMiddleware = (gameServer) => async (ctx, next) => {
-  const credentials = auth(ctx);
-  const game = await gameServer.db.fetch(ctx.params.matchID, {
-    metadata: true,
-  });
-  const metadata = game.metadata;
-  if (
-    credentials &&
-    credentials.name &&
-    metadata &&
-    metadata.players &&
-    credentials.pass === metadata.players[credentials.name].credentials
-  ) {
-    return await next();
-  } else {
-    ctx.throw(403);
+  try {
+    const credentials = auth(ctx);
+
+    if (credentials) {
+      const game = await gameServer.db.fetch(ctx.params.matchID, {
+        metadata: true,
+      });
+      const metadata = game.metadata;
+
+      if (
+        credentials.name === SPECTATOR &&
+        credentials.pass === metadata.setupData.spectatorCredential
+      ) {
+        return await next();
+      }
+
+      if (credentials.pass === metadata.players[credentials.name].credentials) {
+        return await next();
+      }
+    }
+  } catch (err) {
+    console.error(
+      `Error during authentication. Game: ${ctx.params.matchID}, Error: ${err}`,
+    );
+    // ... and go directly to rejection
   }
+
+  console.log(`Rejecting unauthorized request. Game: ${ctx.params.matchID}`);
+  ctx.throw(403);
 };
 
 export default runPublicApi;

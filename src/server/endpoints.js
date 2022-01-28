@@ -16,8 +16,11 @@ import {
   isGameModeCornucopia,
   logEvent,
 } from '../utils/utils';
+import { v4 as uuidv4 } from 'uuid';
 
 export const createGame = (gameServer) => async (ctx) => {
+  const spectatorCredential = uuidv4();
+
   try {
     // Create game
     const r = await request
@@ -31,6 +34,7 @@ export const createGame = (gameServer) => async (ctx) => {
           turnDuration: ctx.request.body.turnDuration,
           gameMode: ctx.request.body.gameMode,
           modelType: ctx.request.body.modelType,
+          spectatorCredential,
         },
       });
 
@@ -92,6 +96,7 @@ export const createGame = (gameServer) => async (ctx) => {
     ctx.body = {
       game: gameId,
       credentials,
+      spectatorCredential,
     };
   } catch (err) {
     // Maybe this error could be more specific?
@@ -272,32 +277,42 @@ function getThreats(gameState, metadata, model) {
 function formatThreats(threats, date) {
   return `Threats ${date}
 =======
-${threats
-  .map(
-    (threat, index) => `
-**${index + 1}. ${escapeMarkdownText(threat.title.trim())}**
-${
-  'owner' in threat
-    ? `
-  - *Author:*       ${escapeMarkdownText(threat.owner)}
-`
-    : ''
+
+${threats.map(formatSingleThreat).join('\n')}
+`;
 }
-  - *Description:*  ${
-    escapeMarkdownText(
-      threat.description.replace(/(\r|\n)+/gm, ' '),
-    ) /* Stops newlines breaking md formatting */
+
+function formatSingleThreat(threat, index) {
+  const lines = [
+    `${index + 1}. **${escapeMarkdownText(threat.title.trim())}**`,
+  ];
+
+  if ('severity' in threat) {
+    lines.push(`    - *Severity:* ${escapeMarkdownText(threat.severity)}`);
   }
 
-${
-  threat.mitigation !== `No mitigation provided.`
-    ? `  - *Mitigation:*   ${escapeMarkdownText(
-        threat.mitigation.replace(/(\r|\n)+/gm, ' '),
-      )}
+  if ('owner' in threat) {
+    lines.push(`    - *Author:* ${escapeMarkdownText(threat.owner)}`);
+  }
 
-`
-    : ''
-}`,
-  )
-  .join('')}`;
+  if ('description' in threat) {
+    lines.push(
+      `    - *Description:* ${escapeMarkdownText(
+        threat.description.replace(/(\r|\n)+/gm, ' '),
+      )}`,
+    );
+  }
+
+  if (
+    'mitigation' in threat &&
+    threat.mitigation !== `No mitigation provided.`
+  ) {
+    lines.push(
+      `    - *Mitigation:* ${escapeMarkdownText(
+        threat.mitigation.replace(/(\r|\n)+/gm, ' '),
+      )}`,
+    );
+  }
+
+  return lines.join('\n');
 }
