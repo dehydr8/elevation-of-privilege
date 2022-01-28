@@ -278,37 +278,41 @@ function formatThreats(threats, date) {
   return `Threats ${date}
 =======
 
-${threats
-  .map(
-    (threat, index) =>
-      `${index + 1}. **${escapeMarkdownText(threat.title.trim())}**${
-        'severity' in threat
-          ? `
-    - *Severity:* ${escapeMarkdownText(threat.severity)}`
-          : ``
-      }${
-        'owner' in threat
-          ? `
-    - *Author:* ${escapeMarkdownText(threat.owner)}`
-          : ``
-      }${
-        'description' in threat
-          ? `
-    - *Description:* ${escapeMarkdownText(
-      threat.description.replace(/(\r|\n)+/gm, ' '),
-    )}`
-          : ``
-      }${
-        'mitigation' in threat &&
-        threat.mitigation !== `No mitigation provided.`
-          ? `
-    - *Mitigation:* ${escapeMarkdownText(
-      threat.mitigation.replace(/(\r|\n)+/gm, ' '),
-    )}
-`
-          : `
-`
-      }`,
-  )
-  .join('')}`;
+${threats.map(formatSingleThreat).join('\n')}
+`;
+}
+
+function formatSingleThreat(threat, index) {
+  const lines = [
+    `${index + 1}. **${escapeMarkdownText(threat.title.trim())}**`,
+  ];
+
+  if ('severity' in threat) {
+    lines.push(`    - *Severity:* ${escapeMarkdownText(threat.severity)}`);
+  }
+
+  if ('owner' in threat) {
+    lines.push(`    - *Author:* ${escapeMarkdownText(threat.owner)}`);
+  }
+
+  if ('description' in threat) {
+    lines.push(
+      `    - *Description:* ${escapeMarkdownText(
+        threat.description.replace(/(\r|\n)+/gm, ' '),
+      )}`,
+    );
+  }
+
+  if (
+    'mitigation' in threat &&
+    threat.mitigation !== `No mitigation provided.`
+  ) {
+    lines.push(
+      `    - *Mitigation:* ${escapeMarkdownText(
+        threat.mitigation.replace(/(\r|\n)+/gm, ' '),
+      )}`,
+    );
+  }
+
+  return lines.join('\n');
 }
