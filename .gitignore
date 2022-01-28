@@ -28,3 +28,4 @@ deploy/
 
 # IDE
 .idea
+.vscode
