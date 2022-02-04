@@ -1,6 +1,6 @@
 Elevation of Privilege
 ======================
-
+[![Tests](https://github.com/dehydr8/elevation-of-privilege/actions/workflows/checks.yml/badge.svg)](https://github.com/dehydr8/elevation-of-privilege/actions/workflows/checks.yml/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/5449a4d61cdfed258204/maintainability)](https://codeclimate.com/github/dehydr8/elevation-of-privilege/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5449a4d61cdfed258204/test_coverage)](https://codeclimate.com/github/dehydr8/elevation-of-privilege/test_coverage)
 
