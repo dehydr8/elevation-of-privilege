@@ -1,12 +1,10 @@
 Elevation of Privilege
 ======================
-[![Build Status](https://travis-ci.org/dehydr8/elevation-of-privilege.svg?branch=master)](https://travis-ci.org/dehydr8/elevation-of-privilege)
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/5449a4d61cdfed258204/maintainability)](https://codeclimate.com/github/dehydr8/elevation-of-privilege/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5449a4d61cdfed258204/test_coverage)](https://codeclimate.com/github/dehydr8/elevation-of-privilege/test_coverage)
 
 Elevation of Privilege (EoP) is the easy way to get started and learn threat modeling. It is a card game that developers, architects or security experts can play.
-
-The deployed version can be found here: https://elevation-of-privilege.herokuapp.com/
 
 ## Running
 There are two components that need to be started in order to run the game.
