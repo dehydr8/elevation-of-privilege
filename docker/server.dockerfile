@@ -2,7 +2,10 @@ FROM node:16.13.1-alpine3.14 AS builder
 WORKDIR /usr/src/app
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm ci --only=production
+COPY tsconfig.server.json ./
+COPY ./src ./src
+RUN npm ci
+RUN npm run build:server
 
 FROM node:16.13.1-alpine3.14
 RUN apk add dumb-init
@@ -11,8 +14,8 @@ RUN chown node:node /usr/src/app
 USER node
 ENV NODE_ENV production
 RUN mkdir -p /usr/src/app/db-images
-COPY --chown=node:node  --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
-COPY --chown=node:node ./src/server /usr/src/app/src/server
-COPY --chown=node:node ./src/game /usr/src/app/src/game
-COPY --chown=node:node ./src/utils /usr/src/app/src/utils
-CMD [ "dumb-init", "node", "--unhandled-rejections=warn", "-r", "esm", "/usr/src/app/src/server/server.js" ]
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm ci --only=production
+COPY --chown=node:node --from=builder /usr/src/app/build-server /usr/src/app/build-server
+CMD [ "dumb-init", "node", "--unhandled-rejections=warn", "--es-module-specifier-resolution=node", "/usr/src/app/build-server/server/server.js" ]

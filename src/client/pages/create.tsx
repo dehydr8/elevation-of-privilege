@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import {
@@ -32,18 +32,49 @@ import {
   MODEL_TYPE_IMAGE,
   MODEL_TYPE_DEFAULT,
   SPECTATOR,
+  DeckSuit,
+  GameMode,
+  ModelType,
 } from '../../utils/constants';
-import { getTypeString } from '../../utils/utils';
+import {
+  getTypeString,
+  isDeckSuit,
+  isGameMode,
+  isModelType,
+} from '../../utils/utils';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
 import CopyButton from '../components/copybutton/copybutton';
 import '../styles/create.css';
+import type { PlayerID } from 'boardgame.io';
 
-class Create extends React.Component {
-  constructor(props) {
+type CreateProps = Record<string, never>;
+
+interface CreateState {
+  players: number;
+  matchID: string;
+  names: Record<PlayerID, string>;
+  secret: Record<PlayerID, string>;
+  spectatorSecret: string;
+  creating: boolean;
+  created: boolean;
+  modelType: ModelType;
+  model: Record<string, unknown> | undefined;
+  image: File | undefined;
+  startSuit: DeckSuit;
+  turnDuration: number;
+  provideModelThruAlternativeChannel: boolean;
+  gameMode: GameMode;
+}
+
+class Create extends React.Component<CreateProps, CreateState> {
+  fileReader: FileReader;
+  apiBase: string;
+
+  constructor(props: CreateProps) {
     super(props);
-    let initialPlayerNames = {};
-    let initialSecrets = {};
+    const initialPlayerNames: Record<number, string> = {};
+    const initialSecrets: Record<number, string> = {};
     _.range(MAX_NUMBER_PLAYERS).forEach((n) => {
       initialPlayerNames[n] = `Player ${n + 1}`;
       initialSecrets[n] = ``;
@@ -70,7 +101,7 @@ class Create extends React.Component {
     this.onNameUpdated = this.onNameUpdated.bind(this);
     this.onstartSuitUpdated = this.onstartSuitUpdated.bind(this);
     this.onTurnDurationUpdated = this.onTurnDurationUpdated.bind(this);
-    this.ongameModeUpdated = this.ongameModeUpdated.bind(this);
+    this.onGameModeUpdated = this.onGameModeUpdated.bind(this);
     this.readJson = this.readJson.bind(this);
     this.updateImage = this.updateImage.bind(this);
     this.onFileRead = this.onFileRead.bind(this);
@@ -88,7 +119,7 @@ class Create extends React.Component {
         : `${window.location.protocol}//${window.location.hostname}:${API_PORT}`;
   }
 
-  async createGame() {
+  async createGame(): Promise<void> {
     this.setState({
       ...this.state,
       creating: true,
@@ -96,21 +127,21 @@ class Create extends React.Component {
     // FormData object (with file if required)
     const formData = new FormData();
 
-    formData.append('players', this.state.players);
+    formData.append('players', `${this.state.players}`);
     formData.append('modelType', this.state.modelType);
     if (this.state.modelType !== MODEL_TYPE_DEFAULT) {
       formData.append(
         'model',
         this.state.modelType === MODEL_TYPE_IMAGE
-          ? this.state.image
+          ? this.state.image ?? ''
           : JSON.stringify(this.state.model),
       );
     }
     for (let i = 0; i < this.state.players; i++) {
-      formData.append('names[]', this.state.names[i]);
+      formData.append('names[]', this.state.names[`${i}`]);
     }
     formData.append('startSuit', this.state.startSuit);
-    formData.append('turnDuration', this.state.turnDuration);
+    formData.append('turnDuration', `${this.state.turnDuration}`);
     formData.append('gameMode', this.state.gameMode);
 
     // Use Fetch API (not superagent)
@@ -124,7 +155,7 @@ class Create extends React.Component {
 
     const gameId = r.game;
 
-    for (var i = 0; i < r.credentials.length; i++) {
+    for (let i = 0; i < r.credentials.length; i++) {
       this.setState({
         ...this.state,
         secret: {
@@ -145,46 +176,67 @@ class Create extends React.Component {
     });
   }
 
-  onFileRead() {
+  onFileRead(): void {
+    if (typeof this.fileReader.result !== 'string') {
+      throw new Error(
+        "Expected `fileReader.result` to be a string but it wasn't.",
+      );
+    }
+    const model = JSON.parse(this.fileReader.result);
+    console.log(model);
     this.setState({
       ...this.state,
-      model: JSON.parse(this.fileReader.result),
+      model,
     });
   }
 
-  readJson(e) {
-    this.fileReader.readAsText(e.target.files[0]);
+  readJson(e: ChangeEvent<HTMLInputElement>): void {
+    const file = e.target.files?.[0];
+    if (!file) {
+      throw new Error(
+        'Expected change event to target an input element with a file but there was no file attached.',
+      );
+    }
+    this.fileReader.readAsText(file);
   }
 
-  updateImage(e) {
+  updateImage(e: ChangeEvent<HTMLInputElement>): void {
     this.setState({
       ...this.state,
-      image: e.target.files[0],
+      image: e.target.files?.[0],
     });
   }
 
-  onPlayersUpdated(e) {
+  onPlayersUpdated(e: ChangeEvent<HTMLInputElement>): void {
     this.setState({
       ...this.state,
       players: parseInt(e.target.value),
     });
   }
 
-  onstartSuitUpdated(e) {
+  onstartSuitUpdated(e: ChangeEvent<HTMLInputElement>): void {
+    const startSuit = e.target.value;
+    if (!isDeckSuit(startSuit)) {
+      throw new Error(`Invalid start suit '${startSuit}'`);
+    }
     this.setState({
       ...this.state,
-      startSuit: e.target.value,
+      startSuit,
     });
   }
 
-  ongameModeUpdated(e) {
+  onGameModeUpdated(e: ChangeEvent<HTMLInputElement>): void {
+    const gameMode = e.target.value;
+    if (!isGameMode(gameMode)) {
+      throw new Error(`Invalid game mode '${gameMode}'`);
+    }
     this.setState({
       ...this.state,
-      gameMode: e.target.value,
+      gameMode,
     });
   }
 
-  onNameUpdated(idx, e) {
+  onNameUpdated(idx: number, e: ChangeEvent<HTMLInputElement>): void {
     this.setState({
       ...this.state,
       names: {
@@ -194,16 +246,16 @@ class Create extends React.Component {
     });
   }
 
-  onTurnDurationUpdated(e) {
+  onTurnDurationUpdated(e: ChangeEvent<HTMLInputElement>): void {
     this.setState({
       ...this.state,
-      turnDuration: e.target.value,
+      turnDuration: Number.parseInt(e.target.value),
     });
   }
 
-  isFormValid() {
-    for (var i = 0; i < this.state.players; i++) {
-      if (_.isEmpty(this.state.names[i])) {
+  isFormValid(): boolean {
+    for (let i = 0; i < this.state.players; i++) {
+      if (_.isEmpty(this.state.names[`${i}`])) {
         return false;
       }
     }
@@ -217,14 +269,18 @@ class Create extends React.Component {
     return true;
   }
 
-  updateModelType(e) {
+  updateModelType(e: ChangeEvent<HTMLInputElement>): void {
+    const modelType = e.target.value;
+    if (!isModelType(modelType)) {
+      throw new Error(`Invalid model type ${modelType}`);
+    }
     this.setState({
       ...this.setState,
-      modelType: e.target.value,
+      modelType,
     });
   }
 
-  url(playerId) {
+  url(playerId: PlayerID): string {
     const secret =
       playerId === SPECTATOR
         ? this.state.spectatorSecret
@@ -232,19 +288,19 @@ class Create extends React.Component {
     return `${window.location.origin}/${this.state.matchID}/${playerId}/${secret}`;
   }
 
-  formatAllLinks() {
+  formatAllLinks(): string {
     return (
       'You have been invited to a game of Elevation of Privilege:\n\n' +
       Array(this.state.players)
         .fill(0)
-        .map((v, i) => {
-          return `${this.state.names[i]}:\t${this.url(i)}`;
+        .map((_, i) => {
+          return `${this.state.names[i]}:\t${this.url(`${i}`)}`;
         })
         .join('\n\n')
     );
   }
 
-  render() {
+  render(): JSX.Element {
     let createForm = <div />;
     let linkDisplay = <div />;
     if (!this.state.created) {
@@ -318,7 +374,7 @@ class Create extends React.Component {
                 <Input
                   id="gameMode"
                   type="select"
-                  onChange={(e) => this.ongameModeUpdated(e)}
+                  onChange={(e) => this.onGameModeUpdated(e)}
                   value={this.state.gameMode}
                 >
                   <option>{GAMEMODE_EOP}</option>
@@ -486,15 +542,15 @@ class Create extends React.Component {
                     <td className="c-td-name">{this.state.names[i]}</td>
                     <td>
                       <a
-                        href={`${this.url(i)}`}
+                        href={`${this.url(`${i}`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {this.url(i)}
+                        {this.url(`${i}`)}
                       </a>
                     </td>
                     <td>
-                      <CopyButton text={this.url(i)} />
+                      <CopyButton text={this.url(`${i}`)} />
                     </td>
                   </tr>
                 ))}
@@ -537,6 +593,8 @@ class Create extends React.Component {
 
     return (
       <div>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-expect-error This is typed incorrectly for react-helmet (see also https://github.com/nfl/react-helmet/issues/344) */}
         <Helmet bodyAttributes={{ style: 'background-color : #000' }} />
         <Container className="create">
           <Row style={{ paddingTop: '20px' }}>

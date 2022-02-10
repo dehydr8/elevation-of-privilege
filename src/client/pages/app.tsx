@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, useState } from 'react';
 
 import { Client } from 'boardgame.io/react';
 import Board from '../components/board/board';
@@ -9,6 +8,7 @@ import { SocketIO } from 'boardgame.io/multiplayer';
 import '../styles/cornucopia_cards.css';
 import '../styles/cards.css';
 import 'cornucopia-cards-modified/style.css';
+import type { RouteComponentProps } from 'react-router';
 
 const url =
   window.location.protocol +
@@ -28,36 +28,31 @@ const EOP = Client({
   }),
 });
 
-class App extends React.Component {
-  static get propTypes() {
-    return {
-      match: PropTypes.object,
-    };
-  }
-
-  constructor(props) {
-    super(props);
-    const { params } = props.match;
-    this.state = {
-      game: params.game,
-      id: params.id,
-      secret: params.secret,
-    };
-  }
-
-  render() {
-    const playerId = this.state.id.toString();
-    return (
-      <div className="player-container">
-        <EOP
-          matchID={this.state.game}
-          credentials={this.state.secret}
-          playerID={playerId === SPECTATOR ? undefined : playerId}
-        />
-        <div className="cornucopiacard"></div>
-      </div>
-    );
-  }
+interface MatchParams {
+  game: string;
+  id: string;
+  secret: string;
 }
+
+type AppProps = RouteComponentProps<MatchParams>;
+
+const App: FC<AppProps> = ({ match }) => {
+  const [game] = useState(match.params.game);
+  const [id] = useState(match.params.id);
+  const [secret] = useState(match.params.secret);
+
+  const playerId = id.toString();
+
+  return (
+    <div className="player-container">
+      <EOP
+        matchID={game}
+        credentials={secret}
+        playerID={playerId === SPECTATOR ? undefined : playerId}
+      />
+      <div className="cornucopiacard"></div>
+    </div>
+  );
+};
 
 export default App;

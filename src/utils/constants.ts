@@ -14,12 +14,14 @@ export const DECK_HANDS = [
   'A',
 ];
 export const DEFAULT_TURN_DURATION = 300;
-export const DECK_SUITS = ['A', 'B', 'C', 'D', 'E', 'T'];
+export const DECK_SUITS = ['A', 'B', 'C', 'D', 'E', 'T'] as const;
+export type DeckSuit = typeof DECK_SUITS[number];
 export const TRUMP_CARD_PREFIX = 'T';
 export const DEFAULT_START_SUIT = 'E';
 export const GAMEMODE_EOP = 'Elevation of Privilege';
 export const GAMEMODE_CORNUCOPIA = 'OWASP Cornucopia';
-export const DEFAULT_GAME_MODE = 'Elevation of Privilege';
+export const DEFAULT_GAME_MODE = GAMEMODE_EOP;
+export type GameMode = typeof GAMEMODE_EOP | typeof GAMEMODE_CORNUCOPIA;
 export const INVALID_CARDS = {
   [GAMEMODE_EOP]: ['E2', 'T2', 'T3', 'T4'],
   [GAMEMODE_CORNUCOPIA]: [],
@@ -47,13 +49,26 @@ export const CARD_LIMIT = 26;
 export const MIN_NUMBER_PLAYERS = 2;
 export const MAX_NUMBER_PLAYERS = 9;
 
-export const SERVER_PORT = process.env.SERVER_PORT || 8000;
-export const API_PORT = process.env.API_PORT || 8001;
-export const INTERNAL_API_PORT = process.env.INTERNAL_API_PORT || 8002;
+export const SERVER_PORT =
+  process.env.SERVER_PORT !== undefined
+    ? Number.parseInt(process.env.SERVER_PORT)
+    : 8000;
+export const API_PORT =
+  process.env.API_PORT !== undefined
+    ? Number.parseInt(process.env.API_PORT)
+    : 8001;
+export const INTERNAL_API_PORT =
+  process.env.INTERNAL_API_PORT !== undefined
+    ? Number.parseInt(process.env.INTERNAL_API_PORT)
+    : 8002;
 
 export const MODEL_TYPE_THREAT_DRAGON = 'Threat Dragon';
 export const MODEL_TYPE_DEFAULT = 'Default';
 export const MODEL_TYPE_IMAGE = 'Image';
+export type ModelType =
+  | typeof MODEL_TYPE_THREAT_DRAGON
+  | typeof MODEL_TYPE_DEFAULT
+  | typeof MODEL_TYPE_IMAGE;
 
 export const DEFAULT_MODEL = {
   summary: {

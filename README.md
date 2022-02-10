@@ -81,6 +81,26 @@ The docker-compose setup starts two containers:
 
 #### Local deployment
 
+In order to start the app locally, it first needs to be built. This can be done via the command
+
+```bash
+npm run build
+```
+
+If you just want to build the client or the server, you can also you
+
+```bash
+npm run build:client
+```
+
+or
+
+```bash
+npm run build:server
+```
+
+respectively.
+
 The server can be started using:
 
 ```bash
@@ -115,13 +135,13 @@ MongoDB has also been removed as a dependency so must be installed by running
 npm install mongodb
 ```
 
-An equivalent to `ModelFlatFile` should also be implemented. This extends the FlatFile database connector to allow the model to be saved to the database. The functions this implements are `setModel`, which allows the model to be set, and `fetch`, which is also overwritten to allow the model to be read in addition to the other properties. The implementations of these for the FlatFile object are available in `ModelFlatFile.js`
+An equivalent to `ModelFlatFile` should also be implemented. This extends the FlatFile database connector to allow the model to be saved to the database. The functions this implements are `setModel`, which allows the model to be set, and `fetch`, which is also overwritten to allow the model to be read in addition to the other properties. The implementations of these for the FlatFile object are available in `ModelFlatFile.ts`
 
-Once the database connector is fully implemented, it can be used instead of a FlatFile by changing the object used in `config.js`. Just replace `ModelFlatFile` with the name of the mongoDB database connector.
+Once the database connector is fully implemented, it can be used instead of a FlatFile by changing the object used in `config.ts`. Just replace `ModelFlatFile` with the name of the mongoDB database connector.
 
 ## TODO
 
-* Migrate to Typescript
+* Migrate to Typescript (in progress but not complete yet)
 * UI fixes (optimizations, smaller screens)
 * Optimize the card sprite sheet (can look at SVGs)
 * Improve test coverage, write tests for possible game states and moves

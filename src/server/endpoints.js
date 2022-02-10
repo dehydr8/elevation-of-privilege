@@ -41,7 +41,7 @@ export const createGame = (gameServer) => async (ctx) => {
     const gameId = r.body.matchID;
     const credentials = [];
 
-    for (var i = 0; i < ctx.request.body.players; i++) {
+    for (let i = 0; i < ctx.request.body.players; i++) {
       const j = await request
         .post(
           `http://localhost:${INTERNAL_API_PORT}/games/${ElevationOfPrivilege.name}/${gameId}/join`,
@@ -153,7 +153,7 @@ export const downloadThreatDragonModel = (gameServer) => async (ctx) => {
       (componentIdx) => {
         let diagram = game.model.detail.diagrams[diagramIdx].diagramJson;
         let cell = null;
-        for (let i = 0; i < diagram.cells.length; i++) {
+        for (var i = 0; i < diagram.cells.length; i++) {
           let c = diagram.cells[i];
           if (c.id === componentIdx) {
             cell = c;
