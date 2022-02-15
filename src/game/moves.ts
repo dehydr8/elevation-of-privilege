@@ -6,14 +6,14 @@ import { getDealtCard, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions';
 import { hasPlayerPassed } from './utils';
 
-import type { EOPCtx } from './context';
-import type { EOPGameState } from './gameState';
+import type { Ctx } from './context';
+import type { GameState } from './gameState';
 import type { Threat } from './threat';
 
 export function toggleModal(
-  G: EOPGameState,
-  ctx: EOPCtx,
-): EOPGameState | typeof INVALID_MOVE {
+  G: GameState,
+  ctx: Ctx,
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to toggle the modal
   if (
     hasPlayerPassed(G, ctx) ||
@@ -41,10 +41,10 @@ export function toggleModal(
 }
 
 export function toggleModalUpdate(
-  G: EOPGameState,
-  ctx: EOPCtx,
+  G: GameState,
+  ctx: Ctx,
   threat: Threat,
-): EOPGameState | typeof INVALID_MOVE {
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to toggle the modal
   if (hasPlayerPassed(G, ctx) || threat.owner !== ctx.playerID) {
     return INVALID_MOVE;
@@ -68,11 +68,11 @@ export function toggleModalUpdate(
 }
 
 export function updateThreat<Field extends keyof Threat>(
-  G: EOPGameState,
-  _: EOPCtx,
+  G: GameState,
+  _: Ctx,
   field: Field,
   value: Threat[Field],
-): EOPGameState | typeof INVALID_MOVE {
+): GameState | typeof INVALID_MOVE {
   return {
     ...G,
     threat: {
@@ -83,10 +83,10 @@ export function updateThreat<Field extends keyof Threat>(
 }
 
 export function selectDiagram(
-  G: EOPGameState,
-  ctx: EOPCtx,
+  G: GameState,
+  ctx: Ctx,
   id: number,
-): EOPGameState | typeof INVALID_MOVE {
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to select diagrams
   if (hasPlayerPassed(G, ctx)) {
     return INVALID_MOVE;
@@ -101,10 +101,10 @@ export function selectDiagram(
 }
 
 export function selectComponent(
-  G: EOPGameState,
-  ctx: EOPCtx,
+  G: GameState,
+  ctx: Ctx,
   id: string,
-): EOPGameState | typeof INVALID_MOVE {
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to select components
   if (hasPlayerPassed(G, ctx)) {
     return INVALID_MOVE;
@@ -118,10 +118,10 @@ export function selectComponent(
 }
 
 export function selectThreat(
-  G: EOPGameState,
-  ctx: EOPCtx,
+  G: GameState,
+  ctx: Ctx,
   id: string,
-): EOPGameState | typeof INVALID_MOVE {
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to select threat
   if (hasPlayerPassed(G, ctx)) {
     return INVALID_MOVE;
@@ -133,10 +133,7 @@ export function selectThreat(
   };
 }
 
-export function pass(
-  G: EOPGameState,
-  ctx: EOPCtx,
-): EOPGameState | typeof INVALID_MOVE {
+export function pass(G: GameState, ctx: Ctx): GameState | typeof INVALID_MOVE {
   if (ctx.playerID === undefined) {
     return INVALID_MOVE;
   }
@@ -154,10 +151,10 @@ export function pass(
 }
 
 export function deleteThreat(
-  G: EOPGameState,
-  ctx: EOPCtx,
+  G: GameState,
+  ctx: Ctx,
   threat: Threat & { id: string },
-): EOPGameState | typeof INVALID_MOVE {
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to toggle the modal
   if (
     hasPlayerPassed(G, ctx) ||
@@ -182,9 +179,9 @@ export function deleteThreat(
 }
 
 export function addOrUpdateThreat(
-  G: EOPGameState,
-  ctx: EOPCtx,
-): EOPGameState | typeof INVALID_MOVE {
+  G: GameState,
+  ctx: Ctx,
+): GameState | typeof INVALID_MOVE {
   const threatTitle = G.threat.title?.trim();
   const threatDescription = G.threat.description?.trim();
   const threatMitigation = G.threat.mitigation?.trim();
@@ -246,10 +243,10 @@ export function addOrUpdateThreat(
 }
 
 export function draw(
-  G: EOPGameState,
-  ctx: EOPCtx,
+  G: GameState,
+  ctx: Ctx,
   card: string,
-): typeof INVALID_MOVE | EOPGameState {
+): typeof INVALID_MOVE | GameState {
   const deck = [...G.players[Number.parseInt(ctx.currentPlayer)]];
   let suit = G.suit;
 

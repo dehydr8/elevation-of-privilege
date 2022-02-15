@@ -1,5 +1,5 @@
 import type { PlayerID } from 'boardgame.io';
-import type { EOPGameState } from '../game/gameState';
+import type { GameState } from '../game/gameState';
 import {
   DeckSuit,
   DECK_SUITS,
@@ -12,7 +12,7 @@ import {
   MODEL_TYPE_THREAT_DRAGON,
 } from './constants';
 
-export function getDealtCard(G: EOPGameState): string {
+export function getDealtCard(G: GameState): string {
   if (G.dealt.length > 0 && G.dealtBy) {
     return G.dealt[Number.parseInt(G.dealtBy)];
   }

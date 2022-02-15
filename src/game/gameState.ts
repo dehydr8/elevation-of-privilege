@@ -2,7 +2,7 @@ import type { PlayerID } from 'boardgame.io';
 import type { DeckSuit, GameMode, ModelType } from '../utils/constants';
 import type { Threat } from './threat';
 
-export interface EOPGameState {
+export interface GameState {
   dealt: string[];
   passed: PlayerID[];
   suit: DeckSuit | '';

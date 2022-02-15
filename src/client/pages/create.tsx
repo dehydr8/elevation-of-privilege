@@ -183,7 +183,6 @@ class Create extends React.Component<CreateProps, CreateState> {
       );
     }
     const model = JSON.parse(this.fileReader.result);
-    console.log(model);
     this.setState({
       ...this.state,
       model,

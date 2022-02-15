@@ -1,6 +1,6 @@
 import type { DeckSuit, GameMode, ModelType } from '../utils/constants';
 
-export interface EOPSetupData {
+export interface SetupData {
   startSuit: DeckSuit;
   gameMode: GameMode;
   modelType: ModelType;

@@ -153,7 +153,7 @@ export const downloadThreatDragonModel = (gameServer) => async (ctx) => {
       (componentIdx) => {
         let diagram = game.model.detail.diagrams[diagramIdx].diagramJson;
         let cell = null;
-        for (var i = 0; i < diagram.cells.length; i++) {
+        for (let i = 0; i < diagram.cells.length; i++) {
           let c = diagram.cells[i];
           if (c.id === componentIdx) {
             cell = c;

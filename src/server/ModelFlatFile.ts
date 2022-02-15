@@ -1,10 +1,10 @@
-import type { Object } from 'ts-toolbelt';
+import { FlatFile } from 'boardgame.io/server';
 
+import type { Object } from 'ts-toolbelt';
 import type {
   FetchFields,
   FetchOpts,
 } from 'boardgame.io/dist/types/src/server/db/base';
-import { FlatFile } from 'boardgame.io/server';
 
 interface ModelFetchOpts extends FetchOpts {
   model?: boolean;
@@ -38,11 +38,13 @@ export class ModelFlatFile extends FlatFile {
     }
     return result as unknown as ModelFetchResult<O>;
   }
+
   async setModel(id: string, model: Record<string, unknown>): Promise<void> {
     const key = this.getModelKey(id);
     // @ts-expect-error setItem is private, ask boardgame.io to make it protected
     return await this.setItem(key, model);
   }
+
   getModelKey(matchID: string): string {
     return `${matchID}:model`;
   }

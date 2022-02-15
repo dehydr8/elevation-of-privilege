@@ -13,9 +13,9 @@ import {
   TRUMP_CARD_PREFIX,
 } from '../utils/constants';
 
-import type { EOPCtx } from './context';
-import type { EOPGameState } from './gameState';
-import type { EOPSetupData } from './setupData';
+import type { Ctx } from './context';
+import type { GameState } from './gameState';
+import type { SetupData } from './setupData';
 
 const scores: Record<string, number> = {};
 const deck: string[] = [];
@@ -31,7 +31,7 @@ for (let i = 0; i < DECK_SUITS.length; i++) {
 }
 
 export function shuffleCards(
-  ctx: EOPCtx,
+  ctx: Ctx,
   startingCard: string,
 ): {
   players: string[][];
@@ -72,7 +72,7 @@ export function shuffleCards(
   };
 }
 
-export function setupGame(ctx: EOPCtx, setupData?: EOPSetupData): EOPGameState {
+export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
   const startSuit = setupData?.startSuit ?? DEFAULT_START_SUIT;
   const gameMode = setupData?.gameMode ?? DEFAULT_GAME_MODE;
   const modelType = setupData?.modelType ?? MODEL_TYPE_DEFAULT;
@@ -111,11 +111,11 @@ export function setupGame(ctx: EOPCtx, setupData?: EOPSetupData): EOPGameState {
   };
 }
 
-export function firstPlayer(G: EOPGameState): number {
+export function firstPlayer(G: GameState): number {
   return G.lastWinner;
 }
 
-export function hasPlayerPassed(G: EOPGameState, ctx: EOPCtx): boolean {
+export function hasPlayerPassed(G: GameState, ctx: Ctx): boolean {
   return (G.passed as (string | undefined)[]).includes(ctx.playerID);
 }
 
@@ -135,7 +135,7 @@ export function getWinner(suit: string, dealt: string[]): number {
   return winner;
 }
 
-export function endGameIf(G: EOPGameState): number | undefined {
+export function endGameIf(G: GameState): number | undefined {
   if (G.round > G.maxRounds) {
     const scores = [...G.scores];
     const winner = scores.indexOf(Math.max(...scores));
@@ -144,8 +144,8 @@ export function endGameIf(G: EOPGameState): number | undefined {
 }
 
 export function endTurnIf(
-  G: EOPGameState,
-  ctx: EOPCtx,
+  G: GameState,
+  ctx: Ctx,
 ): boolean | { next: PlayerID } {
   const passed = [...G.passed];
   if (passed.length >= ctx.numPlayers) {
@@ -159,7 +159,7 @@ export function endTurnIf(
   return false;
 }
 
-export function onTurnEnd(G: EOPGameState, ctx: EOPCtx): EOPGameState {
+export function onTurnEnd(G: GameState, ctx: Ctx): GameState {
   let dealt = [...G.dealt];
   let suit = G.suit;
   let dealtBy = G.dealtBy;

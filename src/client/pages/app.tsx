@@ -1,13 +1,16 @@
-import React, { FC, useState } from 'react';
-
-import { Client } from 'boardgame.io/react';
-import Board from '../components/board/board';
-import { ElevationOfPrivilege } from '../../game/eop';
-import { SERVER_PORT, SPECTATOR } from '../../utils/constants';
-import { SocketIO } from 'boardgame.io/multiplayer';
 import '../styles/cornucopia_cards.css';
 import '../styles/cards.css';
 import 'cornucopia-cards-modified/style.css';
+
+import { SocketIO } from 'boardgame.io/multiplayer';
+import { Client } from 'boardgame.io/react';
+import React from 'react';
+
+import { ElevationOfPrivilege } from '../../game/eop';
+import { SERVER_PORT, SPECTATOR } from '../../utils/constants';
+import Board from '../components/board/board';
+
+import type { FC } from 'react';
 import type { RouteComponentProps } from 'react-router';
 
 const url =
@@ -37,9 +40,7 @@ interface MatchParams {
 type AppProps = RouteComponentProps<MatchParams>;
 
 const App: FC<AppProps> = ({ match }) => {
-  const [game] = useState(match.params.game);
-  const [id] = useState(match.params.id);
-  const [secret] = useState(match.params.secret);
+  const { game, id, secret } = match.params;
 
   const playerId = id.toString();
 

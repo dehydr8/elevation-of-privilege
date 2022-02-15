@@ -21,11 +21,11 @@ import {
 } from './utils';
 
 import type { Game } from 'boardgame.io';
-import type { EOPGameState } from './gameState';
-import type { EOPCtx } from './context';
-import type { EOPSetupData } from './setupData';
+import type { GameState } from './gameState';
+import type { Ctx } from './context';
+import type { SetupData } from './setupData';
 
-export const ElevationOfPrivilege: Game<EOPGameState, EOPCtx, EOPSetupData> = {
+export const ElevationOfPrivilege: Game<GameState, Ctx, SetupData> = {
   name: 'elevation-of-privilege',
   setup: setupGame,
   playerView: PlayerView.STRIP_SECRETS,

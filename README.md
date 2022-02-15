@@ -81,33 +81,14 @@ The docker-compose setup starts two containers:
 
 #### Local deployment
 
-In order to start the app locally, it first needs to be built. This can be done via the command
-
-```bash
-npm run build
-```
-
-If you just want to build the client or the server, you can also you
-
-```bash
-npm run build:client
-```
-
-or
-
-```bash
-npm run build:server
-```
-
-respectively.
-
 The server can be started using:
 
 ```bash
 npm run server
 ```
 
-This will start the backend application listening on the following ports:
+This will also automatically build the server first, compiling any TypeScript code, and then start the backend
+application listening on the following ports:
 
 | Application | Description                                                       | Environment Variable | Default |
 |-------------|-------------------------------------------------------------------|----------------------|---------|
@@ -115,15 +96,34 @@ This will start the backend application listening on the following ports:
 | Lobby API   | Internal API for lobby operations, should not be exposed publicly | `INTERNAL_API_PORT`  | 8002    |
 | Public API  | Public API to create games and retrieve game info                 | `API_PORT`           | 8001    |
 
-The UI can be started using:
+ If you want to build the server code manually, you can do so by running
+
+```bash
+npm run build:server
+```
+
+The UI can be started using
 
 ```bash
 npm start
 ```
 
-and will then be accessible at [http://localhost:3000/](http://localhost:3000/).
+which starts a watch mode that automatically compiles and reloads the UI every time source files are changed. The UI is
+accessible at [http://localhost:3000/](http://localhost:3000/).
+
+You can also build the client manually by running
+
+```bash
+npm run build:client
+```
 
 The UI can also be built and served statically (see the [dockerfile](docker/client.dockerfile)), keep in mind that the values of the port numbers will be hard coded in the generated files.
+
+To build both the client and the server, just run
+
+```bash
+npm run build
+```
 
 ### Using MongoDB
 
@@ -141,7 +141,26 @@ Once the database connector is fully implemented, it can be used instead of a Fl
 
 ## TODO
 
-* Migrate to Typescript (in progress but not complete yet)
+### Migrate to Typescript
+
+Work on migrating to TypeScript has already started but is not complete yet. Most of the server code and the code shared
+between client snd server has already been migrated but a lot of the client is still missing.
+
+In order to migrate a
+component of the client to TypeScript, follow this pattern:
+
+* Change the file extension of the file to `tsx`
+* Create an interface for specifying the props of the component
+* Use that interface when declaring the component
+* Go through the rest of the file and fix any TypeScript or linter errors / warnings
+* Change the extension of any accompanying test files to `tsx`
+* Fix any potential errors in there
+
+`src/client/pages/app.tsx` can server as a simple example for how this looks for a function component, and
+`src/client/components/logo/logo.tsx` can server as example for class components. When migrating a component, you can
+consider also changing it to be a function component, as that is preferred, but it is not necessary.
+### Other TODOs
+
 * UI fixes (optimizations, smaller screens)
 * Optimize the card sprite sheet (can look at SVGs)
 * Improve test coverage, write tests for possible game states and moves
