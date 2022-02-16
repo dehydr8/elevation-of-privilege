@@ -1,19 +1,30 @@
+import type { Game } from 'boardgame.io';
 import { Server } from 'boardgame.io/server';
 import { v4 as uuidv4 } from 'uuid';
+
 import { ElevationOfPrivilege } from '../game/eop';
 import { INTERNAL_API_PORT, SERVER_PORT } from '../utils/constants';
 import { getDatabase } from './config';
 
+import type { ModelFlatFile } from './ModelFlatFile';
+
+export type GameServer = ReturnType<typeof Server> & { db: ModelFlatFile };
+
 const server = Server({
-  games: [ElevationOfPrivilege],
+  games: [ElevationOfPrivilege as Game],
   db: getDatabase(),
   origins: [
     '*', //maybe make this more selective
   ],
   uuid: uuidv4,
-});
+}) as GameServer;
 
-const runGameServer = () => {
+type GameServerHandle = ReturnType<GameServer['run']>;
+
+const runGameServer = (): [
+  server: GameServer,
+  serverHandle: GameServerHandle,
+] => {
   const serverHandle = server.run({
     port: SERVER_PORT,
     callback: () => {

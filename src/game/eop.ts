@@ -1,25 +1,31 @@
-import { TurnOrder, PlayerView } from 'boardgame.io/core';
+import { PlayerView, TurnOrder } from 'boardgame.io/core';
+
 import {
-  endGameIf,
-  onTurnEnd,
-  endTurnIf,
-  firstPlayer,
-  setupGame,
-} from './utils';
-import {
+  addOrUpdateThreat,
+  deleteThreat,
+  draw,
+  pass,
+  selectComponent,
+  selectDiagram,
+  selectThreat,
   toggleModal,
   toggleModalUpdate,
   updateThreat,
-  selectDiagram,
-  selectComponent,
-  selectThreat,
-  pass,
-  deleteThreat,
-  addOrUpdateThreat,
-  draw,
-} from './moves.js';
+} from './moves';
+import {
+  endGameIf,
+  endTurnIf,
+  firstPlayer,
+  onTurnEnd,
+  setupGame,
+} from './utils';
 
-export const ElevationOfPrivilege = {
+import type { Game } from 'boardgame.io';
+import type { GameState } from './gameState';
+import type { Ctx } from './context';
+import type { SetupData } from './setupData';
+
+export const ElevationOfPrivilege: Game<GameState, Ctx, SetupData> = {
   name: 'elevation-of-privilege',
   setup: setupGame,
   playerView: PlayerView.STRIP_SECRETS,

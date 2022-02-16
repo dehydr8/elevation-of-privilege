@@ -1,15 +1,24 @@
 import { INVALID_MOVE } from 'boardgame.io/core';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
+
 import { getDealtCard, getValidMoves } from '../utils/utils';
-import { getThreatDescription } from './definitions.js';
+import { getThreatDescription } from './definitions';
 import { hasPlayerPassed } from './utils';
 
-export function toggleModal(G, ctx) {
+import type { Ctx } from './context';
+import type { GameState } from './gameState';
+import type { Threat } from './threat';
+
+export function toggleModal(
+  G: GameState,
+  ctx: Ctx,
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to toggle the modal
   if (
     hasPlayerPassed(G, ctx) ||
-    (G.threat.modal && G.threat.owner !== ctx.playerID)
+    (G.threat.modal && G.threat.owner !== ctx.playerID) ||
+    G.suit === ''
   ) {
     return INVALID_MOVE;
   }
@@ -31,7 +40,11 @@ export function toggleModal(G, ctx) {
   };
 }
 
-export function toggleModalUpdate(G, ctx, threat) {
+export function toggleModalUpdate(
+  G: GameState,
+  ctx: Ctx,
+  threat: Threat,
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to toggle the modal
   if (hasPlayerPassed(G, ctx) || threat.owner !== ctx.playerID) {
     return INVALID_MOVE;
@@ -54,7 +67,12 @@ export function toggleModalUpdate(G, ctx, threat) {
   };
 }
 
-export function updateThreat(G, ctx, field, value) {
+export function updateThreat<Field extends keyof Threat>(
+  G: GameState,
+  _: Ctx,
+  field: Field,
+  value: Threat[Field],
+): GameState | typeof INVALID_MOVE {
   return {
     ...G,
     threat: {
@@ -64,7 +82,11 @@ export function updateThreat(G, ctx, field, value) {
   };
 }
 
-export function selectDiagram(G, ctx, id) {
+export function selectDiagram(
+  G: GameState,
+  ctx: Ctx,
+  id: number,
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to select diagrams
   if (hasPlayerPassed(G, ctx)) {
     return INVALID_MOVE;
@@ -78,7 +100,11 @@ export function selectDiagram(G, ctx, id) {
   };
 }
 
-export function selectComponent(G, ctx, id) {
+export function selectComponent(
+  G: GameState,
+  ctx: Ctx,
+  id: string,
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to select components
   if (hasPlayerPassed(G, ctx)) {
     return INVALID_MOVE;
@@ -91,7 +117,11 @@ export function selectComponent(G, ctx, id) {
   };
 }
 
-export function selectThreat(G, ctx, id) {
+export function selectThreat(
+  G: GameState,
+  ctx: Ctx,
+  id: string,
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to select threat
   if (hasPlayerPassed(G, ctx)) {
     return INVALID_MOVE;
@@ -103,8 +133,12 @@ export function selectThreat(G, ctx, id) {
   };
 }
 
-export function pass(G, ctx) {
-  let passed = [...G.passed];
+export function pass(G: GameState, ctx: Ctx): GameState | typeof INVALID_MOVE {
+  if (ctx.playerID === undefined) {
+    return INVALID_MOVE;
+  }
+
+  const passed = [...G.passed];
 
   if (!hasPlayerPassed(G, ctx)) {
     passed.push(ctx.playerID);
@@ -116,16 +150,24 @@ export function pass(G, ctx) {
   };
 }
 
-export function deleteThreat(G, ctx, threat) {
+export function deleteThreat(
+  G: GameState,
+  ctx: Ctx,
+  threat: Threat & { id: string },
+): GameState | typeof INVALID_MOVE {
   // if the player has passed, they shouldn't be able to toggle the modal
-  if (hasPlayerPassed(G, ctx) || threat.owner !== ctx.playerID) {
+  if (
+    hasPlayerPassed(G, ctx) ||
+    threat.owner !== ctx.playerID ||
+    ctx.playerID === undefined
+  ) {
     return INVALID_MOVE;
   }
 
-  let scores = [...G.scores];
-  scores[ctx.playerID]--;
+  const scores = [...G.scores];
+  scores[Number.parseInt(ctx.playerID)]--;
 
-  let identifiedThreats = _.cloneDeep(G.identifiedThreats);
+  const identifiedThreats = _.cloneDeep(G.identifiedThreats);
   delete identifiedThreats[G.selectedDiagram][G.selectedComponent][threat.id];
 
   return {
@@ -136,28 +178,33 @@ export function deleteThreat(G, ctx, threat) {
   };
 }
 
-export function addOrUpdateThreat(G, ctx) {
-  let threat_title = G.threat.title.trim();
-  let threat_description = G.threat.description.trim();
-  let threat_mitigation = G.threat.mitigation.trim();
+export function addOrUpdateThreat(
+  G: GameState,
+  ctx: Ctx,
+): GameState | typeof INVALID_MOVE {
+  const threatTitle = G.threat.title?.trim();
+  const threatDescription = G.threat.description?.trim();
+  const threatMitigation = G.threat.mitigation?.trim();
 
   if (
+    ctx.playerID === undefined ||
     G.threat.owner !== ctx.playerID ||
-    _.isEmpty(threat_title) ||
-    _.isEmpty(threat_description)
+    _.isEmpty(threatTitle) ||
+    _.isEmpty(threatDescription) ||
+    G.threat.id === undefined
   ) {
     return INVALID_MOVE;
   }
 
-  let scores = [...G.scores];
+  const scores = [...G.scores];
 
   // only update score if it's a new threat
   if (G.threat.new) {
-    scores[ctx.playerID]++;
+    scores[Number.parseInt(ctx.playerID)]++;
   }
 
   // TODO: have a cleaner or readable approach to updating this object
-  let identifiedThreats = _.cloneDeep(G.identifiedThreats);
+  const identifiedThreats = _.cloneDeep(G.identifiedThreats);
 
   // Are these necessary
   if (!(G.selectedDiagram in identifiedThreats)) {
@@ -175,11 +222,11 @@ export function addOrUpdateThreat(G, ctx) {
     [G.threat.id]: {
       id: G.threat.id,
       owner: G.threat.owner,
-      title: threat_title,
+      title: threatTitle,
       type: G.threat.type,
       severity: G.threat.severity,
-      description: threat_description,
-      mitigation: threat_mitigation || 'No mitigation provided.',
+      description: threatDescription,
+      mitigation: threatMitigation || 'No mitigation provided.',
     },
   });
 
@@ -195,8 +242,12 @@ export function addOrUpdateThreat(G, ctx) {
   };
 }
 
-export function draw(G, ctx, card) {
-  let deck = [...G.players[ctx.currentPlayer]];
+export function draw(
+  G: GameState,
+  ctx: Ctx,
+  card: string,
+): typeof INVALID_MOVE | GameState {
+  const deck = [...G.players[Number.parseInt(ctx.currentPlayer)]];
   let suit = G.suit;
 
   // check if the move is valid
@@ -205,22 +256,23 @@ export function draw(G, ctx, card) {
   }
 
   let dealtBy = G.dealtBy;
-  let index = deck.indexOf(card);
+  const index = deck.indexOf(card);
   deck.splice(index, 1);
 
-  let dealt = [...G.dealt];
+  const dealt = [...G.dealt];
   let numCardsPlayed = G.numCardsPlayed;
 
   dealt[parseInt(ctx.currentPlayer)] = card;
   numCardsPlayed++;
 
   // only update the suit if no suit exists
-  if (suit === '') suit = card.substr(0, 1);
+  if (suit === '')
+    suit = card.substr(0, 1) as 'A' | 'B' | 'C' | 'D' | 'E' | 'T';
 
   dealtBy = ctx.currentPlayer;
 
   // move into threats stage
-  ctx.events.setActivePlayers({ all: 'threats' });
+  ctx.events?.setActivePlayers?.({ all: 'threats' });
 
   return {
     ...G,

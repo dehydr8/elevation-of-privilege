@@ -1,6 +1,6 @@
-import { GAMEMODE_EOP } from '../utils/constants';
+import { GameMode, GAMEMODE_EOP } from '../utils/constants';
 
-let definitions = {
+const definitions = {
   D2: 'An attacker could squat on the random port or socket that the server normally uses',
   D3: "An attacker could try one credential after another and there's nothing to slow them down (online or offline)",
   D4: 'An attacker can anonymously connect, because we expect authentication to be done at a higher level',
@@ -77,8 +77,12 @@ let definitions = {
   TA: "You've invented a new Elevation of Privilege attack",
 };
 
-export function getThreatDescription(card, gameMode) {
-  if (gameMode === GAMEMODE_EOP && card in definitions) {
+function isCardInDefinitions(card: string): card is keyof typeof definitions {
+  return card in definitions;
+}
+
+export function getThreatDescription(card: string, gameMode: GameMode): string {
+  if (gameMode === GAMEMODE_EOP && isCardInDefinitions(card)) {
     return definitions[card];
   }
   return '';
