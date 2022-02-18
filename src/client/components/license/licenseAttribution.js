@@ -1,7 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { GameMode } from '../../../utils/constants';
 import './licenseAttribution.css';
-import { GAMEMODE_CORNUCOPIA, GAMEMODE_EOP } from '../../../utils/constants';
 
 class LicenseAttribution extends React.Component {
   static get propTypes() {
@@ -12,7 +12,7 @@ class LicenseAttribution extends React.Component {
 
   render() {
     switch (this.props.gameMode) {
-      case GAMEMODE_EOP:
+      case GameMode.EOP:
         return (
           <div className="license-attribution">
             The card game{' '}
@@ -28,7 +28,7 @@ class LicenseAttribution extends React.Component {
           </div>
         );
 
-      case GAMEMODE_CORNUCOPIA:
+      case GameMode.CORNUCOPIA:
         return (
           <div className="license-attribution">
             The card game{' '}

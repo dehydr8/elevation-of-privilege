@@ -1,15 +1,15 @@
-import {
-  getDealtCard,
-  resolvePlayerNames,
-  resolvePlayerName,
-  grammarJoin,
-  getPlayers,
-  getComponentName,
-  getValidMoves,
-  getTypeString,
-  escapeMarkdownText,
-} from '../utils';
+import { getSuitDisplayName } from '../cardDefinitions';
 import { STARTING_CARD } from '../constants';
+import {
+  escapeMarkdownText,
+  getComponentName,
+  getDealtCard,
+  getPlayers,
+  getValidMoves,
+  grammarJoin,
+  resolvePlayerName,
+  resolvePlayerNames,
+} from '../utils';
 
 it('getDealtCard() should get empty card if no card dealt', async () => {
   const G = {
@@ -119,7 +119,7 @@ it('produces valid moves', async () => {
 });
 
 it('produces correct type string', async () => {
-  expect(getTypeString('FOO')).toBe('');
+  expect(getSuitDisplayName('FOO')).toBe('');
 });
 
 it('successfully escapes any malicious markdown text', () => {

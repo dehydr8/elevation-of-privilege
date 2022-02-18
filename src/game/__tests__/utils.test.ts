@@ -1,8 +1,4 @@
-import {
-  MODEL_TYPE_DEFAULT,
-  MODEL_TYPE_IMAGE,
-  MODEL_TYPE_THREAT_DRAGON,
-} from '../../utils/constants';
+import { ModelType } from '../../utils/constants';
 import { setupGame } from '../utils';
 
 import type { Ctx } from '../context';
@@ -18,7 +14,7 @@ describe('utils', () => {
   describe('setupGame', () => {
     it('when the model is an image, starts off with a selected dummy component, so the entire image is treated as selected', () => {
       const game = setupGame(ctx, {
-        modelType: MODEL_TYPE_IMAGE,
+        modelType: ModelType.IMAGE,
       } as SetupData);
 
       expect(game.selectedComponent).toBeTruthy();
@@ -27,11 +23,11 @@ describe('utils', () => {
     [
       {
         testCase: 'the default model',
-        modelType: MODEL_TYPE_DEFAULT,
+        modelType: ModelType.DEFAULT,
       },
       {
         testCase: 'a Threat Dragon model',
-        modelType: MODEL_TYPE_THREAT_DRAGON,
+        modelType: ModelType.THREAT_DRAGON,
       },
     ].forEach(({ testCase, modelType }) =>
       it(`when the model is ${testCase}, starts off with no selected component`, () => {

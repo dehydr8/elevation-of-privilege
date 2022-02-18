@@ -1,22 +1,20 @@
 import { rename } from 'fs/promises';
 import send from 'koa-send';
 import request from 'superagent';
+import { v4 as uuidv4 } from 'uuid';
 import { ElevationOfPrivilege } from '../game/eop';
+import { getSuitDisplayName } from '../utils/cardDefinitions';
 import {
   DEFAULT_MODEL,
   INTERNAL_API_PORT,
-  MODEL_TYPE_DEFAULT,
-  MODEL_TYPE_IMAGE,
-  MODEL_TYPE_THREAT_DRAGON,
+  ModelType,
 } from '../utils/constants';
 import {
   escapeMarkdownText,
   getImageExtension,
-  getTypeString,
   isGameModeCornucopia,
   logEvent,
 } from '../utils/utils';
-import { v4 as uuidv4 } from 'uuid';
 
 export const createGame = (gameServer) => async (ctx) => {
   const spectatorCredential = uuidv4();
@@ -55,7 +53,7 @@ export const createGame = (gameServer) => async (ctx) => {
 
     //model stuff
     switch (ctx.request.body.modelType) {
-      case MODEL_TYPE_THREAT_DRAGON: {
+      case ModelType.THREAT_DRAGON: {
         await gameServer.db.setModel(
           gameId,
           JSON.parse(ctx.request.body.model),
@@ -63,12 +61,12 @@ export const createGame = (gameServer) => async (ctx) => {
         break;
       }
 
-      case MODEL_TYPE_DEFAULT: {
+      case ModelType.DEFAULT: {
         await gameServer.db.setModel(gameId, DEFAULT_MODEL);
         break;
       }
 
-      case MODEL_TYPE_IMAGE: {
+      case ModelType.IMAGE: {
         const extension = getImageExtension(ctx.request.files.model.name);
         if (
           !(/image\/[a-z]+$/i.test(ctx.request.files.model.type) && extension)
@@ -139,8 +137,8 @@ export const downloadThreatDragonModel = (gameServer) => async (ctx) => {
     model: true,
   });
   const isJsonModel =
-    game.state.G.modelType == MODEL_TYPE_DEFAULT ||
-    game.state.G.modelType == MODEL_TYPE_THREAT_DRAGON;
+    game.state.G.modelType == ModelType.DEFAULT ||
+    game.state.G.modelType == ModelType.THREAT_DRAGON;
 
   if (!isJsonModel) {
     // if in wrong modelType
@@ -179,7 +177,7 @@ export const downloadThreatDragonModel = (gameServer) => async (ctx) => {
               methodology: isGameModeCornucopia(game.state.G.gameMode)
                 ? 'Cornucopia'
                 : 'STRIDE',
-              type: getTypeString(t.type, game.state.G.gameMode),
+              type: getSuitDisplayName(game.state.G.gameMode, t.type),
               title: t.title,
               description: t.description,
               mitigation: t.mitigation,
@@ -213,8 +211,8 @@ export const downloadThreatsMarkdownFile = (gameServer) => async (ctx) => {
   });
 
   const isJsonModel =
-    game.state.G.modelType == MODEL_TYPE_DEFAULT ||
-    game.state.G.modelType == MODEL_TYPE_THREAT_DRAGON;
+    game.state.G.modelType == ModelType.DEFAULT ||
+    game.state.G.modelType == ModelType.THREAT_DRAGON;
   const threats = getThreats(
     game.state,
     game.metadata,

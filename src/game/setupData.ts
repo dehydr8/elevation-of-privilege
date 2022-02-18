@@ -1,7 +1,8 @@
-import type { DeckSuit, GameMode, ModelType } from '../utils/constants';
+import type { Suit } from '../utils/cardDefinitions';
+import type { GameMode, ModelType } from '../utils/constants';
 
 export interface SetupData {
-  startSuit: DeckSuit;
+  startSuit: Suit;
   gameMode: GameMode;
   modelType: ModelType;
   turnDuration: number;

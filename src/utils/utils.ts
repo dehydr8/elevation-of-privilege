@@ -1,16 +1,7 @@
 import type { PlayerID } from 'boardgame.io';
 import type { GameState } from '../game/gameState';
-import {
-  DeckSuit,
-  DECK_SUITS,
-  GameMode,
-  GAMEMODE_CORNUCOPIA,
-  GAMEMODE_EOP,
-  ModelType,
-  MODEL_TYPE_DEFAULT,
-  MODEL_TYPE_IMAGE,
-  MODEL_TYPE_THREAT_DRAGON,
-} from './constants';
+import type { Card, Suit } from './cardDefinitions';
+import { GameMode, ModelType } from './constants';
 
 export function getDealtCard(G: GameState): string {
   if (G.dealt.length > 0 && G.dealtBy) {
@@ -20,18 +11,7 @@ export function getDealtCard(G: GameState): string {
 }
 
 export function isGameModeCornucopia(gameMode: GameMode): boolean {
-  return gameMode === GAMEMODE_CORNUCOPIA;
-}
-
-export function getCardName(card: string, gameMode: GameMode): string {
-  if (!card) {
-    return '';
-  }
-  if (isGameModeCornucopia(gameMode)) {
-    return getAbbreviationForCornucopia(card) + card.substr(1);
-  } else {
-    return getAbbreviationForEoP(card) + card.substr(1);
-  }
+  return gameMode === GameMode.CORNUCOPIA;
 }
 
 export function resolvePlayerNames(
@@ -88,79 +68,25 @@ export function getComponentName(component: any): string {
 }
 
 export function getValidMoves(
-  cards: string[],
-  suit: string,
+  allCardsInHand: Card[],
+  currentSuit: Suit | undefined,
   round: number,
-  startingCard: string,
-): string[] {
-  let validMoves: string[] = [];
-
-  if (suit === '' && round <= 1) {
-    validMoves.push(startingCard);
-  } else {
-    if (suit !== '') validMoves = cards.filter((e) => e.startsWith(suit));
-    if (validMoves.length <= 0) validMoves = cards;
+  startingCard: Card,
+): Card[] {
+  if (!currentSuit && round <= 1) {
+    return [startingCard];
   }
 
-  return validMoves;
+  const cardsOfSuit = getCardsOfSuit(allCardsInHand, currentSuit);
+
+  return cardsOfSuit.length > 0 ? cardsOfSuit : allCardsInHand;
 }
 
-export function getTypeString(type: string, gameMode: GameMode): string {
-  const map = {
-    [GAMEMODE_CORNUCOPIA]: {
-      A: 'Data Validation & Encoding',
-      B: 'Cryptography',
-      C: 'Session Management',
-      D: 'Authorization',
-      E: 'Authentication',
-      T: 'Cornucopia',
-    },
-    [GAMEMODE_EOP]: {
-      A: 'Denial of Service',
-      B: 'Information Disclosure',
-      C: 'Repudiation',
-      D: 'Spoofing',
-      E: 'Tampering',
-      T: 'Elevation of privilege',
-    },
-  }[gameMode];
-
-  if (map && type in map) {
-    return map[type as DeckSuit];
+function getCardsOfSuit(cards: Card[], suit: Suit | undefined): Card[] {
+  if (!suit) {
+    return [];
   }
-  return '';
-}
-
-export function getAbbreviationForEoP(card: string): string {
-  const category = card.substr(0, 1);
-  const map = {
-    A: 'D',
-    B: 'I',
-    C: 'R',
-    D: 'S',
-    E: 'T',
-    T: 'E',
-  };
-  if (category in map) {
-    return map[category as keyof typeof map];
-  }
-  return '';
-}
-
-export function getAbbreviationForCornucopia(card: string): string {
-  const category = card.substr(0, 1);
-  const map = {
-    A: 'Data',
-    B: 'Crypt',
-    C: 'Sessn',
-    D: 'AuthZ',
-    E: 'AuthN',
-    T: 'Cornu',
-  };
-  if (category in map) {
-    return map[category as keyof typeof map];
-  }
-  return '';
+  return cards.filter((e) => e.startsWith(suit));
 }
 
 export function escapeMarkdownText(text: string): string {
@@ -198,18 +124,10 @@ export function logEvent(message: string): void {
   console.log(`${now} - ${message}`);
 }
 
-export function isDeckSuit(value: string): value is DeckSuit {
-  return (DECK_SUITS as readonly string[]).includes(value);
-}
-
-export function isGameMode(value: string): value is GameMode {
-  return value === GAMEMODE_EOP || value === GAMEMODE_CORNUCOPIA;
-}
-
 export function isModelType(value: string): value is ModelType {
   return (
-    value === MODEL_TYPE_DEFAULT ||
-    value === MODEL_TYPE_IMAGE ||
-    value === MODEL_TYPE_THREAT_DRAGON
+    value === ModelType.DEFAULT ||
+    value === ModelType.IMAGE ||
+    value === ModelType.THREAT_DRAGON
   );
 }

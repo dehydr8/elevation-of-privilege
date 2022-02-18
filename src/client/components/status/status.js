@@ -1,11 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { getCardDisplayName } from '../../../utils/cardDefinitions';
 import {
-  grammarJoin,
-  resolvePlayerNames,
-  resolvePlayerName,
   getPlayers,
-  getCardName,
+  grammarJoin,
+  resolvePlayerName,
+  resolvePlayerNames,
 } from '../../../utils/utils';
 import './status.css';
 
@@ -76,7 +76,7 @@ class Status extends React.Component {
         <span className="status">
           <strong>{playerWhoDealt}</strong> dealt{' '}
           <strong>
-            {getCardName(this.props.dealtCard, this.props.G.gameMode)}
+            {getCardDisplayName(this.props.G.gameMode, this.props.dealtCard)}
           </strong>
           , waiting for <strong>{grammarJoin(players)}</strong> to add threats
           or pass.

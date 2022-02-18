@@ -1,4 +1,4 @@
-import { GameMode, GAMEMODE_EOP } from '../utils/constants';
+import { GameMode } from '../utils/constants';
 
 const definitions = {
   D2: 'An attacker could squat on the random port or socket that the server normally uses',
@@ -82,7 +82,7 @@ function isCardInDefinitions(card: string): card is keyof typeof definitions {
 }
 
 export function getThreatDescription(card: string, gameMode: GameMode): string {
-  if (gameMode === GAMEMODE_EOP && isCardInDefinitions(card)) {
+  if (gameMode === GameMode.EOP && isCardInDefinitions(card)) {
     return definitions[card];
   }
   return '';

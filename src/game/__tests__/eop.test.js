@@ -1,12 +1,8 @@
 import { Client } from 'boardgame.io/client';
-import {
-  DEFAULT_GAME_MODE,
-  DEFAULT_START_SUIT,
-  INVALID_CARDS,
-  STARTING_CARD_MAP,
-} from '../../utils/constants';
-import { ElevationOfPrivilege } from '../eop';
 import { Local } from 'boardgame.io/multiplayer';
+import { getStartingCard } from '../../utils/cardDefinitions';
+import { DEFAULT_GAME_MODE, DEFAULT_START_SUIT } from '../../utils/constants';
+import { ElevationOfPrivilege } from '../eop';
 
 describe('game', () => {
   const spec = {
@@ -21,34 +17,13 @@ describe('game', () => {
   };
 
   let createdThreat = '';
-  const STARTING_CARD =
-    STARTING_CARD_MAP[DEFAULT_GAME_MODE][DEFAULT_START_SUIT];
+  const STARTING_CARD = getStartingCard(DEFAULT_GAME_MODE, DEFAULT_START_SUIT);
 
   Object.keys(players).forEach((k) => {
     players[k].start();
   });
 
   const startingPlayer = players['0'].getState().ctx.currentPlayer;
-
-  it('should shuffle cards correctly', () => {
-    let all = [];
-    Object.keys(players).forEach((k) => {
-      all = all.concat(players[k].getState().G.players[k]);
-    });
-
-    let set = new Set(all);
-
-    // expect unique cards
-    expect(all.length).toBe(set.size);
-
-    // expect that starting card should be present
-    expect(all).toContain(STARTING_CARD);
-
-    // expect that invalid cards shouldn't be present
-    expect(all).toEqual(
-      expect.not.arrayContaining(INVALID_CARDS[DEFAULT_GAME_MODE]),
-    );
-  });
 
   it("shouldn't start in a stage/phase", () => {
     expect(players['0'].getState().ctx.activePlayers).toBeFalsy();

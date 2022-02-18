@@ -1,3 +1,4 @@
+import type { PlayerID } from 'boardgame.io';
 import _ from 'lodash';
 import React, { ChangeEvent } from 'react';
 import Helmet from 'react-helmet';
@@ -19,34 +20,28 @@ import {
   Table,
 } from 'reactstrap';
 import {
+  getSuitDisplayName,
+  getSuits,
+  isSuitInDeck,
+  Suit,
+} from '../../utils/cardDefinitions';
+import {
   API_PORT,
   DEFAULT_GAME_MODE,
   DEFAULT_START_SUIT,
-  GAMEMODE_CORNUCOPIA,
-  GAMEMODE_EOP,
   DEFAULT_TURN_DURATION,
+  GameMode,
+  isGameMode,
   MAX_NUMBER_PLAYERS,
   MIN_NUMBER_PLAYERS,
-  STARTING_CARD_MAP,
-  MODEL_TYPE_THREAT_DRAGON,
-  MODEL_TYPE_IMAGE,
-  MODEL_TYPE_DEFAULT,
-  SPECTATOR,
-  DeckSuit,
-  GameMode,
   ModelType,
+  SPECTATOR,
 } from '../../utils/constants';
-import {
-  getTypeString,
-  isDeckSuit,
-  isGameMode,
-  isModelType,
-} from '../../utils/utils';
+import { isModelType } from '../../utils/utils';
+import CopyButton from '../components/copybutton/copybutton';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
-import CopyButton from '../components/copybutton/copybutton';
 import '../styles/create.css';
-import type { PlayerID } from 'boardgame.io';
 
 type CreateProps = Record<string, never>;
 
@@ -61,7 +56,7 @@ interface CreateState {
   modelType: ModelType;
   model: Record<string, unknown> | undefined;
   image: File | undefined;
-  startSuit: DeckSuit;
+  startSuit: Suit;
   turnDuration: number;
   provideModelThruAlternativeChannel: boolean;
   gameMode: GameMode;
@@ -88,7 +83,7 @@ class Create extends React.Component<CreateProps, CreateState> {
       spectatorSecret: ``,
       creating: false,
       created: false,
-      modelType: MODEL_TYPE_DEFAULT,
+      modelType: ModelType.DEFAULT,
       model: undefined,
       image: undefined,
       startSuit: DEFAULT_START_SUIT,
@@ -99,7 +94,7 @@ class Create extends React.Component<CreateProps, CreateState> {
 
     this.onPlayersUpdated = this.onPlayersUpdated.bind(this);
     this.onNameUpdated = this.onNameUpdated.bind(this);
-    this.onstartSuitUpdated = this.onstartSuitUpdated.bind(this);
+    this.onStartSuitUpdated = this.onStartSuitUpdated.bind(this);
     this.onTurnDurationUpdated = this.onTurnDurationUpdated.bind(this);
     this.onGameModeUpdated = this.onGameModeUpdated.bind(this);
     this.readJson = this.readJson.bind(this);
@@ -129,10 +124,10 @@ class Create extends React.Component<CreateProps, CreateState> {
 
     formData.append('players', `${this.state.players}`);
     formData.append('modelType', this.state.modelType);
-    if (this.state.modelType !== MODEL_TYPE_DEFAULT) {
+    if (this.state.modelType !== ModelType.DEFAULT) {
       formData.append(
         'model',
-        this.state.modelType === MODEL_TYPE_IMAGE
+        this.state.modelType === ModelType.IMAGE
           ? this.state.image ?? ''
           : JSON.stringify(this.state.model),
       );
@@ -213,9 +208,10 @@ class Create extends React.Component<CreateProps, CreateState> {
     });
   }
 
-  onstartSuitUpdated(e: ChangeEvent<HTMLInputElement>): void {
-    const startSuit = e.target.value;
-    if (!isDeckSuit(startSuit)) {
+  onStartSuitUpdated(e: ChangeEvent<HTMLInputElement>): void {
+    const startSuit = e.target.value as Suit;
+    const gameMode = this.state.gameMode;
+    if (!isSuitInDeck(startSuit, gameMode)) {
       throw new Error(`Invalid start suit '${startSuit}'`);
     }
     this.setState({
@@ -259,9 +255,8 @@ class Create extends React.Component<CreateProps, CreateState> {
       }
     }
     if (
-      (this.state.modelType === MODEL_TYPE_THREAT_DRAGON &&
-        !this.state.model) ||
-      (this.state.modelType === MODEL_TYPE_IMAGE && !this.state.image)
+      (this.state.modelType === ModelType.THREAT_DRAGON && !this.state.model) ||
+      (this.state.modelType === ModelType.IMAGE && !this.state.image)
     ) {
       return false;
     }
@@ -376,8 +371,8 @@ class Create extends React.Component<CreateProps, CreateState> {
                   onChange={(e) => this.onGameModeUpdated(e)}
                   value={this.state.gameMode}
                 >
-                  <option>{GAMEMODE_EOP}</option>
-                  <option>{GAMEMODE_CORNUCOPIA}</option>
+                  <option>{GameMode.EOP}</option>
+                  <option>{GameMode.CORNUCOPIA}</option>
                 </Input>
               </Col>
             </FormGroup>
@@ -390,16 +385,14 @@ class Create extends React.Component<CreateProps, CreateState> {
                   type="select"
                   name="startSuit"
                   id="startSuit"
-                  onChange={(e) => this.onstartSuitUpdated(e)}
+                  onChange={(e) => this.onStartSuitUpdated(e)}
                   value={this.state.startSuit}
                 >
-                  {Object.keys(STARTING_CARD_MAP[this.state.gameMode]).map(
-                    (suit) => (
-                      <option value={suit} key={`start-suit-option-${suit}`}>
-                        {getTypeString(suit, this.state.gameMode)}
-                      </option>
-                    ),
-                  )}
+                  {getSuits(this.state.gameMode).map((suit) => (
+                    <option value={suit} key={`start-suit-option-${suit}`}>
+                      {getSuitDisplayName(this.state.gameMode, suit)}
+                    </option>
+                  ))}
                 </Input>
               </Col>
             </FormGroup>
@@ -434,18 +427,18 @@ class Create extends React.Component<CreateProps, CreateState> {
                     <Input
                       type="radio"
                       name="model-type"
-                      value={MODEL_TYPE_THREAT_DRAGON}
+                      value={ModelType.THREAT_DRAGON}
                       onChange={this.updateModelType}
                     />
                     Provide model via Threat Dragon
                   </Label>
                   <Input
-                    disabled={this.state.modelType !== MODEL_TYPE_THREAT_DRAGON}
+                    disabled={this.state.modelType !== ModelType.THREAT_DRAGON}
                     type="file"
                     name="model-json"
                     id="model"
                     onChange={this.readJson}
-                    checked={this.state.modelType === MODEL_TYPE_THREAT_DRAGON}
+                    checked={this.state.modelType === ModelType.THREAT_DRAGON}
                   />
                   <FormText color="muted">
                     Select the JSON model produced by{' '}
@@ -475,19 +468,19 @@ class Create extends React.Component<CreateProps, CreateState> {
                     <Input
                       type="radio"
                       name="model-type"
-                      value={MODEL_TYPE_IMAGE}
+                      value={ModelType.IMAGE}
                       onChange={this.updateModelType}
                     />
                     Provide Model via an image
                   </Label>
                   <Input
-                    disabled={this.state.modelType !== MODEL_TYPE_IMAGE}
+                    disabled={this.state.modelType !== ModelType.IMAGE}
                     type="file"
                     accept="image/*"
                     name="model-image"
                     id="model"
                     onChange={this.updateImage}
-                    checked={this.state.modelType === MODEL_TYPE_IMAGE}
+                    checked={this.state.modelType === ModelType.IMAGE}
                   />
                 </FormGroup>
                 <FormGroup>
@@ -495,10 +488,10 @@ class Create extends React.Component<CreateProps, CreateState> {
                     <Input
                       id="radio-button-default-model"
                       type="radio"
-                      value={MODEL_TYPE_DEFAULT}
+                      value={ModelType.DEFAULT}
                       name="model-type"
                       onChange={this.updateModelType}
-                      checked={this.state.modelType === MODEL_TYPE_DEFAULT}
+                      checked={this.state.modelType === ModelType.DEFAULT}
                     />
                     Provide model via a different channel (e.g. video stream)
                   </Label>

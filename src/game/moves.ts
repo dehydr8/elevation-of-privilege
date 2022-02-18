@@ -9,6 +9,7 @@ import { hasPlayerPassed } from './utils';
 import type { Ctx } from './context';
 import type { GameState } from './gameState';
 import type { Threat } from './threat';
+import type { Suit } from '../utils/cardDefinitions';
 
 export function toggleModal(
   G: GameState,
@@ -18,7 +19,7 @@ export function toggleModal(
   if (
     hasPlayerPassed(G, ctx) ||
     (G.threat.modal && G.threat.owner !== ctx.playerID) ||
-    G.suit === ''
+    !G.suit
   ) {
     return INVALID_MOVE;
   }
@@ -266,8 +267,7 @@ export function draw(
   numCardsPlayed++;
 
   // only update the suit if no suit exists
-  if (suit === '')
-    suit = card.substr(0, 1) as 'A' | 'B' | 'C' | 'D' | 'E' | 'T';
+  if (!suit) suit = card.substr(0, 1) as Suit;
 
   dealtBy = ctx.currentPlayer;
 

@@ -10,11 +10,7 @@ import './board.css';
 import request from 'superagent';
 import Status from '../status/status';
 import { getDealtCard } from '../../../utils/utils';
-import {
-  API_PORT,
-  MODEL_TYPE_IMAGE,
-  SPECTATOR,
-} from '../../../utils/constants';
+import { API_PORT, ModelType, SPECTATOR } from '../../../utils/constants';
 import LicenseAttribution from '../license/licenseAttribution';
 
 class Board extends React.Component {
@@ -89,7 +85,7 @@ class Board extends React.Component {
 
   componentDidMount() {
     this.updateNames();
-    if (this.props.G.modelType !== MODEL_TYPE_IMAGE) {
+    if (this.props.G.modelType !== ModelType.IMAGE) {
       this.updateModel();
     }
   }
@@ -107,7 +103,7 @@ class Board extends React.Component {
 
     return (
       <div>
-        {this.props.G.modelType === MODEL_TYPE_IMAGE ? (
+        {this.props.G.modelType === ModelType.IMAGE ? (
           <ImageModel
             playerID={this.props.playerID ?? SPECTATOR}
             credentials={this.props.credentials}

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Deck from './deck';
-import { GAMEMODE_EOP } from '../../../utils/constants';
+import { GameMode } from '../../../utils/constants';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -15,7 +15,7 @@ it('renders without crashing', () => {
       active={false}
       onCardSelect={() => {}}
       startingCard="T3"
-      gameMode={GAMEMODE_EOP}
+      gameMode={GameMode.EOP}
     />,
     div,
   );
@@ -34,7 +34,7 @@ it('renders active card correctly', () => {
       active={true}
       onCardSelect={() => {}}
       startingCard="T3"
-      gameMode={GAMEMODE_EOP}
+      gameMode={GameMode.EOP}
     />,
     div,
   );
