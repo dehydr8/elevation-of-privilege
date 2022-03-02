@@ -87,7 +87,7 @@
     "prettier": "^2.5.1",
     "supertest": "^6.2.2",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.2"
   },
   "jest": {
     "collectCoverageFrom": [
