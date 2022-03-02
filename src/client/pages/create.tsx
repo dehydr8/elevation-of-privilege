@@ -593,7 +593,6 @@ class Create extends React.Component<CreateProps, CreateState> {
     return (
       <div>
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-expect-error This is typed incorrectly for react-helmet (see also https://github.com/nfl/react-helmet/issues/344) */}
         <Helmet bodyAttributes={{ style: 'background-color : #000' }} />
         <Container className="create">
           <Row style={{ paddingTop: '20px' }}>
