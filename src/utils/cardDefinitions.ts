@@ -262,8 +262,6 @@ function getAbbreviation(gameMode: GameMode, card: Card): string {
   return suitHoldingCard?.abbreviation ?? '';
 }
 
-// TODO: convert substr to new version.  substring?
-// TODO: Possible to define Card as Pair of suit and value?
 export function getCardDisplayName(
   gameMode: GameMode,
   card: Card | undefined,
@@ -273,7 +271,7 @@ export function getCardDisplayName(
   }
 
   const cardSuitAbbreviated = getAbbreviation(gameMode, card);
-  const cardValue = card.substr(1);
+  const cardValue = card.substring(1);
   return `${cardSuitAbbreviated}${cardValue}`;
 }
 

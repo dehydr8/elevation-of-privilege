@@ -31,7 +31,6 @@ import {
   DEFAULT_START_SUIT,
   DEFAULT_TURN_DURATION,
   GameMode,
-  isGameMode,
   MAX_NUMBER_PLAYERS,
   MIN_NUMBER_PLAYERS,
   ModelType,
@@ -221,10 +220,7 @@ class Create extends React.Component<CreateProps, CreateState> {
   }
 
   onGameModeUpdated(e: ChangeEvent<HTMLInputElement>): void {
-    const gameMode = e.target.value;
-    if (!isGameMode(gameMode)) {
-      throw new Error(`Invalid game mode '${gameMode}'`);
-    }
+    const gameMode = e.target.value as GameMode;
     this.setState({
       ...this.state,
       gameMode,

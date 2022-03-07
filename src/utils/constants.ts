@@ -3,15 +3,20 @@ export enum GameMode {
   CORNUCOPIA = 'OWASP Cornucopia',
 }
 
+export const DEFAULT_GAME_MODE = GameMode.EOP;
+
+export function isGameMode(value: GameMode): value is GameMode {
+  return value in GameMode;
+}
+
+export function isGameModeCornucopia(gameMode: GameMode): boolean {
+  return isGameMode(gameMode) && gameMode === GameMode.CORNUCOPIA;
+}
+
 export enum ModelType {
   THREAT_DRAGON = 'Threat Dragon',
   DEFAULT = 'Default',
   IMAGE = 'Image',
-}
-
-export const DEFAULT_GAME_MODE = GameMode.EOP;
-export function isGameMode(value: string): value is GameMode {
-  return value in GameMode;
 }
 
 export const DEFAULT_START_SUIT = 'E';

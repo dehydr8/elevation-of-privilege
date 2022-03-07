@@ -7,12 +7,12 @@ import { getSuitDisplayName } from '../utils/cardDefinitions';
 import {
   DEFAULT_MODEL,
   INTERNAL_API_PORT,
+  isGameModeCornucopia,
   ModelType,
 } from '../utils/constants';
 import {
   escapeMarkdownText,
   getImageExtension,
-  isGameModeCornucopia,
   logEvent,
 } from '../utils/utils';
 

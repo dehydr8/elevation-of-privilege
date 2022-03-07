@@ -76,7 +76,7 @@ function shuffleCards(ctx: Ctx, deck: Card[], startingCard: Card): Card[][] {
   }
 
   // partition deck into player hands
-  const handsPerPlayer = shuffledDeck.reduce(
+  const handsPerPlayer = choppedDeck.reduce(
     (resultingArray: Card[][], item: Card, index: number) => {
       const playerIndex = Math.floor(index / numberCardsPerHand);
 

@@ -1,17 +1,13 @@
 import type { PlayerID } from 'boardgame.io';
 import type { GameState } from '../game/gameState';
 import type { Card, Suit } from './cardDefinitions';
-import { GameMode, ModelType } from './constants';
+import { ModelType } from './constants';
 
 export function getDealtCard(G: GameState): string {
   if (G.dealt.length > 0 && G.dealtBy) {
     return G.dealt[Number.parseInt(G.dealtBy)];
   }
   return '';
-}
-
-export function isGameModeCornucopia(gameMode: GameMode): boolean {
-  return gameMode === GameMode.CORNUCOPIA;
 }
 
 export function resolvePlayerNames(

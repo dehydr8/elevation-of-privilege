@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isGameModeCornucopia } from '../../../utils/utils';
+import { isGameModeCornucopia } from '../../../utils/constants';
 
 class DealtCard extends React.Component {
   static get propTypes() {
