@@ -1,7 +1,7 @@
 .license-attribution {
     text-align: center;
     font-size: 70%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
   }
