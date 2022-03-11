@@ -15,16 +15,13 @@ class LicenseAttribution extends React.Component {
       case GAMEMODE_EOP:
         return (
           <div className="license-attribution">
-            The card game
+            The card game{' '}
             <a href="https://www.microsoft.com/en-us/download/details.aspx?id=20303">
-              {' '}
-              Elevation of Privilege{' '}
-            </a>
-            by
-            <a href="https://adam.shostack.org/"> Adam Shostack </a> (Microsoft)
-            is licensed under
+              Elevation of Privilege
+            </a>{' '}
+            by <a href="https://adam.shostack.org/">Adam Shostack</a> is
+            licensed under{' '}
             <a href="https://creativecommons.org/licenses/by/3.0/us/">
-              {' '}
               CC-BY-3.0
             </a>
             .
@@ -34,13 +31,11 @@ class LicenseAttribution extends React.Component {
       case GAMEMODE_CORNUCOPIA:
         return (
           <div className="license-attribution">
-            The card game
-            <a href="https://owasp.org/www-project-cornucopia/"> Cornucopia </a>
-            by the
-            <a href="https://owasp.org/"> OWASP foundation </a>
-            is licensed under
+            The card game{' '}
+            <a href="https://owasp.org/www-project-cornucopia/">Cornucopia</a>{' '}
+            by the <a href="https://owasp.org/">OWASP foundation</a> is licensed
+            under{' '}
             <a href="https://creativecommons.org/licenses/by-sa/3.0/">
-              {' '}
               CC-BY-SA-3.0
             </a>
             .
