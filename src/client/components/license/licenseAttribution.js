@@ -19,8 +19,8 @@ class LicenseAttribution extends React.Component {
             <a href="https://www.microsoft.com/en-us/download/details.aspx?id=20303">
               Elevation of Privilege
             </a>{' '}
-            <a href="https://adam.shostack.org/">Adam Shostack</a> is licensed
-            under{' '}
+            by <a href="https://adam.shostack.org/">Adam Shostack</a> is
+            licensed under{' '}
             <a href="https://creativecommons.org/licenses/by/3.0/us/">
               CC-BY-3.0
             </a>
