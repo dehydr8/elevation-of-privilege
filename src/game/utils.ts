@@ -95,7 +95,7 @@ function shuffleCards(ctx: Ctx, deck: Card[], startingCard: Card): Card[][] {
 function getPlayerHoldingStartingCard(
   handsPerPlayers: Card[][],
   startingCard: Card,
-): keyof Card[][] {
+): number {
   return handsPerPlayers.findIndex((hand) => hand.includes(startingCard));
 }
 
@@ -123,6 +123,10 @@ export function endTurnIf(
   G: GameState,
   ctx: Ctx,
 ): boolean | { next: PlayerID } {
+  if (G.suit === undefined) {
+    // A turn must have a defined suit. Otherwise it is not a turn and cannot end.
+    return false;
+  }
   const passed = [...G.passed];
   if (passed.length >= ctx.numPlayers) {
     if (G.numCardsPlayed >= ctx.numPlayers) {
@@ -143,6 +147,12 @@ export function onTurnEnd(G: GameState, ctx: Ctx): GameState {
   let round = G.round;
   let lastWinner = G.lastWinner;
   let numCardsPlayed = G.numCardsPlayed;
+
+  if (suit === undefined) {
+    // This should not happen, during a turn the suit should have a defined value.
+    // If we run into such an inconsistent state, return the old `G` and hope someone fixes the state
+    return G;
+  }
 
   // calculate the scores
   //end of trick
@@ -172,7 +182,7 @@ export function onTurnEnd(G: GameState, ctx: Ctx): GameState {
 
 function getWinner(
   dealtCards: Card[],
-  currentSuit: Suit | undefined,
+  currentSuit: Suit,
   gameMode: GameMode,
 ): number {
   const scores = dealtCards.map((card) =>

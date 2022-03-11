@@ -46,7 +46,7 @@ describe('game', () => {
     const state = players['0'].getState();
     expect(state.G.dealt).toContain(STARTING_CARD);
     expect(state.G.dealtBy).toBe(starting);
-    expect(state.G.suit).toBe(STARTING_CARD.substr(0, 1));
+    expect(state.G.suit).toBe(STARTING_CARD.slice(0, 1));
     expect(players['0'].getState().ctx.activePlayers).toStrictEqual({
       0: 'threats',
       1: 'threats',

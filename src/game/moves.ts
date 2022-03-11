@@ -19,7 +19,7 @@ export function toggleModal(
   if (
     hasPlayerPassed(G, ctx) ||
     (G.threat.modal && G.threat.owner !== ctx.playerID) ||
-    !G.suit
+    G.suit === undefined
   ) {
     return INVALID_MOVE;
   }
@@ -267,7 +267,7 @@ export function draw(
   numCardsPlayed++;
 
   // only update the suit if no suit exists
-  if (!suit) suit = card.substr(0, 1) as Suit;
+  if (!suit) suit = card.slice(0, 1) as Suit;
 
   dealtBy = ctx.currentPlayer;
 

@@ -254,7 +254,7 @@ export function getSuitDisplayName(gameMode: GameMode, suit: Suit): string {
   return CARD_DECKS[gameMode]?.[suit]?.name ?? '';
 }
 
-function getAbbreviation(gameMode: GameMode, card: Card): string {
+function getCardAbbreviation(gameMode: GameMode, card: Card): string {
   const suitHoldingCard = Object.values(CARD_DECKS[gameMode] ?? []).find(
     (suit) => suit.cards.includes(card),
   );
@@ -270,7 +270,7 @@ export function getCardDisplayName(
     return ``;
   }
 
-  const cardSuitAbbreviated = getAbbreviation(gameMode, card);
+  const cardSuitAbbreviated = getCardAbbreviation(gameMode, card);
   const cardValue = card.substring(1);
   return `${cardSuitAbbreviated}${cardValue}`;
 }
@@ -283,13 +283,9 @@ export function getAllCards(gameMode: GameMode): Card[] {
 
 export function getCardScore(
   card: Card,
-  currentSuit: Suit | undefined,
+  currentSuit: Suit,
   gameMode: GameMode,
 ): number {
-  if (!currentSuit) {
-    return 0;
-  }
-
   if (isCardOfSuit(card, currentSuit)) {
     return getCardNumericalScore(card, gameMode);
   }
