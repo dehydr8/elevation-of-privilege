@@ -156,9 +156,7 @@ component of the client to TypeScript, follow this pattern:
 * Change the extension of any accompanying test files to `tsx`
 * Fix any potential errors in there
 
-`src/client/pages/app.tsx` can server as a simple example for how this looks for a function component, and
-`src/client/components/logo/logo.tsx` can server as example for class components. When migrating a component, you can
-consider also changing it to be a function component, as that is preferred, but it is not necessary.
+Among the files `src/client/pages/*.tsx` you will find different examples for how to set up TypeScript components.
 ### Other TODOs
 
 * UI fixes (optimizations, smaller screens)
