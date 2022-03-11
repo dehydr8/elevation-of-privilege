@@ -24,7 +24,7 @@ import {
 import { getComponentName, getTypeString } from '../../../utils/utils';
 import confirm from 'reactstrap-confirm';
 import './threatbar.css';
-import ThreatModal from '../threatmodal/threatmodal';
+import ThreatModal from '../threatmodal/threatmodal.js';
 
 class Threatbar extends React.Component {
   static get propTypes() {
