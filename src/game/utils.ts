@@ -60,8 +60,11 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
   };
 }
 
-// TODO: Testing!!!
-function shuffleCards(ctx: Ctx, deck: Card[], startingCard: Card): Card[][] {
+export function shuffleCards(
+  ctx: Ctx,
+  deck: Card[],
+  startingCard: Card,
+): Card[][] {
   const numberCardsPerHand = Math.min(
     Math.floor(deck.length / ctx.numPlayers),
     CARD_LIMIT,
