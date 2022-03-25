@@ -1,17 +1,15 @@
-import '../styles/cornucopia_cards.css';
-import '../styles/cards.css';
-import 'cornucopia-cards-modified/style.css';
-
 import { SocketIO } from 'boardgame.io/multiplayer';
 import { Client } from 'boardgame.io/react';
-import React from 'react';
-
-import { ElevationOfPrivilege } from '../../game/eop';
-import { SERVER_PORT, SPECTATOR } from '../../utils/constants';
-import Board from '../components/board/board';
-
+import 'cornucopia-cards-modified/style.css';
 import type { FC } from 'react';
+import React from 'react';
 import type { RouteComponentProps } from 'react-router';
+import { ElevationOfPrivilege } from '../../game/eop';
+import { SPECTATOR } from '../../utils/constants';
+import { SERVER_PORT } from '../../utils/serverConfig';
+import Board from '../components/board/board';
+import '../styles/cards.css';
+import '../styles/cornucopia_cards.css';
 
 const url =
   window.location.protocol +

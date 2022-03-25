@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Card, CardHeader, Badge } from 'reactstrap';
+import React from 'react';
+import { Badge, Card, CardHeader, Table } from 'reactstrap';
+import { getCardDisplayName } from '../../../utils/cardDefinitions';
 import './leaderboard.css';
-import { getCardName } from '../../../utils/utils';
 
 class Leaderboard extends React.Component {
   static get propTypes() {
@@ -50,7 +50,10 @@ class Leaderboard extends React.Component {
                 </td>
                 <td>
                   <strong>
-                    {getCardName(this.props.cards[idx], this.props.gameMode)}
+                    {getCardDisplayName(
+                      this.props.gameMode,
+                      this.props.cards[idx],
+                    )}
                   </strong>
                 </td>
                 <td>

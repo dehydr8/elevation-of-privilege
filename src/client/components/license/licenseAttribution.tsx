@@ -1,10 +1,6 @@
 import type React from 'react';
+import { GameMode } from '../../../utils/constants';
 import './licenseAttribution.css';
-import {
-  GameMode,
-  GAMEMODE_CORNUCOPIA,
-  GAMEMODE_EOP,
-} from '../../../utils/constants';
 
 interface LicenseAttributionProps {
   gameMode: GameMode;
@@ -14,7 +10,7 @@ const LicenseAttribution: React.FC<LicenseAttributionProps> = ({
   gameMode,
 }) => {
   switch (gameMode) {
-    case GAMEMODE_EOP:
+    case GameMode.EOP:
       return (
         <div className="license-attribution">
           The card game{' '}
@@ -30,7 +26,7 @@ const LicenseAttribution: React.FC<LicenseAttributionProps> = ({
         </div>
       );
 
-    case GAMEMODE_CORNUCOPIA:
+    case GameMode.CORNUCOPIA:
       return (
         <div className="license-attribution">
           The card game{' '}

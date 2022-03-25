@@ -7,11 +7,7 @@ import './sidebar.css';
 import { Button } from 'reactstrap';
 import { getDealtCard } from '../../../utils/utils';
 import Footer from '../footer/footer';
-import {
-  MODEL_TYPE_DEFAULT,
-  MODEL_TYPE_THREAT_DRAGON,
-  SPECTATOR,
-} from '../../../utils/constants';
+import { ModelType, SPECTATOR } from '../../../utils/constants';
 
 class Sidebar extends React.Component {
   static get propTypes() {
@@ -47,8 +43,8 @@ class Sidebar extends React.Component {
         <div className="text-center">
           <Footer short />
         </div>
-        {(this.props.G.modelType === MODEL_TYPE_THREAT_DRAGON ||
-          this.props.G.modelType === MODEL_TYPE_DEFAULT) && (
+        {(this.props.G.modelType === ModelType.THREAT_DRAGON ||
+          this.props.G.modelType === ModelType.DEFAULT) && (
           <DownloadButton
             matchID={this.props.matchID}
             playerID={this.props.playerID}

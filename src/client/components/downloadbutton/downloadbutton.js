@@ -3,7 +3,7 @@ import { Button } from 'reactstrap';
 import { faDownload, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
-import { API_PORT } from '../../../utils/constants';
+import { API_PORT } from '../../../utils/serverConfig';
 
 class DownloadButton extends React.Component {
   static get propTypes() {

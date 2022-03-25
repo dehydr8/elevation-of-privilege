@@ -1,17 +1,17 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { GAMEMODE_CORNUCOPIA, GAMEMODE_EOP } from '../../../utils/constants';
+import React from 'react';
+import { GameMode } from '../../../utils/constants';
 import LicenseAttribution from './licenseAttribution';
 
 describe('licence attribution', () => {
   it('gives the correct license for EoP', () => {
-    render(<LicenseAttribution gameMode={GAMEMODE_EOP} />);
+    render(<LicenseAttribution gameMode={GameMode.EOP} />);
 
     screen.getByText('CC-BY-3.0');
   });
 
   it('gives the correct license for Cornucopia', () => {
-    render(<LicenseAttribution gameMode={GAMEMODE_CORNUCOPIA} />);
+    render(<LicenseAttribution gameMode={GameMode.CORNUCOPIA} />);
 
     screen.getByText('CC-BY-SA-3.0');
   });

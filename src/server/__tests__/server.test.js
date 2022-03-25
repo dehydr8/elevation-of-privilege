@@ -1,10 +1,5 @@
 import request from 'supertest';
-import {
-  GAMEMODE_EOP,
-  MODEL_TYPE_DEFAULT,
-  MODEL_TYPE_THREAT_DRAGON,
-  SPECTATOR,
-} from '../../utils/constants';
+import { GameMode, ModelType, SPECTATOR } from '../../utils/constants';
 import {
   gameServer,
   gameServerHandle,
@@ -51,7 +46,7 @@ it('creates a game with a model', async () => {
     .post('/game/create')
     .field('players', players)
     .field('names[]', ['P1', 'P2', 'P3'])
-    .field('modelType', MODEL_TYPE_THREAT_DRAGON)
+    .field('modelType', ModelType.THREAT_DRAGON)
     .field('model', JSON.stringify({}));
   expect(response.body.game).toBeDefined();
   expect(response.body.credentials.length).toBe(players);
@@ -65,7 +60,7 @@ it('retrieve the model for a game', async () => {
     .post('/game/create')
     .field('players', players)
     .field('names[]', ['P1', 'P2', 'P3'])
-    .field('modelType', MODEL_TYPE_THREAT_DRAGON)
+    .field('modelType', ModelType.THREAT_DRAGON)
     .field('model', JSON.stringify(model));
   expect(response.body.game).toBeDefined();
   expect(response.body.credentials.length).toBe(players);
@@ -82,8 +77,8 @@ it('download the final model for a game', async () => {
 
   const state = {
     G: {
-      modelType: MODEL_TYPE_THREAT_DRAGON,
-      gameMode: GAMEMODE_EOP,
+      modelType: ModelType.THREAT_DRAGON,
+      gameMode: GameMode.EOP,
       identifiedThreats: {
         0: {
           'component-1': {
@@ -176,8 +171,8 @@ it('Download threat file', async () => {
 
   const state = {
     G: {
-      modelType: MODEL_TYPE_THREAT_DRAGON,
-      gameMode: GAMEMODE_EOP,
+      modelType: ModelType.THREAT_DRAGON,
+      gameMode: GameMode.EOP,
       identifiedThreats: {
         0: {
           'component-1': {
@@ -375,7 +370,7 @@ describe('authentificaton', () => {
       .post('/game/create')
       .field('players', players)
       .field('names[]', ['P1', 'P2', 'P3'])
-      .field('modelType', MODEL_TYPE_DEFAULT);
+      .field('modelType', ModelType.DEFAULT);
 
     expect(response.body.game).toBeDefined();
     expect(response.body.credentials.length).toBe(players);

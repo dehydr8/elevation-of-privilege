@@ -4,7 +4,8 @@ import type { Server } from 'http';
 import Koa from 'koa';
 import koaBody from 'koa-body';
 import Router from 'koa-router';
-import { API_PORT, SPECTATOR } from '../utils/constants';
+import { SPECTATOR } from '../utils/constants';
+import { API_PORT } from '../utils/serverConfig';
 import {
   createGame,
   downloadThreatDragonModel,

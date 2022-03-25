@@ -1,30 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import nl2br from 'react-nl2br';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardText,
-  Collapse,
-  Button,
-  Col,
-  Row,
-  CardFooter,
-  ListGroup,
-  ListGroupItem,
-} from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBolt,
-  faPlus,
   faEdit,
+  faPlus,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import { getComponentName, getTypeString } from '../../../utils/utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
+import React from 'react';
+import nl2br from 'react-nl2br';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  CardText,
+  Col,
+  Collapse,
+  ListGroup,
+  ListGroupItem,
+  Row,
+} from 'reactstrap';
 import confirm from 'reactstrap-confirm';
-import './threatbar.css';
+import { getSuitDisplayName } from '../../../utils/cardDefinitions';
+import { getComponentName } from '../../../utils/utils';
 import ThreatModal from '../threatmodal/threatmodal';
+import './threatbar.css';
 
 class Threatbar extends React.Component {
   static get propTypes() {
@@ -187,7 +188,7 @@ class Threatbar extends React.Component {
                   <Row>
                     <Col xs="6">
                       <small>
-                        {getTypeString(val.type, this.props.G.gameMode)}
+                        {getSuitDisplayName(this.props.G.gameMode, val.type)}
                       </small>
                     </Col>
                     <Col xs="3">

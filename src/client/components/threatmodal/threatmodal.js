@@ -1,19 +1,18 @@
-import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
+  Button,
   Form,
   FormGroup,
-  Label,
   Input,
-  Button,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
 } from 'reactstrap';
-import { STARTING_CARD_MAP } from '../../../utils/constants';
-import { getTypeString } from '../../../utils/utils';
-import _ from 'lodash';
+import { getSuitDisplayName, getSuits } from '../../../utils/cardDefinitions';
 
 class ThreatModal extends React.Component {
   static get propTypes() {
@@ -128,13 +127,11 @@ class ThreatModal extends React.Component {
                   this.props.moves.updateThreat('type', e.target.value)
                 }
               >
-                {Object.keys(STARTING_CARD_MAP[this.props.G.gameMode]).map(
-                  (suit) => (
-                    <option value={suit} key={`threat-category-${suit}`}>
-                      {getTypeString(suit, this.props.G.gameMode)}
-                    </option>
-                  ),
-                )}
+                {getSuits(this.props.G.gameMode).map((suit) => (
+                  <option value={suit} key={`threat-category-${suit}`}>
+                    {getSuitDisplayName(this.props.G.gameMode, suit)}
+                  </option>
+                ))}
               </Input>
             </FormGroup>
             <FormGroup>

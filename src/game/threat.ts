@@ -1,4 +1,4 @@
-import type { DeckSuit } from '../utils/constants';
+import type { Suit } from '../utils/cardDefinitions';
 
 export interface Threat {
   modal: boolean;
@@ -6,7 +6,7 @@ export interface Threat {
   id?: string;
   owner?: string;
   title?: string;
-  type?: DeckSuit;
+  type?: Suit;
   severity?: string;
   description?: string;
   mitigation?: string;

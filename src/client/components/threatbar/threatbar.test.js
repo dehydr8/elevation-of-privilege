@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { GAMEMODE_EOP } from '../../../utils/constants';
+import { GameMode } from '../../../utils/constants';
 import React from 'react';
 import Threatbar from './threatbar';
 
 describe('<Threatbar>', () => {
   const G = {
-    gameMode: GAMEMODE_EOP,
+    gameMode: GameMode.EOP,
     threat: {
       modal: false,
     },
