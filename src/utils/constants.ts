@@ -6,7 +6,7 @@ export enum GameMode {
 export const DEFAULT_GAME_MODE = GameMode.EOP;
 
 export function isGameMode(value: GameMode): value is GameMode {
-  return value in GameMode;
+  return Object.values(GameMode).includes(value);
 }
 
 export function isGameModeCornucopia(gameMode: GameMode): boolean {
