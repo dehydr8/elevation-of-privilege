@@ -26,13 +26,6 @@ export const MIN_NUMBER_PLAYERS = 2;
 export const MAX_NUMBER_PLAYERS = 9;
 export const DEFAULT_TURN_DURATION = 300;
 
-//TODO: Move this into dedicated server config file
-export const SERVER_PORT = Number.parseInt(process.env.SERVER_PORT ?? '8000');
-export const API_PORT = Number.parseInt(process.env.API_PORT ?? '8001');
-export const INTERNAL_API_PORT = Number.parseInt(
-  process.env.INTERNAL_API_PORT ?? '8002',
-);
-
 export const DEFAULT_MODEL = {
   summary: {
     title: 'Threat Modelling',

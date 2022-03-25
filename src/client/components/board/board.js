@@ -10,8 +10,9 @@ import './board.css';
 import request from 'superagent';
 import Status from '../status/status';
 import { getDealtCard } from '../../../utils/utils';
-import { API_PORT, ModelType, SPECTATOR } from '../../../utils/constants';
+import { ModelType, SPECTATOR } from '../../../utils/constants';
 import LicenseAttribution from '../license/licenseAttribution';
+import { API_PORT } from '../../../utils/serverConfig';
 
 class Board extends React.Component {
   static get propTypes() {

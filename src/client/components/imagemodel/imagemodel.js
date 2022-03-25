@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './imagemodel.css';
-import { API_PORT } from '../../../utils/constants';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { asyncSetTimeout } from '../../../utils/utils';
+import { API_PORT } from '../../../utils/serverConfig';
 
 class ImageModel extends React.Component {
   static get propTypes() {

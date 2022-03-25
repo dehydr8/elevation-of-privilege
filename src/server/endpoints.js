@@ -6,10 +6,10 @@ import { ElevationOfPrivilege } from '../game/eop';
 import { getSuitDisplayName } from '../utils/cardDefinitions';
 import {
   DEFAULT_MODEL,
-  INTERNAL_API_PORT,
   isGameModeCornucopia,
   ModelType,
 } from '../utils/constants';
+import { INTERNAL_API_PORT } from '../utils/serverConfig';
 import {
   escapeMarkdownText,
   getImageExtension,

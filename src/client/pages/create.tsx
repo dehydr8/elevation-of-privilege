@@ -26,7 +26,6 @@ import {
   Suit,
 } from '../../utils/cardDefinitions';
 import {
-  API_PORT,
   DEFAULT_GAME_MODE,
   DEFAULT_START_SUIT,
   DEFAULT_TURN_DURATION,
@@ -36,6 +35,7 @@ import {
   ModelType,
   SPECTATOR,
 } from '../../utils/constants';
+import { API_PORT } from '../../utils/serverConfig';
 import { isModelType } from '../../utils/utils';
 import CopyButton from '../components/copybutton/copybutton';
 import Footer from '../components/footer/footer';
