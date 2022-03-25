@@ -1,15 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Logo from './logo';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
+import Logo from './logo';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(
-    <Router>
-      <Logo />
-    </Router>,
-    div,
-  );
-  ReactDOM.unmountComponentAtNode(div);
+describe('logo', () => {
+  it('is rendered with alt text', () => {
+    render(
+      <Router>
+        <Logo />
+      </Router>,
+    );
+
+    screen.getByAltText('logo');
+  });
 });
