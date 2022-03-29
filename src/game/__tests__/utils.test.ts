@@ -123,12 +123,12 @@ describe('utils', () => {
         {
           gameMode: GameMode.EOP,
           numPlayers: 3,
-          expectedCardsPerHand: 24, // EoP has 6x13-5=73 cards. So, each player has floor(73/3)=24 cards
+          expectedCardsPerHand: 26, // EoP has 6x13=78 cards. So, each player has floor(73/3)=24 cards
         },
         {
           gameMode: GameMode.EOP,
           numPlayers: 4,
-          expectedCardsPerHand: 18, // EoP has 6x13-5=73 cards. So, each player has floor(73/4)=18 cards
+          expectedCardsPerHand: 19, // EoP has 6x13=78 cards. So, each player has floor(73/4)=18 cards
         },
         {
           gameMode: GameMode.CORNUCOPIA,
