@@ -1,6 +1,6 @@
 .carda10, .carda2, .carda3, .carda4, .carda5, 
 .carda6, .carda7, .carda8, .carda9, .cardaa, 
-.cardaj, .cardak, .cardaq, .cardt10, .cardt5, 
+.cardaj, .cardak, .cardaq, .cardt10, .cardt2, .cardt3, .cardt4, .cardt5, 
 .cardt6, .cardt7, .cardt8, .cardt9, .cardta, 
 .cardtj, .cardtk, .cardtq, .cardb10, .cardb2, 
 .cardb3, .cardb4, .cardb5, .cardb6, .cardb7, 
@@ -10,7 +10,7 @@
 .cardca, .cardcj, .cardck, .cardcq, .cardd10, 
 .cardd2, .cardd3, .cardd4, .cardd5, .cardd6, 
 .cardd7, .cardd8, .cardd9, .cardda, .carddj, 
-.carddk, .carddq, .carde10, .carde3, .carde4, 
+.carddk, .carddq, .carde10,.carde2, .carde3, .carde4, 
 .carde5, .carde6, .carde7, .carde8, .carde9, 
 .cardea, .cardej, .cardek, .cardeq
 { display: inline-block; background: url('cards.png') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
@@ -29,6 +29,9 @@
 .cardak { background-position: -920px -523px; width: 300px; height: 518px; }
 .cardaq { background-position: -1225px -523px; width: 300px; height: 518px; }
 .cardt10 { background-position: -1530px -523px; width: 300px; height: 518px; }
+.cardt2 { background-position: -922px -4709px; width: 300px; height: 518px; }
+.cardt3 { background-position: -1226px -4708px; width: 300px; height: 518px; }
+.cardt4 { background-position: -1530px -4709px; width: 300px; height: 518px; }
 .cardt5 { background-position: -1835px -523px; width: 300px; height: 518px; }
 .cardt6 { background-position: -2140px -523px; width: 300px; height: 518px; }
 .cardt7 { background-position: -5px -1046px; width: 300px; height: 518px; }
@@ -78,6 +81,7 @@
 .carddk { background-position: -1225px -3661px; width: 300px; height: 518px; }
 .carddq { background-position: -1530px -3661px; width: 300px; height: 518px; }
 .carde10 { background-position: -1835px -3661px; width: 300px; height: 518px; }
+.carde2 { background-position: -617px -4707px; width: 300px; height: 518px; }
 .carde3 { background-position: -2140px -3661px; width: 300px; height: 518px; }
 .carde4 { background-position: -5px -4184px; width: 300px; height: 518px; }
 .carde5 { background-position: -310px -4184px; width: 300px; height: 518px; }
