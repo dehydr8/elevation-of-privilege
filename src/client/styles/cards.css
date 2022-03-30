@@ -13,7 +13,7 @@
 .carddk, .carddq, .carde10,.carde2, .carde3, .carde4, 
 .carde5, .carde6, .carde7, .carde8, .carde9, 
 .cardea, .cardej, .cardek, .cardeq
-{ display: inline-block; background: url('cards.png') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
+{ display: inline-block; background: url('cards.jpg') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
  
 .carda10 { background-position: -5px -0px; width: 300px; height: 518px; }
 .carda2 { background-position: -310px -0px; width: 300px; height: 518px; }
