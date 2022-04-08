@@ -53,6 +53,8 @@ This game is intended to be supplemented by your favorite conferencing system. A
 
 Often it is beneficial (but not necessary!) to have a moderator, experienced in the game, who can steer the discussions and cut them off in case they run too long. For this role, a spectator mode is available in the game.
 
+For the case of Elevation of Privilege, we partly support the latest version (as of April 2022) of the [EoP card deck](https://github.com/adamshostack/eop). However, we deviate in some Denial-of-Service cards. In particular, we still use the cards of an older version of the EoP card deck ([pre April 2020](https://github.com/adamshostack/eop/commit/a967aa273bfce60aa5eb4d7f2a37b6ae312ffd01)) for the cards `DoS3`, `DoS4` and `DoS5`. We do this because find the older versions better suited for our use cases.
+
 ## For developers
 
 This repository allows you to build docker containers ready to be deployed e.g. to Kubernetes.
