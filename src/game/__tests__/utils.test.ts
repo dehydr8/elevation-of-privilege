@@ -123,12 +123,12 @@ describe('utils', () => {
         {
           gameMode: GameMode.EOP,
           numPlayers: 3,
-          expectedCardsPerHand: 24, // EoP has 6x13-5=73 cards. So, each player has floor(73/3)=24 cards
+          expectedCardsPerHand: 26, // EoP has 6x13=78 cards. So, each player has floor(78/3)=26 cards
         },
         {
           gameMode: GameMode.EOP,
           numPlayers: 4,
-          expectedCardsPerHand: 18, // EoP has 6x13-5=73 cards. So, each player has floor(73/4)=18 cards
+          expectedCardsPerHand: 19, // EoP has 6x13=78 cards. So, each player has floor(78/4)=19 cards
         },
         {
           gameMode: GameMode.CORNUCOPIA,
@@ -138,12 +138,12 @@ describe('utils', () => {
         {
           gameMode: GameMode.CORNUCOPIA,
           numPlayers: 3,
-          expectedCardsPerHand: 26, // EoP has 6x13=78 cards. So, each player has floor(73/3)=24 cards
+          expectedCardsPerHand: 26, // Cornucopia has 6x13=78 cards. So, each player has floor(78/3)=26 cards
         },
         {
           gameMode: GameMode.CORNUCOPIA,
           numPlayers: 4,
-          expectedCardsPerHand: 19, // EoP has 6x13=78 cards. So, each player has floor(73/4)=18 cards
+          expectedCardsPerHand: 19, // Cornucopia has 6x13=78 cards. So, each player has floor(78/4)=19 cards
         },
       ].forEach(({ gameMode, numPlayers, expectedCardsPerHand }) => {
         const deck = getAllCards(gameMode);

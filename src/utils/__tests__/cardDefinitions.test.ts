@@ -12,7 +12,7 @@ describe('cardDefintions', () => {
   describe('getStartingCard', () => {
     it('should return correct starting card for EoP', () => {
       const startingCard = getStartingCard(GameMode.EOP, 'E');
-      expect(startingCard).toEqual('E3');
+      expect(startingCard).toEqual('E2');
     });
 
     it('should return correct starting card for Cornucopia', () => {
@@ -60,7 +60,7 @@ describe('cardDefintions', () => {
   describe('getAllCards', () => {
     it('should return all cards from EoP', () => {
       const cards = getAllCards(GameMode.EOP);
-      expect(cards.length).toEqual(6 * 13 - 4);
+      expect(cards.length).toEqual(6 * 13);
     });
 
     it('should return all cards from Cornucopia', () => {
