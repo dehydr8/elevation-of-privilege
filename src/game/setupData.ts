@@ -7,4 +7,5 @@ export interface SetupData {
   modelType: ModelType;
   turnDuration: number;
   spectatorCredential: string;
+  modelRef?: string;
 }

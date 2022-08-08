@@ -13,6 +13,7 @@ import { getDealtCard } from '../../../utils/utils';
 import { ModelType, SPECTATOR } from '../../../utils/constants';
 import LicenseAttribution from '../license/licenseAttribution';
 import { API_PORT } from '../../../utils/serverConfig';
+import PrivacyEnhancedModel from '../privacyEnhancedModel/privacyEnhancedModel';
 
 class Board extends React.Component {
   static get propTypes() {
@@ -104,13 +105,14 @@ class Board extends React.Component {
 
     return (
       <div>
-        {this.props.G.modelType === ModelType.IMAGE ? (
+        {this.props.G.modelType === ModelType.IMAGE && (
           <ImageModel
             playerID={this.props.playerID ?? SPECTATOR}
             credentials={this.props.credentials}
             matchID={this.props.matchID}
           />
-        ) : (
+        )}
+        {this.props.G.modelType === ModelType.THREAT_DRAGON && (
           <Model
             model={this.state.model}
             selectedDiagram={this.props.G.selectedDiagram}
@@ -118,6 +120,9 @@ class Board extends React.Component {
             onSelectDiagram={this.props.moves.selectDiagram}
             onSelectComponent={this.props.moves.selectComponent}
           />
+        )}
+        {this.props.G.modelType === ModelType.DEFAULT && (
+          <PrivacyEnhancedModel modelRef={this.props.G.modelRef} />
         )}
         <div className="player-wrap">
           <div className="playingCardsContainer">

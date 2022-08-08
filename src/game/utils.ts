@@ -23,6 +23,7 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
   const gameMode = setupData?.gameMode ?? DEFAULT_GAME_MODE;
   const modelType = setupData?.modelType ?? ModelType.DEFAULT;
   const turnDuration = setupData?.turnDuration ?? DEFAULT_TURN_DURATION;
+  const modelRef = setupData?.modelRef;
 
   const deck = getAllCards(gameMode);
   const startingCard = getStartingCard(gameMode, startSuit);
@@ -45,8 +46,8 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
     ) as number,
     maxRounds: getNumberOfCardsPerHand(handsPerPlayers),
     selectedDiagram: 0,
-    // as image models don't have components, put a dummy id here to treat the entire image as selected
-    selectedComponent: modelType === ModelType.IMAGE ? 'image' : '',
+    // as image models or links don't have components, put a dummy id here to treat the entire image as selected
+    selectedComponent: modelType === ModelType.THREAT_DRAGON ? '' : 'dummy',
     selectedThreat: '',
     threat: {
       modal: false,
@@ -57,6 +58,7 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
     gameMode: gameMode,
     turnDuration: turnDuration,
     modelType,
+    modelRef,
   };
 }
 
