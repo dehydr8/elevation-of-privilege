@@ -431,6 +431,7 @@ class Create extends React.Component<CreateProps, CreateState> {
                   <Input
                     disabled={this.state.modelType !== ModelType.THREAT_DRAGON}
                     type="file"
+                    accept=".json"
                     name="model-json"
                     id="model"
                     onChange={this.readJson}
@@ -472,7 +473,7 @@ class Create extends React.Component<CreateProps, CreateState> {
                   <Input
                     disabled={this.state.modelType !== ModelType.IMAGE}
                     type="file"
-                    accept="image/*"
+                    accept="image/png,image/jpeg,image/gif,image/bmp,image/tiff"
                     name="model-image"
                     id="model"
                     onChange={this.updateImage}
