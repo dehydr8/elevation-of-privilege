@@ -121,7 +121,7 @@ class Board extends React.Component {
             onSelectComponent={this.props.moves.selectComponent}
           />
         )}
-        {this.props.G.modelType === ModelType.DEFAULT && (
+        {this.props.G.modelType === ModelType.PRIVACY_ENHANCED && (
           <PrivacyEnhancedModel modelRef={this.props.G.modelRef} />
         )}
         <div className="player-wrap">

@@ -122,7 +122,7 @@ export function logEvent(message: string): void {
 
 export function isModelType(value: string): value is ModelType {
   return (
-    value === ModelType.DEFAULT ||
+    value === ModelType.PRIVACY_ENHANCED ||
     value === ModelType.IMAGE ||
     value === ModelType.THREAT_DRAGON
   );

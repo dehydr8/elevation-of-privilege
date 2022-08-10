@@ -93,7 +93,7 @@ class ThreatModal extends React.Component {
   }
 
   get isPrivacyEnhancedMode() {
-    return this.props.G.modelType === ModelType.DEFAULT;
+    return this.props.G.modelType === ModelType.PRIVACY_ENHANCED;
   }
 
   threatDetailModalBody() {
