@@ -35,7 +35,7 @@ describe('utils', () => {
     [
       {
         testCase: 'the default model',
-        modelType: ModelType.DEFAULT,
+        modelType: ModelType.PRIVACY_ENHANCED,
       },
       {
         testCase: 'a Threat Dragon model',

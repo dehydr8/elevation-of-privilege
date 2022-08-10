@@ -1,6 +1,6 @@
 export enum ModelType {
   THREAT_DRAGON = 'Threat Dragon',
-  DEFAULT = 'Default',
+  PRIVACY_ENHANCED = 'Default',
   IMAGE = 'Image',
 }
 

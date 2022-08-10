@@ -124,7 +124,7 @@ class Create extends React.Component<CreateProps, CreateState> {
 
     formData.append('players', `${this.state.players}`);
     formData.append('modelType', this.state.modelType);
-    if (this.state.modelType !== ModelType.DEFAULT) {
+    if (this.state.modelType !== ModelType.PRIVACY_ENHANCED) {
       formData.append(
         'model',
         this.state.modelType === ModelType.IMAGE
@@ -497,14 +497,18 @@ class Create extends React.Component<CreateProps, CreateState> {
                     <Input
                       id="radio-button-default-model"
                       type="radio"
-                      value={ModelType.DEFAULT}
+                      value={ModelType.PRIVACY_ENHANCED}
                       name="model-type"
                       onChange={this.updateModelType}
-                      checked={this.state.modelType === ModelType.DEFAULT}
+                      checked={
+                        this.state.modelType === ModelType.PRIVACY_ENHANCED
+                      }
                     />
                     Privacy enhanced mode.
                     <Input
-                      disabled={this.state.modelType !== ModelType.DEFAULT}
+                      disabled={
+                        this.state.modelType !== ModelType.PRIVACY_ENHANCED
+                      }
                       type="text"
                       placeholder="Provide link to model (e.g. in wiki)"
                       className="text-input-wide"

@@ -378,7 +378,7 @@ describe('authentificaton', () => {
       .post('/game/create')
       .field('players', players)
       .field('names[]', ['P1', 'P2', 'P3'])
-      .field('modelType', ModelType.DEFAULT);
+      .field('modelType', ModelType.PRIVACY_ENHANCED);
 
     expect(response.body.game).toBeDefined();
     expect(response.body.credentials.length).toBe(players);

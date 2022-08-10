@@ -20,7 +20,7 @@ import type { SetupData } from './setupData';
 export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
   const startSuit = setupData?.startSuit ?? DEFAULT_START_SUIT;
   const gameMode = setupData?.gameMode ?? DEFAULT_GAME_MODE;
-  const modelType = setupData?.modelType ?? ModelType.DEFAULT;
+  const modelType = setupData?.modelType ?? ModelType.PRIVACY_ENHANCED;
   const turnDuration = setupData?.turnDuration ?? DEFAULT_TURN_DURATION;
   const modelRef = setupData?.modelRef;
 
