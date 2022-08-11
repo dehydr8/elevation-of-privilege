@@ -69,7 +69,7 @@ export const createGame = (gameServer) => async (ctx) => {
       case ModelType.IMAGE: {
         const extension = getImageExtension(ctx.request.files.model.name);
         if (
-          !(/image\/[a-z]+$/i.test(ctx.request.files.model.type) && extension)
+          !(/image\/[a-z+]+$/i.test(ctx.request.files.model.type) && extension)
         ) {
           throw Error('Filetype not supported');
         }
