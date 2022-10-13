@@ -13,7 +13,7 @@
     "bootstrap": "^4.6.0",
     "cornucopia-cards-modified": "file:cornucopiaCards",
     "esm": "^3.2.25",
-    "jointjs": "^3.5.5",
+    "jointjs": "^3.6.0",
     "koa": "^2.13.4",
     "koa-body": "^4.2.0",
     "koa-router": "^10.1.1",
