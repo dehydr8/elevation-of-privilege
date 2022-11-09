@@ -1,8 +1,11 @@
-.Playername {
-
+.player-name {
   min-width: 120%;
   max-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.check-mark {
+  text-align: center;
 }
