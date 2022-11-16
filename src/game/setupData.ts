@@ -1,5 +1,6 @@
 import type { Suit } from '../utils/cardDefinitions';
-import type { GameMode, ModelType } from '../utils/constants';
+import type { ModelType } from '../utils/constants';
+import type { GameMode } from '../utils/GameMode';
 
 export interface SetupData {
   startSuit: Suit;

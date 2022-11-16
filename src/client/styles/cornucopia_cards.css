@@ -1,88 +1,75 @@
-.ccardaa, .ccarda2, .ccarda3, .ccarda4, .ccarda5, .ccarda6, .ccarda7, .ccarda8, .ccarda9, .ccarda10, .ccardaj, .ccardaq, .ccardak,
-.ccardba, .ccardb2, .ccardb3, .ccardb4, .ccardb5, .ccardb6, .ccardb7, .ccardb8, .ccardb9, .ccardb10, .ccardbj, .ccardbq, .ccardbk,
-.ccardca, .ccardc2, .ccardc3, .ccardc4, .ccardc5, .ccardc6, .ccardc7, .ccardc8, .ccardc9, .ccardc10, .ccardcj, .ccardcq, .ccardck,
-.ccardda, .ccardd2, .ccardd3, .ccardd4, .ccardd5, .ccardd6, .ccardd7, .ccardd8, .ccardd9, .ccardd10, .ccarddj, .ccarddq, .ccarddk,
-.ccardea, .ccarde2, .ccarde3, .ccarde4, .ccarde5, .ccarde6, .ccarde7, .ccarde8, .ccarde9, .ccarde10, .ccardej, .ccardeq, .ccardek,
-.ccardta, .ccardt2, .ccardt3, .ccardt4, .ccardt5, .ccardt6, .ccardt7, .ccardt8, .ccardt9, .ccardt10, .ccardtj, .ccardtq, .ccardtk,
-.ccardj1, .ccardj2 {
-  display: inline-block;
-  overflow: hidden;
-  text-indent: -9999px;
-  text-align: left;
-}
-
 /* Reihe 1: d Datavalidation */
-.ccardaa {
+.cornucopia-card-img-aa {
   background-position: -0px -0px;
   width: 331px;
   height: 514px;
 }
 
-.ccarda2 {
+.cornucopia-card-img-a2 {
   background-position: -331px -0px;
   width: 331px;
   height: 514px;
 }
 
-.ccarda3 {
+.cornucopia-card-img-a3 {
   background-position: -662px -0px;
   width: 331px;
   height: 514px;
 }
-.ccarda4 {
+.cornucopia-card-img-a4 {
   background-position: -993px -0px;
   width: 331px;
   height: 514px;
 }
-.ccarda5 {
+.cornucopia-card-img-a5 {
   background-position: -1324px -0px;
   width: 331px;
   height: 514px;
 }
 
-.ccarda6 {
+.cornucopia-card-img-a6 {
   background-position: -1655px -0px;
   width: 331px;
   height: 514px;
 }
 
-.ccarda7 {
+.cornucopia-card-img-a7 {
   background-position: -1986px -0px;
   width: 331px;
   height: 514px;
 }
 
-.ccarda8 {
+.cornucopia-card-img-a8 {
   background-position: -2317px -0px;
   width: 331px;
   height: 514px;
 }
 
-.ccarda9 {
+.cornucopia-card-img-a9 {
   background-position: -2648px -0px;
   width: 331px;
   height: 514px;
 }
 
-.ccarda10 {
+.cornucopia-card-img-a10 {
   background-position: -2979px -0px;
   width: 331px;
   height: 514px;
 }
 
-.ccardaj {
+.cornucopia-card-img-aj {
   background-position: -3310px -0px;
   width: 331px;
   height: 514px;
 }
 
-.ccardaq {
+.cornucopia-card-img-aq {
   background-position: -3641px -0px;
   width: 331px;
   height: 514px;
 }
 
-.ccardak {
+.cornucopia-card-img-ak {
   background-position: -3972px -0px;
   width: 331px;
   height: 514px;
@@ -94,77 +81,77 @@ a
 Authentication */
 
 
-.ccardea {
+.cornucopia-card-img-ea {
   background-position: -0px -514px;
   width: 331px;
   height: 514px;
 }
 
-.ccarde2 {
+.cornucopia-card-img-e2 {
   background-position: -331px -514px;
   width: 331px;
   height: 514px;
 }
 
-.ccarde3 {
+.cornucopia-card-img-e3 {
   background-position: -662px -514px;
   width: 331px;
   height: 514px;
 }
-.ccarde4 {
+.cornucopia-card-img-e4 {
   background-position: -993px -514px;
   width: 331px;
   height: 514px;
 }
-.ccarde5 {
+.cornucopia-card-img-e5 {
   background-position: -1324px -514px;
   width: 331px;
   height: 514px;
 }
 
-.ccarde6 {
+.cornucopia-card-img-e6 {
   background-position: -1655px -514px;
   width: 331px;
   height: 514px;
 }
 
-.ccarde7 {
+.cornucopia-card-img-e7 {
   background-position: -1986px -514px;
   width: 331px;
   height: 514px;
 }
 
-.ccarde8 {
+.cornucopia-card-img-e8 {
   background-position: -2317px -514px;
   width: 331px;
   height: 514px;
 }
 
-.ccarde9 {
+.cornucopia-card-img-e9 {
   background-position: -2648px -514px;
   width: 331px;
   height: 514px;
 }
 
-.ccarde10 {
+.cornucopia-card-img-e10 {
   background-position: -2979px -514px;
   width: 331px;
   height: 514px;
 }
 
-.ccardej {
+.cornucopia-card-img-ej {
   background-position: -3310px -514px;
   width: 331px;
   height: 514px;
 }
 
-.ccardeq {
+.cornucopia-card-img-eq {
   background-position: -3641px -514px;
   width: 331px;
   height: 514px;
 }
 
-.ccardek {
+.cornucopia-card-img-ek {
   background-position: -3972px -514px;
   width: 331px;
   height: 514px;
@@ -176,77 +163,77 @@ s
 Session Management */
 
 
-.ccardca {
+.cornucopia-card-img-ca {
   background-position: -0px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.ccardc2 {
+.cornucopia-card-img-c2 {
   background-position: -331px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.ccardc3 {
+.cornucopia-card-img-c3 {
   background-position: -662px -1028px;
   width: 331px;
   height: 514px;
 }
-.ccardc4 {
+.cornucopia-card-img-c4 {
   background-position: -993px -1028px;
   width: 331px;
   height: 514px;
 }
-.ccardc5 {
+.cornucopia-card-img-c5 {
   background-position: -1324px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.ccardc6 {
+.cornucopia-card-img-c6 {
   background-position: -1655px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.ccardc7 {
+.cornucopia-card-img-c7 {
   background-position: -1986px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.ccardc8 {
+.cornucopia-card-img-c8 {
   background-position: -2317px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.ccardc9 {
+.cornucopia-card-img-c9 {
   background-position: -2648px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.ccardc10 {
+.cornucopia-card-img-c10 {
   background-position: -2979px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.ccardcj {
+.cornucopia-card-img-cj {
   background-position: -3310px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.ccardcq {
+.cornucopia-card-img-cq {
   background-position: -3641px -1028px;
   width: 331px;
   height: 514px;
 }
 
-.ccardck {
+.cornucopia-card-img-ck {
   background-position: -3972px -1028px;
   width: 331px;
   height: 514px;
@@ -257,77 +244,77 @@ o
 Authorization */
 
 
-.ccardda {
+.cornucopia-card-img-da {
   background-position: -0px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.ccardd2 {
+.cornucopia-card-img-d2 {
   background-position: -331px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.ccardd3 {
+.cornucopia-card-img-d3 {
   background-position: -662px -1542px;
   width: 331px;
   height: 514px;
 }
-.ccardd4 {
+.cornucopia-card-img-d4 {
   background-position: -993px -1542px;
   width: 331px;
   height: 514px;
 }
-.ccardd5 {
+.cornucopia-card-img-d5 {
   background-position: -1324px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.ccardd6 {
+.cornucopia-card-img-d6 {
   background-position: -1655px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.ccardd7 {
+.cornucopia-card-img-d7 {
   background-position: -1986px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.ccardd8 {
+.cornucopia-card-img-d8 {
   background-position: -2317px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.ccardd9 {
+.cornucopia-card-img-d9 {
   background-position: -2648px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.ccardd10 {
+.cornucopia-card-img-d10 {
   background-position: -2979px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.ccarddj {
+.cornucopia-card-img-dj {
   background-position: -3310px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.ccarddq {
+.cornucopia-card-img-dq {
   background-position: -3641px -1542px;
   width: 331px;
   height: 514px;
 }
 
-.ccarddk {
+.cornucopia-card-img-dk {
   background-position: -3972px -1542px;
   width: 331px;
   height: 514px;
@@ -338,77 +325,77 @@ c
 Cryptography */
 
 
-.ccardba {
+.cornucopia-card-img-ba {
   background-position: -0px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.ccardb2 {
+.cornucopia-card-img-b2 {
   background-position: -331px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.ccardb3 {
+.cornucopia-card-img-b3 {
   background-position: -662px -2056px;
   width: 331px;
   height: 514px;
 }
-.ccardb4 {
+.cornucopia-card-img-b4 {
   background-position: -993px -2056px;
   width: 331px;
   height: 514px;
 }
-.ccardb5 {
+.cornucopia-card-img-b5 {
   background-position: -1324px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.ccardb6 {
+.cornucopia-card-img-b6 {
   background-position: -1655px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.ccardb7 {
+.cornucopia-card-img-b7 {
   background-position: -1986px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.ccardb8 {
+.cornucopia-card-img-b8 {
   background-position: -2317px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.ccardb9 {
+.cornucopia-card-img-b9 {
   background-position: -2648px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.ccardb10 {
+.cornucopia-card-img-b10 {
   background-position: -2979px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.ccardbj {
+.cornucopia-card-img-bj {
   background-position: -3310px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.ccardbq {
+.cornucopia-card-img-bq {
   background-position: -3641px -2056px;
   width: 331px;
   height: 514px;
 }
 
-.ccardbk {
+.cornucopia-card-img-bk {
   background-position: -3972px -2056px;
   width: 331px;
   height: 514px;
@@ -419,77 +406,77 @@ r
 Cornucopia */
 
 
-.ccardta {
+.cornucopia-card-img-ta {
   background-position: -0px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.ccardt2 {
+.cornucopia-card-img-t2 {
   background-position: -331px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.ccardt3 {
+.cornucopia-card-img-t3 {
   background-position: -662px -2570px;
   width: 331px;
   height: 514px;
 }
-.ccardt4 {
+.cornucopia-card-img-t4 {
   background-position: -993px -2570px;
   width: 331px;
   height: 514px;
 }
-.ccardt5 {
+.cornucopia-card-img-t5 {
   background-position: -1324px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.ccardt6 {
+.cornucopia-card-img-t6 {
   background-position: -1655px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.ccardt7 {
+.cornucopia-card-img-t7 {
   background-position: -1986px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.ccardt8 {
+.cornucopia-card-img-t8 {
   background-position: -2317px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.ccardt9 {
+.cornucopia-card-img-t9 {
   background-position: -2648px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.ccardt10 {
+.cornucopia-card-img-t10 {
   background-position: -2979px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.ccardtj {
+.cornucopia-card-img-tj {
   background-position: -3310px -2570px;
   width: 331px;
   height: 514px;  
 }
 
-.ccardtq {
+.cornucopia-card-img-tq {
   background-position: -3641px -2570px;
   width: 331px;
   height: 514px;
 }
 
-.ccardtk {
+.cornucopia-card-img-tk {
   background-position: -3972px -2570px;
   width: 331px;
   height: 514px;
@@ -500,183 +487,14 @@ j
 Joker */
 
 
-.ccardj1 {
+.cornucopia-card-img-j1 {
   background-position: -0px -3084px;
   width: 331px;
   height: 514px;
 }
 
-.ccardj2 {
+.cornucopia-card-img-j2 {
   background-position: -331px -3084px;
   width: 331px;
   height: 514px;
-}
-
-.playing-card {
-  border: 1px solid darkgray;
-  -moz-box-shadow: 0.2em 0.2em 0.5em #ccc;
-  -webkit-box-shadow: 0.2em 0.2em 0.5em #ccc;
-  box-shadow: 0.2em 0.2em 0.5em #ccc;
-  background-color: rgba(0, 0, 0, 0.2);
-  bottom: 0;
-  top: 0;
-}
-
-.card-rounded {
-  border-radius: 44px;
-}
-
-.playingccardsContainer {
-  position: fixed;
-  bottom: 0;
-  border-top: 4px double #ccc;
-
-  background-image: radial-gradient(#ccc 20%, transparent 20%),
-    radial-gradient(#fafafa 20%, transparent 20%);
-  background-color: #eaeaea;
-  background-position: 0 0, 50px 50px;
-  background-size: 100px 100px;
-  padding-left: 20px;
-
-  width: 100%;
-}
-
-.playingCards {
-  display: table;
-  width: 100%;
-  padding-top: 20px;
-  height: 250px;
-}
-
-.playingCards:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.playingCards .hand li {
-  background-blend-mode: color;
-}
-
-.playingCards .hand .active {
-  background-blend-mode: normal;
-  border: 1px solid #000;
-}
-
-.playingCards .hand .active:hover {
-  margin-top: -310px;
-  cursor: pointer;
-  transform: scale(1);
-}
-
-.scaled {
-  transform-origin: top left;
-  transform: scale(0.4);
-  transition: all 0.4s ease-in-out;
-}
-
-.scaled-big {
-  transform: scale(0.9);
-}
-
-.playingCards ul.table,
-.playingCards ul.hand,
-.playingCards ul.deck {
-  list-style-type: none;
-  padding: 0;
-  margin: 0 0 1.5em 0;
-  position: relative;
-}
-.playingCards ul.table li,
-.playingCards ul.hand li,
-.playingCards ul.deck li {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  float: left;
-}
-
-.playingCards ul.hand li,
-.playingCards ul.deck li {
-  position: absolute;
-  display: inline-block;
-}
-
-.playingCards ul.hand li:nth-child(1) {
-  left: 0;
-}
-.playingCards ul.hand li:nth-child(2) {
-  left: 3em;
-}
-.playingCards ul.hand li:nth-child(3) {
-  left: 6em;
-}
-.playingCards ul.hand li:nth-child(4) {
-  left: 9em;
-}
-.playingCards ul.hand li:nth-child(5) {
-  left: 12em;
-}
-.playingCards ul.hand li:nth-child(6) {
-  left: 15em;
-}
-.playingCards ul.hand li:nth-child(7) {
-  left: 18em;
-}
-.playingCards ul.hand li:nth-child(8) {
-  left: 21em;
-}
-.playingCards ul.hand li:nth-child(9) {
-  left: 24em;
-}
-.playingCards ul.hand li:nth-child(10) {
-  left: 27em;
-}
-.playingCards ul.hand li:nth-child(11) {
-  left: 30em;
-}
-.playingCards ul.hand li:nth-child(12) {
-  left: 33em;
-}
-.playingCards ul.hand li:nth-child(13) {
-  left: 36em;
-}
-.playingCards ul.hand li:nth-child(14) {
-  left: 39em;
-}
-.playingCards ul.hand li:nth-child(15) {
-  left: 42em;
-}
-.playingCards ul.hand li:nth-child(16) {
-  left: 45em;
-}
-.playingCards ul.hand li:nth-child(17) {
-  left: 48em;
-}
-.playingCards ul.hand li:nth-child(18) {
-  left: 51em;
-}
-.playingCards ul.hand li:nth-child(19) {
-  left: 54em;
-}
-.playingCards ul.hand li:nth-child(20) {
-  left: 57em;
-}
-.playingCards ul.hand li:nth-child(21) {
-  left: 60em;
-}
-.playingCards ul.hand li:nth-child(22) {
-  left: 63em;
-}
-.playingCards ul.hand li:nth-child(23) {
-  left: 66em;
-}
-.playingCards ul.hand li:nth-child(24) {
-  left: 69em;
-}
-.playingCards ul.hand li:nth-child(25) {
-  left: 72em;
-}
-.playingCards ul.hand li:nth-child(26) {
-  left: 75em;
 }

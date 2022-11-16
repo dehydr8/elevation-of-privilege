@@ -1,6 +1,7 @@
 import type { PlayerID } from 'boardgame.io';
 import type { Suit } from '../utils/cardDefinitions';
-import type { GameMode, ModelType } from '../utils/constants';
+import type { ModelType } from '../utils/constants';
+import type { GameMode } from '../utils/GameMode';
 import type { Threat } from './threat';
 
 export interface GameState {

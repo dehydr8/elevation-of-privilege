@@ -8,12 +8,11 @@ import {
 } from '../utils/cardDefinitions';
 import {
   CARD_LIMIT,
-  DEFAULT_GAME_MODE,
   DEFAULT_START_SUIT,
   DEFAULT_TURN_DURATION,
-  GameMode,
   ModelType,
 } from '../utils/constants';
+import { DEFAULT_GAME_MODE, GameMode } from '../utils/GameMode';
 import type { Ctx } from './context';
 import type { GameState } from './gameState';
 import type { SetupData } from './setupData';

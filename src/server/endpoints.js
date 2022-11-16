@@ -4,11 +4,8 @@ import request from 'superagent';
 import { v4 as uuidv4 } from 'uuid';
 import { ElevationOfPrivilege } from '../game/eop';
 import { getSuitDisplayName } from '../utils/cardDefinitions';
-import {
-  DEFAULT_MODEL,
-  isGameModeCornucopia,
-  ModelType,
-} from '../utils/constants';
+import { DEFAULT_MODEL, ModelType } from '../utils/constants';
+import { GameMode } from '../utils/GameMode';
 import { INTERNAL_API_PORT } from '../utils/serverConfig';
 import {
   escapeMarkdownText,
@@ -129,6 +126,21 @@ export const getImage = (gameServer) => async (ctx) => {
   });
 };
 
+const getMethodologyName = (gameMode) => {
+  if (gameMode === GameMode.EOP) {
+    return 'STRIDE';
+  }
+  if (gameMode === GameMode.CORNUCOPIA) {
+    return 'Cornucopia';
+  }
+
+  if (gameMode === GameMode.CUMULUS) {
+    return 'Cumulus';
+  }
+
+  return undefined;
+};
+
 export const downloadThreatDragonModel = (gameServer) => async (ctx) => {
   const matchID = ctx.params.matchID;
   const game = await gameServer.db.fetch(matchID, {
@@ -174,9 +186,7 @@ export const downloadThreatDragonModel = (gameServer) => async (ctx) => {
               status: 'Open',
               severity: t.severity,
               id: t.id,
-              methodology: isGameModeCornucopia(game.state.G.gameMode)
-                ? 'Cornucopia'
-                : 'STRIDE',
+              methodology: getMethodologyName(game.state.G.gameMode),
               type: getSuitDisplayName(game.state.G.gameMode, t.type),
               title: t.title,
               description: t.description,

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Leaderboard from './leaderboard';
-import { DEFAULT_GAME_MODE } from '../../../utils/constants';
+import { DEFAULT_GAME_MODE } from '../../../utils/GameMode';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

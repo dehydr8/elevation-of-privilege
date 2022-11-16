@@ -1,4 +1,4 @@
-import { GameMode } from '../utils/constants';
+import { GameMode } from '../utils/GameMode';
 
 const definitions = {
   D2: 'An attacker could take over the port or socket that the server normally uses.',

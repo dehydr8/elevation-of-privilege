@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import ThreatModal from './threatmodal';
-import { DEFAULT_GAME_MODE } from '../../../utils/constants';
+import { DEFAULT_GAME_MODE } from '../../../utils/GameMode';
 
 it('renders without crashing for a new threat', () => {
   const G = {

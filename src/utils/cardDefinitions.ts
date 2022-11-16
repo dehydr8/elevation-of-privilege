@@ -1,16 +1,21 @@
-import { GameMode } from './constants';
+import { GameMode } from './GameMode';
 
 export type Card = string;
 export type Suit = 'A' | 'B' | 'C' | 'D' | 'E' | 'T';
 
 interface SuitDetails {
-  name: string;
-  abbreviation: string;
+  name?: string;
+  abbreviation?: string;
   cards: Card[];
   isTrump: boolean;
+  isDefault: boolean;
 }
 
-export const CARD_DECKS = {
+type CardDeckDefinitions = {
+  [key in GameMode]: { [suit in Suit]: SuitDetails };
+};
+
+const CARD_DECKS: CardDeckDefinitions = {
   [GameMode.EOP]: {
     A: {
       name: 'Denial of Service',
@@ -31,6 +36,7 @@ export const CARD_DECKS = {
         'AA',
       ],
       isTrump: false,
+      isDefault: false,
     },
     B: {
       name: 'Information Disclosure',
@@ -51,6 +57,7 @@ export const CARD_DECKS = {
         'BA',
       ],
       isTrump: false,
+      isDefault: false,
     },
     C: {
       name: 'Repudiation',
@@ -71,6 +78,7 @@ export const CARD_DECKS = {
         'CA',
       ],
       isTrump: false,
+      isDefault: false,
     },
     D: {
       name: 'Spoofing',
@@ -91,6 +99,7 @@ export const CARD_DECKS = {
         'DA',
       ],
       isTrump: false,
+      isDefault: false,
     },
     E: {
       name: 'Tampering',
@@ -111,6 +120,7 @@ export const CARD_DECKS = {
         'EA',
       ],
       isTrump: false,
+      isDefault: true,
     },
     T: {
       name: 'Elevation of Privilege',
@@ -131,6 +141,7 @@ export const CARD_DECKS = {
         'TA',
       ],
       isTrump: true,
+      isDefault: false,
     },
   },
   [GameMode.CORNUCOPIA]: {
@@ -153,6 +164,7 @@ export const CARD_DECKS = {
         'AA',
       ],
       isTrump: false,
+      isDefault: false,
     },
     B: {
       name: 'Cryptography',
@@ -173,6 +185,7 @@ export const CARD_DECKS = {
         'BA',
       ],
       isTrump: false,
+      isDefault: false,
     },
     C: {
       name: 'Session Management',
@@ -193,6 +206,7 @@ export const CARD_DECKS = {
         'CA',
       ],
       isTrump: false,
+      isDefault: false,
     },
     D: {
       name: 'Authorization',
@@ -213,6 +227,7 @@ export const CARD_DECKS = {
         'DA',
       ],
       isTrump: false,
+      isDefault: false,
     },
     E: {
       name: 'Authentication',
@@ -233,6 +248,7 @@ export const CARD_DECKS = {
         'EA',
       ],
       isTrump: false,
+      isDefault: true,
     },
     T: {
       name: 'Cornucopia',
@@ -253,16 +269,116 @@ export const CARD_DECKS = {
         'TA',
       ],
       isTrump: true,
+      isDefault: false,
+    },
+  },
+  [GameMode.CUMULUS]: {
+    A: {
+      name: 'Resources',
+      abbreviation: 'Res',
+      cards: ['A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'AJ', 'AQ', 'AK', 'AA'],
+      isTrump: false,
+      isDefault: true,
+    },
+    B: {
+      name: 'Monitoring',
+      abbreviation: 'Mon',
+      cards: ['B6', 'B7', 'B8', 'B9', 'B10', 'BJ', 'BQ', 'BK', 'BA'],
+      isTrump: false,
+      isDefault: false,
+    },
+    C: {
+      name: 'Recovery',
+      abbreviation: 'Rec',
+      cards: [
+        'C3',
+        'C4',
+        'C5',
+        'C6',
+        'C7',
+        'C8',
+        'C9',
+        'C10',
+        'CJ',
+        'CQ',
+        'CK',
+        'CA',
+      ],
+      isTrump: false,
+      isDefault: false,
+    },
+    D: {
+      name: 'Delivery',
+      abbreviation: 'Del',
+      cards: [
+        'D2',
+        'D3',
+        'D4',
+        'D5',
+        'D6',
+        'D7',
+        'D8',
+        'D9',
+        'D10',
+        'DJ',
+        'DQ',
+        'DK',
+        'DA',
+      ],
+      isTrump: false,
+      isDefault: false,
+    },
+    E: {
+      name: undefined,
+      abbreviation: undefined,
+      cards: [],
+      isTrump: false,
+      isDefault: false,
+    },
+    T: {
+      name: 'Access & Secrets',
+      abbreviation: 'XsSec',
+      cards: [
+        'T3',
+        'T4',
+        'T5',
+        'T6',
+        'T7',
+        'T8',
+        'T9',
+        'T10',
+        'TJ',
+        'TQ',
+        'TK',
+        'TA',
+      ],
+      isTrump: true,
+      isDefault: false,
     },
   },
 };
 
 export function getStartingCard(gameMode: GameMode, suit: Suit): Card {
-  return CARD_DECKS[gameMode][suit].cards[0];
+  const usedSuit =
+    CARD_DECKS[gameMode][suit].cards.length > 0
+      ? suit
+      : getDefaultStartingSuit(gameMode);
+
+  return CARD_DECKS[gameMode][usedSuit].cards[0];
+}
+
+function getDefaultStartingSuit(gameMode: GameMode): Suit {
+  return (
+    (Object.keys(CARD_DECKS[gameMode]) as Suit[]).find(
+      (suit) => CARD_DECKS[gameMode][suit].isDefault,
+    ) ?? 'A'
+  );
 }
 
 export function getSuits(gameMode: GameMode): Suit[] {
-  return Object.keys(CARD_DECKS[gameMode]) as Suit[];
+  return (Object.keys(CARD_DECKS[gameMode]) as Suit[]).filter(
+    (suit) => CARD_DECKS[gameMode][suit].cards.length > 0,
+  );
 }
 
 export function getSuitDisplayName(gameMode: GameMode, suit: Suit): string {
@@ -271,7 +387,7 @@ export function getSuitDisplayName(gameMode: GameMode, suit: Suit): string {
 
 function getCardAbbreviation(gameMode: GameMode, card: Card): string {
   const suitHoldingCard = Object.values(CARD_DECKS[gameMode] ?? []).find(
-    (suit) => suit.cards.includes(card),
+    (suit) => suit.cards.length > 0 && suit.cards.includes(card),
   );
 
   return suitHoldingCard?.abbreviation ?? '';

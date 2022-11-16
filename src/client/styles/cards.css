@@ -1,99 +1,3 @@
-.carda10, .carda2, .carda3, .carda4, .carda5, 
-.carda6, .carda7, .carda8, .carda9, .cardaa, 
-.cardaj, .cardak, .cardaq, .cardt10, .cardt2, .cardt3, .cardt4, .cardt5, 
-.cardt6, .cardt7, .cardt8, .cardt9, .cardta, 
-.cardtj, .cardtk, .cardtq, .cardb10, .cardb2, 
-.cardb3, .cardb4, .cardb5, .cardb6, .cardb7, 
-.cardb8, .cardb9, .cardba, .cardbj, .cardbk, 
-.cardbq, .cardc10, .cardc2, .cardc3, .cardc4, 
-.cardc5, .cardc6, .cardc7, .cardc8, .cardc9, 
-.cardca, .cardcj, .cardck, .cardcq, .cardd10, 
-.cardd2, .cardd3, .cardd4, .cardd5, .cardd6, 
-.cardd7, .cardd8, .cardd9, .cardda, .carddj, 
-.carddk, .carddq, .carde10,.carde2, .carde3, .carde4, 
-.carde5, .carde6, .carde7, .carde8, .carde9, 
-.cardea, .cardej, .cardek, .cardeq
-{ display: inline-block; background: url('cards.jpg') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
- 
-.carda10 { background-position: -5px -0px; width: 300px; height: 518px; }
-.carda2 { background-position: -310px -0px; width: 300px; height: 518px; }
-.carda3 { background-position: -615px -0px; width: 300px; height: 518px; }
-.carda4 { background-position: -920px -0px; width: 300px; height: 518px; }
-.carda5 { background-position: -1225px -0px; width: 300px; height: 518px; }
-.carda6 { background-position: -1530px -0px; width: 300px; height: 518px; }
-.carda7 { background-position: -1835px -0px; width: 300px; height: 518px; }
-.carda8 { background-position: -2140px -0px; width: 300px; height: 518px; }
-.carda9 { background-position: -5px -523px; width: 300px; height: 518px; }
-.cardaa { background-position: -310px -523px; width: 300px; height: 518px; }
-.cardaj { background-position: -615px -523px; width: 300px; height: 518px; }
-.cardak { background-position: -920px -523px; width: 300px; height: 518px; }
-.cardaq { background-position: -1225px -523px; width: 300px; height: 518px; }
-.cardt10 { background-position: -1530px -523px; width: 300px; height: 518px; }
-.cardt2 { background-position: -922px -4709px; width: 300px; height: 518px; }
-.cardt3 { background-position: -1226px -4708px; width: 300px; height: 518px; }
-.cardt4 { background-position: -1530px -4709px; width: 300px; height: 518px; }
-.cardt5 { background-position: -1835px -523px; width: 300px; height: 518px; }
-.cardt6 { background-position: -2140px -523px; width: 300px; height: 518px; }
-.cardt7 { background-position: -5px -1046px; width: 300px; height: 518px; }
-.cardt8 { background-position: -310px -1046px; width: 300px; height: 518px; }
-.cardt9 { background-position: -615px -1046px; width: 300px; height: 518px; }
-.cardta { background-position: -920px -1046px; width: 300px; height: 518px; }
-.cardtj { background-position: -1225px -1046px; width: 300px; height: 518px; }
-.cardtk { background-position: -1530px -1046px; width: 300px; height: 518px; }
-.cardtq { background-position: -1835px -1046px; width: 300px; height: 518px; }
-.cardb10 { background-position: -2140px -1046px; width: 300px; height: 518px; }
-.cardb2 { background-position: -5px -1569px; width: 300px; height: 518px; }
-.cardb3 { background-position: -310px -1569px; width: 300px; height: 518px; }
-.cardb4 { background-position: -615px -1569px; width: 300px; height: 518px; }
-.cardb5 { background-position: -920px -1569px; width: 300px; height: 518px; }
-.cardb6 { background-position: -1225px -1569px; width: 300px; height: 518px; }
-.cardb7 { background-position: -1530px -1569px; width: 300px; height: 518px; }
-.cardb8 { background-position: -1835px -1569px; width: 300px; height: 518px; }
-.cardb9 { background-position: -2140px -1569px; width: 300px; height: 518px; }
-.cardba { background-position: -5px -2092px; width: 300px; height: 518px; }
-.cardbj { background-position: -310px -2092px; width: 300px; height: 518px; }
-.cardbk { background-position: -615px -2092px; width: 300px; height: 518px; }
-.cardbq { background-position: -920px -2092px; width: 300px; height: 518px; }
-.cardc10 { background-position: -1225px -2092px; width: 300px; height: 518px; }
-.cardc2 { background-position: -1530px -2092px; width: 300px; height: 518px; }
-.cardc3 { background-position: -1835px -2092px; width: 300px; height: 518px; }
-.cardc4 { background-position: -2140px -2092px; width: 300px; height: 518px; }
-.cardc5 { background-position: -5px -2615px; width: 300px; height: 518px; }
-.cardc6 { background-position: -310px -2615px; width: 300px; height: 518px; }
-.cardc7 { background-position: -615px -2615px; width: 300px; height: 518px; }
-.cardc8 { background-position: -920px -2615px; width: 300px; height: 518px; }
-.cardc9 { background-position: -1225px -2615px; width: 300px; height: 518px; }
-.cardca { background-position: -1530px -2615px; width: 300px; height: 518px; }
-.cardcj { background-position: -1835px -2615px; width: 300px; height: 518px; }
-.cardck { background-position: -2140px -2615px; width: 300px; height: 518px; }
-.cardcq { background-position: -5px -3138px; width: 300px; height: 518px; }
-.cardd10 { background-position: -310px -3138px; width: 300px; height: 518px; }
-.cardd2 { background-position: -615px -3138px; width: 300px; height: 518px; }
-.cardd3 { background-position: -920px -3138px; width: 300px; height: 518px; }
-.cardd4 { background-position: -1225px -3138px; width: 300px; height: 518px; }
-.cardd5 { background-position: -1530px -3138px; width: 300px; height: 518px; }
-.cardd6 { background-position: -1835px -3138px; width: 300px; height: 518px; }
-.cardd7 { background-position: -2140px -3138px; width: 300px; height: 518px; }
-.cardd8 { background-position: -5px -3661px; width: 300px; height: 518px; }
-.cardd9 { background-position: -310px -3661px; width: 300px; height: 518px; }
-.cardda { background-position: -615px -3661px; width: 300px; height: 518px; }
-.carddj { background-position: -920px -3661px; width: 300px; height: 518px; }
-.carddk { background-position: -1225px -3661px; width: 300px; height: 518px; }
-.carddq { background-position: -1530px -3661px; width: 300px; height: 518px; }
-.carde10 { background-position: -1835px -3661px; width: 300px; height: 518px; }
-.carde2 { background-position: -617px -4707px; width: 300px; height: 518px; }
-.carde3 { background-position: -2140px -3661px; width: 300px; height: 518px; }
-.carde4 { background-position: -5px -4184px; width: 300px; height: 518px; }
-.carde5 { background-position: -310px -4184px; width: 300px; height: 518px; }
-.carde6 { background-position: -615px -4184px; width: 300px; height: 518px; }
-.carde7 { background-position: -920px -4184px; width: 300px; height: 518px; }
-.carde8 { background-position: -1225px -4184px; width: 300px; height: 518px; }
-.carde9 { background-position: -1530px -4184px; width: 300px; height: 518px; }
-.cardea { background-position: -1835px -4184px; width: 300px; height: 518px; }
-.cardej { background-position: -2140px -4184px; width: 300px; height: 518px; }
-.cardek { background-position: -5px -4707px; width: 300px; height: 518px; }
-.cardeq { background-position: -310px -4707px; width: 300px; height: 518px; }
-
 .playing-card {
     border: 1px solid darkgray;
     -moz-box-shadow: .2em .2em .5em #ccc;
@@ -102,6 +6,10 @@
     background-color: rgba(0, 0, 0, 0.2);
     bottom: 0;
     top: 0;
+    display: inline-block;
+    overflow: hidden;
+    text-indent: -9999px;
+    text-align: left;
 }
 
 .card-none {

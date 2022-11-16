@@ -23,7 +23,8 @@ class Footer extends React.Component {
             Careem and{' '}
             <a href="https://www.tngtech.com/en/">TNG Technology Consulting</a>{' '}
             - Elevation of Privilege was originally invented at Microsoft,
-            Cornucopia was developed at OWASP.
+            Cornucopia was developed at OWASP, Cumulus was started at{' '}
+            <a href="https://www.tngtech.com/en/">TNG Technology Consulting</a>.
           </span>
         )}
       </small>

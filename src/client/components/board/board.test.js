@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './board';
-import {
-  DEFAULT_GAME_MODE,
-  DEFAULT_TURN_DURATION,
-} from '../../../utils/constants';
+import { DEFAULT_TURN_DURATION } from '../../../utils/constants';
+import { DEFAULT_GAME_MODE } from '../../../utils/GameMode';
 
 jest.mock('../model/model.js');
 

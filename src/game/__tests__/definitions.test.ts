@@ -1,4 +1,4 @@
-import { GameMode } from '../../utils/constants';
+import { GameMode } from '../../utils/GameMode';
 import { getThreatDescription } from '../definitions';
 
 it('produces empty value for non-existent card', () => {

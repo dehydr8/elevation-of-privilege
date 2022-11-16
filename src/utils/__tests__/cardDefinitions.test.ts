@@ -6,7 +6,7 @@ import {
   getSuitDisplayName,
   getSuits,
 } from '../cardDefinitions';
-import { GameMode } from '../constants';
+import { GameMode } from '../GameMode';
 
 describe('cardDefintions', () => {
   describe('getStartingCard', () => {
@@ -31,6 +31,11 @@ describe('cardDefintions', () => {
       const suits = getSuits(GameMode.CORNUCOPIA);
       expect(suits).toEqual(['A', 'B', 'C', 'D', 'E', 'T']);
     });
+
+    it('should return correct suits for Cumulus', () => {
+      const suits = getSuits(GameMode.CUMULUS);
+      expect(suits).toEqual(['A', 'B', 'C', 'D', 'T']);
+    });
   });
 
   describe('getSuitDisplayName', () => {
@@ -42,6 +47,11 @@ describe('cardDefintions', () => {
     it('should return correct suit name for Cornucopia', () => {
       const suitName = getSuitDisplayName(GameMode.CORNUCOPIA, 'C');
       expect(suitName).toEqual('Session Management');
+    });
+
+    it('should return correct suit name for Cumulus', () => {
+      const suitName = getSuitDisplayName(GameMode.CUMULUS, 'C');
+      expect(suitName).toEqual('Recovery');
     });
   });
 
@@ -55,6 +65,11 @@ describe('cardDefintions', () => {
       const cardName = getCardDisplayName(GameMode.CORNUCOPIA, 'C7');
       expect(cardName).toEqual('Sessn7');
     });
+
+    it('should return correct card name for Cumulus', () => {
+      const cardName = getCardDisplayName(GameMode.CUMULUS, 'C7');
+      expect(cardName).toEqual('Rec7');
+    });
   });
 
   describe('getAllCards', () => {
@@ -66,6 +81,11 @@ describe('cardDefintions', () => {
     it('should return all cards from Cornucopia', () => {
       const cards = getAllCards(GameMode.CORNUCOPIA);
       expect(cards.length).toEqual(6 * 13);
+    });
+
+    it('should return all cards from Cumulus', () => {
+      const cards = getAllCards(GameMode.CUMULUS);
+      expect(cards.length).toEqual(12 + 13 + 12 + 9 + 10);
     });
   });
 

@@ -26,15 +26,14 @@ import {
   Suit,
 } from '../../utils/cardDefinitions';
 import {
-  DEFAULT_GAME_MODE,
   DEFAULT_START_SUIT,
   DEFAULT_TURN_DURATION,
-  GameMode,
   MAX_NUMBER_PLAYERS,
   MIN_NUMBER_PLAYERS,
   ModelType,
   SPECTATOR,
 } from '../../utils/constants';
+import { DEFAULT_GAME_MODE, GameMode } from '../../utils/GameMode';
 import { API_PORT } from '../../utils/serverConfig';
 import { isModelType } from '../../utils/utils';
 import CopyButton from '../components/copybutton/copybutton';
@@ -367,8 +366,9 @@ class Create extends React.Component<CreateProps, CreateState> {
                   onChange={(e) => this.onGameModeUpdated(e)}
                   value={this.state.gameMode}
                 >
-                  <option>{GameMode.EOP}</option>
-                  <option>{GameMode.CORNUCOPIA}</option>
+                  {Object.values(GameMode).map((mode) => (
+                    <option key={`option-${mode}`}>{mode}</option>
+                  ))}
                 </Input>
               </Col>
             </FormGroup>

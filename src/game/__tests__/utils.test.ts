@@ -1,9 +1,9 @@
 import {
   CARD_LIMIT,
   DEFAULT_START_SUIT,
-  GameMode,
   ModelType,
 } from '../../utils/constants';
+import { GameMode } from '../../utils/GameMode';
 import { endTurnIf, setupGame, shuffleCards } from '../utils';
 import seedrandom from 'seedrandom';
 

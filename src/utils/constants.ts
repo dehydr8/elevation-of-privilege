@@ -1,18 +1,3 @@
-export enum GameMode {
-  EOP = 'Elevation of Privilege',
-  CORNUCOPIA = 'OWASP Cornucopia',
-}
-
-export const DEFAULT_GAME_MODE = GameMode.EOP;
-
-export function isGameMode(value: GameMode): value is GameMode {
-  return Object.values(GameMode).includes(value);
-}
-
-export function isGameModeCornucopia(gameMode: GameMode): boolean {
-  return isGameMode(gameMode) && gameMode === GameMode.CORNUCOPIA;
-}
-
 export enum ModelType {
   THREAT_DRAGON = 'Threat Dragon',
   DEFAULT = 'Default',

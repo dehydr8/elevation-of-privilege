@@ -1,5 +1,6 @@
 import request from 'supertest';
-import { GameMode, ModelType, SPECTATOR } from '../../utils/constants';
+import { ModelType, SPECTATOR } from '../../utils/constants';
+import { GameMode } from '../../utils/GameMode';
 import {
   gameServer,
   gameServerHandle,
