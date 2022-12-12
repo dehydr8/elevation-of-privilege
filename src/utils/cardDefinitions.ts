@@ -276,7 +276,19 @@ const CARD_DECKS: CardDeckDefinitions = {
     A: {
       name: 'Resources',
       abbreviation: 'Res',
-      cards: ['A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'AJ', 'AQ', 'AK', 'AA'],
+      cards: [
+        'A4',
+        'A5',
+        'A6',
+        'A7',
+        'A8',
+        'A9',
+        'A10',
+        'AJ',
+        'AQ',
+        'AK',
+        'AA',
+      ],
       isTrump: false,
       isDefault: true,
     },
@@ -339,6 +351,7 @@ const CARD_DECKS: CardDeckDefinitions = {
       name: 'Access & Secrets',
       abbreviation: 'XsSec',
       cards: [
+        'T2',
         'T3',
         'T4',
         'T5',
