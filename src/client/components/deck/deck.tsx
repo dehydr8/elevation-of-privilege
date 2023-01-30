@@ -31,6 +31,9 @@ const Deck: React.FC<DeckProps> = ({
       ? getValidMoves(cards, suit, round, startingCard)
       : [];
 
+  const roundedClass =
+    gameMode === GameMode.CUMULUS ? `card-rounded-cumulus` : `card-rounded`;
+
   return (
     <div className="playingCards">
       <ul className="hand">
@@ -39,7 +42,7 @@ const Deck: React.FC<DeckProps> = ({
             key={`card-in-hand-${card}`}
             className={`playing-card ${getCardCssClass(gameMode, card)} ${
               validMoves.includes(card) ? 'active' : ''
-            } card-rounded scaled`}
+            } ${roundedClass} scaled`}
             onClick={() => onCardSelect(card)}
           />
         ))}

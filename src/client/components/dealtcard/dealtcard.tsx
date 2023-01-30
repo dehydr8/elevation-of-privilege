@@ -8,12 +8,14 @@ interface DealtCardProps {
 }
 
 const DealtCard: React.FC<DealtCardProps> = ({ gameMode, card }) => {
+  const roundedClass =
+    gameMode === GameMode.CUMULUS ? `card-rounded-cumulus` : `card-rounded`;
   return (
     <div
       className={`playing-card ${getCardCssClass(
         gameMode,
         card,
-      )} active card-rounded scaled-big`}
+      )} active ${roundedClass} scaled-big`}
     />
   );
 };

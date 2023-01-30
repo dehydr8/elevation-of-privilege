@@ -20,6 +20,10 @@
     border-radius: 44px;
 }
 
+.card-rounded-cumulus {
+    border-radius: 25px;
+}
+
 .playingCardsContainer {
     position: fixed;
     bottom: 0;
@@ -57,7 +61,7 @@
 }
 
 .playingCards .hand .active:hover {
-    margin-top: -310px;
+    margin-top: -350px;
     cursor: pointer;
     transform: scale(1.0);
 }
