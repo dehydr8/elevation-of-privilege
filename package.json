@@ -1,6 +1,6 @@
 {
   "name": "eop",
-  "version": "0.15.2",
+  "version": "0.16.0",
   "private": true,
   "main": "src/client/index.tsx",
   "dependencies": {
