@@ -1,6 +1,6 @@
 Elevation of Privilege
 ======================
-[![Tests](https://github.com/dehydr8/elevation-of-privilege/actions/workflows/checks.yml/badge.svg)](https://github.com/dehydr8/elevation-of-privilege/actions/workflows/checks.yml)
+[![Tests](https://github.com/tng/elevation-of-privilege/actions/workflows/checks.yml/badge.svg)](https://github.com/tng/elevation-of-privilege/actions/workflows/checks.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/5449a4d61cdfed258204/maintainability)](https://codeclimate.com/github/dehydr8/elevation-of-privilege/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5449a4d61cdfed258204/test_coverage)](https://codeclimate.com/github/dehydr8/elevation-of-privilege/test_coverage)
 
@@ -28,11 +28,28 @@ But most important the game will teach the developers to look at the system with
 
 ### How is this done?
 
-In [Elevation of Privilege](https://download.microsoft.com/download/F/A/E/FAE1434F-6D22-4581-9804-8B60C04354E4/EoP_Whitepaper.pdf), the game invented by Microsoft, each card represents a particular attack on the system. The cards are meant as a starting point for brainstorming and discussions, if and where such an attack can be used on the system. During its flow the game guides the players through these threats in a structured manner. As a result a list of possible security weaknesses is generated. 
+In [Elevation of Privilege](https://download.microsoft.com/download/F/A/E/FAE1434F-6D22-4581-9804-8B60C04354E4/EoP_Whitepaper.pdf), the game invented by Microsoft, each card represents a particular attack on the system. The cards are meant as a starting point for brainstorming and discussions, if and where such an attack can be used on the system. During its flow the game guides the players through these threats in a structured manner. As a result a list of possible security weaknesses is generated.
+
+## Card decks
+
+Currently, three game modes are supported, reflecting different aspects of modern software development projects:
+
+### Elevation of Privilege
+
+This is the classic [Elevation of Privilege](https://shostack.org/games/elevation-of-privilege) game, developed by [Adam Shostack](https://github.com/adamshostack).
+![card EoP](docs/EoP_cards_attributed.png)
+
+### OWASP Cornucopia
 
 Inspired by this, the game [Cornucopia](https://owasp.org/www-project-cornucopia/) has been developed by the [Open Web Application Security Project](https://owasp.org/) (OWASP). It specifically targets threat modeling of web application and might be an easy starting point for beginning threat modeling.
 
-![card decks](docs/eop_cornucopia.png)
+![card Cornucopia](docs/Cornucopia_cards_attributed.png)
+
+### Cumulus
+
+[Cumulus](https://github.com/TNG/cumulus), developed at [TNG Technology Consulting](https://www.tngtech.com/en/index.html), is a threat modeling game targeting cloud and DevOps setups.
+
+![card Cumulus](docs/Cumulus_cards_attributed.png)
 
 ## For users
 
