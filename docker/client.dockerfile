@@ -6,6 +6,10 @@ COPY tsconfig.json ./
 COPY ./public ./public
 COPY ./src ./src
 COPY ./cornucopiaCards ./cornucopiaCards
+COPY ./.eslintignore ./.eslintignore
+COPY ./.eslintrc.cjs ./.eslintrc.cjs
+COPY ./.prettierignore ./.prettierignore
+COPY ./.prettierrc.cjs ./.prettierc.cjs
 RUN npm ci
 RUN npm run build:client
 
