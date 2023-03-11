@@ -4,7 +4,7 @@ import Board from './board';
 import { DEFAULT_TURN_DURATION } from '../../../utils/constants';
 import { DEFAULT_GAME_MODE } from '../../../utils/GameMode';
 
-jest.mock('../model/model.js');
+jest.mock('../model/model.jsx');
 
 it('renders without crashing', async () => {
   Board.prototype.componentDidMount = jest.fn();
