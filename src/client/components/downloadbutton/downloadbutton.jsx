@@ -51,7 +51,7 @@ class DownloadButton extends React.Component {
     const pass = this.props.secret;
     return {
       Authorization:
-        'Basic ' + Buffer.from(user + ':' + pass).toString('base64'),
+        'Basic ' + btoa(user + ':' + pass),
     };
   }
 

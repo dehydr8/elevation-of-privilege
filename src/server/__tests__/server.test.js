@@ -439,7 +439,7 @@ describe('authentificaton', () => {
         .set(
           'Authorization',
           // missing 'Basic ' prefix
-          Buffer.from(`0:${credentials[0]}`).toString('base64'),
+          btoa(`0:${credentials[0]}`),
         );
       expect(response.status).toBe(403);
     },
@@ -454,7 +454,7 @@ describe('authentificaton', () => {
         .get(`/game/${matchID}/${endpoint}`)
         .set(
           'Authorization',
-          'Basic ' + Buffer.from(`0:${credentials[0]}`).toString('base64'),
+          'Basic ' + btoa(`0:${credentials[0]}`),
         );
       expect(response.status).not.toBe(403);
     },
@@ -468,9 +468,7 @@ describe('authentificaton', () => {
         .set(
           'Authorization',
           'Basic ' +
-            Buffer.from(`${SPECTATOR}:${spectatorCredential}`).toString(
-              'base64',
-            ),
+          btoa(`${SPECTATOR}:${spectatorCredential}`),
         );
       expect(response.status).not.toBe(403);
     },
@@ -484,7 +482,7 @@ describe('authentificaton', () => {
         .set(
           'Authorization',
           'Basic ' +
-            Buffer.from(`${SPECTATOR}:wrongCredentials`).toString('base64'),
+          btoa(`${SPECTATOR}:wrongCredentials`),
         );
       expect(response.status).toBe(403);
     },
