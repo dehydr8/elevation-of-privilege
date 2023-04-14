@@ -1,10 +1,14 @@
-import * as joint from 'jointjs';
+import { shapes, V, dia, util } from 'jointjs';
+import {
+  defineHasOpenThreats,
+  defineOutOfScope,
+  defineProperties,
+  editNameElement,
+  editNameLink,
+  wordUnwrap,
+} from './utils.js';
 
-var V = joint.V;
-
-joint.shapes.tm = {};
-
-joint.shapes.tm.Highlighter = {
+const Highlighter = {
   highlighter: {
     name: 'addClass',
     options: {
@@ -13,123 +17,9 @@ joint.shapes.tm.Highlighter = {
   },
 };
 
-//utility functions for threat model shapes
-
-joint.shapes.tm.utils = {
-  shapeFromClassName: function (str) {
-    var arr = str.split('.');
-    /*jshint validthis: true */
-    var fn = window || this;
-    for (var i = 0, len = arr.length; i < len; i++) {
-      fn = fn[arr[i]];
-    }
-
-    fn = require('jointjs')[fn];
-
-    if (typeof fn !== 'function') {
-      throw new Error('function not found');
-    }
-
-    return fn;
-  },
-
-  editNameElement: function (element, value) {
-    element.attr('text/text', this.wordWrap(element, value));
-  },
-
-  editNameLink: function (element, value) {
-    element.label(0, {
-      attrs: { text: { text: this.wordWrap(element, value) } },
-    });
-  },
-
-  wordWrap: function (element, text) {
-    var size = element.isLink()
-      ? { width: 140, height: 80 }
-      : element.get('size');
-    return joint.util.breakText(text, size, {});
-  },
-
-  wordUnwrap: function (text) {
-    return text.replace('\n', ' ');
-  },
-
-  defineProperties: function (proto, properties) {
-    properties.forEach(function (property) {
-      Object.defineProperty(proto, property, {
-        get: function () {
-          return this.prop(property);
-        },
-        set: function (value) {
-          this.prop(property, value);
-        },
-      });
-    });
-  },
-
-  defineOutOfScope: function (proto, selectorClass) {
-    Object.defineProperty(proto, 'outOfScope', {
-      get: function () {
-        return this.prop('outOfScope');
-      },
-      set: function (value) {
-        var selector = '.' + selectorClass + '/class';
-        var originalClass =
-          this.attr(selector) || selectorClass + ' hasNoOpenThreats isInScope';
-
-        if (value) {
-          this.attr(
-            selector,
-            originalClass.replace('isInScope', 'isOutOfScope'),
-          );
-        } else {
-          this.attr(
-            selector,
-            originalClass.replace('isOutOfScope', 'isInScope'),
-          );
-        }
-
-        this.prop('outOfScope', value);
-      },
-    });
-  },
-
-  defineHasOpenThreats: function (proto, selectorClasses) {
-    Object.defineProperty(proto, 'hasOpenThreats', {
-      get: function () {
-        return this.prop('hasOpenThreats');
-      },
-      set: function (value) {
-        var element = this;
-
-        selectorClasses.forEach(function (selectorClass) {
-          var selector = '.' + selectorClass + '/class';
-          var originalClass =
-            element.attr(selector) ||
-            selectorClass + ' hasNoOpenThreats isInScope';
-
-          if (value) {
-            element.attr(
-              selector,
-              originalClass.replace('hasNoOpenThreats', 'hasOpenThreats'),
-            );
-          } else {
-            element.attr(
-              selector,
-              originalClass.replace('hasOpenThreats', 'hasNoOpenThreats'),
-            );
-          }
-        });
-
-        this.prop('hasOpenThreats', value);
-      },
-    });
-  },
-};
-
 //data flow shape
 
-joint.shapes.tm.Flow = joint.dia.Link.extend({
+const Flow = dia.Link.extend({
   markup: [
     '<path class="connection" stroke="black"/>',
     '<path class="marker-source" fill="black" stroke="black" />',
@@ -155,7 +45,7 @@ joint.shapes.tm.Flow = joint.dia.Link.extend({
     ];
   },
 
-  defaults: joint.util.deepSupplement(
+  defaults: util.defaultsDeep(
     {
       type: 'tm.Flow',
       attrs: {
@@ -163,32 +53,24 @@ joint.shapes.tm.Flow = joint.dia.Link.extend({
       },
       smooth: true,
     },
-    joint.dia.Link.prototype.defaults,
+    dia.Link.prototype.defaults,
   ),
 });
 
 //flow element properties
 
-Object.defineProperty(joint.shapes.tm.Flow.prototype, 'name', {
+Object.defineProperty(Flow.prototype, 'name', {
   get: function () {
-    return joint.shapes.tm.utils.wordUnwrap(
-      this.attributes.labels[0].attrs.text.text,
-    );
+    return wordUnwrap(this.attributes.labels[0].attrs.text.text);
   },
   set: function (value) {
-    joint.shapes.tm.utils.editNameLink(this, value);
+    editNameLink(this, value);
   },
 });
 
-joint.shapes.tm.utils.defineOutOfScope(
-  joint.shapes.tm.Flow.prototype,
-  'connection',
-);
-joint.shapes.tm.utils.defineHasOpenThreats(joint.shapes.tm.Flow.prototype, [
-  'connection',
-  'marker-target',
-]);
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Flow.prototype, [
+defineOutOfScope(Flow.prototype, 'connection');
+defineHasOpenThreats(Flow.prototype, ['connection', 'marker-target']);
+defineProperties(Flow.prototype, [
   'reasonOutOfScope',
   'protocol',
   'isEncrypted',
@@ -198,7 +80,7 @@ joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Flow.prototype, [
 
 //trust boundary shape
 
-joint.shapes.tm.Boundary = joint.dia.Link.extend({
+const Boundary = dia.Link.extend({
   markup: [
     '<path class="connection" stroke="black"/>',
     '<path class="marker-source" fill="black" stroke="black" />',
@@ -224,7 +106,7 @@ joint.shapes.tm.Boundary = joint.dia.Link.extend({
     ];
   },
 
-  defaults: joint.util.deepSupplement(
+  defaults: util.defaultsDeep(
     {
       type: 'tm.Boundary',
       attrs: {
@@ -236,13 +118,13 @@ joint.shapes.tm.Boundary = joint.dia.Link.extend({
       },
       smooth: true,
     },
-    joint.dia.Link.prototype.defaults,
+    dia.Link.prototype.defaults,
   ),
 });
 
 //element with tool bar
 
-joint.shapes.tm.toolElement = joint.shapes.basic.Generic.extend({
+const toolElement = shapes.basic.Generic.extend({
   toolMarkup: [
     '<g class="element-tools">',
     '<g class="element-tool-remove"><circle fill="red" r="11"/>',
@@ -256,7 +138,7 @@ joint.shapes.tm.toolElement = joint.shapes.basic.Generic.extend({
     '</g>',
   ].join(''),
 
-  defaults: joint.util.deepSupplement(
+  defaults: util.defaultsDeep(
     {
       attrs: {
         text: {
@@ -270,41 +152,32 @@ joint.shapes.tm.toolElement = joint.shapes.basic.Generic.extend({
         },
       },
     },
-    joint.shapes.basic.Generic.prototype.defaults,
+    shapes.basic.Generic.prototype.defaults,
   ),
 });
 
 //tool element properties
 
-Object.defineProperty(joint.shapes.tm.toolElement.prototype, 'name', {
+Object.defineProperty(toolElement.prototype, 'name', {
   get: function () {
-    return joint.shapes.tm.utils.wordUnwrap(this.attr('text/text'));
+    return wordUnwrap(this.attr('text/text'));
   },
   set: function (value) {
-    joint.shapes.tm.utils.editNameElement(this, value);
+    editNameElement(this, value);
   },
 });
 
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.toolElement.prototype, [
-  'reasonOutOfScope',
-  'threats',
-]);
-joint.shapes.tm.utils.defineOutOfScope(
-  joint.shapes.tm.toolElement.prototype,
-  'element-shape',
-);
-joint.shapes.tm.utils.defineHasOpenThreats(
-  joint.shapes.tm.toolElement.prototype,
-  ['element-shape', 'element-text'],
-);
+defineProperties(toolElement.prototype, ['reasonOutOfScope', 'threats']);
+defineOutOfScope(toolElement.prototype, 'element-shape');
+defineHasOpenThreats(toolElement.prototype, ['element-shape', 'element-text']);
 
 //process element shape
 
-joint.shapes.tm.Process = joint.shapes.tm.toolElement.extend({
+const Process = toolElement.extend({
   markup:
     '<g class="rotatable"><g class="scalable"><circle class="element-shape hasNoOpenThreats isInScope"/><title class="tooltip"/></g><text class="element-text hasNoOpenThreats isInScope"/></g>',
 
-  defaults: joint.util.deepSupplement(
+  defaults: util.defaultsDeep(
     {
       type: 'tm.Process',
       attrs: {
@@ -318,23 +191,21 @@ joint.shapes.tm.Process = joint.shapes.tm.toolElement.extend({
       },
       size: { width: 100, height: 100 },
     },
-    joint.shapes.tm.toolElement.prototype.defaults,
+    toolElement.prototype.defaults,
   ),
 });
 
 //define process element properties
 
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Process.prototype, [
-  'privilegeLevel',
-]);
+defineProperties(Process.prototype, ['privilegeLevel']);
 
 //data store element shape
 
-joint.shapes.tm.Store = joint.shapes.tm.toolElement.extend({
+const Store = toolElement.extend({
   markup:
     '<g class="rotatable"><g class="scalable"><rect/><path class="element-shape hasNoOpenThreats isInScope"/><title class="tooltip"/></g><text class="element-text hasNoOpenThreats isInScope"/></g>',
 
-  defaults: joint.util.deepSupplement(
+  defaults: util.defaultsDeep(
     {
       type: 'tm.Store',
       attrs: {
@@ -356,13 +227,13 @@ joint.shapes.tm.Store = joint.shapes.tm.toolElement.extend({
       },
       size: { width: 160, height: 80 },
     },
-    joint.shapes.tm.toolElement.prototype.defaults,
+    toolElement.prototype.defaults,
   ),
 });
 
 //data store properties
 
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Store.prototype, [
+defineProperties(Store.prototype, [
   'isALog',
   'storesCredentials',
   'isEncrypted',
@@ -371,11 +242,11 @@ joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Store.prototype, [
 
 //actor element shape
 
-joint.shapes.tm.Actor = joint.shapes.tm.toolElement.extend({
+const Actor = toolElement.extend({
   markup:
     '<g class="rotatable"><g class="scalable"><rect class="element-shape hasNoOpenThreats isInScope"/><title class="tooltip"/></g><text class="element-text hasNoOpenThreats isInScope"/></g>',
 
-  defaults: joint.util.deepSupplement(
+  defaults: util.defaultsDeep(
     {
       type: 'tm.Actor',
       attrs: {
@@ -391,25 +262,23 @@ joint.shapes.tm.Actor = joint.shapes.tm.toolElement.extend({
       },
       size: { width: 160, height: 80 },
     },
-    joint.shapes.tm.toolElement.prototype.defaults,
+    toolElement.prototype.defaults,
   ),
 });
 
 //actor properties
 
-joint.shapes.tm.utils.defineProperties(joint.shapes.tm.Store.prototype, [
-  'providesAuthentication',
-]);
+defineProperties(Store.prototype, ['providesAuthentication']);
 
 //custom views
 
-joint.shapes.tm.ToolElementView = joint.dia.ElementView.extend({
+const ToolElementView = dia.ElementView.extend({
   initialize: function () {
-    joint.dia.ElementView.prototype.initialize.apply(this, arguments);
+    dia.ElementView.prototype.initialize.apply(this, arguments);
   },
 
   render: function () {
-    joint.dia.ElementView.prototype.render.apply(this, arguments);
+    dia.ElementView.prototype.render.apply(this, arguments);
 
     this.renderTools();
     this.update();
@@ -451,14 +320,14 @@ joint.shapes.tm.ToolElementView = joint.dia.ElementView.extend({
       default:
     }
 
-    joint.dia.CellView.prototype.pointerclick.apply(this, arguments);
+    dia.CellView.prototype.pointerclick.apply(this, arguments);
   },
 
   setSelected: function () {
-    this.highlight(null, joint.shapes.tm.Highlighter);
+    this.highlight(null, Highlighter);
   },
   setUnselected: function () {
-    this.unhighlight(null, joint.shapes.tm.Highlighter);
+    this.unhighlight(null, Highlighter);
   },
   addLinkFrom: function () {
     this.linkFrom = true;
@@ -470,25 +339,40 @@ joint.shapes.tm.ToolElementView = joint.dia.ElementView.extend({
   },
 });
 
-joint.shapes.tm.StoreView = joint.shapes.tm.ToolElementView;
+const StoreView = ToolElementView;
 
-joint.shapes.tm.ActorView = joint.shapes.tm.ToolElementView;
+const ActorView = ToolElementView;
 
-joint.shapes.tm.ProcessView = joint.shapes.tm.ToolElementView;
+const ProcessView = ToolElementView;
 
-joint.shapes.tm.LinkView = joint.dia.LinkView.extend({
+const LinkView = dia.LinkView.extend({
   setSelected: function () {
-    this.highlight(null, joint.shapes.tm.Highlighter);
+    this.highlight(null, Highlighter);
   },
   setUnselected: function () {
-    this.unhighlight(null, joint.shapes.tm.Highlighter);
+    this.unhighlight(null, Highlighter);
   },
 });
 
-joint.shapes.tm.FlowView = joint.shapes.tm.LinkView;
+const FlowView = LinkView;
 
-joint.shapes.tm.BoundaryView = joint.shapes.tm.LinkView;
+const BoundaryView = LinkView;
 
-if (typeof exports === 'object') {
-  module.exports = joint.shapes.tm;
-}
+const tm = {
+  Highlighter,
+  Flow,
+  Boundary,
+  toolElement,
+  Process,
+  Store,
+  Actor,
+  ToolElementView,
+  StoreView,
+  ActorView,
+  ProcessView,
+  LinkView,
+  FlowView,
+  BoundaryView,
+};
+
+Object.assign(shapes, { tm });
