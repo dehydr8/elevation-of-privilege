@@ -43,7 +43,7 @@ const DownloadButton: FC<DownloadButtonProps> = ({
       const res = await fetch(apiEndpointUrl, {
         headers: {
           Authorization:
-            'Basic ' + Buffer.from(playerID + ':' + secret).toString('base64'),
+            'Basic ' + btoa(playerID + ':' + secret),
         },
       });
       if (!res.ok) {
