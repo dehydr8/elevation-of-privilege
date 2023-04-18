@@ -1,6 +1,6 @@
 .threat-bar {
   position: fixed;
-  right: 310px;
+  right: 330px;
   max-height: calc(100% - 250px - 3rem);;
   width: 500px;
   overflow-y: auto;

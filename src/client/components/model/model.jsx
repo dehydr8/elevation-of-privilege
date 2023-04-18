@@ -4,7 +4,7 @@ import * as joint from 'jointjs';
 import 'jointjs/dist/joint.css';
 import '../../jointjs/joint-tm.css';
 // eslint-disable-next-line
-import Shapes from '../../jointjs/shapes';
+import '../../jointjs/shapes';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import './model.css';

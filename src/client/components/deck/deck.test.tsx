@@ -8,9 +8,9 @@ it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
     <Deck
-      suit=""
+      suit={DEFAULT_START_SUIT}
       cards={[]}
-      phase="play"
+      isInThreatStage={true}
       round={0}
       current={false}
       active={false}
@@ -31,7 +31,7 @@ it('renders active card correctly', () => {
     <Deck
       suit={DEFAULT_START_SUIT}
       cards={['T3', 'S2']}
-      phase="play"
+      isInThreatStage={true}
       round={0}
       current={true}
       active={true}

@@ -28,7 +28,7 @@ const ImageModel: FC<ImageModelProps> = ({
       headers: {
         Authorization:
           'Basic ' +
-          Buffer.from(playerID + ':' + credentials).toString('base64'),
+          btoa(playerID + ':' + credentials),
       },
     });
     if (!res.ok) {

@@ -2,9 +2,9 @@ FROM node:16.13.1-alpine3.14 AS builder
 WORKDIR /usr/src/app
 COPY package.json ./
 COPY package-lock.json ./
+RUN npm ci
 COPY tsconfig.server.json ./
 COPY ./src ./src
-RUN npm ci
 RUN npm run build:server
 
 FROM node:16.13.1-alpine3.14 AS dependency-installer
