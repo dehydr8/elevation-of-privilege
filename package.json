@@ -16,7 +16,7 @@
     "jointjs": "^3.6.2",
     "koa": "^2.13.4",
     "koa-body": "^4.2.0",
-    "koa-router": "^10.1.1",
+    "koa-router": "^12.0.0",
     "koa-send": "^5.0.1",
     "lodash": "^4.17.21",
     "node-persist": "^3.1.0",
