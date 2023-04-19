@@ -81,7 +81,7 @@
     "@types/seedrandom": "^3.0.2",
     "@types/superagent": "^4.1.15",
     "@types/uuid": "^8.3.4",
-    "eslint": "^8.36.0",
+    "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
