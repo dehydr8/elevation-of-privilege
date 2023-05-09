@@ -49,12 +49,12 @@ const Timer: FC<TimerProps> = ({ active = true, duration, targetTime }) => {
         size={150}
         duration={duration}
         initialRemainingTime={Math.max(timeDifferenceInSeconds, 0)}
-        colors={[
-          ['#28a745', 0.625],
-          ['#ffc107', 0.25],
-          ['#dc3545', 0.125],
-        ]}
-        onComplete={() => [false, 0]}
+        colors={['#28a745', '#ffc107', '#dc3545']}
+        colorsTime={[0.625, 0.25, 0.125]}
+        onComplete={() => ({
+          shouldRepeat: false,
+          newInitialRemainingTime: 0 
+        })}
       >
         {renderTime}
       </CountdownCircleTimer>
