@@ -85,7 +85,7 @@ describe('cardDefintions', () => {
 
     it('should return all cards from Cumulus', () => {
       const cards = getAllCards(GameMode.CUMULUS);
-      expect(cards.length).toEqual(13 + 13 + 12 + 9 + 11);
+      expect(cards.length).toEqual(13 + 13 + 12 + 10 + 11);
     });
   });
 
