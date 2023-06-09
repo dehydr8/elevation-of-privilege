@@ -248,10 +248,10 @@ export const downloadThreatsMarkdownFile = (gameServer) => async (ctx) => {
 };
 
 function enrichThreatWithCategory(threat, gameMode) {
-  if (threat.type && isSuit(threat.type)) {
+  if (threat.type) {
     return ({
       ...threat,
-      category: getSuitDisplayName(gameMode, threat.type)
+      category: isSuit(threat.type) ? getSuitDisplayName(gameMode, threat.type) : threat.type
     });
   }
   
