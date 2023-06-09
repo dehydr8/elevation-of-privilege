@@ -99,6 +99,8 @@ class Board extends React.Component {
       this.props.ctx.activePlayers[this.props.playerID] === 'threats'
         ? true
         : false;
+    // If this.props.playerID is unset, then we are in spectator mode and check whether the first player is in threat stage.
+    const shouldShowTimer = isInThreatStage || (!this.props.playerID && this.props.ctx.activePlayers?.[0] === 'threats');
     const active = current || isInThreatStage;
 
     let dealtCard = getDealtCard(this.props.G);
@@ -169,7 +171,7 @@ class Board extends React.Component {
           secret={this.props.credentials}
         />
         <Timer
-          active={isInThreatStage}
+          active={shouldShowTimer}
           targetTime={this.props.G.turnFinishTargetTime}
           duration={parseInt(this.props.G.turnDuration)}
           key={isInThreatStage}
