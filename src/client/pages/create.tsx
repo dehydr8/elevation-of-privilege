@@ -510,7 +510,7 @@ class Create extends React.Component<CreateProps, CreateState> {
                         this.state.modelType !== ModelType.PRIVACY_ENHANCED
                       }
                       type="text"
-                      placeholder="Provide link to model (e.g. in wiki)"
+                      placeholder="Optional: Provide link to model (e.g. in wiki)"
                       className="text-input-wide"
                       onChange={(e) => this.onModelRefUpdated(e)}
                     />
