@@ -323,16 +323,19 @@ it('Download threat file', async () => {
 =======
 
 1. **title**
+    - *Category:* Spoofing
     - *Severity:* High
     - *Author:* Player 1
     - *Description:* &lt;img src="" onerror="alert\\('XSS'\\) alt="Uh oh..."&gt;
     - *Mitigation:* mitigation
 2. **title**
+    - *Category:* Spoofing
     - *Severity:* High
     - *Author:* Player 1
     - *Description:* description
     - *Mitigation:* mitigation
 3. **title**
+    - *Category:* Spoofing
     - *Severity:* High
     - *Author:* Player 1
     - *Description:* description
