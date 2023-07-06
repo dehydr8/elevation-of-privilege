@@ -23,8 +23,6 @@ type TimerProps = {
 const Timer: FC<TimerProps> = ({ active = true, duration, targetTime }) => {
   const [painted, setPainted] = useState(false);
 
-  console.log(`Printing TIMER: active=${active}`);
-
   useEffect(() => {
     // This is a bit of a workaround
     // The timer is updated with window.requestAnimationFrame however the page can be rendered before

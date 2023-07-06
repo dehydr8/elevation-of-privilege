@@ -30,7 +30,10 @@ class Status extends React.Component {
   }
 
   render() {
-    if (!this.props.isInThreatStage) {
+    const isSpectator = !this.props.playerID;
+    const isFirstPlayerInThreatStage = this.props.ctx.activePlayers?.[0] === 'threats';
+
+    if (!(this.props.isInThreatStage || (isSpectator && isFirstPlayerInThreatStage))) {
       let currentPlayerName = resolvePlayerName(
         this.props.ctx.currentPlayer,
         this.props.names,
