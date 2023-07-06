@@ -99,6 +99,11 @@ class Board extends React.Component {
       this.props.ctx.activePlayers[this.props.playerID] === 'threats'
         ? true
         : false;
+    
+    const isSpectator = !this.props.playerID;
+    const isFirstPlayerInThreatStage = this.props.ctx.activePlayers?.[0] === 'threats';
+    
+    const shouldShowTimer = isInThreatStage || (isSpectator && isFirstPlayerInThreatStage);
     const active = current || isInThreatStage;
 
     let dealtCard = getDealtCard(this.props.G);
@@ -169,7 +174,7 @@ class Board extends React.Component {
           secret={this.props.credentials}
         />
         <Timer
-          active={isInThreatStage}
+          active={shouldShowTimer}
           targetTime={this.props.G.turnFinishTargetTime}
           duration={parseInt(this.props.G.turnDuration)}
           key={isInThreatStage}
