@@ -58,7 +58,7 @@ interface CreateState {
   turnDuration: number;
   provideModelThruAlternativeChannel: boolean;
   gameMode: GameMode;
-  modelRef?: string;
+  modelReference?: string;
 }
 
 class Create extends React.Component<CreateProps, CreateState> {
@@ -89,7 +89,7 @@ class Create extends React.Component<CreateProps, CreateState> {
       turnDuration: DEFAULT_TURN_DURATION,
       provideModelThruAlternativeChannel: false,
       gameMode: DEFAULT_GAME_MODE,
-      modelRef: undefined,
+      modelReference: undefined,
     };
 
     this.onPlayersUpdated = this.onPlayersUpdated.bind(this);
@@ -138,8 +138,8 @@ class Create extends React.Component<CreateProps, CreateState> {
     formData.append('startSuit', this.state.startSuit);
     formData.append('turnDuration', `${this.state.turnDuration}`);
     formData.append('gameMode', this.state.gameMode);
-    if (this.state.modelRef) {
-      formData.append('modelRef', this.state.modelRef);
+    if (this.state.modelReference) {
+      formData.append('modelReference', this.state.modelReference);
     }
 
     // Use Fetch API (not superagent)
@@ -251,7 +251,7 @@ class Create extends React.Component<CreateProps, CreateState> {
   onModelRefUpdated(e: ChangeEvent<HTMLInputElement>): void {
     this.setState({
       ...this.state,
-      modelRef: e.target.value,
+      modelReference: e.target.value,
     });
   }
 

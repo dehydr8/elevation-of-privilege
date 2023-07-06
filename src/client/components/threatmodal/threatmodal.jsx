@@ -201,12 +201,12 @@ class ThreatModal extends React.Component {
     return (
       <ModalBody>
         <FormGroup>
-          <Label for="ref">
+          <Label for="referenceInputField">
             Reference <em>(e.g. link to external bug tracking system)</em>
           </Label>
           <Input
             type="text"
-            name="ref"
+            name="referenceInputField"
             disabled={!this.isOwner}
             autoComplete="off"
             value={this.state.title}

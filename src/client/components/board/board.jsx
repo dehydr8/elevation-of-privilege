@@ -122,7 +122,7 @@ class Board extends React.Component {
           />
         )}
         {this.props.G.modelType === ModelType.PRIVACY_ENHANCED && (
-          <PrivacyEnhancedModel modelRef={this.props.G.modelRef} />
+          <PrivacyEnhancedModel modelReference={this.props.G.modelReference} />
         )}
         <div className="player-wrap">
           <div className="playingCardsContainer">

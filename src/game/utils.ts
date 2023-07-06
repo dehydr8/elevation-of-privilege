@@ -22,7 +22,7 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
   const gameMode = setupData?.gameMode ?? DEFAULT_GAME_MODE;
   const modelType = setupData?.modelType ?? ModelType.PRIVACY_ENHANCED;
   const turnDuration = setupData?.turnDuration ?? DEFAULT_TURN_DURATION;
-  const modelRef = setupData?.modelRef;
+  const modelReference = setupData?.modelReference;
 
   const deck = getAllCards(gameMode);
   const startingCard = getStartingCard(gameMode, startSuit);
@@ -57,7 +57,7 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
     gameMode: gameMode,
     turnDuration: turnDuration,
     modelType,
-    modelRef,
+    modelReference,
   };
 }
 

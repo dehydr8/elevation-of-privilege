@@ -29,7 +29,7 @@ export const createGame = (gameServer) => async (ctx) => {
           turnDuration: ctx.request.body.turnDuration,
           gameMode: ctx.request.body.gameMode,
           modelType: ctx.request.body.modelType,
-          modelRef: ctx.request.body.modelRef,
+          modelReference: ctx.request.body.modelReference,
           spectatorCredential,
         },
       });
