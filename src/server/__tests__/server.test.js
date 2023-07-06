@@ -323,34 +323,41 @@ it('Download threat file', async () => {
 =======
 
 1. **title**
+    - *Category:* Spoofing
     - *Severity:* High
     - *Author:* Player 1
     - *Description:* &lt;img src="" onerror="alert\\('XSS'\\) alt="Uh oh..."&gt;
     - *Mitigation:* mitigation
 2. **title**
+    - *Category:* Spoofing
     - *Severity:* High
     - *Author:* Player 1
     - *Description:* description
     - *Mitigation:* mitigation
 3. **title**
+    - *Category:* Spoofing
     - *Severity:* High
     - *Author:* Player 1
     - *Description:* description
     - *Mitigation:* mitigation
 4. **Accessing DB credentials**
+    - *Category:* Information disclosure
     - *Severity:* High
     - *Description:* The Background Worker configuration stores the credentials used by the worker to access the DB. An attacker could compromise the Background Worker and get access to the DB credentials.
     - *Mitigation:* \\[Click Me\\]\\(javascript:alert\\('XSS'\\)\\)
 5. **Unauthorised access**
+    - *Category:* Information disclosure
     - *Severity:* High
     - *Description:* An attacker could make an query call on the DB,
     - *Mitigation:* Require all queries to be authenticated.
 6. **Credential theft**
+    - *Category:* Information disclosure
     - *Severity:* Medium
     - *Author:* The Model
     - *Description:* An attacker could obtain the DB credentials ans use them to make unauthorised queries.
     - *Mitigation:* Use a firewall to restrict access to the DB to only the Background Worker IP address.
 7. **\\!\\[Uh oh...\\]\\(https://www.example.com/image.png"onload="alert\\('XSS'\\)\\)**
+    - *Category:* Information disclosure
     - *Severity:* High
     - *Description:* The Web Application Config stores credentials used  by the Web App to access the message queue. These could be stolen by an attacker and used to read confidential data or place poison message on the queue.
     - *Mitigation:* The Message Queue credentials should be encrypted. newlines shouldn't break the formatting

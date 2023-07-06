@@ -371,6 +371,10 @@ const CARD_DECKS: CardDeckDefinitions = {
   },
 };
 
+export function isSuit(str: string): str is Suit {
+  return ['A', 'B', 'C', 'D', 'E', 'T'].includes(str);
+}
+
 export function getStartingCard(gameMode: GameMode, suit: Suit): Card {
   const usedSuit =
     CARD_DECKS[gameMode][suit].cards.length > 0

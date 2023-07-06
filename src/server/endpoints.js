@@ -3,7 +3,7 @@ import send from 'koa-send';
 import request from 'superagent';
 import { v4 as uuidv4 } from 'uuid';
 import { ElevationOfPrivilege } from '../game/eop';
-import { getSuitDisplayName } from '../utils/cardDefinitions';
+import { getSuitDisplayName, isSuit } from '../utils/cardDefinitions';
 import { DEFAULT_MODEL, ModelType } from '../utils/constants';
 import { GameMode } from '../utils/GameMode';
 import { INTERNAL_API_PORT } from '../utils/serverConfig';
@@ -244,8 +244,19 @@ export const downloadThreatsMarkdownFile = (gameServer) => async (ctx) => {
   logEvent(`Download threats: ${matchID}`);
   ctx.attachment(filename);
   ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
-  ctx.body = formatThreats(threats, date);
+  ctx.body = formatThreats(threats.map(threat => enrichThreatWithCategory(threat, game.state.G.gameMode)), date);
 };
+
+function enrichThreatWithCategory(threat, gameMode) {
+  if (threat.type) {
+    return ({
+      ...threat,
+      category: isSuit(threat.type) ? getSuitDisplayName(gameMode, threat.type) : threat.type
+    });
+  }
+  
+  return threat;  
+}
 
 function getThreats(gameState, metadata, model) {
   var threats = [];
@@ -294,6 +305,10 @@ function formatSingleThreat(threat, index) {
   const lines = [
     `${index + 1}. **${escapeMarkdownText(threat.title.trim())}**`,
   ];
+
+  if ('category' in threat) {
+    lines.push(`    - *Category:* ${escapeMarkdownText(threat.category)}`);
+  }
 
   if ('severity' in threat) {
     lines.push(`    - *Severity:* ${escapeMarkdownText(threat.severity)}`);
