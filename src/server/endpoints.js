@@ -29,6 +29,7 @@ export const createGame = (gameServer) => async (ctx) => {
           turnDuration: ctx.request.body.turnDuration,
           gameMode: ctx.request.body.gameMode,
           modelType: ctx.request.body.modelType,
+          modelReference: ctx.request.body.modelReference,
           spectatorCredential,
         },
       });
@@ -58,7 +59,7 @@ export const createGame = (gameServer) => async (ctx) => {
         break;
       }
 
-      case ModelType.DEFAULT: {
+      case ModelType.PRIVACY_ENHANCED: {
         await gameServer.db.setModel(gameId, DEFAULT_MODEL);
         break;
       }
@@ -149,7 +150,7 @@ export const downloadThreatDragonModel = (gameServer) => async (ctx) => {
     model: true,
   });
   const isJsonModel =
-    game.state.G.modelType == ModelType.DEFAULT ||
+    game.state.G.modelType == ModelType.PRIVACY_ENHANCED ||
     game.state.G.modelType == ModelType.THREAT_DRAGON;
 
   if (!isJsonModel) {
@@ -221,7 +222,7 @@ export const downloadThreatsMarkdownFile = (gameServer) => async (ctx) => {
   });
 
   const isJsonModel =
-    game.state.G.modelType == ModelType.DEFAULT ||
+    game.state.G.modelType == ModelType.PRIVACY_ENHANCED ||
     game.state.G.modelType == ModelType.THREAT_DRAGON;
   const threats = getThreats(
     game.state,

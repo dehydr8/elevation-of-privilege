@@ -43,8 +43,7 @@ class Sidebar extends React.Component {
         <div className="text-center">
           <Footer short />
         </div>
-        {(this.props.G.modelType === ModelType.THREAT_DRAGON ||
-          this.props.G.modelType === ModelType.DEFAULT) && (
+        {this.props.G.modelType === ModelType.THREAT_DRAGON && (
           <DownloadButton
             matchID={this.props.matchID}
             playerID={this.props.playerID}

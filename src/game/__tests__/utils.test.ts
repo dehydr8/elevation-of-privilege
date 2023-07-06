@@ -34,10 +34,6 @@ describe('utils', () => {
 
     [
       {
-        testCase: 'the default model',
-        modelType: ModelType.DEFAULT,
-      },
-      {
         testCase: 'a Threat Dragon model',
         modelType: ModelType.THREAT_DRAGON,
       },

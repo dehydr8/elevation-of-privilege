@@ -58,6 +58,7 @@ interface CreateState {
   turnDuration: number;
   provideModelThruAlternativeChannel: boolean;
   gameMode: GameMode;
+  modelReference?: string;
 }
 
 class Create extends React.Component<CreateProps, CreateState> {
@@ -81,13 +82,14 @@ class Create extends React.Component<CreateProps, CreateState> {
       spectatorSecret: ``,
       creating: false,
       created: false,
-      modelType: ModelType.DEFAULT,
+      modelType: ModelType.IMAGE,
       model: undefined,
       image: undefined,
       startSuit: DEFAULT_START_SUIT,
       turnDuration: DEFAULT_TURN_DURATION,
       provideModelThruAlternativeChannel: false,
       gameMode: DEFAULT_GAME_MODE,
+      modelReference: undefined,
     };
 
     this.onPlayersUpdated = this.onPlayersUpdated.bind(this);
@@ -122,7 +124,7 @@ class Create extends React.Component<CreateProps, CreateState> {
 
     formData.append('players', `${this.state.players}`);
     formData.append('modelType', this.state.modelType);
-    if (this.state.modelType !== ModelType.DEFAULT) {
+    if (this.state.modelType !== ModelType.PRIVACY_ENHANCED) {
       formData.append(
         'model',
         this.state.modelType === ModelType.IMAGE
@@ -136,6 +138,9 @@ class Create extends React.Component<CreateProps, CreateState> {
     formData.append('startSuit', this.state.startSuit);
     formData.append('turnDuration', `${this.state.turnDuration}`);
     formData.append('gameMode', this.state.gameMode);
+    if (this.state.modelReference) {
+      formData.append('modelReference', this.state.modelReference);
+    }
 
     // Use Fetch API (not superagent)
     const response = await fetch(`${this.apiBase}/game/create`, {
@@ -240,6 +245,13 @@ class Create extends React.Component<CreateProps, CreateState> {
     this.setState({
       ...this.state,
       turnDuration: Number.parseInt(e.target.value),
+    });
+  }
+
+  onModelRefUpdated(e: ChangeEvent<HTMLInputElement>): void {
+    this.setState({
+      ...this.state,
+      modelReference: e.target.value,
     });
   }
 
@@ -466,6 +478,7 @@ class Create extends React.Component<CreateProps, CreateState> {
                       name="model-type"
                       value={ModelType.IMAGE}
                       onChange={this.updateModelType}
+                      checked={this.state.modelType === ModelType.IMAGE}
                     />
                     Provide Model via an image
                   </Label>
@@ -484,12 +497,23 @@ class Create extends React.Component<CreateProps, CreateState> {
                     <Input
                       id="radio-button-default-model"
                       type="radio"
-                      value={ModelType.DEFAULT}
+                      value={ModelType.PRIVACY_ENHANCED}
                       name="model-type"
                       onChange={this.updateModelType}
-                      checked={this.state.modelType === ModelType.DEFAULT}
+                      checked={
+                        this.state.modelType === ModelType.PRIVACY_ENHANCED
+                      }
                     />
-                    Provide model via a different channel (e.g. video stream)
+                    Privacy enhanced mode.
+                    <Input
+                      disabled={
+                        this.state.modelType !== ModelType.PRIVACY_ENHANCED
+                      }
+                      type="text"
+                      placeholder="Optional: Provide link to model (e.g. in wiki)"
+                      className="text-input-wide"
+                      onChange={(e) => this.onModelRefUpdated(e)}
+                    />
                   </Label>
                 </FormGroup>
               </Col>

@@ -26,3 +26,7 @@ table {
 .spectator-row {
   border-top: 5px double #eee;
 }
+
+.text-input-wide {
+  width: 100%;
+}

@@ -24,5 +24,6 @@ export interface GameState {
   gameMode: GameMode;
   turnDuration: number;
   modelType: ModelType;
+  modelReference?: string;
   turnFinishTargetTime?: number;
 }
