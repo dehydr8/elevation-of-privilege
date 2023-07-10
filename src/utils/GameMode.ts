@@ -3,7 +3,7 @@ import type { Card } from './cardDefinitions';
 export enum GameMode {
   EOP = 'Elevation of Privilege',
   CORNUCOPIA = 'OWASP Cornucopia',
-  CUMULUS = 'Cumulus',
+  CUMULUS = 'OWASP Cumulus',
 }
 
 export const DEFAULT_GAME_MODE = GameMode.EOP;

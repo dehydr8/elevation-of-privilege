@@ -289,7 +289,7 @@ const CARD_DECKS: CardDeckDefinitions = {
         'AK',
         'AA',
       ],
-      isTrump: true,
+      isTrump: false,
       isDefault: false,
     },
     B: {
@@ -365,7 +365,7 @@ const CARD_DECKS: CardDeckDefinitions = {
         'TK',
         'TA',
       ],
-      isTrump: false,
+      isTrump: true,
       isDefault: true,
     },
   },
