@@ -23,3 +23,13 @@
 .player-wrap:hover {
   z-index: 1;
 }
+
+.board-footer {
+  position: fixed;
+  left: 1rem;
+  bottom: 0;
+  width: 6rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 70%;
+}

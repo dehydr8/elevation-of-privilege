@@ -14,6 +14,8 @@ import { ModelType, SPECTATOR } from '../../../utils/constants';
 import LicenseAttribution from '../license/licenseAttribution';
 import { API_PORT } from '../../../utils/serverConfig';
 import PrivacyEnhancedModel from '../privacyEnhancedModel/privacyEnhancedModel';
+import Imprint from '../footer/imprint';
+import Privacy from '../footer/privacy';
 
 class Board extends React.Component {
   static get propTypes() {
@@ -158,6 +160,10 @@ class Board extends React.Component {
                 gameMode={this.props.G.gameMode}
               />
             )}
+          </div>
+          <div className='board-footer'>
+            <Imprint />
+            <Privacy />
           </div>
           <LicenseAttribution gameMode={this.props.G.gameMode} />
         </div>
