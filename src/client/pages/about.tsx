@@ -7,10 +7,12 @@ import { Card, CardBody, CardHeader, Col, Container, Row } from 'reactstrap';
 
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
+import Banner from '../components/banner/banner';
 
 const About: FC = () => {
   return (
     <div>
+      <Banner />
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       <Helmet bodyAttributes={{ style: 'background-color : #000' }} />
       <Container className="about" fluid>

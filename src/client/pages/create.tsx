@@ -40,6 +40,7 @@ import CopyButton from '../components/copybutton/copybutton';
 import Footer from '../components/footer/footer';
 import Logo from '../components/logo/logo';
 import '../styles/create.css';
+import Banner from '../components/banner/banner';
 
 type CreateProps = Record<string, never>;
 
@@ -307,6 +308,7 @@ class Create extends React.Component<CreateProps, CreateState> {
     if (!this.state.created) {
       createForm = (
         <div>
+          <Banner />
           <p>
             Elevation of Privilege (EoP) is the easy way to get started and
             learn threat modeling. It is a card game that developers, architects
@@ -539,6 +541,7 @@ class Create extends React.Component<CreateProps, CreateState> {
     } else {
       linkDisplay = (
         <div>
+          <Banner />
           <div className="text-center text-muted">
             <p>
               The following links should be distributed to the players

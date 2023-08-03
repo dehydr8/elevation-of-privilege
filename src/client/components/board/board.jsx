@@ -16,6 +16,7 @@ import { API_PORT } from '../../../utils/serverConfig';
 import PrivacyEnhancedModel from '../privacyEnhancedModel/privacyEnhancedModel';
 import Imprint from '../footer/imprint';
 import Privacy from '../footer/privacy';
+import Banner from '../banner/banner';
 
 class Board extends React.Component {
   static get propTypes() {
@@ -112,6 +113,7 @@ class Board extends React.Component {
 
     return (
       <div>
+        <Banner />
         {this.props.G.modelType === ModelType.IMAGE && (
           <ImageModel
             playerID={this.props.playerID ?? SPECTATOR}

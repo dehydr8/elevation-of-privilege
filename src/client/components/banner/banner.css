@@ -1,0 +1,19 @@
+.banner {
+  background-color: rgb(221, 30, 30);
+  color: white;
+  position: fixed;
+  left: -9rem;
+  top: 12rem;
+  transform-origin: 0% 0%;
+  transform: rotate(-45deg);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  padding-left: 10rem;
+  padding-right: 10rem;
+  max-width: 30rem;
+  min-width: 30rem;
+  text-align: center;
+  font-weight: 900;
+  font-size: 115%;
+  z-index: 999;
+}

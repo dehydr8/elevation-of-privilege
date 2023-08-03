@@ -1,6 +1,7 @@
 FROM node:16.13.1-alpine3.14 AS builder
 ARG REACT_APP_EOP_IMPRINT
 ARG REACT_APP_EOP_PRIVACY
+ARG REACT_APP_EOP_BANNER_TEXT
 WORKDIR /usr/src/app
 COPY package.json ./
 COPY package-lock.json ./
@@ -15,6 +16,7 @@ COPY ./.prettierrc.cjs ./.prettierc.cjs
 COPY ./src ./src
 ENV REACT_APP_EOP_IMPRINT=$REACT_APP_EOP_IMPRINT
 ENV REACT_APP_EOP_PRIVACY=$REACT_APP_EOP_PRIVACY
+ENV REACT_APP_EOP_BANNER_TEXT=$REACT_APP_EOP_BANNER_TEXT
 RUN npm run build:client
 
 FROM nginxinc/nginx-unprivileged:1.20.1-alpine
