@@ -1,16 +1,50 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Create from '../create';
-import { BrowserRouter as Router } from 'react-router-dom';
+import Board from './board';
+import { DEFAULT_TURN_DURATION } from '../../../utils/constants';
+import { DEFAULT_GAME_MODE } from '../../../utils/GameMode';
 
-describe('<Create />', () => {
+jest.mock('../model/model.jsx');
+
+const G = {
+  dealt: [],
+  players: {
+    0: ['T3', 'T4', 'T5'],
+  },
+  order: [0, 1, 2],
+  scores: [0, 0, 0],
+  identifiedThreats: {},
+  selectedDiagram: 0,
+  selectedComponent: '',
+  threat: {
+    modal: false,
+  },
+  passed: [],
+  suit: 'T',
+  round: 1,
+  startingCard: 'T3',
+  gameMode: DEFAULT_GAME_MODE,
+  turnDuration: DEFAULT_TURN_DURATION,
+  turnFinishTargetTime: Date.now() + DEFAULT_TURN_DURATION * 1000,
+};
+const ctx = {
+  actionPlayers: [0, 1, 2],
+};
+Board.prototype.componentDidMount = jest.fn();
+
+
+describe('Board', () => {
   it('renders without crashing', async () => {
-    render(<Router><Create /></Router>);
+    
+    // when
+    render(<Board G={G} ctx={ctx} matchID="123" moves={{}} events={{}} playerID="0" />);
 
-    await screen.getAllByRole('button', {
-      name: 'Proceed'
+    // then
+    await screen.getByRole(`button`, {
+      name: `Download Threats`
     });
+  
   });
 
   it('should render imprint link if env var is defined', async () => {
@@ -18,7 +52,7 @@ describe('<Create />', () => {
     process.env.REACT_APP_EOP_IMPRINT = 'https://example.tld/imprint/'
 
     // when
-    render(<Router><Create /></Router>);
+    render(<Board G={G} ctx={ctx} matchID="123" moves={{}} events={{}} playerID="0" />);
 
     // when
 
@@ -34,7 +68,7 @@ describe('<Create />', () => {
     process.env.REACT_APP_EOP_IMPRINT = "";
 
     // when
-    render(<Router><Create /></Router>);
+    render(<Board G={G} ctx={ctx} matchID="123" moves={{}} events={{}} playerID="0" />);
 
     // then
     const links = await screen.queryAllByRole('link', {
@@ -48,7 +82,7 @@ describe('<Create />', () => {
     process.env.REACT_APP_EOP_PRIVACY = 'https://example.tld/privacy/'
 
     // when
-    render(<Router><Create /></Router>);
+    render(<Board G={G} ctx={ctx} matchID="123" moves={{}} events={{}} playerID="0" />);
 
     // when
 
@@ -64,7 +98,7 @@ describe('<Create />', () => {
     process.env.REACT_APP_EOP_PRIVACY = "";
 
     // when
-    render(<Router><Create /></Router>);
+    render(<Board G={G} ctx={ctx} matchID="123" moves={{}} events={{}} playerID="0" />);
 
     // then
     const links = await screen.queryAllByRole('link', {
@@ -72,5 +106,5 @@ describe('<Create />', () => {
     });
     expect(links.length).toBe(0);
   });
-
+  
 });

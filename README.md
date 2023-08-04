@@ -144,6 +144,22 @@ To build both the client and the server, just run
 npm run build
 ```
 
+#### Imprint and privacy notices
+
+Links to imprint and privacy notices can be included into the client, if the environment variable
+
+```bash
+export REACT_APP_EOP_IMPRINT="https://example.tld/imprint/"
+export REACT_APP_EOP_PRIVACY="https://example.tld/privacy/"
+```
+
+are set when building the app.
+When building the client via docker these env vars can be set by defining `build-args`
+
+```bash
+docker build --build-arg "EOP_IMPRINT=https://example.tld/imprint/" --build-arg "EOP_PRIVACY=https://example.tld/privacy/" -f docker/client.dockerfile . -t "some-tag"
+```
+
 ### Using MongoDB
 
 As of boardgame.io v0.39.0, MongoDB is no longer supported as a database connector. There is currently no external library providing this functionality, however there is an [implementation](https://github.com/boardgameio/boardgame.io/issues/6#issuecomment-656144940) posted on github. This class implements the abstract functions in [this base class](https://github.com/boardgameio/boardgame.io/blob/ce8ef4a16bcc420b05c5e0751b41f168352bce7d/src/server/db/base.ts#L49-L111).
