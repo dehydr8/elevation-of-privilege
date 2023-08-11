@@ -22,10 +22,13 @@ import {
 
 import type { Game } from 'boardgame.io';
 import type { GameState } from './gameState';
-import type { Ctx } from './context';
 import type { SetupData } from './setupData';
 
-export const ElevationOfPrivilege: Game<GameState, Ctx, SetupData> = {
+export const ElevationOfPrivilege: Game<
+  GameState,
+  Record<string, unknown>,
+  SetupData
+> = {
   name: 'elevation-of-privilege',
   setup: setupGame,
   playerView: PlayerView.STRIP_SECRETS,

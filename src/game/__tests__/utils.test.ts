@@ -7,7 +7,6 @@ import { GameMode } from '../../utils/GameMode';
 import { endTurnIf, setupGame, shuffleCards } from '../utils';
 import seedrandom from 'seedrandom';
 
-import type { Ctx } from '../context';
 import type { SetupData } from '../setupData';
 import {
   getAllCards,
@@ -15,17 +14,22 @@ import {
   Suit,
 } from '../../utils/cardDefinitions';
 import type { Card } from 'reactstrap';
+import type { Ctx, DefaultPluginAPIs, FnContext } from 'boardgame.io';
+import type { GameState } from '../gameState';
+
+type DefaultContext = DefaultPluginAPIs & { ctx: Ctx };
 
 describe('utils', () => {
   describe('setupGame', () => {
-    const ctx = {
+    const context = {
       random: {
         Shuffle: (deck) => deck,
       },
-    } as Ctx;
+      ctx: { numPlayers: 1 },
+    } as DefaultContext;
 
     it('when the model is an image, starts off with a selected dummy component, so the entire image is treated as selected', () => {
-      const game = setupGame(ctx, {
+      const game = setupGame(context, {
         modelType: ModelType.IMAGE,
       } as SetupData);
 
@@ -39,7 +43,7 @@ describe('utils', () => {
       },
     ].forEach(({ testCase, modelType }) =>
       it(`when the model is ${testCase}, starts off with no selected component`, () => {
-        const game = setupGame(ctx, { modelType } as SetupData);
+        const game = setupGame(context, { modelType } as SetupData);
 
         expect(game.selectedComponent).toEqual('');
       }),
@@ -104,11 +108,11 @@ describe('utils', () => {
     ].forEach((seed) => {
       const random = seedrandom(seed);
       const fakedShuffle = <T>(items: T[]) => items.sort(() => random() - 0.5);
-      const ctxBase = {
+      const baseContext = {
         random: {
           Shuffle: (deck: Card[]) => fakedShuffle<Card>(deck),
         },
-      } as Ctx;
+      };
 
       [
         {
@@ -144,10 +148,14 @@ describe('utils', () => {
       ].forEach(({ gameMode, numPlayers, expectedCardsPerHand }) => {
         const deck = getAllCards(gameMode);
         const startingCard = getStartingCard(gameMode, DEFAULT_START_SUIT);
-        const ctx = { ...ctxBase, numPlayers };
+
+        const context = {
+          ...baseContext,
+          ctx: { numPlayers },
+        } as DefaultContext;
 
         it(`should return hands in the correct dimensions for ${numPlayers} players for ${gameMode} (seed=${seed})`, () => {
-          const shuffledCards = shuffleCards(ctx, deck, startingCard);
+          const shuffledCards = shuffleCards(context, deck, startingCard);
 
           expect(shuffledCards.length).toEqual(numPlayers);
           expect(shuffledCards[0].length).toEqual(expectedCardsPerHand);
@@ -155,7 +163,7 @@ describe('utils', () => {
         });
 
         it(`should contain the starting card in any hand for ${numPlayers} players for ${gameMode} (seed=${seed})`, () => {
-          const shuffledCards = shuffleCards(ctx, deck, startingCard);
+          const shuffledCards = shuffleCards(context, deck, startingCard);
 
           expect(
             shuffledCards.some((cards) => cards.includes(startingCard)),
@@ -166,12 +174,12 @@ describe('utils', () => {
   });
 
   describe(`endTurnIf`, () => {
-    const ctx = {
+    const context = {
       random: {
         Shuffle: (deck) => deck,
       },
-      numPlayers: 5,
-    } as Ctx;
+      ctx: { numPlayers: 5 },
+    } as DefaultContext;
 
     const setupData = {
       modelType: ModelType.IMAGE,
@@ -179,50 +187,50 @@ describe('utils', () => {
     } as SetupData;
 
     it(`should return false if not every player did pass`, () => {
-      const game = {
-        ...setupGame(ctx, setupData),
+      const G = {
+        ...setupGame(context, setupData),
         passed: ['1', '2', '3', '4'],
         suit: DEFAULT_START_SUIT as Suit,
       };
 
-      const shouldEndTurn = endTurnIf(game, ctx);
+      const shouldEndTurn = endTurnIf({ ...context, G });
       expect(shouldEndTurn).toBeFalsy();
     });
 
     it(`should return true if every player did pass`, () => {
-      const game = {
-        ...setupGame(ctx, setupData),
+      const G = {
+        ...setupGame(context, setupData),
         passed: ['1', '2', '3', '4', '5'],
         suit: DEFAULT_START_SUIT as Suit,
       };
 
-      const shouldEndTurn = endTurnIf(game, ctx);
+      const shouldEndTurn = endTurnIf({ ...context, G });
       expect(shouldEndTurn).toBeTruthy();
     });
 
     it(`should return winner of round`, () => {
-      const game = {
-        ...setupGame(ctx, setupData),
+      const G = {
+        ...setupGame(context, setupData),
         passed: ['1', '2', '3', '4', '5'],
         suit: DEFAULT_START_SUIT as Suit,
         numCardsPlayed: 5,
         dealt: ['E2', 'EQ', 'AK', 'E3', 'E4'],
       };
 
-      const roundWinner = endTurnIf(game, ctx) as { next: string };
+      const roundWinner = endTurnIf({ ...context, G }) as { next: string };
       expect(roundWinner.next).toEqual('1');
     });
 
     it(`should return winner of round if trump was played`, () => {
-      const game = {
-        ...setupGame(ctx, setupData),
+      const G = {
+        ...setupGame(context, setupData),
         passed: ['1', '2', '3', '4', '5'],
         suit: DEFAULT_START_SUIT as Suit,
         numCardsPlayed: 5,
         dealt: ['E2', 'EQ', 'AK', 'T5', 'E4'],
       };
 
-      const roundWinner = endTurnIf(game, ctx) as { next: string };
+      const roundWinner = endTurnIf({ ...context, G }) as { next: string };
       expect(roundWinner.next).toEqual('3');
     });
   });

@@ -6,19 +6,18 @@ import { getDealtCard, getValidMoves } from '../utils/utils';
 import { getThreatDescription } from './definitions';
 import { hasPlayerPassed } from './utils';
 
-import type { Ctx } from './context';
 import type { GameState } from './gameState';
 import type { Threat } from './threat';
 import type { Suit } from '../utils/cardDefinitions';
+import type { MoveFn } from 'boardgame.io';
 
-export function toggleModal(
-  G: GameState,
-  ctx: Ctx,
-): GameState | typeof INVALID_MOVE {
+type MoveFnContext<G> = Parameters<MoveFn<G>>[0];
+
+export const toggleModal: MoveFn<GameState> = ({ G, playerID }) => {
   // if the player has passed, they shouldn't be able to toggle the modal
   if (
-    hasPlayerPassed(G, ctx) ||
-    (G.threat.modal && G.threat.owner !== ctx.playerID) ||
+    hasPlayerPassed(G, playerID) ||
+    (G.threat.modal && G.threat.owner !== playerID) ||
     G.suit === undefined
   ) {
     return INVALID_MOVE;
@@ -30,7 +29,7 @@ export function toggleModal(
       ...G.threat,
       modal: !G.threat.modal,
       new: true,
-      owner: ctx.playerID,
+      owner: playerID,
       type: G.suit,
       id: uuidv4(),
       title: '',
@@ -39,15 +38,14 @@ export function toggleModal(
       mitigation: '',
     },
   };
-}
+};
 
-export function toggleModalUpdate(
-  G: GameState,
-  ctx: Ctx,
+export const toggleModalUpdate: MoveFn<GameState> = (
+  { G, playerID },
   threat: Threat,
-): GameState | typeof INVALID_MOVE {
+) => {
   // if the player has passed, they shouldn't be able to toggle the modal
-  if (hasPlayerPassed(G, ctx) || threat.owner !== ctx.playerID) {
+  if (hasPlayerPassed(G, playerID) || threat.owner !== playerID) {
     return INVALID_MOVE;
   }
 
@@ -58,7 +56,7 @@ export function toggleModalUpdate(
       modal: !G.threat.modal,
       new: false,
       id: threat.id,
-      owner: ctx.playerID,
+      owner: playerID,
       title: threat.title,
       type: threat.type,
       severity: threat.severity,
@@ -66,14 +64,13 @@ export function toggleModalUpdate(
       mitigation: threat.mitigation,
     },
   };
-}
+};
 
 export function updateThreat<Field extends keyof Threat>(
-  G: GameState,
-  _: Ctx,
+  { G }: MoveFnContext<GameState>,
   field: Field,
   value: Threat[Field],
-): GameState | typeof INVALID_MOVE {
+): ReturnType<MoveFn<GameState>> {
   return {
     ...G,
     threat: {
@@ -83,13 +80,12 @@ export function updateThreat<Field extends keyof Threat>(
   };
 }
 
-export function selectDiagram(
-  G: GameState,
-  ctx: Ctx,
+export const selectDiagram: MoveFn<GameState> = (
+  { G, playerID },
   id: number,
-): GameState | typeof INVALID_MOVE {
+) => {
   // if the player has passed, they shouldn't be able to select diagrams
-  if (hasPlayerPassed(G, ctx)) {
+  if (hasPlayerPassed(G, playerID)) {
     return INVALID_MOVE;
   }
 
@@ -99,15 +95,11 @@ export function selectDiagram(
     selectedComponent: '',
     selectedThreat: '',
   };
-}
+};
 
-export function selectComponent(
-  G: GameState,
-  ctx: Ctx,
-  id: string,
-): GameState | typeof INVALID_MOVE {
+export const selectComponent: MoveFn = ({ G, playerID }, id: string) => {
   // if the player has passed, they shouldn't be able to select components
-  if (hasPlayerPassed(G, ctx)) {
+  if (hasPlayerPassed(G, playerID)) {
     return INVALID_MOVE;
   }
 
@@ -116,15 +108,14 @@ export function selectComponent(
     selectedComponent: id,
     selectedThreat: '',
   };
-}
+};
 
-export function selectThreat(
-  G: GameState,
-  ctx: Ctx,
+export const selectThreat: MoveFn<GameState> = (
+  { G, playerID },
   id: string,
-): GameState | typeof INVALID_MOVE {
+) => {
   // if the player has passed, they shouldn't be able to select threat
-  if (hasPlayerPassed(G, ctx)) {
+  if (hasPlayerPassed(G, playerID)) {
     return INVALID_MOVE;
   }
 
@@ -132,41 +123,40 @@ export function selectThreat(
     ...G,
     selectedThreat: id,
   };
-}
+};
 
-export function pass(G: GameState, ctx: Ctx): GameState | typeof INVALID_MOVE {
-  if (ctx.playerID === undefined) {
+export const pass: MoveFn<GameState> = ({ G, playerID }) => {
+  if (playerID === undefined) {
     return INVALID_MOVE;
   }
 
   const passed = [...G.passed];
 
-  if (!hasPlayerPassed(G, ctx)) {
-    passed.push(ctx.playerID);
+  if (!hasPlayerPassed(G, playerID)) {
+    passed.push(playerID);
   }
 
   return {
     ...G,
     passed,
   };
-}
+};
 
-export function deleteThreat(
-  G: GameState,
-  ctx: Ctx,
+export const deleteThreat: MoveFn<GameState> = (
+  { G, playerID },
   threat: Threat & { id: string },
-): GameState | typeof INVALID_MOVE {
+) => {
   // if the player has passed, they shouldn't be able to toggle the modal
   if (
-    hasPlayerPassed(G, ctx) ||
-    threat.owner !== ctx.playerID ||
-    ctx.playerID === undefined
+    hasPlayerPassed(G, playerID) ||
+    threat.owner !== playerID ||
+    playerID === undefined
   ) {
     return INVALID_MOVE;
   }
 
   const scores = [...G.scores];
-  scores[Number.parseInt(ctx.playerID)]--;
+  scores[Number.parseInt(playerID)]--;
 
   const identifiedThreats = _.cloneDeep(G.identifiedThreats);
   delete identifiedThreats[G.selectedDiagram][G.selectedComponent][threat.id];
@@ -177,19 +167,16 @@ export function deleteThreat(
     selectedThreat: '',
     identifiedThreats,
   };
-}
+};
 
-export function addOrUpdateThreat(
-  G: GameState,
-  ctx: Ctx,
-): GameState | typeof INVALID_MOVE {
+export const addOrUpdateThreat: MoveFn<GameState> = ({ G, playerID }) => {
   const threatTitle = G.threat.title?.trim();
   const threatDescription = G.threat.description?.trim();
   const threatMitigation = G.threat.mitigation?.trim();
 
   if (
-    ctx.playerID === undefined ||
-    G.threat.owner !== ctx.playerID ||
+    playerID === undefined ||
+    G.threat.owner !== playerID ||
     _.isEmpty(threatTitle) ||
     _.isEmpty(threatDescription) ||
     G.threat.id === undefined
@@ -201,7 +188,7 @@ export function addOrUpdateThreat(
 
   // only update score if it's a new threat
   if (G.threat.new) {
-    scores[Number.parseInt(ctx.playerID)]++;
+    scores[Number.parseInt(playerID)]++;
   }
 
   // TODO: have a cleaner or readable approach to updating this object
@@ -241,13 +228,9 @@ export function addOrUpdateThreat(
     selectedThreat: G.threat.id,
     identifiedThreats,
   };
-}
+};
 
-export function draw(
-  G: GameState,
-  ctx: Ctx,
-  card: string,
-): typeof INVALID_MOVE | GameState {
+export const draw: MoveFn<GameState> = ({ G, ctx, events }, card: string) => {
   const deck = [...G.players[Number.parseInt(ctx.currentPlayer)]];
   let suit = G.suit;
 
@@ -272,7 +255,7 @@ export function draw(
   dealtBy = ctx.currentPlayer;
 
   // move into threats stage
-  ctx.events?.setActivePlayers?.({ all: 'threats' });
+  events?.setActivePlayers?.({ all: 'threats' });
 
   return {
     ...G,
@@ -286,4 +269,4 @@ export function draw(
     },
     turnFinishTargetTime: Date.now() + G.turnDuration * 1000,
   };
-}
+};

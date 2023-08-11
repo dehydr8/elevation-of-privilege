@@ -1,4 +1,4 @@
-import type { PlayerID } from 'boardgame.io';
+import type { Ctx, DefaultPluginAPIs, FnContext, PlayerID } from 'boardgame.io';
 import {
   Card,
   Suit,
@@ -13,11 +13,13 @@ import {
   ModelType,
 } from '../utils/constants';
 import { DEFAULT_GAME_MODE, GameMode } from '../utils/GameMode';
-import type { Ctx } from './context';
 import type { GameState } from './gameState';
 import type { SetupData } from './setupData';
 
-export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
+export function setupGame(
+  { ctx, ...context }: DefaultPluginAPIs & { ctx: Ctx },
+  setupData?: SetupData,
+): GameState {
   const startSuit = setupData?.startSuit ?? DEFAULT_START_SUIT;
   const gameMode = setupData?.gameMode ?? DEFAULT_GAME_MODE;
   const modelType = setupData?.modelType ?? ModelType.PRIVACY_ENHANCED;
@@ -28,7 +30,7 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
   const startingCard = getStartingCard(gameMode, startSuit);
 
   const scores = new Array(ctx.numPlayers).fill(0);
-  const handsPerPlayers = shuffleCards(ctx, deck, startingCard);
+  const handsPerPlayers = shuffleCards({ ctx, ...context }, deck, startingCard);
 
   return {
     dealt: [],
@@ -62,7 +64,12 @@ export function setupGame(ctx: Ctx, setupData?: SetupData): GameState {
 }
 
 export function shuffleCards(
-  ctx: Ctx,
+  {
+    ctx,
+    random,
+  }: DefaultPluginAPIs & {
+    ctx: Ctx;
+  },
   deck: Card[],
   startingCard: Card,
 ): Card[][] {
@@ -72,11 +79,11 @@ export function shuffleCards(
   );
   const numberCardsToDeal = ctx.numPlayers * numberCardsPerHand;
 
-  const shuffledDeck = ctx.random.Shuffle<Card>(deck);
+  const shuffledDeck = random.Shuffle<Card>(deck);
   let choppedDeck = shuffledDeck.slice(0, numberCardsToDeal);
   if (!choppedDeck.includes(startingCard)) {
     choppedDeck[0] = startingCard;
-    choppedDeck = ctx.random.Shuffle<Card>(choppedDeck);
+    choppedDeck = random.Shuffle<Card>(choppedDeck);
   }
 
   // partition deck into player hands
@@ -107,15 +114,15 @@ function getNumberOfCardsPerHand(handsPerPlayer: Card[][]): number {
   return handsPerPlayer[0]?.length ?? 0;
 }
 
-export function firstPlayer(G: GameState): number {
+export function firstPlayer({ G }: FnContext<GameState>): number {
   return G.lastWinner;
 }
 
-export function hasPlayerPassed(G: GameState, ctx: Ctx): boolean {
-  return (G.passed as (string | undefined)[]).includes(ctx.playerID);
+export function hasPlayerPassed(G: GameState, playerID: PlayerID): boolean {
+  return (G.passed as (string | undefined)[]).includes(playerID);
 }
 
-export function endGameIf(G: GameState): number | undefined {
+export function endGameIf({ G }: FnContext<GameState>): number | undefined {
   if (G.round > G.maxRounds) {
     const scores = [...G.scores];
     const winner = scores.indexOf(Math.max(...scores));
@@ -123,10 +130,10 @@ export function endGameIf(G: GameState): number | undefined {
   }
 }
 
-export function endTurnIf(
-  G: GameState,
-  ctx: Ctx,
-): boolean | { next: PlayerID } {
+export function endTurnIf({
+  G,
+  ctx,
+}: FnContext<GameState>): boolean | { next: PlayerID } {
   if (G.suit === undefined) {
     // A turn must have a defined suit. Otherwise it is not a turn and cannot end.
     return false;
@@ -143,7 +150,7 @@ export function endTurnIf(
   return false;
 }
 
-export function onTurnEnd(G: GameState, ctx: Ctx): GameState {
+export function onTurnEnd({ G, ctx }: FnContext<GameState>): GameState {
   let dealt = [...G.dealt];
   let suit = G.suit;
   let dealtBy = G.dealtBy;

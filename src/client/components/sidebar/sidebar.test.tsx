@@ -3,9 +3,9 @@ import React from 'react';
 import Sidebar from './sidebar';
 import { DEFAULT_GAME_MODE } from '../../../utils/GameMode';
 import { render, screen } from '@testing-library/react';
-import type { Ctx } from '../../../game/context';
 import type { GameState } from '../../../game/gameState';
 import { ModelType } from '../../../utils/constants';
+import type { Ctx } from 'boardgame.io';
 
 describe('Sidebar', () => {
   it('renders without crashing', async () => {
