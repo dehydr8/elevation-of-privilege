@@ -31,7 +31,8 @@ const G = {
 const ctx = {
   actionPlayers: [0, 1, 2],
 };
-Board.prototype.componentDidMount = jest.fn();
+// Suppress REST calls during test
+Board.prototype.apiGetRequest = jest.fn();
 
 describe('Board', () => {
   it('renders without crashing', async () => {
