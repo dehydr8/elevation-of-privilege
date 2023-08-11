@@ -4,16 +4,20 @@ import { render, screen } from '@testing-library/react';
 import Banner from './banner';
 
 describe('Banner', () => {
+  const envBackup = process.env
+
+  afterEach(() => process.env = envBackup);
+  
   it('should render link if env var is defined', async () => {
     // given
     process.env.REACT_APP_EOP_BANNER_TEXT = 'This is a banner text'
     render(<Banner />);
 
     // when
-    const banners = await screen.queryAllByText('This is a banner text');
+    const banner = await screen.findByText('This is a banner text');
 
     // then
-    expect(banners.length).toBe(1);
+    expect(banner).toBeInTheDocument();
   });
 
   it('should not render link if env var is not defined', async () => {
@@ -22,9 +26,9 @@ describe('Banner', () => {
     render(<Banner />);
 
     // when
-    const banners = await screen.queryAllByText('This is a banner text');
+    const banner = await screen.queryByText('This is a banner text');
 
     // then
-    expect(banners.length).toBe(0);
+    expect(banner).not.toBeInTheDocument();
   });
 });

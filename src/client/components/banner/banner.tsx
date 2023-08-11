@@ -9,7 +9,7 @@ const Banner: FC = () => {
       <div className='banner'>{process.env.REACT_APP_EOP_BANNER_TEXT}</div>
       );
   }
-  return (<></>);
+  return null;
 }
 
 export default Banner;

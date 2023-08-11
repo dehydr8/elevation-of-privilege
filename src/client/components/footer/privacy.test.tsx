@@ -10,10 +10,10 @@ describe('Privacy', () => {
     render(<Privacy />);
 
     // when
-    const links = await screen.queryAllByRole('link');
+    const link = await screen.findByRole('link');
 
     // then
-    expect(links.length).toBe(1);
+    expect(link).toBeInTheDocument();
   });
 
   it('should not render link if env var is not defined', async () => {
@@ -22,9 +22,9 @@ describe('Privacy', () => {
     render(<Privacy />);
 
     // when
-    const links = await screen.queryAllByRole('link');
+    const link = screen.queryByRole('link');
 
     // then
-    expect(links.length).toBe(0);
+    expect(link).not.toBeInTheDocument();
   });
 });
