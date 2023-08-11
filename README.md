@@ -146,7 +146,7 @@ npm run build
 
 #### Imprint and privacy notices
 
-Links to imprint and privacy notices can be included into the client, if the environment variable
+Links to imprint and privacy notices can be included into the client, if the environment variables
 
 ```bash
 export REACT_APP_EOP_IMPRINT="https://example.tld/imprint/"
@@ -157,7 +157,7 @@ are set when building the app.
 When building the client via docker these env vars can be set by defining `build-args`
 
 ```bash
-docker build --build-arg "EOP_IMPRINT=https://example.tld/imprint/" --build-arg "EOP_PRIVACY=https://example.tld/privacy/" -f docker/client.dockerfile . -t "some-tag"
+docker build --build-arg "REACT_APP_EOP_IMPRINT=https://example.tld/imprint/" --build-arg "REACT_APP_EOP_PRIVACY=https://example.tld/privacy/" -f docker/client.dockerfile . -t "some-tag"
 ```
 
 ### Using MongoDB

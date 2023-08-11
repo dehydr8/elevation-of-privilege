@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import Create from '../create';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-describe('<Create />', () => {
+describe('Create', () => {
   it('renders without crashing', async () => {
     render(<Router><Create /></Router>);
 

@@ -7,7 +7,7 @@ const Privacy: FC = () => {
       <a href={process.env.REACT_APP_EOP_PRIVACY}>Privacy</a>
     );
     }
-    return (<></>);
+    return null;
 }
 
 export default Privacy;

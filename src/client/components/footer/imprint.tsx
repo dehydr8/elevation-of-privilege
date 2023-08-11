@@ -7,7 +7,7 @@ const Imprint: FC = () => {
       <a href={process.env.REACT_APP_EOP_IMPRINT}>Imprint</a>
     );
   }
-  return (<></>);
+  return null;
   
 }
 
