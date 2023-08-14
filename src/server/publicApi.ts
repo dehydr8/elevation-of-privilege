@@ -15,6 +15,7 @@ import {
   getPlayerNames,
 } from './endpoints';
 import type { GameServer } from './gameServer';
+import { getDbImagesFolder } from './filesystem';
 
 const runPublicApi = (gameServer: GameServer): [Koa, Server] => {
   const app = new Koa();
@@ -28,7 +29,7 @@ const runPublicApi = (gameServer: GameServer): [Koa, Server] => {
 
   router.post(
     '/create',
-    koaBody({ multipart: true, formidable: { uploadDir: './db-images' } }),
+    koaBody({ multipart: true, formidable: { uploadDir: getDbImagesFolder() } }),
     createGame(gameServer),
   );
   router.get('/:matchID/players', getPlayerNames());

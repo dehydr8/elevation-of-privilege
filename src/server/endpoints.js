@@ -12,6 +12,7 @@ import {
   getImageExtension,
   logEvent,
 } from '../utils/utils';
+import { getDbImagesFolder } from './filesystem';
 
 export const createGame = (gameServer) => async (ctx) => {
   const spectatorCredential = uuidv4();
@@ -74,7 +75,7 @@ export const createGame = (gameServer) => async (ctx) => {
 
         await rename(
           ctx.request.files.model.path,
-          `./db-images/${gameId}.${extension}`,
+          `${getDbImagesFolder()}/${gameId}.${extension}`,
         );
         //use model object to store info about image
         await gameServer.db.setModel(gameId, { extension });
@@ -123,7 +124,7 @@ export const getImage = (gameServer) => async (ctx) => {
 
   //send image
   await send(ctx, `${matchID}.${game.model.extension}`, {
-    root: './db-images',
+    root: getDbImagesFolder(),
   });
 };
 
