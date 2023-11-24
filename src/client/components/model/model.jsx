@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import * as joint from 'jointjs';
 import 'jointjs/dist/joint.css';
 import '../../jointjs/joint-tm.css';
-// eslint-disable-next-line
 import '../../jointjs/shapes';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';

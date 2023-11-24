@@ -41,10 +41,7 @@ export function setupGame(
     round: 1,
     numCardsPlayed: 0,
     scores,
-    lastWinner: getPlayerHoldingStartingCard(
-      handsPerPlayers,
-      startingCard,
-    ) as number,
+    lastWinner: getPlayerHoldingStartingCard(handsPerPlayers, startingCard),
     maxRounds: getNumberOfCardsPerHand(handsPerPlayers),
     selectedDiagram: 0,
     // as image models or links don't have components, put a dummy id here to treat the entire image as selected

@@ -14,8 +14,7 @@ import {
   Suit,
 } from '../../utils/cardDefinitions';
 import type { Card } from 'reactstrap';
-import type { Ctx, DefaultPluginAPIs, FnContext } from 'boardgame.io';
-import type { GameState } from '../gameState';
+import type { Ctx, DefaultPluginAPIs } from 'boardgame.io';
 
 type DefaultContext = DefaultPluginAPIs & { ctx: Ctx };
 

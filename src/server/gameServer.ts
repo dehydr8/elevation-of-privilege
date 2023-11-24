@@ -1,4 +1,3 @@
-import type { Game } from 'boardgame.io';
 import { Server } from 'boardgame.io/server';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,7 +10,7 @@ import type { ModelFlatFile } from './ModelFlatFile';
 export type GameServer = ReturnType<typeof Server> & { db: ModelFlatFile };
 
 const server = Server({
-  games: [ElevationOfPrivilege as Game],
+  games: [ElevationOfPrivilege],
   db: getDatabase(),
   origins: [
     '*', //maybe make this more selective
