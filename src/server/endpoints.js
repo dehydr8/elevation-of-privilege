@@ -102,6 +102,7 @@ export const createGame = (gameServer) => async (ctx) => {
   }
 };
 
+// TODO: This returns more than just the players: It returns the requested match. We should probably adjust the name (and the path). See https://boardgame.io/documentation/#/api/Lobby?id=getting-a-specific-match-by-its-id
 export const getPlayerNames = () => async (ctx) => {
   const matchID = ctx.params.matchID;
 
