@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import React from 'react';
 import Leaderboard from './leaderboard';
 import { DEFAULT_GAME_MODE } from '../../../utils/GameMode';
