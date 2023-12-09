@@ -43,7 +43,8 @@ const LicenseAttribution: React.FC<LicenseAttributionProps> = ({
     case GameMode.CUMULUS:
       return (
         <div className="license-attribution">
-          The card game <a href="https://owasp.org/www-project-cumulus/">OWASP Cumulus</a> by{' '}
+          The card game{' '}
+          <a href="https://owasp.org/www-project-cumulus/">OWASP Cumulus</a> by{' '}
           <a href="https://www.tngtech.com/en/index.html">
             TNG Technology Consulting
           </a>{' '}

@@ -29,7 +29,10 @@ const runPublicApi = (gameServer: GameServer): [Koa, Server] => {
 
   router.post(
     '/create',
-    koaBody({ multipart: true, formidable: { uploadDir: getDbImagesFolder() } }),
+    koaBody({
+      multipart: true,
+      formidable: { uploadDir: getDbImagesFolder() },
+    }),
     createGame(gameServer),
   );
   router.get('/:matchID/players', getPlayerNames());

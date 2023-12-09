@@ -43,9 +43,12 @@
     "eject": "react-scripts eject",
     "server": "node --unhandled-rejections=warn --es-module-specifier-resolution=node build-server/server/server.js",
     "preserver": "npm run build:server",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.cjs .",
-    "fixlint": "eslint --fix --ext .js,.jsx,.ts,.tsx,.cjs .",
-    "format": "prettier --write \"./**/*.(js|jsx|ts|tsx|json|yml)\""
+    "lint": "npm run eslint",
+    "fixlint": "npm run eslint -- --fix",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx,.cjs .",
+    "format": "npm run prettier -- --write",
+    "checkformat": "npm run prettier -- --check",
+    "prettier": "prettier \"./**/*.(js|jsx|ts|tsx|json|yml)\""
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -295,7 +295,7 @@ const CARD_DECKS: CardDeckDefinitions = {
     B: {
       name: 'Monitoring',
       abbreviation: 'Mon',
-      cards: ['B5','B6', 'B7', 'B8', 'B9', 'B10', 'BJ', 'BQ', 'BK', 'BA'],
+      cards: ['B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'BJ', 'BQ', 'BK', 'BA'],
       isTrump: false,
       isDefault: false,
     },

@@ -53,7 +53,7 @@ const Timer: FC<TimerProps> = ({ active = true, duration, targetTime }) => {
         colorsTime={[0.625, 0.25, 0.125]}
         onComplete={() => ({
           shouldRepeat: false,
-          newInitialRemainingTime: 0 
+          newInitialRemainingTime: 0,
         })}
       >
         {renderTime}

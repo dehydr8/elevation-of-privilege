@@ -21,6 +21,7 @@ jobs:
           node-version: ${{ env.node-version }}
           cache: 'npm'
       - run: npm ci --prefer-offline
+      - run: npm run checkformat
       - run: npm run lint
       - run: npm run build
       - run: npm test

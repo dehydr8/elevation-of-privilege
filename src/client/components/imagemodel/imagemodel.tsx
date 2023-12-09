@@ -26,9 +26,7 @@ const ImageModel: FC<ImageModelProps> = ({
   const updateImage = useCallback(async () => {
     const res = await fetch(`${apiBase}/game/${matchID}/image`, {
       headers: {
-        Authorization:
-          'Basic ' +
-          btoa(playerID + ':' + credentials),
+        Authorization: 'Basic ' + btoa(playerID + ':' + credentials),
       },
     });
     if (!res.ok) {

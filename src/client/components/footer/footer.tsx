@@ -7,7 +7,6 @@ import Imprint from './imprint';
 import './footer.css';
 import Privacy from './privacy';
 
-
 type FooterProps = {
   short?: boolean;
 };
@@ -24,15 +23,14 @@ const Footer: FC<FooterProps> = ({ short }) => (
           <FontAwesomeIcon icon={faHeart} style={{ color: '#00cc00' }} /> at
           Careem and{' '}
           <a href="https://www.tngtech.com/en/">TNG Technology Consulting</a> -
-          Elevation of Privilege was originally invented at Microsoft, Cornucopia
-          was developed at OWASP, Cumulus was started at{' '}
+          Elevation of Privilege was originally invented at Microsoft,
+          Cornucopia was developed at OWASP, Cumulus was started at{' '}
           <a href="https://www.tngtech.com/en/">TNG Technology Consulting</a>.
         </span>
-        <div className='footer-container'>
-        <Imprint />
-        <Privacy />
+        <div className="footer-container">
+          <Imprint />
+          <Privacy />
         </div>
-        
       </>
     )}
   </small>

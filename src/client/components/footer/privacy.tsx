@@ -3,11 +3,9 @@ import type { FC } from 'react';
 
 const Privacy: FC = () => {
   if (process.env.REACT_APP_EOP_PRIVACY) {
-    return (
-      <a href={process.env.REACT_APP_EOP_PRIVACY}>Privacy</a>
-    );
-    }
-    return null;
-}
+    return <a href={process.env.REACT_APP_EOP_PRIVACY}>Privacy</a>;
+  }
+  return null;
+};
 
 export default Privacy;

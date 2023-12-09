@@ -5,7 +5,7 @@ import Privacy from './privacy';
 describe('Privacy', () => {
   it('should render link if env var is defined', async () => {
     // given
-    process.env.REACT_APP_EOP_PRIVACY = 'https://example.tld/privacy/'
+    process.env.REACT_APP_EOP_PRIVACY = 'https://example.tld/privacy/';
     render(<Privacy />);
 
     // when
@@ -17,7 +17,7 @@ describe('Privacy', () => {
 
   it('should not render link if env var is not defined', async () => {
     // given
-    process.env.REACT_APP_EOP_PRIVACY = "";
+    process.env.REACT_APP_EOP_PRIVACY = '';
     render(<Privacy />);
 
     // when

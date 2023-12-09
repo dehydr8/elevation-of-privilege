@@ -459,10 +459,7 @@ describe('authentificaton', () => {
 
       let response = await request(publicApiServer.callback())
         .get(`/game/${matchID}/${endpoint}`)
-        .set(
-          'Authorization',
-          'Basic ' + btoa(`0:${credentials[0]}`),
-        );
+        .set('Authorization', 'Basic ' + btoa(`0:${credentials[0]}`));
       expect(response.status).not.toBe(403);
     },
   );
@@ -474,8 +471,7 @@ describe('authentificaton', () => {
         .get(`/game/${matchID}/${endpoint}`)
         .set(
           'Authorization',
-          'Basic ' +
-          btoa(`${SPECTATOR}:${spectatorCredential}`),
+          'Basic ' + btoa(`${SPECTATOR}:${spectatorCredential}`),
         );
       expect(response.status).not.toBe(403);
     },
@@ -486,11 +482,7 @@ describe('authentificaton', () => {
     async (endpoint) => {
       let response = await request(publicApiServer.callback())
         .get(`/game/${matchID}/${endpoint}`)
-        .set(
-          'Authorization',
-          'Basic ' +
-          btoa(`${SPECTATOR}:wrongCredentials`),
-        );
+        .set('Authorization', 'Basic ' + btoa(`${SPECTATOR}:wrongCredentials`));
       expect(response.status).toBe(403);
     },
   );

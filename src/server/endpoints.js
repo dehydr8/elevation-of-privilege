@@ -247,18 +247,25 @@ export const downloadThreatsMarkdownFile = (gameServer) => async (ctx) => {
   logEvent(`Download threats: ${matchID}`);
   ctx.attachment(filename);
   ctx.set('Access-Control-Expose-Headers', 'Content-Disposition');
-  ctx.body = formatThreats(threats.map(threat => enrichThreatWithCategory(threat, game.state.G.gameMode)), date);
+  ctx.body = formatThreats(
+    threats.map((threat) =>
+      enrichThreatWithCategory(threat, game.state.G.gameMode),
+    ),
+    date,
+  );
 };
 
 function enrichThreatWithCategory(threat, gameMode) {
   if (threat.type) {
-    return ({
+    return {
       ...threat,
-      category: isSuit(threat.type) ? getSuitDisplayName(gameMode, threat.type) : threat.type
-    });
+      category: isSuit(threat.type)
+        ? getSuitDisplayName(gameMode, threat.type)
+        : threat.type,
+    };
   }
-  
-  return threat;  
+
+  return threat;
 }
 
 function getThreats(gameState, metadata, model) {
