@@ -13,12 +13,14 @@ export function getDealtCard(G: GameState): string {
 export function resolvePlayerNames(
   players: PlayerID[],
   names: string[],
-  current: PlayerID,
+  current: PlayerID | null,
 ): string[] {
   const resolved = [];
   for (let i = 0; i < players.length; i++) {
     const c = Number.parseInt(players[i]);
-    resolved.push(c === Number.parseInt(current) ? 'You' : names[c]);
+    resolved.push(
+      current !== null && c === Number.parseInt(current) ? 'You' : names[c],
+    );
   }
   return resolved;
 }
@@ -26,9 +28,10 @@ export function resolvePlayerNames(
 export function resolvePlayerName(
   player: PlayerID,
   names: string[],
-  current: PlayerID,
+  current: PlayerID | null,
 ): string {
-  return Number.parseInt(player) === Number.parseInt(current)
+  return current !== null &&
+    Number.parseInt(player) === Number.parseInt(current)
     ? 'You'
     : names[Number.parseInt(player)];
 }

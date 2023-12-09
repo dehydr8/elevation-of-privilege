@@ -152,11 +152,8 @@ const Board: FC<BoardProps> = ({
             <Status
               G={G}
               ctx={ctx}
-              gameMode={G.gameMode}
               playerID={playerID}
               names={names}
-              current={current}
-              active={active}
               dealtCard={dealtCard}
               isInThreatStage={isInThreatStage}
             />
