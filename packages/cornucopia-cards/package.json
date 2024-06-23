@@ -1,0 +1,6 @@
+{
+  "name": "@eop/cornucopia-cards",
+  "description": "a version of the playing cards OWASP Cornucopia adapted for this game",
+  "author": "TNG Technology Consulting",
+  "license": "CC-BY-SA-3.0"
+}
