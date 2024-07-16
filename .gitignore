@@ -26,6 +26,7 @@ deploy/
 # IDE
 .idea
 .vscode
+.zed
 
 # Turbo
 .turbo
